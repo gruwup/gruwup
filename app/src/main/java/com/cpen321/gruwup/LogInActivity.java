@@ -1,6 +1,8 @@
 package com.cpen321.gruwup;
 
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.fragment.app.FragmentManager;
+import androidx.fragment.app.FragmentTransaction;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -103,9 +105,8 @@ public class LogInActivity extends AppCompatActivity {
             Log.d(TAG, "Given Name: "+ account.getGivenName());
             Log.d(TAG, "Family Name: "+ account.getFamilyName());
             Log.d(TAG, "Photo URL: "+ account.getPhotoUrl());
-
+            
             Intent intent = new Intent(LogInActivity.this, MainActivity.class);
-//            myIntent.putExtra("key", value); //Optional parameters
             Bundle extras = new Bundle();
 
             String imageUrl = "null";
