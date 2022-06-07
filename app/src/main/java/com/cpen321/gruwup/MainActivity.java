@@ -15,11 +15,17 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        getSupportActionBar().hide();
 
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+        // TO DO: If first time sign in show user tab otherwise show discover tab
+
+//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
+        bottomNav.getMenu().getItem(2).setChecked(true);
+        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DiscoverFragment()).commit();
+
     }
 
     private BottomNavigationView.OnNavigationItemSelectedListener navListener =
@@ -38,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
                             selectedFragment = new ChatFragment();
                             break;
                         case R.id.nav_discover:
-                            selectedFragment = new RequestsFragment();
+                            selectedFragment = new DiscoverFragment();
                             break;
                         case R.id.nav_requests:
-                            selectedFragment = new DiscoverFragment();
+                            selectedFragment = new RequestsFragment();
                             break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();

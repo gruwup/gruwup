@@ -8,17 +8,20 @@
         android:id="@+id/nav_chat"
         android:icon="@drawable/ic_chat_vector"
         android:title="Chat" />
+
+    <item
+        android:id="@+id/nav_discover"
+        android:icon="@drawable/ic_discover_vector"
+        android:title="Discover" />
+
     <item
         android:id="@+id/nav_search"
         android:icon="@drawable/ic_search_vector"
         android:title="Search" />
-    <item
-        android:id="@+id/nav_discover"
-        android:icon="@drawable/ic_discover_vector"
-        android:title="Search" />
+
     <item
         android:id="@+id/nav_requests"
         android:icon="@drawable/ic_requests_vector"
-        android:title="Search" />
+        android:title="Requests" />
 
 </menu>
