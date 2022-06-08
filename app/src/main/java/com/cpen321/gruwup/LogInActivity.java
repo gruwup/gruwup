@@ -105,7 +105,7 @@ public class LogInActivity extends AppCompatActivity {
             Log.d(TAG, "Given Name: "+ account.getGivenName());
             Log.d(TAG, "Family Name: "+ account.getFamilyName());
             Log.d(TAG, "Photo URL: "+ account.getPhotoUrl());
-            
+
             Intent intent = new Intent(LogInActivity.this, MainActivity.class);
             Bundle extras = new Bundle();
 
