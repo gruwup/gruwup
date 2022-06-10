@@ -15,10 +15,10 @@ const chatRoute = require("./routes/Chat");
 const requestRoute = require("./routes/Request");
 
 // applying routes
-app.use("/account", accountRoute);
-app.use("/adventure", adventureRoute);
-app.use("/chat", chatRoute);
-app.use("/request", requestRoute);
+app.use("/user/account", accountRoute);
+app.use("/user/adventure", adventureRoute);
+app.use("/user/chat", chatRoute);
+app.use("/user/request", requestRoute);
 
 
 async function run() {
