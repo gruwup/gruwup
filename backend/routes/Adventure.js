@@ -1,8 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const categories = require("../Constants/Categories");
-const dataValidator = require("../Constants/DataValidator");
-const validator = dataValidator.DataValidator;
+const DataValidator = require("../Constants/DataValidator");
+const Categories = require("../Constants/DataValidator");
 
 const TestAdventure = {
     id: "2he8-2odw7",
@@ -12,6 +11,10 @@ const TestAdventure = {
     date: "2022-05-21",
     time: "20:15:19"
 }
+
+router.get("/", (req, res) => {
+    res.send("Adventure route live");
+});
 
 router.post("/create", (req, res) => {
     // category should be stored in ids instead of strings
@@ -35,11 +38,11 @@ router.post("/create", (req, res) => {
     }
 
     // check validity of fields
-    if (!validator.isDateTimeStringValid(req.body.date + " " + req.body.time)) {
+    if (!DataValidator.isDateTimeStringValid(req.body.date + " " + req.body.time)) {
         res.status(400).send({message: "[Adventure]: date time invalid"});
     }
 
-    if (!validator.isCatogoryIdValid(req.body.category)) {
+    if (!DataValidator.isCatogoryIdValid(req.body.category)) {
         res.status(400).send({message: "[Adventure]: category invalid"});
     }
 

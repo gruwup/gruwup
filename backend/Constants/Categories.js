@@ -1,4 +1,4 @@
-export const Categories = {
+const Categories = {
     0: "Movie",
     1: "Sports",
     2: "Games",
@@ -7,3 +7,5 @@ export const Categories = {
     5: "Convention",
     6: "Show"
 }
+
+module.exports = Categories;
