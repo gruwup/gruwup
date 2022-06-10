@@ -1,0 +1,417 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/kalebhui/CPEN321-api/1.0.0
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/GrantLi1012/Gruwup/1.0.0
+info:
+  version: "1.0.0"
+  title: Sample Access Code Flow OAuth2 Project
+  description: >-
+    This is an example of using OAuth2 Access Code Flow in a specification to
+    describe security to your API.
+tags:
+- name: Adventure
+  description: Adventure related operations
+security:
+  - accessCode:
+      - read
+      - write
+paths:
+  /example:
+    get:
+      summary: Server example operation
+      description: >-
+        This is an example operation to show how security is applied to the
+        call.
+      responses:
+        '200':
+          description: OK
+  /ping:
+    get:
+      summary: Server heartbeat operation
+      description: >-
+        This operation shows how to override the global security defined above,
+        as we want to open it up for all users.
+      security: []
+      responses:
+        '200':
+          description: OK
+  /user/adventure/create:
+    post:
+      summary: Create a new adventure
+      tags:
+       - Adventure
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Adventure'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Adventure'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/search:
+    get:
+      summary: Search adventure using filters
+      tags:
+       - Adventure
+      parameters:
+        - in: query
+          name: filters
+          required: true
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Search'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Adventure'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/{userId}/get:
+    get:
+      summary: Ger all adventure user has
+      tags:
+       - Adventure
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success (return list of adventure ids)
+          content:
+            application/json:
+              schema:
+               type: object
+               example: {
+                 adventureIds: ["e28hc", "end82b"]
+               }
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/{adventureId}/detail:
+    get:
+      summary: View adventure detail
+      tags:
+       - Adventure
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Sucess
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Adventure'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/{adventureId}/update:
+    put:
+      summary: Update adventure detail
+      tags:
+       - Adventure
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Adventure'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Adventure'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/{adventureId}/delete:
+    delete:
+      summary: View adventure detail
+      tags:
+       - Adventure
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/account/create:
+    post:
+      summary: Create a new user profile
+      tags:
+       - Account
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Account'
+      responses:
+        "200":
+          description: Successfully created account. Return created account details.
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Account'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /public/account/sign-in:
+    post:
+      summary: Sign in with Google
+      tags:
+       - Account
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Token'
+      responses:
+        "200":
+          description: Successfully signed in to account
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Account'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+                  
+  /user/account/sign-out:
+    post:
+      summary: Sign out
+      tags:
+       - Account
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Token'
+      responses:
+        "200":
+          description: Successfully signed out
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/account/edit:
+    put:
+      summary: Edit existing user profile
+      tags:
+       - Account
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Account'
+      responses:
+        "200":
+          description: Successfully updated account details. Return account details.
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Account'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "some sort of error message"
+    Adventure:
+      type: object
+      properties:
+        id:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+          enum: [movie, sports, party, show]
+          example: "movie"
+        location:
+          type: string
+          example: "2110 Burrard St, Vancouver, BC V6J 3H6"
+        date:
+          type: string
+          example: "June 5th 2022"
+        time:
+          type: string
+          example: "8:15 pm"
+    Search:
+      type: object
+      properties:
+        title:
+          type: string
+        category:
+          type: string
+          enum: [movie, sports, party, show]
+          example: "movie"
+        date:
+          type: string
+          enum: [this week, this month, this year, all date]
+          example: "this week"
+        time:
+          type: string
+          enum: [morning, afternoon, night, all time]
+          example: "morning"
+    Message:
+      type: object
+      properties:
+        userId:
+          type: string
+        message:
+          type: string
+          example: "hi everyone :)"
+        time:
+          type: string
+          example: "1:20pm"
+    Account:
+      type: object
+      properties:
+        userId:
+          type: string
+        name:
+          type: string
+          example: "Bob John"
+        biography:
+          type: string
+          example: "I am a 20 year old living in Vancouver"
+        categories:
+          type: object
+          example: {"1": "Sports", "2": "Food", "3":"Movie"}
+    Token:
+      type: object
+      properties:
+        userId:
+          type: string
+    Request:
+      type: object
+      properties:
+        ReqId:
+          type: string
+        AdventureId:
+          type: string
+        Requester:
+          type: string
+          example: "Bob John"
+        State:
+          type: string
+          enum: ["yes", "no", "pending"]
+          example: "pending"
+        time:
+          type: string
+          example: "1:20pm"
+  securitySchemes:
+    accessCode:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'http://example.com/oauth/auth'
+          tokenUrl: 'http://example.com/oauth/token'
+          scopes:
+            write: allows modifying resources
+            read: allows reading resources
+
+
