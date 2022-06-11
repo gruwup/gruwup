@@ -46,7 +46,7 @@
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="wrap_content">
 
             <Button
                 android:id="@+id/edit_profile_button"
@@ -63,7 +63,8 @@
                 app:icon="@drawable/ic_rieditboxline"
                 app:iconGravity="textStart"
                 app:iconPadding="0dp"
-                app:iconTint="@android:color/holo_red_dark" />
+                app:iconTint="@android:color/holo_red_dark"
+                tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
             <TextView
                 android:id="@+id/userName"
@@ -77,8 +78,17 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 tools:text="User Name" />
-
         </RelativeLayout>
+
+        <Button
+            android:id="@+id/sign_out_button"
+            android:layout_width="wrap_content"
+            android:layout_height="50dp"
+            android:layout_centerInParent="true"
+            android:text="Sign Out"
+            app:backgroundTint="@color/purple_700"
+            app:iconTint="@android:color/holo_blue_light"
+            />
 
     </LinearLayout>
 

@@ -25,7 +25,9 @@ public class ProfileFragment extends Fragment {
         displayName = (TextView) view.findViewById(R.id.userName);
         displayName.setText(this.getArguments().getString("Display_Name"));
         profilePic = (ImageView) view.findViewById(R.id.userImage);
-        Picasso.get().load(this.getArguments().getString("Photo_URL")).into(profilePic);
+        if(this.getArguments().getString("Photo_URL") != null && !this.getArguments().getString("Photo_URL").equals("")) {
+            Picasso.get().load(this.getArguments().getString("Photo_URL")).into(profilePic);
+        }
         System.out.println(this.getArguments().getString("Photo_URL"));
         //set profile picture using the link from the bundle using Picasso
 

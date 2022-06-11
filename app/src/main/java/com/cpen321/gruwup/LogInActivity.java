@@ -115,7 +115,7 @@ public class LogInActivity extends AppCompatActivity {
             Intent intent = new Intent(LogInActivity.this, MainActivity.class);
             Bundle extras = new Bundle();
 
-            String imageUrl = "null";
+            String imageUrl = "";
 
             if (account.getPhotoUrl() != null){
                 imageUrl = account.getPhotoUrl().toString();
@@ -129,36 +129,5 @@ public class LogInActivity extends AppCompatActivity {
 
         }
 
-    }
-
-    private void getPermissions() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED) {
-            return;
-        }
-        else {
-            if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET)) {
-                Toast.makeText(LogInActivity.this, "We need these permissions to run!", Toast.LENGTH_LONG).show();
-                new AlertDialog.Builder(this)
-                        .setTitle("Need Location Permissions")
-                        .setMessage("We need the location permissions to mark your location on a map")
-                        .setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                dialog.dismiss();
-                            }
-                        })
-                        .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                            @Override
-                            public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(LogInActivity.this, new String[] {Manifest.permission.INTERNET}, 1);
-                            }
-                        })
-                        .create()
-                        .show();
-            }
-            else {
-                ActivityCompat.requestPermissions(LogInActivity.this, new String[] {Manifest.permission.INTERNET}, 1);
-            }
-        }
     }
 }
