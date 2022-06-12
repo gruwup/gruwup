@@ -8,8 +8,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -56,15 +58,43 @@ public class ProfileFragment extends Fragment {
     public void showPopUp(View v){
         TextView goBack;
         Button confirmButton;
+        EditText bioInput;
+        TextView bioValidation;
+        TextView userBio;
 
         profileDialog.setContentView(R.layout.profile_pop_up);
         goBack  = (TextView) profileDialog.findViewById(R.id.goBack);
         goBack.setPaintFlags(goBack.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
         confirmButton = (Button) profileDialog.findViewById(R.id.confirmButton);
+        bioInput = (EditText) profileDialog.findViewById(R.id.biographyInput);
+        bioValidation = (TextView) profileDialog.findViewById(R.id.biographyAlert);
+        userBio = (TextView) getView().findViewById(R.id.userBio);
+
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 profileDialog.dismiss();
+            }
+        });
+        confirmButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Pressed Confirm Button");
+                Log.d(TAG, bioInput.getText().toString());
+
+                if (bioInput.getText().toString().trim().equals("")){
+                    bioValidation.setText("Biography cannot be set empty.");
+                }
+                else if (!bioInput.getText().toString().matches("[a-zA-Z.? ]*")){
+                    bioValidation.setText("Biography can only allow numbers, spaces and letters.");
+                }
+                else{
+                    // To Do: Once API is set, send this information needs to be sent to backend
+                    userBio.setText(bioInput.getText().toString());
+                    profileDialog.dismiss();
+                    Toast.makeText(getActivity(), "Changed Profile Information", Toast.LENGTH_SHORT).show();
+                }
+
             }
         });
         profileDialog.show();

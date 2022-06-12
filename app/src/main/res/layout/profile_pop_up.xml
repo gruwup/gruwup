@@ -39,11 +39,19 @@
         android:minHeight="48dp"
         android:padding="10dp" />
 
+    <TextView
+        android:id="@+id/biographyAlert"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="4dp"
+        android:layout_marginRight="30dp"
+        android:textColor="@color/design_default_color_error" />
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
         android:layout_marginLeft="25dp"
-        android:layout_marginTop="25dp"
+        android:layout_marginTop="20dp"
         android:layout_marginRight="25dp"
         android:background="@color/black" />
 
