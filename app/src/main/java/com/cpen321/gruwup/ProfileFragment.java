@@ -1,9 +1,13 @@
 package com.cpen321.gruwup;
 
+import android.app.Dialog;
+import android.graphics.Paint;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -16,6 +20,10 @@ import com.squareup.picasso.Picasso;
 public class ProfileFragment extends Fragment {
     TextView displayName;
     ImageView profilePic;
+
+    Dialog profileDialog;
+    Button editButton;
+    final static String TAG = "ProfileFragment";
 
     @Nullable
     @Override
@@ -31,7 +39,35 @@ public class ProfileFragment extends Fragment {
         System.out.println(this.getArguments().getString("Photo_URL"));
         //set profile picture using the link from the bundle using Picasso
 
+        profileDialog = new Dialog(getActivity());
 
+        editButton = view.findViewById(R.id.edit_profile_button);
+
+        editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Edit Icon Clicked");
+                showPopUp(view);
+            }
+        });
         return view;
     }
+
+    public void showPopUp(View v){
+        TextView goBack;
+        Button confirmButton;
+
+        profileDialog.setContentView(R.layout.profile_pop_up);
+        goBack  = (TextView) profileDialog.findViewById(R.id.goBack);
+        goBack.setPaintFlags(goBack.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
+        confirmButton = (Button) profileDialog.findViewById(R.id.confirmButton);
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                profileDialog.dismiss();
+            }
+        });
+        profileDialog.show();
+    }
+
 }
