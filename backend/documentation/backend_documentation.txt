@@ -377,33 +377,29 @@ paths:
                       "ReqId": "string",
                       "AdventureId": "string",
                       "Requester": "Bob John",
-                      "State": "pending",
-                      "date": "2022-12-11",
-                      "time": "15:13:15"
+                      "State": 1,
+                      "dateTime": "2022-12-11 11:20:01",
                     },
                     {
                       "ReqId": "string",
                       "AdventureId": "string",
                       "Requester": "Bob John",
-                      "State": "pending",
-                      "date": "2022-11-11",
-                      "time": "12:20:15"
+                      "State": 2,
+                      "dateTime": "2022-12-11 11:01:00",
                     },
                     {
                       "ReqId": "string",
                       "AdventureId": "string",
                       "Requester": "Bob John",
-                      "State": "pending",
-                      "date": "2022-10-10",
-                      "time": "12:13:15"
+                      "State": 1,
+                      "dateTime": "2022-12-11 11:00:00",
                     },
                     {
                       "ReqId": "string",
                       "AdventureId": "string",
                       "Requester": "Bob John",
-                      "State": "pending",
-                      "date": "2021-11-11",
-                      "time": "12:13:15"
+                      "State": 1,
+                      "dateTime": "2022-10-11 12:14:14",
                     },
                    ]
                }
@@ -513,8 +509,7 @@ paths:
                     {
                       "userId": "string",
                       "message": "hi everyone :)",
-                      "dateTime": "2022-10-11 12:14:14",
-                      "time": ""
+                      "dateTime": "2022-10-11 12:14:14"
                     },
                    ]
                }
@@ -647,15 +642,12 @@ components:
           type: string
           example: "Bob John"
         State:
+          type: integer
+          enum: [1, 2, 3] #"accept", "reject", "pending"
+          example: 3
+        dateTime:
           type: string
-          enum: ["yes", "no", "pending"]
-          example: "pending"
-        date:
-          type: string
-          example: "yyyy-mm-dd"
-        time:
-          type: string
-          example: "hh:mm:ss"
+          example: "yyyy-mm-dd hh:mm:ss"
   securitySchemes:
     accessCode:
       type: oauth2
