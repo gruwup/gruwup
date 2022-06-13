@@ -20,12 +20,11 @@ const DataValidator = {
         return true;
     },
     isCatogoryIdValid: (categoryId) => {
-        return categoryId && Categories[categoryId] !== undefined;
+        return Boolean(categoryId && Categories[categoryId] !== undefined);
     },
     isTokenValid: (userId) => {
         return true; //TODO
-    },
-    
+    }
 }
 
 module.exports = DataValidator;
