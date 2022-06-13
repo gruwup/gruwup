@@ -66,12 +66,18 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/adventure/search:
+  /user/adventure/search/{pagination}:
     get:
       summary: Search adventure using filters
       tags:
        - Adventure
       parameters:
+        - name: pagination
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
         - in: query
           name: filters
           required: true
@@ -520,7 +526,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/chat/{adventureId}/{userId}/delete:
+  /user/chat/{adventureId}/{userId}/delete-user:
     delete:
       summary: Remove user from chat
       tags:
@@ -533,6 +539,28 @@ paths:
         schema:
           type: string
       - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/chat/{adventureId}/delete-chat:
+    delete:
+      summary: Delete chat lobby
+      tags:
+       - Chat
+      parameters:
+      - name: adventureId
         in: path
         required: true
         style: simple

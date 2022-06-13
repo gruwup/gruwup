@@ -3,15 +3,24 @@ const router = express.Router();
 const DataValidator = require("../Constants/DataValidator");
 const Categories = require("../Constants/DataValidator");
 
-const TestAdventure = {
-    id: "2he8-2odw7",
-    title: "Doctor Strang: Multiverse of Madness",
-    category: "Movie",
-    location: "209 5th Ave, Vancouver",
-    date: "2022-05-21",
-    time: "20:15:19"
-}
+const Constants = require("../Constants/Constants");
 
+const TestAdventure = {
+    "id": "string",
+    "owner": "user id",
+    "title": "string",
+    "category": "movie",
+    "location": "2110 Burrard St, Vancouver, BC V6J 3H6",
+    "dateTime": "yyyy-mm-dd hh:mm:ss",
+    "peopleGoing": [
+        "user id 1",
+        "user id 2",
+        "user id 3"
+    ],
+    "status": "open"
+};
+
+// test endpoint
 router.get("/", (req, res) => {
     res.send("Adventure route live");
 });
@@ -51,8 +60,10 @@ router.post("/create", (req, res) => {
 });
 
 // search adventures
-router.get("/search", (req, res) => {
-    res.status(200).send(TestAdventure);
+router.get("/search/:pagination", (req, res) => {
+    console.log("pagination: " + req.params.pagination);
+    console.log("pagination limit: " + Constants.SEARCH_PAGINATION_LIMIT);
+    res.status(200).send([TestAdventure, TestAdventure]);
 });
 
 // search all adventures created by user
@@ -61,22 +72,22 @@ router.get("/:userId/get", (req, res) => {
     res.status(200).send([TestAdventure]);
 });
 
-// search all adventures created by user
-router.get("/:adventureId/get", (req, res) => {
+// get adventure details
+router.get("/:adventureId/detail", (req, res) => {
     console.log(req.params.adventureId);
     res.status(200).send(TestAdventure);
 });
 
 // update adventure details
-router.get("/:adventureId/update", (req, res) => {
+router.put("/:adventureId/update", (req, res) => {
     console.log(req.params.adventureId);
     res.status(200).send(TestAdventure);
 });
 
 // Cancel the adventure and delete chat room
-router.get("/:adventureId/cancel", (req, res) => {
+router.delete("/:adventureId/cancel", (req, res) => {
     console.log(req.params.adventureId);
-    res.status(200);
+    res.status(200).send();
 });
 
 module.exports = router;
