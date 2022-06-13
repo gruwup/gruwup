@@ -22,6 +22,9 @@ const DataValidator = {
     isCatogoryIdValid: (categoryId) => {
         return Boolean(categoryId && Categories[categoryId] !== undefined);
     },
+    isTokenValid: (userId) => {
+        return true; //TODO
+    }
 }
 
 module.exports = DataValidator;
