@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 
-const Constants = require("../Constants/Constants");
+const Constants = require("../constants/Constants");
 
 const TestMessage = {
     "userId": "string",

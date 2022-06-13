@@ -45,7 +45,7 @@ paths:
       tags:
        - Adventure
       requestBody:
-        description: All fields are mandatory
+        description: All fields are mandatory, category must be a string with first letter capitalized and supported by backend, check backend/constants/Categories for supported strings
         content:
           application/json:
             schema:
