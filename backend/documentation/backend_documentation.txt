@@ -8,7 +8,7 @@ servers:
     url: https://virtserver.swaggerhub.com/GrantLi1012/Gruwup/1.0.0
 info:
   version: "1.0.0"
-  title: Sample Access Code Flow OAuth2 Project
+  title: Gruwup
   description: >-
     This is an example of using OAuth2 Access Code Flow in a specification to
     describe security to your API.
@@ -153,7 +153,7 @@ paths:
                   - $ref: '#/components/schemas/Error'
   /user/adventure/{adventureId}/update:
     put:
-      summary: Update adventure detail
+      summary: Update adventure detail or adventure status(from open to closed or closed to open, controlled by a toggle button)
       tags:
        - Adventure
       parameters:
@@ -185,9 +185,9 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/adventure/{adventureId}/delete:
+  /user/adventure/{adventureId}/cancel:
     delete:
-      summary: View adventure detail
+      summary: Cancel the adventure and delete chat room
       tags:
        - Adventure
       parameters:
@@ -513,27 +513,9 @@ paths:
                     {
                       "userId": "string",
                       "message": "hi everyone :)",
-                      "date": "2022-10-11",
-                      "time": "12:14:14"
+                      "dateTime": "2022-10-11 12:14:14",
+                      "time": ""
                     },
-                    {
-                      "userId": "string",
-                      "message": "hi everyone :)",
-                      "date": "2022-10-11",
-                      "time": "12:13:20"
-                    },
-                    {
-                      "userId": "string",
-                      "message": "hi everyone :)",
-                      "date": "2022-10-11",
-                      "time": "12:13:15"
-                    },
-                    {
-                      "userId": "string",
-                      "message": "hi everyone :)",
-                      "date": "2022-10-11",
-                      "time": "12:13:14"
-                    }
                    ]
                }
         "400":
@@ -584,21 +566,29 @@ components:
       properties:
         id:
           type: string
+        owner:
+          type: string
+          example: "user id"
         title:
           type: string
         category:
           type: string
-          enum: [movie, sports, party, show]
           example: "movie"
         location:
           type: string
           example: "2110 Burrard St, Vancouver, BC V6J 3H6"
-        date:
+        dateTime:
           type: string
-          example: "yyyy-mm-dd"
-        time:
+          example: "yyyy-mm-dd hh:mm:ss"
+        peopleGoing:
+          type: array
+          items:
+            type: string
+          example: ["user id 1", "user id 2", "user id 3"]
+        status:
           type: string
-          example: "hh:mm:ss"
+          enum: ["closed", "open"]
+          example: "open"
     Search:
       type: object
       properties:
@@ -624,12 +614,9 @@ components:
         message:
           type: string
           example: "hi everyone :)"
-        date:
+        dateTime:
           type: string
-          example: "yyyy-mm-dd"
-        time:
-          type: string
-          example: "hh:mm:ss"
+          example: "yyyy-mm-dd hh:mm:ss"
     Account:
       type: object
       properties:
