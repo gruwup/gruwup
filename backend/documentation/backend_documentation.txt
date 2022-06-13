@@ -8,7 +8,7 @@ servers:
     url: https://virtserver.swaggerhub.com/GrantLi1012/Gruwup/1.0.0
 info:
   version: "1.0.0"
-  title: Sample Access Code Flow OAuth2 Project
+  title: Gruwup
   description: >-
     This is an example of using OAuth2 Access Code Flow in a specification to
     describe security to your API.
@@ -153,7 +153,7 @@ paths:
                   - $ref: '#/components/schemas/Error'
   /user/adventure/{adventureId}/update:
     put:
-      summary: Update adventure detail
+      summary: Update adventure detail or adventure status(from open to closed or closed to open, controlled by a toggle button)
       tags:
        - Adventure
       parameters:
@@ -185,9 +185,9 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/adventure/{adventureId}/delete:
+  /user/adventure/{adventureId}/cancel:
     delete:
-      summary: View adventure detail
+      summary: Cancel the adventure and delete chat room
       tags:
        - Adventure
       parameters:
@@ -234,7 +234,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /public/account/sign-in:
+  /user/account/sign-in:
     post:
       summary: Sign in with Google
       tags:
@@ -311,6 +311,243 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
+  /user/request/{adventureId}/make-request:
+    post:
+      summary: request to join 
+      tags:
+       - Request
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Token'
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request made sucessfully.
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Request'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/request/{userId}/check/{pagination}:
+    get:
+      summary: Get 10 requests for the user starting at given pagination (so pagination 0 will return most recent 10 requests, if the batch has less then 10 requests it will return whatever it can, so if you have 15 messages, and pagination is at 9, it will return message 9-15 instead of 9-19)
+      tags:
+      - Request
+      parameters:
+      - name: pagination
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: number
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Success, return given pagination and the messages
+          content:
+            application/json:
+              schema:
+               type: object
+               example: {
+                 pagination: 0,
+                 requests: [
+                    {
+                      "ReqId": "string",
+                      "AdventureId": "string",
+                      "Requester": "Bob John",
+                      "State": 1,
+                      "dateTime": "2022-12-11 11:20:01",
+                    },
+                    {
+                      "ReqId": "string",
+                      "AdventureId": "string",
+                      "Requester": "Bob John",
+                      "State": 2,
+                      "dateTime": "2022-12-11 11:01:00",
+                    },
+                    {
+                      "ReqId": "string",
+                      "AdventureId": "string",
+                      "Requester": "Bob John",
+                      "State": 1,
+                      "dateTime": "2022-12-11 11:00:00",
+                    },
+                    {
+                      "ReqId": "string",
+                      "AdventureId": "string",
+                      "Requester": "Bob John",
+                      "State": 1,
+                      "dateTime": "2022-10-11 12:14:14",
+                    },
+                   ]
+               }
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/request/{userId}/respond:
+    post:
+      summary: respond to request
+      tags:
+      - Request
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Request'
+      responses:
+        "200":
+          description: Successfully responded
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Request'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/chat/{adventureId}/send:
+    post:
+      summary: Create a new chat message
+      tags:
+       - Chat
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Message'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Message'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/chat/{adventureId}/messages/{pagination}:
+    get:
+      summary: Get 30 messages in adventure starting at given pagination (so pagination 0 will return most recent 30 messages, if the batch has less then 30 messages it will return whatever it can, so if you have 50 messages, and pagination is at 29, it will return message 29-50 instead of 29-59)
+      tags:
+       - Chat
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: pagination
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Success, return given pagination and the messages
+          content:
+            application/json:
+              schema:
+               type: object
+               example: {
+                 pagination: 0,
+                 messages: [
+                    {
+                      "userId": "string",
+                      "message": "hi everyone :)",
+                      "dateTime": "2022-10-11 12:14:14"
+                    },
+                   ]
+               }
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/chat/{adventureId}/{userId}/delete:
+    delete:
+      summary: Remove user from chat
+      tags:
+       - Chat
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
 components:
   schemas:
     Error:
@@ -324,21 +561,29 @@ components:
       properties:
         id:
           type: string
+        owner:
+          type: string
+          example: "user id"
         title:
           type: string
         category:
           type: string
-          enum: [movie, sports, party, show]
           example: "movie"
         location:
           type: string
           example: "2110 Burrard St, Vancouver, BC V6J 3H6"
-        date:
+        dateTime:
           type: string
-          example: "June 5th 2022"
-        time:
+          example: "yyyy-mm-dd hh:mm:ss"
+        peopleGoing:
+          type: array
+          items:
+            type: string
+          example: ["user id 1", "user id 2", "user id 3"]
+        status:
           type: string
-          example: "8:15 pm"
+          enum: ["closed", "open"]
+          example: "open"
     Search:
       type: object
       properties:
@@ -364,9 +609,9 @@ components:
         message:
           type: string
           example: "hi everyone :)"
-        time:
+        dateTime:
           type: string
-          example: "1:20pm"
+          example: "yyyy-mm-dd hh:mm:ss"
     Account:
       type: object
       properties:
@@ -380,7 +625,7 @@ components:
           example: "I am a 20 year old living in Vancouver"
         categories:
           type: object
-          example: {"1": "Sports", "2": "Food", "3":"Movie"}
+          example: [1, 2, 3]
     Token:
       type: object
       properties:
@@ -397,12 +642,12 @@ components:
           type: string
           example: "Bob John"
         State:
+          type: integer
+          enum: [1, 2, 3] #"accept", "reject", "pending"
+          example: 3
+        dateTime:
           type: string
-          enum: ["yes", "no", "pending"]
-          example: "pending"
-        time:
-          type: string
-          example: "1:20pm"
+          example: "yyyy-mm-dd hh:mm:ss"
   securitySchemes:
     accessCode:
       type: oauth2
@@ -413,5 +658,3 @@ components:
           scopes:
             write: allows modifying resources
             read: allows reading resources
-
-
