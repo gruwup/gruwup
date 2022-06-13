@@ -16,6 +16,7 @@ router.get("/", (req, res) => {
     res.send("Adventure route live");
 });
 
+// create new adventure
 router.post("/create", (req, res) => {
     // category should be stored in ids instead of strings
     // translate id to string to return to frontend
@@ -47,6 +48,35 @@ router.post("/create", (req, res) => {
     }
 
     res.status(200).send(TestAdventure);
+});
+
+// search adventures
+router.get("/search", (req, res) => {
+    res.status(200).send(TestAdventure);
+});
+
+// search all adventures created by user
+router.get("/:userId/get", (req, res) => {
+    console.log(req.params.userId);
+    res.status(200).send([TestAdventure]);
+});
+
+// search all adventures created by user
+router.get("/:adventureId/get", (req, res) => {
+    console.log(req.params.adventureId);
+    res.status(200).send(TestAdventure);
+});
+
+// update adventure details
+router.get("/:adventureId/update", (req, res) => {
+    console.log(req.params.adventureId);
+    res.status(200).send(TestAdventure);
+});
+
+// Cancel the adventure and delete chat room
+router.get("/:adventureId/cancel", (req, res) => {
+    console.log(req.params.adventureId);
+    res.status(200);
 });
 
 module.exports = router;
