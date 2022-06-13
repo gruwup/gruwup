@@ -1,5 +1,5 @@
 const express = require("express");
-const DataValidator = require("./../Constants/DataValidator.js");
+const DataValidator = require("./../constants/DataValidator.js");
 const router = express.Router();
 
 // TODO: need database to store profile information based on user token

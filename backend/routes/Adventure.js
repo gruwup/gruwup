@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router();
-const DataValidator = require("../Constants/DataValidator");
-const Categories = require("../Constants/DataValidator");
+const DataValidator = require("../constants/DataValidator");
+const Categories = require("../constants/DataValidator");
 
-const Constants = require("../Constants/Constants");
+const Constants = require("../constants/Constants");
 
 const TestAdventure = {
     "id": "string",
