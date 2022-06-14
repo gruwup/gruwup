@@ -213,11 +213,11 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/account/create:
+  /user/profile/create:
     post:
       summary: Create a new user profile
       tags:
-       - Account
+       - Profile
       requestBody:
         description: All fields are mandatory
         content:
@@ -240,7 +240,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/account/sign-in:
+  /account/sign-in:
     post:
       summary: Sign in with Google
       tags:
@@ -268,7 +268,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Error'
                   
-  /user/account/sign-out:
+  /account/sign-out:
     post:
       summary: Sign out
       tags:
@@ -290,11 +290,11 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/account/edit:
+  /user/profile/edit:
     put:
       summary: Edit existing user profile
       tags:
-       - Account
+       - Profile
       requestBody:
         description: All fields are mandatory
         content:
