@@ -13,12 +13,8 @@ const example = {
   }
 
 router.post("/create", (req, res) => {
-    // TODO: authentication
-    
-});
-
-router.post("/sign-in", (req, res) => {
     if (DataValidator.isTokenValid(req.body.userId)) {
+        // TODO: check fields are also valid
         res.status(200).send(example);
     }
     else {
@@ -26,9 +22,10 @@ router.post("/sign-in", (req, res) => {
     }
 });
 
-router.post("/sign-out", (req, res) => {
+router.post("/edit", (req, res) => {
     if (DataValidator.isTokenValid(req.body.userId)) {
-        res.sendStatus(200);
+        // TODO: check fields are also valid
+        res.status(200).send(example);
     }
     else {
         res.sendStatus(400);
