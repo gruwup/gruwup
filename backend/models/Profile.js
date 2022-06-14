@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const Category = require("./internalUseSchema/Category");
 
 const schema = mongoose.Schema({
     userId: {
@@ -14,7 +15,7 @@ const schema = mongoose.Schema({
         required: true
     },
     categories: {
-        type: [Number],
+        type: [Category],
         required: true
     }
 });

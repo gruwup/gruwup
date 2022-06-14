@@ -1,4 +1,5 @@
 const mongoose = require("mongoose");
+const DateTime = require("./internalUseSchema/DateTime");
 
 const schema = mongoose.Schema({
     userId: {
@@ -10,8 +11,8 @@ const schema = mongoose.Schema({
         required: true
     },
     dareTime: {
-        type: String,
-        required: true
+        type: DateTime,
+        required: true,
     }
 });
 

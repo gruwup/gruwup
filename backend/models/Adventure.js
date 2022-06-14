@@ -1,4 +1,7 @@
 const mongoose = require("mongoose");
+const Category = require("./internalUseSchema/Category");
+const DateTime = require("./internalUseSchema/DateTime");
+const AdventureStatus = require("./internalUseSchema/AdventureStatus");
 
 const schema = mongoose.Schema({
     adventureId: {
@@ -15,12 +18,12 @@ const schema = mongoose.Schema({
     },
     description: String,
     category: {
-        type: Number,
+        type: Category,
         required: true
     },
     peopleGoing: [String],
     dateTime: {
-        type: String,
+        type: DateTime,
         required: true
     },
     location: {
@@ -28,8 +31,8 @@ const schema = mongoose.Schema({
         required: true
     },
     status: {
-        type: String,
-        required: true
+        type: AdventureStatus,
+        required: true,
     }
 });
 
