@@ -1,4 +1,6 @@
 const mongoose = require("mongoose");
+const DateTime = require("./internalUseSchema/DateTime");
+const RequestStatus = require("./internalUseSchema/RequestStatus");
 
 const schema = mongoose.Schema({
     requestId: {
@@ -14,11 +16,11 @@ const schema = mongoose.Schema({
         required: true
     },
     status: {
-        type: String,
+        type: RequestStatus,
         required: true
     },
     dateTime: {
-        type: String,
+        type: DateTime,
         required: true
     }
 });
