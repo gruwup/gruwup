@@ -620,6 +620,8 @@ components:
           example: "user id"
         title:
           type: string
+        description:
+          type: string
         category:
           type: string
           example: "movie"
@@ -693,14 +695,14 @@ components:
     Request:
       type: object
       properties:
-        ReqId:
+        requestId:
           type: string
-        AdventureId:
+        adventureId:
           type: string
-        Requester:
+        requester:
           type: string
           example: "Bob John"
-        State:
+        status:
           type: integer
           enum: [1, 2, 3] #"accept", "reject", "pending"
           example: 3

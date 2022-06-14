@@ -12,6 +12,11 @@ const example = {
     "categories": [1, 2, 3]
   }
 
+router.post("/create", (req, res) => {
+    // TODO: authentication
+    
+});
+
 router.post("/sign-in", (req, res) => {
     if (DataValidator.isTokenValid(req.body.userId)) {
         res.status(200).send(example);
