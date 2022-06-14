@@ -89,7 +89,7 @@ public class ProfileFragment extends Fragment {
         bioInput = (EditText) profileDialog.findViewById(R.id.biographyInput);
         bioValidation = (TextView) profileDialog.findViewById(R.id.biographyAlert);
         userBio = (TextView) getView().findViewById(R.id.userBio);
-
+        
         // for categories
         initCategories();
         Log.d(TAG, "Initialize Category Recycler View");
@@ -127,7 +127,6 @@ public class ProfileFragment extends Fragment {
 
             }
         });
-
 
         profileDialog.show();
     }
