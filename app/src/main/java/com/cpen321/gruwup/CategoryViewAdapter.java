@@ -2,6 +2,7 @@ package com.cpen321.gruwup;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
+import android.graphics.Color;
 import android.media.Image;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -25,11 +26,15 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
     //vars
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private Context mContext;
+    boolean isSelectMode = false;
+    private ArrayList<Integer> mSelectedCategories = new ArrayList<>();
 
     public CategoryViewAdapter(Context mContext ,ArrayList<String> mCategoryNames) {
         this.mCategoryNames = mCategoryNames;
         this.mContext = mContext;
     }
+
+
 
     @NonNull
     @Override
@@ -42,33 +47,50 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
-//        Glide.with(mContext)
-//                .asBitmap()
-//                .load(mCategoryImages.get(position))
-//                .into(holder.image);
 
         holder.categoryName.setText(mCategoryNames.get(position));
+        holder.categoryName.setTextColor(Color.parseColor("#766867"));
         holder.categoryName.setOnClickListener(new View.OnClickListener(){
 
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "onClick: clcked on an image: "+ mCategoryNames.get(position));
                 Toast.makeText(mContext, mCategoryNames.get(position),Toast.LENGTH_SHORT).show();
+
+                isSelectMode = true;
+                if (mSelectedCategories.contains(position)){
+                    holder.categoryName.setTextColor(Color.parseColor("#766867"));
+                    mSelectedCategories.remove(Integer.valueOf(position));
+                    Log.d(TAG, "Selected items after remove are " + mSelectedCategories);
+                }
+                else {
+                    holder.categoryName.setTextColor(Color.parseColor("#ffffff"));
+                    mSelectedCategories.add(position);
+
+                    Log.d(TAG, "Selected items after add are " + mSelectedCategories);
+                }
+
+                if (mSelectedCategories.size() == 0){
+                    isSelectMode = false;
+                }
+
             }
         });
-//        holder.image.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//                Log.d(TAG, "onClick: clcked on an image: "+ mCategoryNames.get(position));
-//                Toast.makeText(mContext, mCategoryNames.get(position),Toast.LENGTH_SHORT).show();
-//            }
-//        });
+
 
     }
 
     @Override
     public int getItemCount() {
         return mCategoryNames.size();
+    }
+
+    public int getSelectedCategoriesCount(){
+        return mSelectedCategories.size();
+    }
+
+    public ArrayList<Integer> getSelectedCategories(){
+        return mSelectedCategories;
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

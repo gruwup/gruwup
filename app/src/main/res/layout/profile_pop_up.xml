@@ -70,9 +70,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginLeft="30dp"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="15dp"
         android:text="Click to choose..."
         android:textStyle="bold" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="30dp"
+        android:layout_marginTop="5dp"
+        android:id="@+id/categoryAlert"
+        android:textColor="@color/design_default_color_error"/>
 
    <androidx.recyclerview.widget.RecyclerView
        android:layout_width="match_parent"

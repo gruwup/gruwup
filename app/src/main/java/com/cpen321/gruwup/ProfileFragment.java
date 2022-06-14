@@ -33,6 +33,12 @@ public class ProfileFragment extends Fragment {
     final static String TAG = "ProfileFragment";
 
     private ArrayList<String> mCategoryNames = new ArrayList<>();
+    private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
+    private ArrayList<Integer> mSelectedCategoryIds = new ArrayList<>();
+
+    private ArrayList<String> tmpSelectedCategoryNames = new ArrayList<>();
+    private ArrayList<Integer> tmpSelectedCategoryIds = new ArrayList<>();
+
 
     private void initCategories(){
         mCategoryNames.add("Movies");
@@ -80,7 +86,13 @@ public class ProfileFragment extends Fragment {
         Button confirmButton;
         EditText bioInput;
         TextView bioValidation;
+        TextView categoryValidation;
         TextView userBio;
+
+        tmpSelectedCategoryNames = mSelectedCategoryNames;
+        tmpSelectedCategoryIds = mSelectedCategoryIds;
+        mSelectedCategoryNames.clear();
+        mSelectedCategoryIds.clear();
 
         profileDialog.setContentView(R.layout.profile_pop_up);
         goBack  = (TextView) profileDialog.findViewById(R.id.goBack);
@@ -88,8 +100,9 @@ public class ProfileFragment extends Fragment {
         confirmButton = (Button) profileDialog.findViewById(R.id.confirmButton);
         bioInput = (EditText) profileDialog.findViewById(R.id.biographyInput);
         bioValidation = (TextView) profileDialog.findViewById(R.id.biographyAlert);
+        categoryValidation = (TextView) profileDialog.findViewById(R.id.categoryAlert);
         userBio = (TextView) getView().findViewById(R.id.userBio);
-        
+
         // for categories
         initCategories();
         Log.d(TAG, "Initialize Category Recycler View");
@@ -100,9 +113,19 @@ public class ProfileFragment extends Fragment {
         CategoryViewAdapter adapter = new CategoryViewAdapter(getActivity(),mCategoryNames);
         categoryView.setAdapter(adapter);
 
+        LinearLayoutManager categoriesLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView selectedCategories = (RecyclerView) getView().findViewById(R.id.selectedCategories);
+        selectedCategories.setLayoutManager(categoriesLayoutManager);
+
+
         goBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                // To do: change this to display from API call from backend (previous selected categories)
+                mSelectedCategoryIds = tmpSelectedCategoryIds;
+                mSelectedCategoryNames = tmpSelectedCategoryNames;
+                CategoryViewAdapter selectedCategoriesAdapter = new CategoryViewAdapter(getActivity(),mSelectedCategoryNames);
+                selectedCategories.setAdapter(selectedCategoriesAdapter);
                 profileDialog.dismiss();
             }
         });
@@ -118,9 +141,24 @@ public class ProfileFragment extends Fragment {
                 else if (!bioInput.getText().toString().matches("[a-zA-Z.? ]*")){
                     bioValidation.setText("Biography can only allow numbers, spaces and letters.");
                 }
+                else if(adapter.getSelectedCategoriesCount()<3){
+                    categoryValidation.setText("Please select atleast 3 categories. ");
+                }
                 else{
                     // To Do: Once API is set, send this information needs to be sent to backend
                     userBio.setText(bioInput.getText().toString());
+
+
+                    for (int i = 0 ; i < adapter.getSelectedCategoriesCount(); i++){
+                        mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
+                        mSelectedCategoryIds.add(adapter.getSelectedCategories().get(i));
+
+
+                    }
+                    CategoryViewAdapter selectedCategoriesAdapter = new CategoryViewAdapter(getActivity(),mSelectedCategoryNames);
+                    selectedCategories.setAdapter(selectedCategoriesAdapter);
+                    Log.d(TAG, "Selected categories names are: "+ mSelectedCategoryNames);
+                    Log.d(TAG, "Selected category ids are: "+ mSelectedCategoryIds);
                     profileDialog.dismiss();
                     Toast.makeText(getActivity(), "Changed Profile Information", Toast.LENGTH_SHORT).show();
                 }

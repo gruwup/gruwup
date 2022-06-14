@@ -81,6 +81,7 @@
                 android:textStyle="bold"
                 tools:text="User Name" />
 
+
         </RelativeLayout>
 
         <TextView
@@ -91,6 +92,17 @@
             android:layout_marginTop="15dp"
             android:textColor="@color/lightGray"
             android:textSize="18sp"/>
+
+        <androidx.recyclerview.widget.RecyclerView
+            android:layout_width="match_parent"
+            android:layout_height="90dp"
+            android:id="@+id/selectedCategories"
+            android:layout_marginLeft="30dp"
+            android:orientation="horizontal"
+            >
+
+        </androidx.recyclerview.widget.RecyclerView>
+
 
         <Button
             android:id="@+id/sign_out_button"
