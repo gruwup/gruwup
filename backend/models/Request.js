@@ -1,6 +1,10 @@
 const mongoose = require("mongoose");
 
 const schema = mongoose.Schema({
+    requestId: {
+        type: String,
+        required: true
+    },
     adventureId: {
         type: String,
         required: true

@@ -664,6 +664,8 @@ components:
     Request:
       type: object
       properties:
+        requestId:
+          type: string
         adventureId:
           type: string
         requester:
