@@ -80,7 +80,17 @@
                 android:textSize="30sp"
                 android:textStyle="bold"
                 tools:text="User Name" />
+
         </RelativeLayout>
+
+        <TextView
+            android:id="@+id/userBio"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:layout_marginTop="15dp"
+            android:textColor="@color/lightGray"
+            android:textSize="18sp"/>
 
         <Button
             android:id="@+id/sign_out_button"

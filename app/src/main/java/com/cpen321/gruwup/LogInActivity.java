@@ -121,6 +121,8 @@ public class LogInActivity extends AppCompatActivity {
                 imageUrl = account.getPhotoUrl().toString();
             }
 
+//            if (account.getIdToken())
+//            account.get
             extras.putString("Display_Name", account.getDisplayName() );
             // Note: Photo URL is converted to String
             extras.putString("Photo_URL", imageUrl);

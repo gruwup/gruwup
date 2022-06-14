@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <androidx.cardview.widget.CardView
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        app:cardCornerRadius="50dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/colorAccent">
+
+<!--            <androidx.cardview.widget.CardView-->
+<!--                android:layout_width="80dp"-->
+<!--                android:layout_height="50dp"-->
+<!--                android:layout_centerHorizontal="true"-->
+<!--                android:layout_gravity="center"-->
+<!--                android:background="@drawable/category_border"-->
+<!--                android:shape="ring"-->
+<!--                android:thicknessRatio="1.9"-->
+<!--                app:cardCornerRadius="100dp">-->
+
+<!--                <ImageView-->
+<!--                    android:id="@+id/category_image"-->
+<!--                    android:layout_width="match_parent"-->
+<!--                    android:layout_height="match_parent"-->
+<!--                    android:layout_centerHorizontal="true"-->
+
+<!--                    android:src="@android:drawable/btn_star_big_on"></ImageView>-->
+<!--            </androidx.cardview.widget.CardView>-->
+
+
+            <!--            <ImageView-->
+            <!--                android:id="@+id/category_image"-->
+            <!--                android:layout_width="80dp"-->
+            <!--                android:layout_height="50dp"-->
+            <!--                android:layout_centerHorizontal="true"-->
+            <!--                android:layout_marginTop="3dp"-->
+            <!--                android:background="@drawable/category_border"-->
+            <!--                android:src="@android:drawable/btn_star_big_on" />-->
+
+            <TextView
+                android:id="@+id/categoryName"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="10dp"
+                android:gravity="center"
+                android:text="Movie"
+                android:textStyle="bold" />
+
+        </RelativeLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>
