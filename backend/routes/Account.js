@@ -13,13 +13,8 @@ const example = {
   }
 
 router.post("/create", (req, res) => {
-    if (DataValidator.isTokenValid(req.body.userId)) {
-        // TODO: check fields are also valid
-        res.status(200).send(example);
-    }
-    else {
-        res.sendStatus(400);
-    }
+    // TODO: authentication
+    
 });
 
 router.post("/sign-in", (req, res) => {

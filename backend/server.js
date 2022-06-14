@@ -1,4 +1,6 @@
 const express = require("express");
+const mongoose = require("mongoose");
+
 const app = express();
 const PORT = 8081;
 
@@ -23,11 +25,15 @@ app.use("/user/request", requestRoute);
 
 async function run() {
     try {
-        var server = app.listen(PORT, (req, res) => {
-        var host = server.address().address;
-        var port = server.address().port;
-        
-        console.log("App listening at http://%s:%s", host, port);
+        mongoose
+            .connect("mongodb://localhost:27384", { useNewUrlParser: true })
+            .then(() => {
+                console.log("Connected to MongoDB");
+                var server = app.listen(PORT, (req, res) => {
+                    var host = server.address().address;
+                    var port = server.address().port;
+                    console.log("App listening at http://%s:%s", host, port);
+            })
         })
     }
     catch (err) {
