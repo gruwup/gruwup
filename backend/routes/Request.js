@@ -1,5 +1,5 @@
 const express = require("express");
-const DataValidator = require("./../constants/DataValidator.js");
+const DataValidator = require("../constants/DataValidator");
 const router = express.Router();
 
 // these are just for testing, delete later
