@@ -213,6 +213,26 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
+  /user/profile/get:
+    get:
+      summary: Get user profile
+      tags:
+       - Profile
+      responses:
+        "200":
+          description: Successfully created account. Return created account details.
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Account'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
   /user/profile/create:
     post:
       summary: Create a new user profile
@@ -251,15 +271,21 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/Token'
+                - $ref: '#/components/schemas/code'
       responses:
         "200":
           description: Successfully signed in to account
           content:
             application/json:
-              schema: 
-                allOf:
-                  - $ref: '#/components/schemas/Account'
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                  userExists:
+                    type: boolean
+                    enum: [true, false]
+                    example: false
         "400":
           description: Could be any other error code
           content:
@@ -279,7 +305,7 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/Token'
+                - $ref: '#/components/schemas/userId'
       responses:
         "200":
           description: Successfully signed out
@@ -328,7 +354,7 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/Token'
+                - $ref: '#/components/schemas/userId'
       parameters:
       - name: adventureId
         in: path
@@ -654,7 +680,12 @@ components:
         categories:
           type: object
           example: [1, 2, 3]
-    Token:
+    code:
+      type: object
+      properties:
+        authentication-code:
+          type: string
+    userId:
       type: object
       properties:
         userId:
