@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const DataValidator = require("../constants/DataValidator");
-const Categories = require("../constants/DataValidator");
+const Adventure = require("../models/Adventure");
+
 
 const Constants = require("../constants/Constants");
 
@@ -27,36 +27,30 @@ router.get("/", (req, res) => {
 
 // create new adventure
 router.post("/create", (req, res) => {
-    // category should be stored in ids instead of strings
-    // translate id to string to return to frontend
+    // TODO: validate token
+    var adventure = new Adventure({
+        owner: req.body.owner,
+        title: req.body.title,
+        description: req.body.description,
+        peopleGoing: [req.body.owner],
+        dateTime: req.body.dateTime,
+        location: req.body.location,
+        category: req.body.category,
+        status: "OPEN",
+        image: req.body.image ? new Buffer(req.body.image.split(",")[1],"base64") : null
+    });
 
-    // all field should exist
-    if (!req.body.title) {
-        res.status(400).send({message: "[Adventure]: title field cannot be empty"});
-    }
-    if (!req.body.category) {
-        res.status(400).send({message: "[Adventure]: category field cannot be empty"});
-    }
-    if (!req.body.location) {
-        res.status(400).send({message: "[Adventure]: location field cannot be empty"});
-    }
-    if (!req.body.date) {
-        res.status(400).send({message: "[Adventure]: date field cannot be empty"});
-    }
-    if (!req.body.time) {
-        res.status(400).send({message: "[Adventure]: time field cannot be empty"});
-    }
-
-    // check validity of fields
-    if (!DataValidator.isDateTimeStringValid(req.body.date + " " + req.body.time)) {
-        res.status(400).send({message: "[Adventure]: date time invalid"});
-    }
-
-    if (!DataValidator.isCatogoryIdValid(req.body.category)) {
-        res.status(400).send({message: "[Adventure]: category invalid"});
-    }
-
-    res.status(200).send(TestAdventure);
+    adventure.save((err, adventureAdded) => {
+        if (err) {
+            res.status(500).send({
+                message: err.toString()
+            });
+        }
+        else {
+            adventure.id = adventureAdded._id;
+            res.status(200).send(adventure);
+        }
+    });
 });
 
 // search adventures
@@ -67,15 +61,29 @@ router.get("/search/:pagination", (req, res) => {
 });
 
 // search all adventures created by user
-router.get("/:userId/get", (req, res) => {
+router.get("/:userId/get-adventure-ids", (req, res) => {
     console.log(req.params.userId);
     res.status(200).send([TestAdventure]);
 });
 
 // get adventure details
 router.get("/:adventureId/detail", (req, res) => {
-    console.log(req.params.adventureId);
-    res.status(200).send(TestAdventure);
+    // TODO: validate token
+    Adventure.findById(req.params.adventureId, (err, adventure) => {
+        if (err) {
+            res.status(500).send({
+                message: err.toString()
+            });
+        }
+        else if (!adventure) {
+            res.status(404).send({
+                message: "Adventure not found"
+            });
+        }
+        else {
+            res.status(200).send(adventure);
+        }
+    });
 });
 
 // update adventure details

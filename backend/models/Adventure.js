@@ -1,13 +1,6 @@
 const mongoose = require("mongoose");
-const Category = require("./internalUseSchema/Category");
-const DateTime = require("./internalUseSchema/DateTime");
-const AdventureStatus = require("./internalUseSchema/AdventureStatus");
 
 const schema = mongoose.Schema({
-    adventureId: {
-        type: String,
-        required: true
-    },
     owner: {
         type: String,
         required: true
@@ -18,12 +11,22 @@ const schema = mongoose.Schema({
     },
     description: String,
     category: {
-        type: Category,
+        type: String,
+        enum: {
+            values: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"],
+            message: '{VALUE} is not supported'
+        },
         required: true
     },
     peopleGoing: [String],
     dateTime: {
-        type: DateTime,
+        type: String,
+        validate: {
+            validator: function (value) {
+                return /[0-9]{4}-(0[1-9]|1[0-2])-(0[1-9]|[1-2][0-9]|3[0-1]) (2[0-3]|[01][0-9]):[0-5][0-9]:[0-5][0-9]/.test(value);
+            },
+            message: '{VALUE} is not a valid date time of format yyyy-mm-dd hh:mm:ss'
+        },
         required: true
     },
     location: {
@@ -31,8 +34,15 @@ const schema = mongoose.Schema({
         required: true
     },
     status: {
-        type: AdventureStatus,
+        type: String,
+        enum: {
+            values: ["OPEN", "CLOSED", "CANCELLED"],
+            message: '{VALUE} is not a supported AdventureStatus'
+        },
         required: true,
+    },
+    image: {
+        type: Buffer
     }
 });
 
