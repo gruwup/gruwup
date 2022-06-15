@@ -15,7 +15,7 @@ const schema = mongoose.Schema({
         required: true
     },
     categories: {
-        type: [Category],
+        type: [String],
         required: true
     }
 });
