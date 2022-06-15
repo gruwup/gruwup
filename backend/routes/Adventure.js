@@ -28,7 +28,6 @@ router.get("/", (req, res) => {
 // create new adventure
 router.post("/create", (req, res) => {
     // TODO: validate token
-    
     var adventure = new Adventure({
         owner: req.body.owner,
         title: req.body.title,
@@ -69,8 +68,22 @@ router.get("/:userId/get-adventure-ids", (req, res) => {
 
 // get adventure details
 router.get("/:adventureId/detail", (req, res) => {
-    console.log(req.params.adventureId);
-    res.status(200).send(TestAdventure);
+    // TODO: validate token
+    Adventure.findById(req.params.adventureId, (err, adventure) => {
+        if (err) {
+            res.status(500).send({
+                message: err.toString()
+            });
+        }
+        else if (!adventure) {
+            res.status(404).send({
+                message: "Adventure not found"
+            });
+        }
+        else {
+            res.status(200).send(adventure);
+        }
+    });
 });
 
 // update adventure details
