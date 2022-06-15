@@ -1,8 +1,7 @@
 const express = require("express");
-const DataValidator = require("../constants/DataValidator");
-const router = express.Router();
+const Profile = require("../models/Profile");
 
-// TODO: need database to store profile information based on user token
+const router = express.Router();
 
 // can delete this later, just for early testing
 const example = {
@@ -13,23 +12,66 @@ const example = {
   }
 
 router.post("/create", (req, res) => {
-    if (DataValidator.isTokenValid(req.body.userId)) {
-        // TODO: check fields are also valid
-        res.status(200).send(example);
-    }
-    else {
-        res.sendStatus(400);
-    }
+    // TODO: validate token
+    const profile = new Profile({
+        userId: req.body.userId,
+        name: req.body.name,
+        biography: req.body.biography,
+        categories: req.body.categories
+    });
+
+    profile.save((err) => {
+        if (err) {
+            res.status(500).send({
+                message: err.toString()
+            });
+        }
+        else {
+            res.status(200).send(profile);
+        }
+    });
 });
 
-router.post("/edit", (req, res) => {
-    if (DataValidator.isTokenValid(req.body.userId)) {
-        // TODO: check fields are also valid
-        res.status(200).send(example);
-    }
-    else {
-        res.sendStatus(400);
-    }
+router.get("/:userId/get", (req, res) => {
+    // TODO: validate token
+    Profile.findOne({ userId: req.params.userId }, (err, profile) => {
+        if (err) {
+            res.status(500).send({
+                message: err.toString()
+            });
+        }
+        else if (!profile) {
+            res.status(404).send({
+                message: "Profile not found"
+            });
+        }
+        else {
+            res.status(200).send(profile);
+        }
+    });
+});
+
+router.put("/edit", (req, res) => {
+    // TODO: validate token
+    Profile.findOneAndUpdate(
+        { userId: req.body.userId }, 
+        { $set: { name: req.body.name, biography: req.body.biography, categories: req.body.categories } },
+        (err, profile) => {
+            if (err) {
+                res.status(500).send({
+                    message: err.toString()
+                });
+            }
+            else if (!profile) {
+                res.status(404).send({
+                    message: "Profile not found"
+                });
+            }
+            else {
+                res.status(200).send(profile);
+            }
+        }
+    );
 });
 
 module.exports = router;

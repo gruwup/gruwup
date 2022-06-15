@@ -3,6 +3,12 @@ const mongoose = require("mongoose");
 
 const app = express();
 const PORT = 8081;
+const defaultMongoPort = "27017";
+const customMongoPort = "27384";
+
+// Grant is using the custom mongo port 27384, leave this boolean to true if you want to use the default mongo port 27017
+var useDefaultMongoPort = true;
+var mongoDbUrl = "mongodb://localhost:" + (useDefaultMongoPort ? defaultMongoPort : customMongoPort);
 
 app.use(express.json());
 
@@ -28,7 +34,7 @@ app.use("/user/request", requestRoute);
 async function run() {
     try {
         mongoose
-            .connect("mongodb://localhost:27384", { useNewUrlParser: true })
+            .connect(mongoDbUrl, { useNewUrlParser: true })
             .then(() => {
                 console.log("Connected to MongoDB");
                 var server = app.listen(PORT, (req, res) => {

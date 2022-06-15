@@ -1,5 +1,4 @@
 const mongoose = require("mongoose");
-const Category = require("./internalUseSchema/Category");
 
 const schema = mongoose.Schema({
     userId: {
@@ -15,7 +14,15 @@ const schema = mongoose.Schema({
         required: true
     },
     categories: {
-        type: [Category],
+        type: [
+            {
+                type: String,
+                enum: {
+                    values: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"],
+                    message: '{VALUE} is not supported'
+                }
+            }
+        ],
         required: true
     }
 });
