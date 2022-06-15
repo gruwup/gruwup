@@ -32,6 +32,24 @@ router.post("/create", (req, res) => {
     });
 });
 
+router.get("/:userId/get", (req, res) => {
+    Profile.findOne({ userId: req.params.userId }, (err, profile) => {
+        if (err) {
+            res.status(500).send({
+                message: err.toString()
+            });
+        }
+        else if (!profile) {
+            res.status(404).send({
+                message: "Profile not found"
+            });
+        }
+        else {
+            res.status(200).send(profile);
+        }
+    });
+});
+
 router.put("/edit", (req, res) => {
     if (DataValidator.isTokenValid(req.body.userId)) {
 
