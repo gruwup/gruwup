@@ -55,6 +55,7 @@ router.post("/create", (req, res) => {
 
 // search adventures
 router.get("/search/:pagination", (req, res) => {
+    // TODO: validate token
     console.log("pagination: " + req.params.pagination);
     console.log("pagination limit: " + Constants.SEARCH_PAGINATION_LIMIT);
     res.status(200).send([TestAdventure, TestAdventure]);
@@ -88,6 +89,7 @@ router.get("/:adventureId/detail", (req, res) => {
 
 // update adventure details
 router.put("/:adventureId/update", (req, res) => {
+    // TODO: validate token
     Adventure.findOneAndUpdate(
         { _id: req.params.adventureId },
         { $set: { title: req.body.title, description: req.body.description, dateTime: req.body.dateTime, location: req.body.location, category: req.body.category, image: req.body.image ? new Buffer(req.body.image.split(",")[1],"base64") : null } },
@@ -112,6 +114,7 @@ router.put("/:adventureId/update", (req, res) => {
 
 // Cancel the adventure and delete chat room
 router.delete("/:adventureId/cancel", (req, res) => {
+    // TODO: validate token
     Adventure.findOneAndRemove(
         { _id: req.params.adventureId },
         (err, adventure) => {
