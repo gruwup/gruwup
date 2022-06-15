@@ -213,11 +213,18 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/profile/get:
+  /user/profile/{userId}/get:
     get:
       summary: Get user profile
       tags:
        - Profile
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
       responses:
         "200":
           description: Successfully created account. Return created account details.
