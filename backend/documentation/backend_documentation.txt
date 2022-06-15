@@ -323,11 +323,18 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/profile/edit:
+  /user/profile/{userId}/edit:
     put:
       summary: Edit existing user profile
       tags:
        - Profile
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
       requestBody:
         description: All fields are mandatory
         content:
@@ -629,7 +636,8 @@ components:
           type: string
         category:
           type: string
-          example: "movie"
+          example: "MOVIE"
+          enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
         location:
           type: string
           example: "2110 Burrard St, Vancouver, BC V6J 3H6"
@@ -638,8 +646,8 @@ components:
           example: "yyyy-mm-dd hh:mm:ss"
         status:
           type: string
-          enum: ["closed", "open"]
-          example: "open"
+          enum: ["CLOSED", "OPEN", "CANCELLED"]
+          example: "OPEN"
     AdventureWithId:
       type: object
       properties:
@@ -654,7 +662,8 @@ components:
           type: string
         category:
           type: string
-          example: "movie"
+          example: "MOVIE"
+          enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
         location:
           type: string
           example: "2110 Burrard St, Vancouver, BC V6J 3H6"
@@ -668,8 +677,8 @@ components:
           example: ["user id 1", "user id 2", "user id 3"]
         status:
           type: string
-          enum: ["closed", "open"]
-          example: "open"
+          enum: ["OPEN", "CLOSED", "CANCELLED"]
+          example: "OPEN"
     Search:
       type: object
       properties:
@@ -677,8 +686,8 @@ components:
           type: string
         category:
           type: string
-          enum: [movie, sports, party, show]
-          example: "movie"
+          enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
+          example: "MOVIE"
         date:
           type: string
           enum: [this week, this month, this year, all date]
@@ -711,7 +720,11 @@ components:
           example: "I am a 20 year old living in Vancouver"
         categories:
           type: object
-          example: [1, 2, 3]
+          example: ["MOVIE", "MUSIC"]
+          enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
+        image:
+          type: string
+          example: "imagegivenbygoogle.com"
     code:
       type: object
       properties:

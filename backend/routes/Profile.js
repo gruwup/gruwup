@@ -17,7 +17,8 @@ router.post("/create", (req, res) => {
         userId: req.body.userId,
         name: req.body.name,
         biography: req.body.biography,
-        categories: req.body.categories
+        categories: req.body.categories,
+        image: req.body.image ? req.body.image : null
     });
 
     profile.save((err) => {
@@ -51,11 +52,12 @@ router.get("/:userId/get", (req, res) => {
     });
 });
 
-router.put("/edit", (req, res) => {
+router.put("/:userId/edit", (req, res) => {
     // TODO: validate token
     Profile.findOneAndUpdate(
-        { userId: req.body.userId }, 
-        { $set: { name: req.body.name, biography: req.body.biography, categories: req.body.categories } },
+        { userId: req.params.userId }, 
+        { $set: { name: req.body.name, biography: req.body.biography, categories: req.body.categories, image: req.body.image } },
+        {new: true},
         (err, profile) => {
             if (err) {
                 res.status(500).send({
