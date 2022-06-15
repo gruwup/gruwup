@@ -33,6 +33,7 @@ router.post("/create", (req, res) => {
 });
 
 router.get("/:userId/get", (req, res) => {
+    // TODO: validate token
     Profile.findOne({ userId: req.params.userId }, (err, profile) => {
         if (err) {
             res.status(500).send({
@@ -51,14 +52,26 @@ router.get("/:userId/get", (req, res) => {
 });
 
 router.put("/edit", (req, res) => {
-    if (DataValidator.isTokenValid(req.body.userId)) {
-
-        // TODO: check fields are also valid
-        res.status(200).send(example);
-    }
-    else {
-        res.sendStatus(400);
-    }
+    // TODO: validate token
+    Profile.findOneAndUpdate(
+        { userId: req.body.userId }, 
+        { $set: { name: req.body.name, biography: req.body.biography, categories: req.body.categories } },
+        (err, profile) => {
+            if (err) {
+                res.status(500).send({
+                    message: err.toString()
+                });
+            }
+            else if (!profile) {
+                res.status(404).send({
+                    message: "Profile not found"
+                });
+            }
+            else {
+                res.status(200).send(profile);
+            }
+        }
+    );
 });
 
 module.exports = router;
