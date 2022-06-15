@@ -4,7 +4,7 @@ const AdventureStatus = mongoose.Schema({
     value: {
         type: String,
         enum: {
-            value: ["OPEN", "CLOSED", "CANCELLED"],
+            values: ["OPEN", "CLOSED", "CANCELLED"],
             message: '{VALUE} is not a supported AdventureStatus'
         }
     }

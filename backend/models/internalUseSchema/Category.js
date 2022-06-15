@@ -1,13 +1,14 @@
 const mongoose = require("mongoose");
 
 const Category = mongoose.Schema({
-    value: {
+    categoryType: {
         type: String,
         enum: {
-            value: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"],
-            message: '{VALUE} is not a supported category'
+            values: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"],
+            message: '{VALUE} is not supported'
         }
     }
-});
+}
+);
 
 module.exports = Category;

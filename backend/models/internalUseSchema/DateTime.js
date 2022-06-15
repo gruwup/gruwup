@@ -10,6 +10,7 @@ const DateTime = mongoose.Schema({
             message: '{VALUE} is not a valid date time of format yyyy-mm-dd hh:mm:ss'
         }
     }
-});
+}
+);
 
 module.exports = DateTime;

@@ -3,6 +3,11 @@ const mongoose = require("mongoose");
 
 const app = express();
 const PORT = 8081;
+const defaultMongoPort = "27017";
+const customMongoPort = "27384";
+
+var useDefaultMongoPort = true;
+var mongoDbUrl = "mongodb://localhost:" + (useDefaultMongoPort ? defaultMongoPort : customMongoPort);
 
 app.use(express.json());
 
