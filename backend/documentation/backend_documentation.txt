@@ -1,0 +1,764 @@
+openapi: 3.0.0
+servers:
+  # Added by API Auto Mocking Plugin
+  # Added by API Auto Mocking Plugin
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/kalebhui/CPEN321-api/1.0.0
+  - description: SwaggerHub API Auto Mocking
+    url: https://virtserver.swaggerhub.com/GrantLi1012/Gruwup/1.0.0
+info:
+  version: "1.0.0"
+  title: Gruwup
+  description: >-
+    This is an example of using OAuth2 Access Code Flow in a specification to
+    describe security to your API.
+tags:
+- name: Adventure
+  description: Adventure related operations
+security:
+  - accessCode:
+      - read
+      - write
+paths:
+  /example:
+    get:
+      summary: Server example operation
+      description: >-
+        This is an example operation to show how security is applied to the
+        call.
+      responses:
+        '200':
+          description: OK
+  /ping:
+    get:
+      summary: Server heartbeat operation
+      description: >-
+        This operation shows how to override the global security defined above,
+        as we want to open it up for all users.
+      security: []
+      responses:
+        '200':
+          description: OK
+  /user/adventure/create:
+    post:
+      summary: Create a new adventure
+      tags:
+       - Adventure
+      requestBody:
+        description: All fields are mandatory, category must be a string with first letter capitalized and supported by backend, check backend/constants/Categories for supported strings
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Adventure'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/AdventureWithId'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/search/{pagination}:
+    get:
+      summary: Search adventure using filters
+      tags:
+       - Adventure
+      parameters:
+        - name: pagination
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: number
+        - in: query
+          name: filters
+          required: true
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Search'
+      responses:
+        "200":
+          description: Success returns a list of adventures
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/AdventureWithId'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/{userId}/get-adventure-ids:
+    get:
+      summary: Ger all adventure user has
+      tags:
+       - Adventure
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success (return list of adventure ids)
+          content:
+            application/json:
+              schema:
+               type: object
+               example: {
+                 adventureIds: ["e28hc", "end82b"]
+               }
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/{adventureId}/detail:
+    get:
+      summary: View adventure detail
+      tags:
+       - Adventure
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Sucess
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/AdventureWithId'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/{adventureId}/update:
+    put:
+      summary: Update adventure detail or adventure status(from open to closed or closed to open, controlled by a toggle button)
+      tags:
+       - Adventure
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/AdventureWithId'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/AdventureWithId'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/{adventureId}/cancel:
+    delete:
+      summary: Cancel the adventure and delete chat room
+      tags:
+       - Adventure
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/profile/{userId}/get:
+    get:
+      summary: Get user profile
+      tags:
+       - Profile
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Successfully created account. Return created account details.
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Account'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/profile/create:
+    post:
+      summary: Create a new user profile
+      tags:
+       - Profile
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Account'
+      responses:
+        "200":
+          description: Successfully created account. Return created account details.
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Account'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /account/sign-in:
+    post:
+      summary: Sign in with Google
+      tags:
+       - Account
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/code'
+      responses:
+        "200":
+          description: Successfully signed in to account
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  userId:
+                    type: string
+                  userExists:
+                    type: boolean
+                    enum: [true, false]
+                    example: false
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+                  
+  /account/sign-out:
+    post:
+      summary: Sign out
+      tags:
+       - Account
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/userId'
+      responses:
+        "200":
+          description: Successfully signed out
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/profile/{userId}/edit:
+    put:
+      summary: Edit existing user profile
+      tags:
+       - Profile
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Account'
+      responses:
+        "200":
+          description: Successfully updated account details. Return account details.
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Account'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/request/{adventureId}/make-request:
+    post:
+      summary: request to join 
+      tags:
+       - Request
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/userId'
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Request made sucessfully.
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Request'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/request/{userId}/check/{pagination}:
+    get:
+      summary: Get 10 requests for the user starting at given pagination (so pagination 0 will return most recent 10 requests, if the batch has less then 10 requests it will return whatever it can, so if you have 15 messages, and pagination is at 9, it will return message 9-15 instead of 9-19)
+      tags:
+      - Request
+      parameters:
+      - name: pagination
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: number
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Success, return given pagination and the messages
+          content:
+            application/json:
+              schema:
+               type: object
+               example: {
+                 pagination: 0,
+                 requests: [
+                    {
+                      "ReqId": "string",
+                      "AdventureId": "string",
+                      "Requester": "Bob John",
+                      "State": 1,
+                      "dateTime": "2022-12-11 11:20:01",
+                    },
+                    {
+                      "ReqId": "string",
+                      "AdventureId": "string",
+                      "Requester": "Bob John",
+                      "State": 2,
+                      "dateTime": "2022-12-11 11:01:00",
+                    },
+                    {
+                      "ReqId": "string",
+                      "AdventureId": "string",
+                      "Requester": "Bob John",
+                      "State": 1,
+                      "dateTime": "2022-12-11 11:00:00",
+                    },
+                    {
+                      "ReqId": "string",
+                      "AdventureId": "string",
+                      "Requester": "Bob John",
+                      "State": 1,
+                      "dateTime": "2022-10-11 12:14:14",
+                    },
+                   ]
+               }
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/request/{userId}/respond:
+    post:
+      summary: respond to request
+      tags:
+      - Request
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Request'
+      responses:
+        "200":
+          description: Successfully responded
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Request'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/chat/{adventureId}/send:
+    post:
+      summary: Create a new chat message
+      tags:
+       - Chat
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Message'
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/Message'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/chat/{adventureId}/messages/{pagination}:
+    get:
+      summary: Get 30 messages in adventure starting at given pagination (so pagination 0 will return most recent 30 messages, if the batch has less then 30 messages it will return whatever it can, so if you have 50 messages, and pagination is at 29, it will return message 29-50 instead of 29-59)
+      tags:
+       - Chat
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: pagination
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: number
+      responses:
+        "200":
+          description: Success, return given pagination and the messages
+          content:
+            application/json:
+              schema:
+               type: object
+               example: {
+                 pagination: 0,
+                 messages: [
+                    {
+                      "userId": "string",
+                      "message": "hi everyone :)",
+                      "dateTime": "2022-10-11 12:14:14"
+                    },
+                   ]
+               }
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/chat/{adventureId}/{userId}/delete-user:
+    delete:
+      summary: Remove user from chat
+      tags:
+       - Chat
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/chat/{adventureId}/delete-chat:
+    delete:
+      summary: Delete chat lobby
+      tags:
+       - Chat
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    Error:
+      type: object
+      properties:
+        message:
+          type: string
+          example: "some sort of error message"
+    Adventure:
+      type: object
+      properties:
+        owner:
+          type: string
+          example: "user id"
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          example: "MOVIE"
+          enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
+        location:
+          type: string
+          example: "2110 Burrard St, Vancouver, BC V6J 3H6"
+        dateTime:
+          type: string
+          example: "yyyy-mm-dd hh:mm:ss"
+        status:
+          type: string
+          enum: ["CLOSED", "OPEN", "CANCELLED"]
+          example: "OPEN"
+    AdventureWithId:
+      type: object
+      properties:
+        adventureId:
+          type: string
+        owner:
+          type: string
+          example: "user id"
+        title:
+          type: string
+        description:
+          type: string
+        category:
+          type: string
+          example: "MOVIE"
+          enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
+        location:
+          type: string
+          example: "2110 Burrard St, Vancouver, BC V6J 3H6"
+        dateTime:
+          type: string
+          example: "yyyy-mm-dd hh:mm:ss"
+        peopleGoing:
+          type: array
+          items:
+            type: string
+          example: ["user id 1", "user id 2", "user id 3"]
+        status:
+          type: string
+          enum: ["OPEN", "CLOSED", "CANCELLED"]
+          example: "OPEN"
+    Search:
+      type: object
+      properties:
+        title:
+          type: string
+        category:
+          type: string
+          enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
+          example: "MOVIE"
+        date:
+          type: string
+          enum: [this week, this month, this year, all date]
+          example: "this week"
+        time:
+          type: string
+          enum: [morning, afternoon, night, all time]
+          example: "morning"
+    Message:
+      type: object
+      properties:
+        userId:
+          type: string
+        message:
+          type: string
+          example: "hi everyone :)"
+        dateTime:
+          type: string
+          example: "yyyy-mm-dd hh:mm:ss"
+    Account:
+      type: object
+      properties:
+        userId:
+          type: string
+        name:
+          type: string
+          example: "Bob John"
+        biography:
+          type: string
+          example: "I am a 20 year old living in Vancouver"
+        categories:
+          type: object
+          example: ["MOVIE", "MUSIC"]
+          enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
+        image:
+          type: string
+          example: "imagegivenbygoogle.com"
+    code:
+      type: object
+      properties:
+        authentication-code:
+          type: string
+    userId:
+      type: object
+      properties:
+        userId:
+          type: string
+    Request:
+      type: object
+      properties:
+        requestId:
+          type: string
+        adventureId:
+          type: string
+        requester:
+          type: string
+          example: "Bob John"
+        status:
+          type: integer
+          enum: [1, 2, 3] #"accept", "reject", "pending"
+          example: 3
+        dateTime:
+          type: string
+          example: "yyyy-mm-dd hh:mm:ss"
+  securitySchemes:
+    accessCode:
+      type: oauth2
+      flows:
+        authorizationCode:
+          authorizationUrl: 'http://example.com/oauth/auth'
+          tokenUrl: 'http://example.com/oauth/token'
+          scopes:
+            write: allows modifying resources
+            read: allows reading resources
