@@ -1,6 +1,7 @@
 package com.cpen321.gruwup;
 
 import android.app.Dialog;
+import android.content.Intent;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -92,6 +93,10 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 Log.d("ProfileFragment", "Signing out");
                 mGoogleSignInClient.signOut();
+                Intent intent = new Intent(getActivity(), LogInActivity.class);
+                startActivity(intent);
+
+
                 //should return user to login screen in the LoginActivity
             }
         });

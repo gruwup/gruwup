@@ -107,8 +107,9 @@
         <Button
             android:id="@+id/sign_out_button"
             android:layout_width="150dp"
+            android:drawableLeft="@drawable/common_google_signin_btn_icon_dark"
             android:layout_height="50dp"
-
+            android:backgroundTint="@color/colorPrimary"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
             android:text="Sign Out"
