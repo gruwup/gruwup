@@ -48,13 +48,13 @@ public class ProfileFragment extends Fragment {
 
 
     private void initCategories(){
-        mCategoryNames.add("Movies");
-        mCategoryNames.add("Sports");
-        mCategoryNames.add("Games");
-        mCategoryNames.add("Food");
-        mCategoryNames.add("Party");
-        mCategoryNames.add("Convention");
-        mCategoryNames.add("Show");
+        mCategoryNames.add("MOVIE");
+        mCategoryNames.add("MUSIC");
+        mCategoryNames.add("SPORTS");
+        mCategoryNames.add("FOOD");
+        mCategoryNames.add("TRAVEL");
+        mCategoryNames.add("DANCE");
+        mCategoryNames.add("ART");
 //        initCategoryRecyclerView(view);
     }
 
@@ -180,6 +180,8 @@ public class ProfileFragment extends Fragment {
                     }
                     CategoryViewAdapter selectedCategoriesAdapter = new CategoryViewAdapter(getActivity(),mSelectedCategoryNames);
                     selectedCategories.setAdapter(selectedCategoriesAdapter);
+
+                    // To do: Send this selected categories to the backend with user id
                     Log.d(TAG, "Selected categories names are: "+ mSelectedCategoryNames);
                     Log.d(TAG, "Selected category ids are: "+ mSelectedCategoryIds);
                     profileDialog.dismiss();
@@ -191,15 +193,4 @@ public class ProfileFragment extends Fragment {
 
         profileDialog.show();
     }
-
-//    private void initCategoryRecyclerView(View view){
-//        Log.d(TAG, "Initialize Category Recycler View");
-//        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-//        RecyclerView categoryRecyclerView = view.findViewById(R.id.categoryRecyclerView);
-//        categoryRecyclerView.setLayoutManager(layoutManager);
-//        CategoryViewAdapter adapter = new CategoryViewAdapter(getActivity(),mCategoryNames, mCategoryImages);
-//        categoryRecyclerView.setAdapter(adapter);
-//    }
-
-
 }
