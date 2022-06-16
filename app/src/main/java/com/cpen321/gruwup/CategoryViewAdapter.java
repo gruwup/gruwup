@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -33,8 +32,6 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
         this.mCategoryNames = mCategoryNames;
         this.mContext = mContext;
     }
-
-
 
     @NonNull
     @Override
@@ -76,8 +73,6 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
             }
         });
-
-
     }
 
     @Override
@@ -97,7 +92,6 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
         ImageView image;
         TextView categoryName;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
