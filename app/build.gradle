@@ -48,5 +48,6 @@ dependencies {
     //animation
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
+    implementation 'com.squareup.okhttp3:okhttp:4.1.0'
 
 }
