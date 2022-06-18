@@ -41,6 +41,7 @@ public class LogInActivity extends AppCompatActivity {
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -111,6 +112,7 @@ public class LogInActivity extends AppCompatActivity {
             Log.d(TAG, "Given Name: "+ account.getGivenName());
             Log.d(TAG, "Family Name: "+ account.getFamilyName());
             Log.d(TAG, "Photo URL: "+ account.getPhotoUrl());
+            Log.d(TAG, "Token: " + account.getIdToken());
 
             Intent intent = new Intent(LogInActivity.this, MainActivity.class);
             Bundle extras = new Bundle();
