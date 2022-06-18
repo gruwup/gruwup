@@ -15,15 +15,16 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.ViewHolder> {
 
     private static final String TAG = "DiscAdvViewAdapter";
 
-    private ArrayList<String> mAdvNames = new ArrayList<>();
+    private ArrayList<Map<String, String>> mAdvNames = new ArrayList<>();
     private Context mContext;
 
-    public DiscAdvViewAdapter(Context mContext , ArrayList<String> mAdvNames) {
+    public DiscAdvViewAdapter(Context mContext , ArrayList<Map<String, String>> mAdvNames) {
         this.mAdvNames = mAdvNames;
         this.mContext = mContext;
     }
@@ -37,7 +38,11 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
-        holder.adventureName.setText(mAdvNames.get(position));
+        holder.adventureName.setText(mAdvNames.get(position).get("event"));
+        holder.adventureTime.setText(mAdvNames.get(position).get("time"));
+        holder.adventureLocation.setText(mAdvNames.get(position).get("location"));
+        holder.adventureCount.setText(mAdvNames.get(position).get("count"));
+        holder.adventureDescription.setText(mAdvNames.get(position).get("description"));
     }
 
     @Override
@@ -48,9 +53,17 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder{
         ImageView image;
         TextView adventureName;
+        TextView adventureTime;
+        TextView adventureLocation;
+        TextView adventureCount;
+        TextView adventureDescription;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             adventureName = itemView.findViewById(R.id.disc_adventure_name);
+            adventureTime = itemView.findViewById(R.id.disc_adventure_time);
+            adventureLocation = itemView.findViewById(R.id.disc_adventure_location);
+            adventureCount = itemView.findViewById(R.id.disc_adventure_people_count);
+            adventureDescription = itemView.findViewById(R.id.disc_adventure_description);
         }
     }
 }
