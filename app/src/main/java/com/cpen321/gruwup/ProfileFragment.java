@@ -27,7 +27,18 @@ import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
+
+import okhttp3.FormBody;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class ProfileFragment extends Fragment {
     TextView displayName;
@@ -38,6 +49,8 @@ public class ProfileFragment extends Fragment {
     Dialog profileDialog;
     Button editButton;
     final static String TAG = "ProfileFragment";
+    // TO DO: Replace this later with userId obtained after tokenID validation from backend
+    String UserID = "27";
 
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
@@ -183,8 +196,14 @@ public class ProfileFragment extends Fragment {
 
                     // To do: Send this selected categories to the backend with user id
                     Log.d(TAG, "Selected categories names are: "+ mSelectedCategoryNames);
-                    Log.d(TAG, "Selected category ids are: "+ mSelectedCategoryIds);
+//                    Log.d(TAG, "Selected category ids are: "+ mSelectedCategoryIds);
+                    try {
+                        editProfileRequest(bioInput.toString(), mSelectedCategoryNames.toString());
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
                     profileDialog.dismiss();
+
                     Toast.makeText(getActivity(), "Changed Profile Information", Toast.LENGTH_SHORT).show();
                 }
 
@@ -192,5 +211,39 @@ public class ProfileFragment extends Fragment {
         });
 
         profileDialog.show();
+    }
+
+    private void editProfileRequest(String bioInput, String categoryNames) throws IOException {
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("userId", UserID);
+            jsonObject.put("userId", UserID);
+            jsonObject.put("name", displayName.toString());
+            jsonObject.put("biography", bioInput);
+            jsonObject.put("categories", categoryNames);
+            jsonObject.put("image", this.getArguments().getString("Photo_URL"));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        OkHttpClient client = new OkHttpClient();
+//        MediaType JSON = MediaType.parse("application/json; charset=utf-8");
+        MediaType JSON = MediaType.parse("application/json");
+        RequestBody body = RequestBody.create(JSON, jsonObject.toString());
+        Request request = new Request.Builder()
+                .url("http://localhost:8081/user/profile/"+ UserID + "/edit")
+                .post(body)
+                .build();
+
+        Response response = null;
+        try {
+            response = client.newCall(request).execute();
+            String resStr = response.body().string();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.d(TAG,response.body().string());
+
     }
 }
