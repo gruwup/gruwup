@@ -4,8 +4,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="370dp"
     android:layout_height="700dp"
-    card_view:cardCornerRadius="15dp"
-    card_view:cardElevation="5dp"
+    card_view:cardCornerRadius="25dp"
+    card_view:cardElevation="15dp"
     card_view:contentPadding="5dp"
     android:layout_gravity="center">
 
@@ -16,15 +16,16 @@
         android:layout_gravity="center">
 
         <TextView
-            android:id="@+id/goBack"
+            android:id="@+id/cancel_view_adventure"
             android:layout_width="100dp"
             android:layout_height="20dp"
             android:textColor="@color/lightGray"
-            android:text="@string/discard_change_caption"
-            android:textSize="25px"
+            android:text="Cancel"
+            android:textSize="15dp"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginLeft="10dp"
+            android:layout_marginTop="7dp"
             android:layout_gravity="end"
             />
 
@@ -40,6 +41,7 @@
 
         <TextView
             android:layout_width="wrap_content"
+            android:id="@+id/view_adventure_event_type"
             android:layout_height="25dp"
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
@@ -57,6 +59,7 @@
             android:layout_marginRight="20dp"
             android:text="Member count"
             android:drawablePadding="5dp"
+            android:id="@+id/view_adventure_member_count"
             android:drawableLeft="@drawable/ic_group"/>
 
         <TextView
@@ -67,6 +70,7 @@
             android:layout_marginRight="20dp"
             android:text="Time"
             android:drawablePadding="5dp"
+            android:id="@+id/view_adventure_time"
             android:drawableLeft="@drawable/ic_icons8_clock"/>
 
         <TextView
@@ -77,6 +81,7 @@
             android:layout_marginRight="20dp"
             android:text="Location"
             android:drawablePadding="5dp"
+            android:id="@+id/view_adventure_location"
             android:drawableLeft="@drawable/ic_location"/>
 
         <TextView
@@ -86,6 +91,15 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:text="Description: Lorem ipsum dolor sit amet, consectetur adipiscing. Dolor sit amet, consectetur adipiscing. " />
+
+        <Button
+            android:id="@+id/request_join_adventure"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_btn"
+            android:layout_marginTop="320dp"
+            android:text="Request to Join" />
 
     </LinearLayout>
 
