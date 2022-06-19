@@ -254,12 +254,7 @@ paths:
                 - $ref: '#/components/schemas/Account'
       responses:
         "200":
-          description: Successfully created account. Return created account details.
-          content:
-            application/json:
-              schema: 
-                allOf:
-                  - $ref: '#/components/schemas/Account'
+          description: Successfully created account.
         "400":
           description: Could be any other error code
           content:
@@ -344,12 +339,7 @@ paths:
                 - $ref: '#/components/schemas/Account'
       responses:
         "200":
-          description: Successfully updated account details. Return account details.
-          content:
-            application/json:
-              schema: 
-                allOf:
-                  - $ref: '#/components/schemas/Account'
+          description: Successfully updated account details.
         "400":
           description: Could be any other error code
           content:
