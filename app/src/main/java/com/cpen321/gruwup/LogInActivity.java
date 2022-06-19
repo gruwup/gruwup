@@ -1,19 +1,29 @@
 package com.cpen321.gruwup;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.ActivityCompat;
+import androidx.core.content.ContextCompat;
 import androidx.fragment.app.FragmentManager;
 import androidx.fragment.app.FragmentTransaction;
 
+import android.Manifest;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
 public class LogInActivity extends AppCompatActivity {
@@ -31,6 +41,7 @@ public class LogInActivity extends AppCompatActivity {
         // profile. ID and basic profile are included in DEFAULT_SIGN_IN.
 
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestIdToken(getString(R.string.default_web_client_id))
                 .requestEmail()
                 .build();
 
@@ -46,9 +57,6 @@ public class LogInActivity extends AppCompatActivity {
 
         // TO DO : Add Use without SignIn Option to be able to go to MainActivity without
         // sign in
-
-
-
     }
 
     private void signIn() {
@@ -86,7 +94,6 @@ public class LogInActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
         // Check for existing Google Sign In account, if the user is already signed in
         // the GoogleSignInAccount will be non-null.
         GoogleSignInAccount account = GoogleSignIn.getLastSignedInAccount(this);
@@ -105,16 +112,19 @@ public class LogInActivity extends AppCompatActivity {
             Log.d(TAG, "Given Name: "+ account.getGivenName());
             Log.d(TAG, "Family Name: "+ account.getFamilyName());
             Log.d(TAG, "Photo URL: "+ account.getPhotoUrl());
+            Log.d(TAG, "Token: " + account.getIdToken());
 
             Intent intent = new Intent(LogInActivity.this, MainActivity.class);
             Bundle extras = new Bundle();
 
-            String imageUrl = "null";
+            String imageUrl = "";
 
             if (account.getPhotoUrl() != null){
                 imageUrl = account.getPhotoUrl().toString();
             }
 
+//            if (account.getIdToken())
+//            account.get
             extras.putString("Display_Name", account.getDisplayName() );
             // Note: Photo URL is converted to String
             extras.putString("Photo_URL", imageUrl);

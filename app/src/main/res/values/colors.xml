@@ -11,4 +11,7 @@
     <color name= "colorPrimary">#F07D7D</color>
     <color name="colorPrimaryDark">#C04A4A</color>
     <color name="colorAccent">#F4A4A4</color>
+    <color name="bgColor">#D9D9D9</color>
+    <color name="lightPink">#F3D6D4</color>
+    <color name="lightGray">#A0A1A2</color>
 </resources>
