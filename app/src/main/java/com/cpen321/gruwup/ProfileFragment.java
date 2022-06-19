@@ -263,6 +263,8 @@ public class ProfileFragment extends Fragment {
                             @Override
                             public void run() {
                                 // Stuff that updates the UI
+                                TextView userBio = (TextView) getView().findViewById(R.id.userBio);
+                                userBio.setText(bio);
                                 RecyclerView.LayoutManager mLayoutManafer = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
                                 selectedCategories.setLayoutManager(mLayoutManafer);
                                 CategoryViewAdapter adapter = new CategoryViewAdapter(getActivity(), preferences_list);
