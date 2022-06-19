@@ -59,7 +59,6 @@ public class DiscoverFragment extends Fragment {
         StrictMode.setThreadPolicy(policy);
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
 
-
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
                 .url("http://20.227.142.169:8081/user/adventure/search/{pagination}")

@@ -24,7 +24,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
     private ArrayList<Map<String, String>> mAdvNames = new ArrayList<>();
     private Context mContext;
 
-    public DiscAdvViewAdapter(Context mContext , ArrayList<Map<String, String>> mAdvNames) {
+    public DiscAdvViewAdapter(Context mContext, ArrayList<Map<String, String>> mAdvNames) {
         this.mAdvNames = mAdvNames;
         this.mContext = mContext;
     }

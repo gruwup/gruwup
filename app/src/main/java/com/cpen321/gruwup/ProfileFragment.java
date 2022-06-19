@@ -201,8 +201,6 @@ public class ProfileFragment extends Fragment {
                     for (int i = 0 ; i < adapter.getSelectedCategoriesCount(); i++){
                         mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
                         mSelectedCategoryIds.add(adapter.getSelectedCategories().get(i));
-
-
                     }
                     CategoryViewAdapter selectedCategoriesAdapter = new CategoryViewAdapter(getActivity(),mSelectedCategoryNames);
                     selectedCategories.setAdapter(selectedCategoriesAdapter);
@@ -333,7 +331,6 @@ public class ProfileFragment extends Fragment {
         return call;
 
     }
-
 
     Call get(String url , Callback callback){
         Request request = new Request.Builder()
