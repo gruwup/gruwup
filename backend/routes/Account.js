@@ -20,15 +20,23 @@ router.post("/sign-in", (req, res) => {
         // var response = GoogleAuth.validateToken(req.body.authentication_code);
         GoogleAuth.validateToken(key).then(response => {
             payload = response.getPayload();
-            var userInfo = {
-                userId: response.payload['sub'],
-                userExists: false // replace after checking if user exists in database
-            }
-            res.status(200).send(userInfo);
+
+            Profile.findById(response.payload['sub'], (err, user) => {
+                if (err) {
+                    res.status(500).send({
+                        message: err.toString()
+                    });
+                }
+                else if (!user) {
+                    res.status(404).send({userId: user.userId, userExists: false});
+                }
+                else {
+                    res.status(200).send({userId: user.userId, userExists: true});
+                }
+            });
         }).catch(error => {
             res.sendStatus(400).send(error);
         })
-        // do something to check response? and get fields from google if verified
     }
     catch {
         res.sendStatus(400);
