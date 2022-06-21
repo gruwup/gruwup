@@ -1,5 +1,7 @@
 const {OAuth2Client} = require('google-auth-library');
-CLIENT_ID="" //TODO will need to ask FE ppl about this (whoever set this thang up)
+
+// CHANGE TO WHATEVER IS IN DA FE...
+CLIENT_ID=""
 
 //https://developers.google.com/identity/sign-in/web/backend-auth
 const GoogleAuth = {
@@ -12,12 +14,7 @@ const GoogleAuth = {
             });
             return ticket;
         }
-        verify().then(ticket => {
-            return {userId: payload['sub'], payload: ticket.getPayload()};
-        }
-        ).catch(error => {
-            return error //??
-        });
+        return verify();
     }
 }
 
