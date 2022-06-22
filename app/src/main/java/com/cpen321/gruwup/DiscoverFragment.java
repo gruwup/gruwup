@@ -53,6 +53,20 @@ public class DiscoverFragment extends Fragment {
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
     TextView createButton;
+    TextView cancelCreate;
+    RecyclerView categoryView;
+    private ArrayList<String> mCategoryNames = new ArrayList<>();
+
+    private void initCategories(){
+        mCategoryNames.add("MOVIE");
+        mCategoryNames.add("MUSIC");
+        mCategoryNames.add("SPORTS");
+        mCategoryNames.add("FOOD");
+        mCategoryNames.add("TRAVEL");
+        mCategoryNames.add("DANCE");
+        mCategoryNames.add("ART");
+//        initCategoryRecyclerView(view);
+    }
 
     @Nullable
     @Override
@@ -66,7 +80,7 @@ public class DiscoverFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 System.out.println("Create adventure button clicked");
-                createAdventure();
+                createAdventure(v);
             }
         });
 
@@ -96,11 +110,27 @@ public class DiscoverFragment extends Fragment {
 
     }
 
-    private void createAdventure() {
+    private void createAdventure(View v) {
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.create_adventure_pop_up);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
+
+        initCategories();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        categoryView = (RecyclerView) dialog.findViewById(R.id.create_adventure_recycler_view);
+        categoryView.setLayoutManager(layoutManager);
+        CategoryViewAdapter adapter = new CategoryViewAdapter(getActivity(), mCategoryNames);
+        categoryView.setAdapter(adapter);
+
+        cancelCreate = (TextView) dialog.findViewById(R.id.create_adventure_go_back);
+        cancelCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+
     }
     private void initAdventures() throws JSONException {
         mAdventureList = new ArrayList<Map<String, String>>();
