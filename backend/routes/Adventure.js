@@ -1,9 +1,8 @@
 const express = require("express");
 const router = express.Router();
 const Adventure = require("../models/Adventure");
-
-
 const Constants = require("../constants/Constants");
+const AdventureStore = require("../stores/AdventureStore");
 
 const TestAdventure = {
     "id": "string",
@@ -28,29 +27,12 @@ router.get("/", (req, res) => {
 // create new adventure
 router.post("/create", (req, res) => {
     // TODO: validate token
-    var adventure = new Adventure({
-        owner: req.body.owner,
-        title: req.body.title,
-        description: req.body.description,
-        peopleGoing: [req.body.owner],
-        dateTime: req.body.dateTime,
-        location: req.body.location,
-        category: req.body.category,
-        status: "OPEN",
-        image: req.body.image ? new Buffer(req.body.image.split(",")[1],"base64") : null
-    });
-
-    adventure.save((err, adventureAdded) => {
-        if (err) {
-            res.status(500).send({
-                message: err.toString()
-            });
-        }
-        else {
-            adventure.id = adventureAdded._id;
-            res.status(200).send(adventure);
-        }
-    });
+    console.log("req body: " + req.body);
+    try {
+        AdventureStore.createAdventure(req, res);
+    } catch (err) { 
+        res.status(500).send(err);
+    }
 });
 
 // search adventures
