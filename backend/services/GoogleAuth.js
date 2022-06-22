@@ -1,6 +1,5 @@
 const {OAuth2Client} = require('google-auth-library');
 
-// CHANGE TO WHATEVER IS IN DA FE...
 CLIENT_ID=""
 
 //https://developers.google.com/identity/sign-in/web/backend-auth
