@@ -1,5 +1,12 @@
+const GoogleAuth = require("./GoogleAuth");
+const UserStore = require("../store/UserStore");
+
 const checkValidToken = (token) => {
-    return true;
+    return GoogleAuth.validateToken(token).then(response => {
+        return UserStore.findUser(response.payload['sub']);
+    }).catch(error => {
+        return error;
+    })
 };
 
 const getProfile = (userId) => {
@@ -11,4 +18,12 @@ const getProfile = (userId) => {
       };
 };
 
-module.exports = {checkValidToken, getProfile}
+const createProfile = (profile) => {
+
+};
+
+const updateProfile = (profile) => {
+    
+};
+
+module.exports = {checkValidToken, getProfile, createProfile, updateProfile}
