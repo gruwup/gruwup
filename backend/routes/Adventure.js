@@ -2,7 +2,7 @@ const express = require("express");
 const router = express.Router();
 const Adventure = require("../models/Adventure");
 const Constants = require("../constants/Constants");
-const AdventureStore = require("../stores/AdventureStore");
+const AdventureStore = require("../store/AdventureStore");
 
 const TestAdventure = {
     "id": "string",
@@ -27,7 +27,6 @@ router.get("/", (req, res) => {
 // create new adventure
 router.post("/create", (req, res) => {
     // TODO: validate token
-    console.log("req body: " + req.body);
     try {
         AdventureStore.createAdventure(req, res);
     } catch (err) { 
