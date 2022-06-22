@@ -3,16 +3,7 @@ const Profile = require("../models/Profile");
 
 const router = express.Router();
 
-// can delete this later, just for early testing
-const example = {
-    "userId": "string",
-    "name": "Bob John",
-    "biography": "I am a 20 year old living in Vancouver",
-    "categories": [1, 2, 3]
-  }
-
 router.post("/create", (req, res) => {
-    // TODO: validate token
     const profile = new Profile({
         userId: req.body.userId,
         name: req.body.name,
@@ -34,7 +25,6 @@ router.post("/create", (req, res) => {
 });
 
 router.get("/:userId/get", (req, res) => {
-    // TODO: validate token
     Profile.findOne({ userId: req.params.userId }, (err, profile) => {
         if (err) {
             res.status(500).send({
@@ -53,7 +43,6 @@ router.get("/:userId/get", (req, res) => {
 });
 
 router.put("/:userId/edit", (req, res) => {
-    // TODO: validate token
     Profile.findOneAndUpdate(
         { userId: req.params.userId }, 
         { $set: { name: req.body.name, biography: req.body.biography, categories: req.body.categories, image: req.body.image } },
