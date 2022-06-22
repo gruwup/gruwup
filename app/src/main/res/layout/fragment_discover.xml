@@ -44,7 +44,9 @@
             android:drawableLeft="@drawable/ic_discover_add_sign"
             android:textColor="@color/lightGray"
             android:textSize="20dp"
-            android:textStyle="bold" />
+            android:textStyle="bold"
+            android:onClick="onClick"
+            android:clickable="true"/>
     </LinearLayout>
 
 
