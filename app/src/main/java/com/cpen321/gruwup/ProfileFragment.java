@@ -63,10 +63,6 @@ public class ProfileFragment extends Fragment {
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     private ArrayList<Integer> mSelectedCategoryIds = new ArrayList<>();
 
-    private ArrayList<String> tmpSelectedCategoryNames = new ArrayList<>();
-    private ArrayList<Integer> tmpSelectedCategoryIds = new ArrayList<>();
-
-
     private void initCategories(){
         mCategoryNames.add("MOVIE");
         mCategoryNames.add("MUSIC");
@@ -75,7 +71,7 @@ public class ProfileFragment extends Fragment {
         mCategoryNames.add("TRAVEL");
         mCategoryNames.add("DANCE");
         mCategoryNames.add("ART");
-//        initCategoryRecyclerView(view);
+
     }
 
     @Nullable
@@ -123,7 +119,6 @@ public class ProfileFragment extends Fragment {
                 mGoogleSignInClient.signOut();
                 Intent intent = new Intent(getActivity(), LogInActivity.class);
                 startActivity(intent);
-
 
                 //should return user to login screen in the LoginActivity
             }
@@ -207,7 +202,6 @@ public class ProfileFragment extends Fragment {
 
                     // Note: Can store this in cache
                     Log.d(TAG, "Selected categories names are: "+ mSelectedCategoryNames);
-//                    Log.d(TAG, "Selected category ids are: "+ mSelectedCategoryIds);
                     try {
                         editProfileRequest(bioInput.getText().toString(), mSelectedCategoryNames.toString());
                     } catch (IOException e) {
