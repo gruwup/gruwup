@@ -23,11 +23,13 @@ const schema = mongoose.Schema({
         type: String,
         validate: {
             validator: function (value) {
-                var val = new Date(value);
+                console.log(value);
+                var val = new Date(Number(value));
                 var now = new Date();
+                console.log(val);
                 return val > now;
             },
-            message: '{VALUE} is not a valid date time of format yyyy-mm-dd hh:mm:ss and cannot be in the past'
+            message: '{VALUE} dateTime cannot be in the past'
         },
         required: true
     },
