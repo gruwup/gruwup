@@ -22,7 +22,7 @@ const TestAdventure = {
 
 // test endpoint
 router.get("/", (req, res) => {
-    res.send("Adventure route live");
+    res.status(200).send("Adventure route live");
 });
 
 // create new adventure
