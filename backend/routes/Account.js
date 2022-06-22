@@ -1,22 +1,24 @@
 const express = require("express");
 const DataValidator = require("../constants/DataValidator");
 const GoogleAuth = require("../services/GoogleAuth");
+const Profile = require("../models/Profile");
 const router = express.Router();
 
 router.post("/sign-in", (req, res) => {
     GoogleAuth.validateToken(req.body.authentication_code).then(response => {
-        Profile.findById(response.payload['sub'], (err, user) => {
+        Profile.findOne({ userId: response.payload['sub'] }, (err, user) => {
             if (err) {
                 res.status(500).send({message: err.toString()});
             }
             else if (!user) {
-                res.status(404).send({userId: user.userId, userExists: false});
+                res.status(404).send({userId: response.payload['sub'], userExists: false});
             }
             else {
-                res.status(200).send({userId: user.userId, userExists: true});
+                res.status(200).send({userId: response.payload['sub'], userExists: true});
             }
         });
     }).catch(error => {
+        console.log("err");
         res.status(400).send({message: error.message});
     })
 });
