@@ -1,7 +1,6 @@
 const Profile = require("../models/Profile");
 
 const findUser = (userId) => {
-    console.log(userId);
     return Profile.findOne({ userId: userId });
 };
 

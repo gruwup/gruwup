@@ -2,11 +2,7 @@ const GoogleAuth = require("./GoogleAuth");
 const UserStore = require("../store/UserStore");
 
 const checkValidToken = (token) => {
-    return GoogleAuth.validateToken(token).then(response => {
-        return UserStore.findUser(response.payload['sub']);
-    }).catch(error => {
-        return error;
-    })
+    return GoogleAuth.validateToken(token);
 };
 
 const getProfile = (userId) => {
