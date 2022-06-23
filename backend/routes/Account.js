@@ -1,12 +1,13 @@
 const express = require("express");
-const DataValidator = require("../constants/DataValidator");
-const GoogleAuth = require("../services/GoogleAuth");
-const Profile = require("../models/Profile");
+const UserAccount = require("../services/UserAccount");
+const UserStore = require("../store/UserStore");
+const Session = require("../services/Session");
 const router = express.Router();
 
 router.post("/sign-in", (req, res) => {
-    GoogleAuth.validateToken(req.body.authentication_code).then(response => {
-        Profile.findOne({ userId: response.payload['sub'] }, (err, user) => {
+    UserAccount.checkValidToken(req.body.authentication_code).then(response => {
+        //create cookie and send it back to user
+        UserStore.findUser(response.payload['sub']).then((user, err) => {
             if (err) {
                 res.status(500).send({message: err.toString()});
             }
@@ -15,21 +16,16 @@ router.post("/sign-in", (req, res) => {
             }
             else {
                 res.status(200).send({userId: response.payload['sub'], userExists: true});
-            }
+            } 
         });
-    }).catch(error => {
-        console.log("err");
-        res.status(400).send({message: error.message});
     })
+    .catch(err => {
+        res.status(404).send({message: err});
+    });
 });
 
 router.post("/sign-out", (req, res) => { //change
-    if (DataValidator.isTokenValid(req.body.userId)) {
-        res.sendStatus(200);
-    }
-    else {
-        res.sendStatus(400);
-    }
+    res.sendStatus(200);
 });
 
 module.exports = router;
