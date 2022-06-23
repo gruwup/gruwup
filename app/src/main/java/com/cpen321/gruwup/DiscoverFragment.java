@@ -132,6 +132,7 @@ public class DiscoverFragment extends Fragment {
         });
 
     }
+
     private void initAdventures() throws JSONException {
         mAdventureList = new ArrayList<Map<String, String>>();
 
@@ -179,5 +180,4 @@ public class DiscoverFragment extends Fragment {
             return null;
         }
     }
-
 }

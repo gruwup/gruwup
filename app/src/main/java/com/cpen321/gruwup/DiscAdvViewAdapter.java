@@ -90,7 +90,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
 
     @Override
     public int getItemCount() {
-        return mAdvNames.size();
+        return mAdvNames == null ? 0 : mAdvNames.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
