@@ -1,6 +1,8 @@
 package com.cpen321.gruwup;
 
 import android.content.Context;
+import android.content.Intent;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +19,7 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
 
     Context context;
     ArrayList <User> users;
+    static final String TAG = "ChatViewAdapter";
 
     public ChatViewAdapter(Context context, ArrayList<User> users){
         this.context = context;
@@ -39,6 +42,18 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
         // To do: change this to profile pic of individual users
         holder.img.setImageResource(R.drawable.college_student);
 
+        holder.itemView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ChatActivity.class);
+                // To do: Can pass in user information, such as their name and id here
+                // or the adventure group name
+                intent.putExtra("name", user.getName());
+                intent.putExtra("userId", user.getUserId());
+                context.startActivity(intent);
+            }
+        });
+
     }
 
     @Override
@@ -59,7 +74,6 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
             lastMessage = itemView.findViewById(R.id.lastMessage);
             messageTime = itemView.findViewById(R.id.messageTime);
             img = itemView.findViewById(R.id.userProfileImg);
-
         }
     }
 }
