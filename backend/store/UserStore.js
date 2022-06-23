@@ -16,4 +16,4 @@ const updateUser = (profile) => {
 
 };
 
-module.exports = {findUser, }
+module.exports = {findUser, getUserProfile, createUser, updateUser};

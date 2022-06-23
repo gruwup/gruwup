@@ -20,7 +20,7 @@ router.post("/sign-in", (req, res) => {
         });
     })
     .catch(err => {
-        res.status(404).send(err);
+        res.status(404).send({message: err});
     });
 });
 

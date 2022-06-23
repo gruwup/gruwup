@@ -772,7 +772,7 @@ components:
     code:
       type: object
       properties:
-        authentication-code:
+        authentication_code:
           type: string
     userId:
       type: object
