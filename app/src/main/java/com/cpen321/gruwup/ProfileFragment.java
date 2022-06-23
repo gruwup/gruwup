@@ -181,17 +181,13 @@ public class ProfileFragment extends Fragment {
                 Log.d(TAG, "Pressed Confirm Button");
                 Log.d(TAG, bioInput.getText().toString());
 
-                if (bioInput.getText().toString().trim().equals("")){
-                    bioValidation.setText("Biography cannot be set empty.");
-                }
-                else if (!bioInput.getText().toString().matches("[a-zA-Z.? ]*")){
-                    bioValidation.setText("Biography can only allow numbers, spaces and letters.");
+                if (!verifyUserInput(bioInput).equals("valid")){
+                    bioValidation.setText(verifyUserInput(bioInput));
                 }
                 else if(adapter.getSelectedCategoriesCount()<3){
-                    categoryValidation.setText("Please select atleast 3 categories. ");
+                    categoryValidation.setText("Please select at least 3 categories.");
                 }
                 else{
-
                     userBio.setText(bioInput.getText().toString());
                     for (int i = 0 ; i < adapter.getSelectedCategoriesCount(); i++){
                         mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
@@ -211,7 +207,6 @@ public class ProfileFragment extends Fragment {
 
                     Toast.makeText(getActivity(), "Changed Profile Information", Toast.LENGTH_SHORT).show();
                 }
-
             }
         });
 
@@ -315,7 +310,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    Call put(String url , String json , Callback callback){
+    private Call put(String url , String json , Callback callback){ //should probably make this a static method for code reuse, just pass in client
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)
@@ -328,7 +323,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    Call get(String url , Callback callback){
+    private Call get(String url , Callback callback){
         Request request = new Request.Builder()
                 .url(url)
                 .get()
@@ -338,5 +333,17 @@ public class ProfileFragment extends Fragment {
         call.enqueue(callback);
         return call;
 
+    }
+
+    public static String verifyUserInput(EditText field) {
+        if (field.getText().toString().trim().equals("")){
+            return "This field cannot be empty.";
+        }
+        else if (!field.getText().toString().matches("[a-zA-Z.? ]*")){
+            return "This field only allows numbers, spaces and letters.";
+        }
+        else {
+            return "valid";
+        }
     }
 }

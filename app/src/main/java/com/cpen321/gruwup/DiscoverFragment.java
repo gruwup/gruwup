@@ -53,6 +53,7 @@ public class DiscoverFragment extends Fragment {
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
     TextView createButton;
+    TextView confirmCreateButton;
     TextView cancelCreate;
     RecyclerView categoryView;
     private ArrayList<String> mCategoryNames = new ArrayList<>();
@@ -65,7 +66,6 @@ public class DiscoverFragment extends Fragment {
         mCategoryNames.add("TRAVEL");
         mCategoryNames.add("DANCE");
         mCategoryNames.add("ART");
-//        initCategoryRecyclerView(view);
     }
 
     @Nullable
@@ -106,11 +106,12 @@ public class DiscoverFragment extends Fragment {
         return view;
     }
 
-    private void showAdventures() {
-
-    }
-
     private void createAdventure(View v) {
+        EditText title;
+        EditText description;
+        EditText time;
+        EditText location;
+
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.create_adventure_pop_up);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -131,6 +132,29 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
+        title = (EditText) dialog.findViewById(R.id.create_adventure_title_input);
+        description = (EditText) dialog.findViewById(R.id.create_adventure_description_input);
+        time = (EditText) dialog.findViewById(R.id.create_adventure_time_input);
+        location = (EditText) dialog.findViewById(R.id.create_adventure_location_input);
+        confirmCreateButton = (TextView) dialog.findViewById(R.id.confirmButton);
+        confirmCreateButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if(ProfileFragment.verifyUserInput(title) != "valid" ||
+                        ProfileFragment.verifyUserInput(description) != "valid" ||
+                        ProfileFragment.verifyUserInput(time) != "valid" ||
+                        ProfileFragment.verifyUserInput(location) != "valid"){
+                    Toast.makeText(getActivity(), "Make sure all fields are not empty and use alphanumeric characters!", Toast.LENGTH_SHORT).show();
+                }
+                else {
+                    System.out.println(title.getText().toString().trim() + " "
+                            + description.getText().toString().trim() + " "
+                            + time.getText().toString().trim() + " "
+                            + location.getText().toString().trim());
+                    dialog.dismiss();
+                }
+            }
+        });
     }
 
     private void initAdventures() throws JSONException {

@@ -41,6 +41,7 @@
             />
 
         <EditText
+            android:id="@+id/create_adventure_title_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -62,6 +63,7 @@
             />
 
         <EditText
+            android:id="@+id/create_adventure_description_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -113,6 +115,7 @@
             />
 
         <EditText
+            android:id="@+id/create_adventure_time_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
@@ -134,6 +137,7 @@
             />
 
         <EditText
+            android:id="@+id/create_adventure_location_input"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
