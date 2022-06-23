@@ -26,6 +26,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -51,6 +52,21 @@ public class DiscoverFragment extends Fragment {
 
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
+    TextView createButton;
+    TextView cancelCreate;
+    RecyclerView categoryView;
+    private ArrayList<String> mCategoryNames = new ArrayList<>();
+
+    private void initCategories(){
+        mCategoryNames.add("MOVIE");
+        mCategoryNames.add("MUSIC");
+        mCategoryNames.add("SPORTS");
+        mCategoryNames.add("FOOD");
+        mCategoryNames.add("TRAVEL");
+        mCategoryNames.add("DANCE");
+        mCategoryNames.add("ART");
+//        initCategoryRecyclerView(view);
+    }
 
     @Nullable
     @Override
@@ -58,6 +74,15 @@ public class DiscoverFragment extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
+
+        createButton = (TextView) view.findViewById(R.id.create_adventure);
+        createButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Create adventure button clicked");
+                createAdventure(v);
+            }
+        });
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
@@ -82,6 +107,29 @@ public class DiscoverFragment extends Fragment {
     }
 
     private void showAdventures() {
+
+    }
+
+    private void createAdventure(View v) {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.create_adventure_pop_up);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+
+        initCategories();
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        categoryView = (RecyclerView) dialog.findViewById(R.id.create_adventure_recycler_view);
+        categoryView.setLayoutManager(layoutManager);
+        CategoryViewAdapter adapter = new CategoryViewAdapter(getActivity(), mCategoryNames);
+        categoryView.setAdapter(adapter);
+
+        cancelCreate = (TextView) dialog.findViewById(R.id.create_adventure_go_back);
+        cancelCreate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
 
     }
 
@@ -132,5 +180,4 @@ public class DiscoverFragment extends Fragment {
             return null;
         }
     }
-
 }

@@ -50,7 +50,7 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clcked on an image: "+ mCategoryNames.get(position));
+                Log.d(TAG, "onClick: clicked on an item: "+ mCategoryNames.get(position));
                 Toast.makeText(mContext, mCategoryNames.get(position),Toast.LENGTH_SHORT).show();
 
                 isSelectMode = true;
