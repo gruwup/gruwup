@@ -70,7 +70,6 @@ public class ProfileFragment extends Fragment {
         mCategoryNames.add("TRAVEL");
         mCategoryNames.add("DANCE");
         mCategoryNames.add("ART");
-
     }
 
     @Nullable
@@ -96,7 +95,6 @@ public class ProfileFragment extends Fragment {
         categoryView = (RecyclerView) view.findViewById(R.id.categoryRecyclerView);
         selectedCategories = (RecyclerView) view.findViewById(R.id.selectedCategories);
 
-
         profileDialog = new Dialog(getActivity());
 
         editButton = view.findViewById(R.id.edit_profile_button);
@@ -108,7 +106,6 @@ public class ProfileFragment extends Fragment {
                 showPopUp(view);
             }
         });
-
 
         signOutButton = (Button) view.findViewById(R.id.sign_out_button);
         signOutButton.setOnClickListener(new View.OnClickListener() {

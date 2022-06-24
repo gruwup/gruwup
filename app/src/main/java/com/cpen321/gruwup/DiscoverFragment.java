@@ -7,6 +7,8 @@ import android.app.Dialog;
 import android.graphics.Paint;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.os.StrictMode;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -39,6 +41,7 @@ import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -47,6 +50,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
+import okhttp3.internal.http2.Http2Reader;
 
 public class DiscoverFragment extends Fragment {
 
@@ -58,6 +62,8 @@ public class DiscoverFragment extends Fragment {
     RecyclerView categoryView;
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     private ArrayList<String> mCategoryNames = new ArrayList<>();
+    private Handler mHandler = new Handler(Looper.getMainLooper());
+
 
     private void initCategories(){
         mCategoryNames.add("MOVIE");
@@ -91,20 +97,51 @@ public class DiscoverFragment extends Fragment {
                 .build();
 
         try {
-            Response response = client.newCall(request).execute();
-            HTTPRESULT = response.body().string();
+            get("http://10.0.2.2:8081/user/adventure/search/{pagination}",  new Callback() {
+
+                @Override
+                public void onFailure(Call call, IOException e) {
+
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if(response.isSuccessful()){
+                        try {
+                           HTTPRESULT = response.body().string();
+                           initAdventures();
+
+                           mHandler.post(new Runnable() {
+                               @Override
+                               public void run() {
+                                   displayAdventures(view);
+                               }
+                           });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else {
+                        System.out.println("HTTP req failed");
+                    }
+                }
+            });
             initAdventures();
-        } catch (JSONException | IOException e) {
+        } catch (JSONException e) {
             e.printStackTrace();
         }
 
+        displayAdventures(view);
+
+        return view;
+    }
+
+    private void displayAdventures(View view) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         RecyclerView adventureListView = (RecyclerView) view.findViewById(R.id.discoveredAdventures);
         adventureListView.setLayoutManager(layoutManager);
         DiscAdvViewAdapter adapter = new DiscAdvViewAdapter(getActivity(),mAdventureList);
         adventureListView.setAdapter(adapter);
-
-        return view;
     }
 
     private void createAdventure(View v) {
@@ -197,6 +234,7 @@ public class DiscoverFragment extends Fragment {
         });
     }
 
+    @Nullable
     private Response syncHttpRequester(Request request) {
         try {
             OkHttpClient client = new OkHttpClient();
@@ -207,5 +245,18 @@ public class DiscoverFragment extends Fragment {
             System.out.println("Request failed");
             return null;
         }
+    }
+
+    @NonNull
+    private Call get(String url , Callback callback){
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+        OkHttpClient client = new OkHttpClient();
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+        return call;
+
     }
 }
