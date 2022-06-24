@@ -26,6 +26,19 @@ import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
+
 public class LogInActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 1;
@@ -114,8 +127,6 @@ public class LogInActivity extends AppCompatActivity {
             Log.d(TAG, "Photo URL: "+ account.getPhotoUrl());
             Log.d(TAG, "Token: " + account.getIdToken());
 
-            Intent intent = new Intent(LogInActivity.this, MainActivity.class);
-            Bundle extras = new Bundle();
 
             String imageUrl = "";
 
@@ -123,13 +134,77 @@ public class LogInActivity extends AppCompatActivity {
                 imageUrl = account.getPhotoUrl().toString();
             }
 
-            extras.putString("Display_Name", account.getDisplayName() );
-            // Note: Photo URL is converted to String
-            extras.putString("Photo_URL", imageUrl);
-            intent.putExtras(extras);
-            startActivity(intent);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("authentication_code", account.getIdToken());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //TO DO: change this to remote server url // checking if new user
+            String finalImageUrl = imageUrl;
+            post("http://10.0.2.2:8081/account/sign-in", jsonObject.toString(), new Callback(){
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            Log.d(TAG, "login unsucessful");
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            Log.d(TAG, "login successful");
+
+                            String jsonData = response.body().string();
+//                            JSONObject jsonObj = null;
+                            try {
+                                Log.d(TAG, "response body is "+ jsonData);
+                                JSONObject jsonObj = new JSONObject(jsonData);
+                                Log.d(TAG, "json Obj "+ jsonObj.toString());
+                                boolean userExists = jsonObj.getBoolean("userExists");
+                                Log.d(TAG, "User exits: "+ userExists);
+
+                                if (!userExists){
+                                    Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
+                                    Bundle extras = new Bundle();
+                                    extras.putString("Display_Name", account.getDisplayName() );
+                                    extras.putString("Photo_URL", finalImageUrl);
+                                    intent.putExtras(extras);
+                                    startActivity(intent);
+
+                                }
+                                else{
+                                    Log.d(TAG, "New User!");
+                                    Intent intent = new Intent(LogInActivity.this, MainActivity.class);
+                                    Bundle extras = new Bundle();
+                                    extras.putString("Display_Name", account.getDisplayName() );
+                                    extras.putString("Photo_URL", finalImageUrl);
+                                    intent.putExtras(extras);
+                                    startActivity(intent);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+            });
+
 
         }
+
+    }
+
+    OkHttpClient client = new OkHttpClient();
+    MediaType JSON = MediaType.parse("application/json");
+
+     Call post(String url , String json , Callback callback){ //should probably make this a static method for code reuse, just pass in client
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+        return call;
 
     }
 }
