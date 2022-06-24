@@ -96,7 +96,7 @@ public class DiscoverFragment extends Fragment {
                 .url("http://10.0.2.2:8081/user/adventure/search/{pagination}")
                 .build();
 
-        get("http://10.0.2.1:8081/user/adventure/search/{pagination}",  new Callback() {
+        get("http://10.0.2.2:8081/user/adventure/search/{pagination}",  new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
