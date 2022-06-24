@@ -61,7 +61,6 @@ public class ProfileFragment extends Fragment {
 
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
-    private ArrayList<Integer> mSelectedCategoryIds = new ArrayList<>();
 
     private void initCategories(){
         mCategoryNames.add("MOVIE");
@@ -136,7 +135,6 @@ public class ProfileFragment extends Fragment {
         TextView userBio;
 
         mSelectedCategoryNames.clear();
-        mSelectedCategoryIds.clear();
 
         profileDialog.setContentView(R.layout.profile_pop_up);
         goBack  = (TextView) profileDialog.findViewById(R.id.goBack);
@@ -191,7 +189,6 @@ public class ProfileFragment extends Fragment {
                     userBio.setText(bioInput.getText().toString());
                     for (int i = 0 ; i < adapter.getSelectedCategoriesCount(); i++){
                         mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
-                        mSelectedCategoryIds.add(adapter.getSelectedCategories().get(i));
                     }
                     CategoryViewAdapter selectedCategoriesAdapter = new CategoryViewAdapter(getActivity(),mSelectedCategoryNames);
                     selectedCategories.setAdapter(selectedCategoriesAdapter);

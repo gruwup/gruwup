@@ -56,6 +56,7 @@ public class DiscoverFragment extends Fragment {
     TextView confirmCreateButton;
     TextView cancelCreate;
     RecyclerView categoryView;
+    private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     private ArrayList<String> mCategoryNames = new ArrayList<>();
 
     private void initCategories(){
@@ -86,7 +87,7 @@ public class DiscoverFragment extends Fragment {
 
         OkHttpClient client = new OkHttpClient();
         Request request = new Request.Builder()
-                .url("http://20.227.142.169:8081/user/adventure/search/{pagination}")
+                .url("http://10.0.2.2:8081/user/adventure/search/{pagination}")
                 .build();
 
         try {
@@ -147,10 +148,13 @@ public class DiscoverFragment extends Fragment {
                     Toast.makeText(getActivity(), "Make sure all fields are not empty and use alphanumeric characters!", Toast.LENGTH_SHORT).show();
                 }
                 else {
+                    for (int i = 0 ; i < adapter.getSelectedCategoriesCount(); i++) {
+                        mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
+                    }
                     System.out.println(title.getText().toString().trim() + " "
                             + description.getText().toString().trim() + " "
                             + time.getText().toString().trim() + " "
-                            + location.getText().toString().trim());
+                            + location.getText().toString().trim() + " " + mSelectedCategoryNames);
                     dialog.dismiss();
                 }
             }
