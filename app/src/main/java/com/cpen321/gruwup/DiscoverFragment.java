@@ -50,7 +50,7 @@ import okhttp3.Callback;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.Response;
-import okhttp3.internal.http2.Http2Reader;
+//import okhttp3.internal.http2.Http2Reader;
 
 public class DiscoverFragment extends Fragment {
 
