@@ -96,40 +96,35 @@ public class DiscoverFragment extends Fragment {
                 .url("http://10.0.2.2:8081/user/adventure/search/{pagination}")
                 .build();
 
-        try {
-            get("http://10.0.2.2:8081/user/adventure/search/{pagination}",  new Callback() {
+        get("http://10.0.2.1:8081/user/adventure/search/{pagination}",  new Callback() {
 
-                @Override
-                public void onFailure(Call call, IOException e) {
+            @Override
+            public void onFailure(Call call, IOException e) {
 
-                }
+            }
 
-                @Override
-                public void onResponse(Call call, Response response) throws IOException {
-                    if(response.isSuccessful()){
-                        try {
-                           HTTPRESULT = response.body().string();
-                           initAdventures();
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    try {
+                       HTTPRESULT = response.body().string();
+                       initAdventures();
 
-                           mHandler.post(new Runnable() {
-                               @Override
-                               public void run() {
-                                   displayAdventures(view);
-                               }
-                           });
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
-                    }
-                    else {
-                        System.out.println("HTTP req failed");
+                       mHandler.post(new Runnable() {
+                           @Override
+                           public void run() {
+                               displayAdventures(view);
+                           }
+                       });
+                    } catch (JSONException e) {
+                        e.printStackTrace();
                     }
                 }
-            });
-            initAdventures();
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
+                else {
+                    System.out.println("HTTP req failed");
+                }
+            }
+        });
 
         displayAdventures(view);
 
