@@ -36,7 +36,7 @@
             android:textStyle="bold" />
 
         <EditText
-            android:id="@+id/initialBioInput"
+            android:id="@+id/setBio"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -48,7 +48,7 @@
             android:padding="10dp" />
 
         <TextView
-            android:id="@+id/biographyAlert"
+            android:id="@+id/setBioAlert"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="30dp"
@@ -83,7 +83,7 @@
             android:textStyle="bold" />
 
         <androidx.recyclerview.widget.RecyclerView
-            android:id="@+id/categoryRecyclerView"
+            android:id="@+id/setUpPreferences"
             android:layout_width="match_parent"
             android:layout_height="90dp"
             android:layout_marginTop="10dp"
@@ -91,13 +91,21 @@
 
 
         </androidx.recyclerview.widget.RecyclerView>
+        <TextView
+            android:id="@+id/selectCategoryAlert"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="30dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginRight="30dp"
+            android:textColor="@color/design_default_color_error" />
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="match_parent">
 
             <Button
-                android:id="@+id/saveProfileButton"
+                android:id="@+id/setupProfileButton"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
                 android:layout_alignParentBottom="true"

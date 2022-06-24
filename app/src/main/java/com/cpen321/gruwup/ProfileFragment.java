@@ -62,6 +62,7 @@ public class ProfileFragment extends Fragment {
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
 
+    // TO DO: Can make this common later to avoid DRY
     private void initCategories(){
         mCategoryNames.add("MOVIE");
         mCategoryNames.add("MUSIC");
@@ -98,7 +99,6 @@ public class ProfileFragment extends Fragment {
         profileDialog = new Dialog(getActivity());
 
         editButton = view.findViewById(R.id.edit_profile_button);
-
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -145,16 +145,14 @@ public class ProfileFragment extends Fragment {
         // for categories
         initCategories();
         Log.d(TAG, "Initialize Category Recycler View");
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-//        RecyclerView categoryView = (RecyclerView) profileDialog.findViewById(R.id.categoryRecyclerView);
         categoryView = (RecyclerView) profileDialog.findViewById(R.id.categoryRecyclerView);
-//        categoryView.setHasFixedSize(true);
         categoryView.setLayoutManager(layoutManager);
         CategoryViewAdapter adapter = new CategoryViewAdapter(getActivity(),mCategoryNames);
         categoryView.setAdapter(adapter);
 
         LinearLayoutManager categoriesLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-//        RecyclerView selectedCategories = (RecyclerView) getView().findViewById(R.id.selectedCategories);
         selectedCategories = (RecyclerView) getView().findViewById(R.id.selectedCategories);
         selectedCategories.setLayoutManager(categoriesLayoutManager);
 

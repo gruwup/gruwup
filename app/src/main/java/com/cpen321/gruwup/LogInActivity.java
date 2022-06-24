@@ -154,7 +154,7 @@ public class LogInActivity extends AppCompatActivity {
                             Log.d(TAG, "login successful");
 
                             String jsonData = response.body().string();
-//                            JSONObject jsonObj = null;
+
                             try {
                                 Log.d(TAG, "response body is "+ jsonData);
                                 JSONObject jsonObj = new JSONObject(jsonData);
@@ -195,7 +195,7 @@ public class LogInActivity extends AppCompatActivity {
     OkHttpClient client = new OkHttpClient();
     MediaType JSON = MediaType.parse("application/json");
 
-     Call post(String url , String json , Callback callback){ //should probably make this a static method for code reuse, just pass in client
+     private Call post(String url , String json , Callback callback){
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)
