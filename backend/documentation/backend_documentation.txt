@@ -246,8 +246,8 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Error'
   /user/adventure/{adventureId}/cancel:
-    delete:
-      summary: Cancel the adventure and delete chat room
+    put:
+      summary: Update the status of adventure to CANCELLED
       tags:
        - Adventure
       parameters:

@@ -71,51 +71,21 @@ router.get("/:adventureId/detail", (req, res) => {
 // update adventure details
 router.put("/:adventureId/update", (req, res) => {
     // TODO: validate token
-    Adventure.findOneAndUpdate(
-        { _id: req.params.adventureId },
-        { $set: { title: req.body.title, description: req.body.description, dateTime: req.body.dateTime, location: req.body.location, category: req.body.category, image: req.body.image ? new Buffer(req.body.image.split(",")[1],"base64") : null } },
-        {new: true},
-        (err, adventure) => {
-            if (err) {
-                res.status(500).send({
-                    message: err.toString()
-                });
-            }
-            else if (!adventure) {
-                res.status(404).send({
-                    message: "Adventure not found"
-                });
-            }
-            else {
-                res.status(200).send(adventure);
-            }
-        }
-    )
+    try {
+        AdventureStore.updateAdventure(req, res);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 // Cancel the adventure and delete chat room
-router.delete("/:adventureId/cancel", (req, res) => {
+router.put("/:adventureId/cancel", (req, res) => {
     // TODO: validate token
-    Adventure.findOneAndRemove(
-        { _id: req.params.adventureId },
-        (err, adventure) => {
-            if (err) {
-                res.status(500).send({
-                    message: err.toString()
-                });
-            }
-            else if (!adventure) {
-                res.status(404).send({
-                    message: "Adventure not found"
-                });
-            }
-            else {
-                res.status(200).send({
-                    message: "Adventure cancelled"
-                });
-            }
-        }
-    );
+    try {
+        AdventureStore.cancelAdventure(req, res);
+    } catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 module.exports = router;
