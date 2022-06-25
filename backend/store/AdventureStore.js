@@ -123,4 +123,29 @@ module.exports = class AdventureStore {
             };
         }
     };
+
+    static getAdventureParticipants = async (adventureId) => {
+        try {
+            var result = await Adventure.findById(adventureId);
+            if (result) {
+                return {
+                    code: 200,
+                    message: "Adventure participants found",
+                    payload: result.peopleGoing
+                };
+            }
+            else {
+                return {
+                    code: 404,
+                    message: "Adventure not found"
+                };
+            }
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    }
 };
