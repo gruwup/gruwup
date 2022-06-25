@@ -24,10 +24,28 @@ router.get("/", (req, res) => {
 });
 
 // create new adventure
-router.post("/create", (req, res) => {
+router.post("/create", async (req, res) => {
     // TODO: validate token
+    var adventure = {
+        owner: req.body.owner,
+        title: req.body.title,
+        description: req.body.description,
+        peopleGoing: [req.body.owner],
+        dateTime: req.body.dateTime,
+        location: req.body.location,
+        category: req.body.category,
+        status: "OPEN",
+        image: req.body.image ? new Buffer(req.body.image.split(",")[1],"base64") : null,
+        city: req.body.location.split(", ")[1] ?? "unknown"
+    };
     try {
-        AdventureStore.createAdventure(req, res);
+        var result = await AdventureStore.createAdventure(adventure);
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
     } catch (err) { 
         res.status(500).send(err);
     }
