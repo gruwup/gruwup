@@ -59,12 +59,6 @@ router.get("/search/:pagination", (req, res) => {
     res.status(200).send([TestAdventure, TestAdventure]);
 });
 
-// search all adventures created by user
-router.get("/:userId/get-adventure-ids", (req, res) => {
-    console.log(req.params.userId);
-    res.status(200).send([TestAdventure]);
-});
-
 // get adventure details
 router.get("/:adventureId/detail", async (req, res) => {
     // TODO: validate token
@@ -103,9 +97,15 @@ router.put("/:adventureId/cancel", (req, res) => {
 });
 
 // get ids of adventures owned or participated by user that are not cancelled
-router.get("/:userId/get-adventures", (req, res) => {
+router.get("/:userId/get-adventures", async (req, res) => {
     try {
-        AdventureStore.getUsersAdventures(req, res);
+        var result = await AdventureStore.getUsersAdventures(req.params.userId);
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
     } catch (err) {
         res.status(500).send(err);
     }

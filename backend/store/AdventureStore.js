@@ -92,34 +92,32 @@ module.exports = class AdventureStore {
         );
     };
 
-    static getUsersAdventures = async (req, res) => {
-        Adventure.find({
-            $and: [
-                { 
-                    $or: [
-                        { owner: req.params.userId },
-                        { peopleGoing: { $in: req.params.userId} },
-                    ]
-                },
-                {
-                    status: "OPEN"
-                }
-            ]
-            
-        }, (err, adventures) => {
-            if (err) {
-                res.status(500).send({
-                    message: err.toString()
-                });
-            }
-            else if (!adventures) {
-                res.status(404).send({
-                    message: "No adventures found"
-                });
-            }
-            else {
-                res.status(200).send(adventures.map(adventure => adventure._id));
-            }
-        });
+    static getUsersAdventures = async (userId) => {
+        try {
+            var result = await Adventure.find({
+                $and: [
+                    { 
+                        $or: [
+                            { owner: userId },
+                            { peopleGoing: { $in: userId} },
+                        ]
+                    },
+                    {
+                        status: "OPEN"
+                    }
+                ]
+            });
+            return {
+                code: 200,
+                message: "Adventures found",
+                payload: result.map(adventure => adventure._id)
+            };
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
     };
 };
