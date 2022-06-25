@@ -92,15 +92,19 @@
             android:orientation="horizontal"
             />
 
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/lightGray"
-            android:text="Cover Photo"
-            android:textSize="25dp"
-            android:textStyle="bold"
+        <Button
+            android:id="@+id/create_adventure_upload_image_button"
+            android:layout_width="match_parent"
+            android:layout_height="40dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginRight="30dp"
+            android:layout_marginBottom="0dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/rounded_btn"
             android:gravity="center"
-            android:layout_marginTop="0dp"
+            android:text="Upload Image"
+            android:textSize="14sp"
+
             />
 
         <TextView
@@ -121,7 +125,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/rectangle_border"
-            android:hint="Enter a time..."
+            android:hint="Enter a time, yyyy-mm-dd hh:mm:ss"
             android:minHeight="48dp"
             android:padding="10dp" />
 
@@ -143,7 +147,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/rectangle_border"
-            android:hint="Enter a location USE GOOGLE MAPS"
+            android:hint="Format: address, city, province, postal code"
             android:minHeight="48dp"
             android:padding="10dp" />
 

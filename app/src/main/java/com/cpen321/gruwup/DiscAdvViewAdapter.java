@@ -4,6 +4,8 @@ import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Color;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -101,6 +103,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         TextView adventureCount;
         TextView adventureDescription;
         CardView adventureCard;
+        ImageView adventureImage;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             adventureName = itemView.findViewById(R.id.disc_adventure_name);
@@ -109,6 +112,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
             adventureCount = itemView.findViewById(R.id.disc_adventure_people_count);
             adventureDescription = itemView.findViewById(R.id.disc_adventure_description);
             adventureCard = itemView.findViewById(R.id.adventure_card);
+            adventureImage = itemView.findViewById(R.id.disc_adventure_image);
         }
     }
 }

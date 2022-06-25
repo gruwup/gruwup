@@ -272,7 +272,6 @@ public class ProfileFragment extends Fragment {
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("userId", UserID);
-            jsonObject.put("userId", UserID);
             jsonObject.put("name", displayName.toString());
             jsonObject.put("biography", bioInput);
             jsonObject.put("categories", categoryNames);
