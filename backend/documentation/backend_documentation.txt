@@ -435,18 +435,12 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/request/{userId}/check/{pagination}:
+  /user/request/{userId}/get:
     get:
-      summary: Get 10 requests for the user starting at given pagination (so pagination 0 will return most recent 10 requests, if the batch has less then 10 requests it will return whatever it can, so if you have 15 messages, and pagination is at 9, it will return message 9-15 instead of 9-19)
+      summary: Get all request user has not processed (state is pending)
       tags:
       - Request
       parameters:
-      - name: pagination
-        in: path
-        required: true
-        style: simple
-        schema:
-          type: number
       - name: userId
         in: path
         required: true
@@ -455,7 +449,7 @@ paths:
           type: number
       responses:
         "200":
-          description: Success, return given pagination and the messages
+          description: Success, return the requests
           content:
             application/json:
               schema:
@@ -782,20 +776,32 @@ components:
     Request:
       type: object
       properties:
-        requestId:
-          type: string
         adventureId:
           type: string
+        adventureParticipants:
+          type: array
+          items: 
+            type: string
         requester:
           type: string
           example: "Bob John"
+        requesterId:
+          type: string
+        accepted:
+          type: array
+          items: 
+            type: string
+        rejected: 
+          type: array
+          items: 
+            type: string
         status:
-          type: integer
-          enum: [1, 2, 3] #"accept", "reject", "pending"
-          example: 3
+          type: string
+          enum: ["ACCEPTED", "PENDING", "REJECTED"]
+          example: "PENDING"
         dateTime:
           type: string
-          example: "yyyy-mm-dd hh:mm:ss"
+          example: "13131238"
   securitySchemes:
     accessCode:
       type: oauth2

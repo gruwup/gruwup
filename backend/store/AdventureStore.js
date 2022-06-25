@@ -125,16 +125,27 @@ module.exports = class AdventureStore {
     };
 
     static getAdventureParticipants = async (adventureId) => {
-        Adventure.findById(adventureId, (err, adventure) => {
-            if (err) {
-                callback(err, []);
-            }
-            else if (!adventure) {
-                callback("Adventure not found", []);
+        try {
+            var result = await Adventure.findById(adventureId);
+            if (result) {
+                return {
+                    code: 200,
+                    message: "Adventure participants found",
+                    payload: result.peopleGoing
+                };
             }
             else {
-                callback("Participants found", adventure.peopleGoing);
+                return {
+                    code: 404,
+                    message: "Adventure not found"
+                };
             }
-        });
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
     }
 };

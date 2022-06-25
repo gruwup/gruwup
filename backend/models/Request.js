@@ -1,17 +1,27 @@
 const mongoose = require("mongoose");
 
 const schema = mongoose.Schema({
-    requestId: {
+    adventureId: {
         type: String,
         required: true
     },
-    adventureId: {
-        type: String,
+    adventureParticipants: {
+        type: [String],
         required: true
     },
     requester: {
         type: String,
         required: true
+    },
+    requesterId: {
+        type: String,
+        required: true
+    },
+    accepted: {
+        type: [String],
+    },
+    rejected: {
+        type: [String],
     },
     status: {
         type: String,
