@@ -5,37 +5,45 @@ module.exports = class AdventureStore {
         var adventure = new Adventure(adventure);
         
         try {
-            await adventure.save();
+            var result = await adventure.save();
+            result.adventureId = result._id;
             return {
                 code: 200,
                 message: "Adventure created successfully",
-                payload: adventure
+                payload: result
             };
+        }
+        catch (err) {
+            return {
+                code: 400,
+                message: err
+            };
+        }
+    };
+
+    static getAdventureDetail = async (adventureId) => {
+        try {
+            var result = await Adventure.findById(adventureId);
+            if (result) {
+                return {
+                    code: 200,
+                    message: "Adventure found",
+                    payload: result
+                };
+            }
+            else {
+                return {
+                    code: 404,
+                    message: "Adventure not found"
+                };
+            }
         }
         catch (err) {
             return {
                 code: 500,
                 message: err
             };
-        }
-    };
-
-    static getAdventureDetail = async (req, res) => {
-        Adventure.findById(req.params.adventureId, (err, adventure) => {
-            if (err) {
-                res.status(500).send({
-                    message: err.toString()
-                });
-            }
-            else if (!adventure) {
-                res.status(404).send({
-                    message: "Adventure not found"
-                });
-            }
-            else {
-                res.status(200).send(adventure);
-            }
-        });
+        };
     };
 
     static updateAdventure = async (req, res) => {

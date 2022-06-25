@@ -66,10 +66,16 @@ router.get("/:userId/get-adventure-ids", (req, res) => {
 });
 
 // get adventure details
-router.get("/:adventureId/detail", (req, res) => {
+router.get("/:adventureId/detail", async (req, res) => {
     // TODO: validate token
     try {
-        AdventureStore.getAdventureDetail(req, res);
+        var result = await AdventureStore.getAdventureDetail(req.params.adventureId);
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
     } catch (err) { 
         res.status(500).send(err);
     }
