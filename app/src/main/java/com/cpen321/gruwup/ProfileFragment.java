@@ -81,6 +81,7 @@ public class ProfileFragment extends Fragment {
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
         displayName = (TextView) view.findViewById(R.id.userName);
         displayName.setText(this.getArguments().getString("Display_Name"));
+
         profilePic = (ImageView) view.findViewById(R.id.userImage);
         if(this.getArguments().getString("Photo_URL") != null && !this.getArguments().getString("Photo_URL").equals("")) {
             Picasso.get().load(this.getArguments().getString("Photo_URL")).into(profilePic);
@@ -191,7 +192,7 @@ public class ProfileFragment extends Fragment {
                     // Note: Can store this in cache
                     Log.d(TAG, "Selected categories names are: "+ mSelectedCategoryNames);
                     try {
-                        editProfileRequest(bioInput.getText().toString(), mSelectedCategoryNames.toString());
+                        editProfileRequest(bioInput.getText().toString(), mSelectedCategoryNames);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -228,12 +229,16 @@ public class ProfileFragment extends Fragment {
                         Log.d(TAG, "json Obj "+ jsonObj.toString());
                         String bio = jsonObj.getString("biography");
                         Log.d(TAG, "Bio is "+ bio);
-                        String pref = jsonObj.getString("categories");
+                        JSONArray pref = jsonObj.getJSONArray("categories");
                         Log.d(TAG, "Pref is "+ pref);
-                        // format example of categories : "["[MOVIE, MUSIC, SPORTS]"]"
-                        String pref_str = pref.substring(3,pref.length()-3);
-                        ArrayList<String> preferences_list = new ArrayList<String>(Arrays.asList(pref_str.split(", ")));
-                        Log.d(TAG, "StrList: "+pref_str);
+
+                        ArrayList<String> preferences_list = new ArrayList<String>();
+                        if (pref !=null){
+                            for (int i=0; i<pref.length(); i++){
+                                preferences_list.add(pref.getString(i));
+                            }
+                        }
+
                         Log.d(TAG, "List: "+ preferences_list);
                         // Display preferences in profile
                         mSelectedCategoryNames = preferences_list;
@@ -264,16 +269,17 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private void editProfileRequest(String bioInput, String categoryNames) throws IOException {
+    private void editProfileRequest(String bioInput, ArrayList<String> categoryNames) throws IOException {
 
         Log.d(TAG, "bio is "+ bioInput);
         JSONObject jsonObject = new JSONObject();
+
+        JSONArray preferences = new JSONArray(categoryNames);
         try {
-            jsonObject.put("userId", UserID);
             jsonObject.put("userId", UserID);
             jsonObject.put("name", displayName.toString());
             jsonObject.put("biography", bioInput);
-            jsonObject.put("categories", categoryNames);
+            jsonObject.put("categories", preferences);
             jsonObject.put("image", this.getArguments().getString("Photo_URL"));
         } catch (JSONException e) {
             e.printStackTrace();
