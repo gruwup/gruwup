@@ -24,10 +24,28 @@ router.get("/", (req, res) => {
 });
 
 // create new adventure
-router.post("/create", (req, res) => {
+router.post("/create", async (req, res) => {
     // TODO: validate token
+    var adventure = {
+        owner: req.body.owner,
+        title: req.body.title,
+        description: req.body.description,
+        peopleGoing: [req.body.owner],
+        dateTime: req.body.dateTime,
+        location: req.body.location,
+        category: req.body.category,
+        status: "OPEN",
+        image: req.body.image ? new Buffer(req.body.image.split(",")[1],"base64") : null,
+        city: req.body.location.split(", ")[1] ?? "unknown"
+    };
     try {
-        AdventureStore.createAdventure(req, res);
+        var result = await AdventureStore.createAdventure(adventure);
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
     } catch (err) { 
         res.status(500).send(err);
     }
@@ -41,47 +59,77 @@ router.get("/search/:pagination", (req, res) => {
     res.status(200).send([TestAdventure, TestAdventure]);
 });
 
-// search all adventures created by user
-router.get("/:userId/get-adventure-ids", (req, res) => {
-    console.log(req.params.userId);
-    res.status(200).send([TestAdventure]);
-});
-
 // get adventure details
-router.get("/:adventureId/detail", (req, res) => {
+router.get("/:adventureId/detail", async (req, res) => {
     // TODO: validate token
     try {
-        AdventureStore.getAdventureDetail(req, res);
+        var result = await AdventureStore.getAdventureDetail(req.params.adventureId);
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
     } catch (err) { 
         res.status(500).send(err);
     }
 });
 
 // update adventure details
-router.put("/:adventureId/update", (req, res) => {
+router.put("/:adventureId/update", async (req, res) => {
     // TODO: validate token
+    var adventure = {
+        owner: req.body.owner,
+        title: req.body.title,
+        description: req.body.description,
+        peopleGoing: [req.body.owner],
+        dateTime: req.body.dateTime,
+        location: req.body.location,
+        category: req.body.category,
+        status: "OPEN",
+        image: req.body.image ? new Buffer(req.body.image.split(",")[1],"base64") : null,
+        city: req.body.location.split(", ")[1] ?? "unknown"
+    };
     try {
-        AdventureStore.updateAdventure(req, res);
+        var result = await AdventureStore.updateAdventure(req.params.adventureId, adventure);
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
     } catch (err) {
         res.status(500).send(err);
     }
 });
 
 // cancel the adventure and delete chat room
-router.put("/:adventureId/cancel", (req, res) => {
+router.put("/:adventureId/cancel", async (req, res) => {
     // TODO: validate token
     // TODO: delete chat room
     try {
-        AdventureStore.cancelAdventure(req, res);
+        var result = await AdventureStore.cancelAdventure(req, res);
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
     } catch (err) {
         res.status(500).send(err);
     }
 });
 
 // get ids of adventures owned or participated by user that are not cancelled
-router.get("/:userId/get-adventures", (req, res) => {
+router.get("/:userId/get-adventures", async (req, res) => {
     try {
-        AdventureStore.getUsersAdventures(req, res);
+        var result = await AdventureStore.getUsersAdventures(req.params.userId);
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
     } catch (err) {
         res.status(500).send(err);
     }
