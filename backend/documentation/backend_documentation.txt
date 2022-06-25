@@ -134,7 +134,7 @@ paths:
       tags:
        - Adventure
       parameters:
-        - name: currentLocation
+        - name: currentCity
           in: query
           required: true
           style: simple
@@ -155,9 +155,9 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/adventure/{userId}/get-adventure-ids:
+  /user/adventure/{userId}/get-adventures:
     get:
-      summary: Ger all adventure user has
+      summary: Get the id of all adventures the user owns or participates in (to check if user owns it, just check if the owner field of adventure euqal to user's id)
       tags:
        - Adventure
       parameters:

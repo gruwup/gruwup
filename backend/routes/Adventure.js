@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const Adventure = require("../models/Adventure");
 const Constants = require("../constants/Constants");
 const AdventureStore = require("../store/AdventureStore");
 
@@ -51,21 +50,11 @@ router.get("/:userId/get-adventure-ids", (req, res) => {
 // get adventure details
 router.get("/:adventureId/detail", (req, res) => {
     // TODO: validate token
-    Adventure.findById(req.params.adventureId, (err, adventure) => {
-        if (err) {
-            res.status(500).send({
-                message: err.toString()
-            });
-        }
-        else if (!adventure) {
-            res.status(404).send({
-                message: "Adventure not found"
-            });
-        }
-        else {
-            res.status(200).send(adventure);
-        }
-    });
+    try {
+        AdventureStore.getAdventureDetail(req, res);
+    } catch (err) { 
+        res.status(500).send(err);
+    }
 });
 
 // update adventure details
@@ -78,11 +67,21 @@ router.put("/:adventureId/update", (req, res) => {
     }
 });
 
-// Cancel the adventure and delete chat room
+// cancel the adventure and delete chat room
 router.put("/:adventureId/cancel", (req, res) => {
     // TODO: validate token
+    // TODO: delete chat room
     try {
         AdventureStore.cancelAdventure(req, res);
+    } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+// get ids of adventures owned or participated by user that are not cancelled
+router.get("/:userId/get-adventures", (req, res) => {
+    try {
+        AdventureStore.getUsersAdventures(req, res);
     } catch (err) {
         res.status(500).send(err);
     }
