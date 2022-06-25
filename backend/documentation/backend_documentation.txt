@@ -401,7 +401,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/request/{adventureId}/make-request:
+  /user/request/{adventureId}/send-request:
     post:
       summary: request to join 
       tags:
@@ -763,7 +763,7 @@ components:
           type: string
           example: "I am a 20 year old living in Vancouver"
         categories:
-          type: object
+          type: string
           example: ["MOVIE", "MUSIC"]
           enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
         image:

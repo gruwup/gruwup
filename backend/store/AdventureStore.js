@@ -120,4 +120,18 @@ module.exports = class AdventureStore {
             }
         });
     };
+
+    static getAdventureParticipants = async (adventureId) => {
+        Adventure.findById(adventureId, (err, adventure) => {
+            if (err) {
+                callback(err, []);
+            }
+            else if (!adventure) {
+                callback("Adventure not found", []);
+            }
+            else {
+                callback("Participants found", adventure.peopleGoing);
+            }
+        });
+    }
 };

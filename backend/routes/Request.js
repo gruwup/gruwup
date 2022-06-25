@@ -51,12 +51,12 @@ const example_req = {
   }
 
 router.post("/:adventureId/make-request", (req, res) => {
-    if (DataValidator.isTokenValid(req.body.userId)) {
-        res.status(200).send(example);
-    }
-    else {
-        res.status(400);
-    }
+  const callback = (msg, payload) => {
+    console.log(msg);
+    console.log(payload);
+  }
+
+  
 });
 
 router.get("/:userId/check/:pagination", (req, res) => {
