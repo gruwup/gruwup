@@ -44,7 +44,7 @@ const schema = mongoose.Schema({
         required: true,
     },
     image: {
-        type: Buffer
+        type: String
     },
     city: {
         type: String
