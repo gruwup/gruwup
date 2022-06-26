@@ -66,6 +66,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 public class DiscoverFragment extends Fragment {
 
+    private String address = "10.0.2.2";
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
@@ -103,7 +104,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        get("http://20.227.142.169:8081/user/adventure/search/{pagination}",  new Callback() {
+        get("http://"+address+":8081/user/adventure/search/{pagination}",  new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -204,8 +205,8 @@ public class DiscoverFragment extends Fragment {
                         jsonObject.put("owner", "test owner");
                         jsonObject.put("title", title.getText().toString().trim());
                         jsonObject.put("description", description.getText().toString().trim());
-                        jsonObject.put("dateTime", "1687715065000");
-                        jsonObject.put("location", "2110 Burrard St, Vancouver, BC V6J 3H6");
+                        jsonObject.put("dateTime", time.getText().toString().trim());
+                        jsonObject.put("location", location.getText().toString().trim());
                         jsonObject.put("category", "MOVIE");
                         jsonObject.put("image", bmpToB64(imageBMP));
                     } catch (JSONException e) {
@@ -214,7 +215,7 @@ public class DiscoverFragment extends Fragment {
                     }
 
                     // To do: change this later with server url
-                    post("http://20.227.142.169:8081/user/adventure/create", jsonObject.toString(), new Callback() {
+                    post("http://"+address+":8081/user/adventure/create", jsonObject.toString(), new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             System.out.println("failure on post");
@@ -248,8 +249,10 @@ public class DiscoverFragment extends Fragment {
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
             mAdventureList.get(i).put("count", ("3"));
             mAdventureList.get(i).put("description", ("Description " + String.valueOf(i)));
+            mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
     }
+
     private void asyncHttpRequester(Request request) {
         OkHttpClient client = new OkHttpClient();
         client.newCall(request).enqueue(new Callback() {
@@ -267,6 +270,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
     }
+
     @Nullable
     private Response syncHttpRequester(Request request) {
         try {
@@ -279,6 +283,7 @@ public class DiscoverFragment extends Fragment {
             return null;
         }
     }
+
     @NonNull
     private Call get(String url , Callback callback){
         Request request = new Request.Builder()
@@ -325,7 +330,7 @@ public class DiscoverFragment extends Fragment {
         }
     }
 
-    private String bmpToB64(Bitmap bmp) {
+    public  static String bmpToB64(Bitmap bmp) {
         if(bmp == null) return null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 0, baos);
@@ -334,11 +339,10 @@ public class DiscoverFragment extends Fragment {
         return (imageEncoded);
     }
 
-    private Bitmap B64ToBmp(String b64) {
+    public static Bitmap B64ToBmp(String b64) {
         if(b64 == null) return null;
         byte[] decodedString = Base64.decode(b64, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
     }
-
 }

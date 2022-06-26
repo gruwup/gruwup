@@ -53,6 +53,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         holder.adventureLocation.setText(mAdvNames.get(position).get("location"));
         holder.adventureCount.setText(mAdvNames.get(position).get("count"));
         holder.adventureDescription.setText(mAdvNames.get(position).get("description"));
+        holder.adventureImage.setImageBitmap(DiscoverFragment.B64ToBmp(mAdvNames.get(position).get("image")));
         holder.adventureCard.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
