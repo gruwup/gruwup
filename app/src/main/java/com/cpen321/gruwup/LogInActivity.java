@@ -69,8 +69,6 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
-        // TO DO : Add Use without SignIn Option to be able to go to MainActivity without
-        // sign in
     }
 
     private void signIn() {
@@ -155,9 +153,11 @@ public class LogInActivity extends AppCompatActivity {
                             Log.d(TAG, "login successful");
 
                             String jsonData = response.body().string();
+                            String cookie = response.headers().get("Set-Cookie");
 
                             try {
                                 Log.d(TAG, "response body is "+ jsonData);
+                                Log.d(TAG, "cookie is "+ cookie);
                                 JSONObject jsonObj = new JSONObject(jsonData);
                                 Log.d(TAG, "json Obj "+ jsonObj.toString());
                                 boolean userExists = jsonObj.getBoolean("userExists");
@@ -168,11 +168,15 @@ public class LogInActivity extends AppCompatActivity {
                                 // Note: For storing userId locally used SharedPreferences
                                 final String PREF_NAME = "LogIn";
                                 final String DATA_TAG = "UserId";
+                                final String COOKIE_TAG = "Cookie";
                                 SharedPreferences settings = getApplicationContext().getSharedPreferences(PREF_NAME,0);
                                 SharedPreferences.Editor editor = settings.edit();
 
                                 // store userId
                                 editor.putString(DATA_TAG, userId);
+                                editor.commit();
+
+                                editor.putString(COOKIE_TAG, cookie);
                                 editor.commit();
 
                                 if (!userExists){
