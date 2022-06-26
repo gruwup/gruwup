@@ -26,9 +26,6 @@ public class SupportRequests {
     }
 
     public static Call post(String url , String json , Callback callback){
-//        OkHttpClient client = new OkHttpClient();
-//        MediaType JSON = MediaType.parse("application/json");
-
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)
@@ -55,7 +52,7 @@ public class SupportRequests {
 
     }
 
-    public static Call put(String url , String json , Callback callback){ //should probably make this a static method for code reuse, just pass in client
+    public static Call put(String url , String json , Callback callback){
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
                 .url(url)

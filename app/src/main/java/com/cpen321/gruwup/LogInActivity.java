@@ -117,7 +117,6 @@ public class LogInActivity extends AppCompatActivity {
             Log.d(TAG, "There is no user signed in");
         }
         else{
-            // TO DO:  navigate to MainActivity with User Profile Information Passed In
 
             Log.d(TAG, "Display Name: " + account.getDisplayName());
             Log.d(TAG, "Email: " + account.getEmail());
@@ -209,19 +208,4 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
-//    OkHttpClient client = new OkHttpClient();
-//    MediaType JSON = MediaType.parse("application/json");
-//
-//     private Call post(String url , String json , Callback callback){
-//        RequestBody body = RequestBody.create(JSON, json);
-//        Request request = new Request.Builder()
-//                .url(url)
-//                .post(body)
-//                .build();
-//
-//        Call call = client.newCall(request);
-//        call.enqueue(callback);
-//        return call;
-//
-//    }
 }
