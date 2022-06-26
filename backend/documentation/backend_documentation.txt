@@ -486,13 +486,13 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/request/{userId}/respond:
-    post:
+  /user/request/{requestId}/respond:
+    put:
       summary: respond to request
       tags:
       - Request
       parameters:
-      - name: userId
+      - name: requestId
         in: path
         required: true
         style: simple
@@ -504,7 +504,7 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/Request'
+                - $ref: '#/components/schemas/RequestResponse'
       responses:
         "200":
           description: Successfully responded
@@ -794,6 +794,15 @@ components:
         dateTime:
           type: string
           example: "13131238"
+    RequestResponse: 
+      type: object
+      properties:
+        userId:
+          type: string
+        response:
+          type: string
+          enum: ["ACCEPT", "REJECT"]
+          example: "ACCEPT"
   securitySchemes:
     accessCode:
       type: oauth2

@@ -40,13 +40,16 @@ const example_req = {
 
 router.post("/:adventureId/make-request", async (req, res) => {
 	// TODO: validate token and request
-	// TODO: if adventure already happened, auto reject request in store get request
 	try {
-    	var participantsResult = await AdventureStore.getAdventureParticipants(req.params.adventureId);
-		if (participantsResult.payload.length > 0) {
+		var adventure = await AdventureStore.getAdventureDetail(req.params.adventureId);
+		if (adventure.payload.status != "OPEN") {
+			return res.status(400).send("Adventure is not open");
+		}
+    	var participants = adventure.payload.peopleGoing;
+		if (participants.length > 0) {
 			var request = {
 				adventureId: req.params.adventureId,
-				adventureParticipants: participantsResult.payload,
+				adventureParticipants: participants,
 				requester: req.body.requester,
 				requesterId: req.body.requesterId,
 				status: "PENDING",
@@ -84,14 +87,20 @@ router.get("/:userId/get", async (req, res) => {
 	}
 });
 
-router.post("/:userId/respond", (req, res) => {
-    if (DataValidator.isTokenValid(req.params.userId)) {
-        // TODO: check field from user
-        res.status(200).send(example);
-    }
-    else {
-        res.sendStatus(400);
-    }
+router.put("/:requestId/respond", async (req, res) => {
+    //TODO: validate token
+	try {
+		var result = await RequestStore.sendResponse(req.params.requestId, req.body.userId, req.body.response);
+		if (result.code === 200) {
+			res.status(200).send(result.message);
+		}
+		else {
+			res.status(result.code).send(result.message);
+		}
+	}
+	catch (err) {
+		res.status(500).send(err);
+	}
 });
 
 module.exports = router;
