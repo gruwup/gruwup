@@ -106,8 +106,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
     }
-
-
+    
     private void createProfileRequest( String UserID, String displayName, String profileUrl, String bioInput, ArrayList<String> categoryNames) throws IOException {
 
         Log.d(TAG, "bio is "+ bioInput);
@@ -127,7 +126,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         // To do: change this later with server url
-        post("http://10.0.2.2:8081/user/profile/create", jsonObject.toString(), new Callback() {
+        SupportRequests.post("http://10.0.2.2:8081/user/profile/create", jsonObject.toString(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "could not create the user profile");
@@ -148,19 +147,4 @@ public class SignUpActivity extends AppCompatActivity {
 
     }
 
-    // To do: make this common
-    private Call post(String url , String json , Callback callback){
-        OkHttpClient client = new OkHttpClient();
-        MediaType JSON = MediaType.parse("application/json");
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
-
-    }
 }

@@ -209,12 +209,9 @@ public class ProfileFragment extends Fragment {
         profileDialog.show();
     }
 
-    OkHttpClient client = new OkHttpClient();
-    MediaType JSON = MediaType.parse("application/json");
-
     private void getProfileRequest() throws IOException{
         // To do: replace this with server url
-        get("http://10.0.2.2:8081/user/profile/" + UserID + "/get",  new Callback() {
+        SupportRequests.get("http://10.0.2.2:8081/user/profile/" + UserID + "/get",  new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -289,7 +286,7 @@ public class ProfileFragment extends Fragment {
         }
 
         // To do: change this later with server url
-        put("http://10.0.2.2:8081/user/profile/" + UserID + "/edit", jsonObject.toString(), new Callback() {
+        SupportRequests.put("http://10.0.2.2:8081/user/profile/" + UserID + "/edit", jsonObject.toString(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "could not edit the user profile");
@@ -308,31 +305,6 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
-
-    }
-
-    private Call put(String url , String json , Callback callback){ //should probably make this a static method for code reuse, just pass in client
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .put(body)
-                .build();
-
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
-
-    }
-
-    private Call get(String url , Callback callback){
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
-
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
 
     }
 
