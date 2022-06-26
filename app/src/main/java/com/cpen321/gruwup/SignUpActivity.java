@@ -7,6 +7,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -34,10 +35,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     RecyclerView categoryView ;
-    RecyclerView selectedCategories ;
     static final String TAG = "SignUpActivity";
-    //Change this to dynamic
-    String UserID = "27";
 
     private void initCategories(){
         mCategoryNames.add("MOVIE");
@@ -52,6 +50,10 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // Note: get stores UserID this way for activity
+        String UserID = SupportSharedPreferences.getUserId(getApplicationContext());
+
         setContentView(R.layout.activity_sign_up);
         getSupportActionBar().hide();
 
@@ -78,8 +80,6 @@ public class SignUpActivity extends AppCompatActivity {
                     categoryValidation.setText("Please select at least 3 categories.");
                 }
                 else {
-                    // pass selected categories for creating profile
-//                    userBio.setText(bioInput.getText().toString());
                     for (int i = 0 ; i < adapter.getSelectedCategoriesCount(); i++){
                         mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
                     }
@@ -88,7 +88,7 @@ public class SignUpActivity extends AppCompatActivity {
                     String profileUrl = getIntent().getStringExtra("Photo_URL");
 
                     try {
-                        createProfileRequest(displayName, profileUrl,bioInput.getText().toString(),mSelectedCategoryNames);
+                        createProfileRequest(UserID, displayName, profileUrl,bioInput.getText().toString(),mSelectedCategoryNames);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -97,6 +97,7 @@ public class SignUpActivity extends AppCompatActivity {
                     Bundle extras = new Bundle();
                     extras.putString("Display_Name", displayName);
                     extras.putString("Photo_URL", profileUrl);
+                    extras.putString("User_ID", UserID);
                     intent.putExtras(extras);
                     startActivity(intent);
                 }
@@ -107,7 +108,7 @@ public class SignUpActivity extends AppCompatActivity {
     }
 
 
-    private void createProfileRequest( String displayName, String profileUrl, String bioInput, ArrayList<String> categoryNames) throws IOException {
+    private void createProfileRequest( String UserID, String displayName, String profileUrl, String bioInput, ArrayList<String> categoryNames) throws IOException {
 
         Log.d(TAG, "bio is "+ bioInput);
         JSONObject jsonObject = new JSONObject();

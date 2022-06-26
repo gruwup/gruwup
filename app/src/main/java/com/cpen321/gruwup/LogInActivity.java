@@ -11,6 +11,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -141,7 +142,7 @@ public class LogInActivity extends AppCompatActivity {
                 e.printStackTrace();
             }
 
-            //TO DO: change this to remote server url // checking if new user
+            //TO DO: change this to remote server url
             String finalImageUrl = imageUrl;
             post("http://10.0.2.2:8081/account/sign-in", jsonObject.toString(), new Callback(){
                         @Override
@@ -160,9 +161,22 @@ public class LogInActivity extends AppCompatActivity {
                                 JSONObject jsonObj = new JSONObject(jsonData);
                                 Log.d(TAG, "json Obj "+ jsonObj.toString());
                                 boolean userExists = jsonObj.getBoolean("userExists");
+                                String userId = jsonObj.getString("userId");
                                 Log.d(TAG, "User exits: "+ userExists);
+                                Log.d(TAG, "User id"+ userId);
+
+                                // Note: For storing userId locally used SharedPreferences
+                                final String PREF_NAME = "LogIn";
+                                final String DATA_TAG = "UserId";
+                                SharedPreferences settings = getApplicationContext().getSharedPreferences(PREF_NAME,0);
+                                SharedPreferences.Editor editor = settings.edit();
+
+                                // store userId
+                                editor.putString(DATA_TAG, userId);
+                                editor.commit();
 
                                 if (!userExists){
+                                    Log.d(TAG, "New User!");
                                     Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
                                     Bundle extras = new Bundle();
                                     extras.putString("Display_Name", account.getDisplayName() );
@@ -172,7 +186,6 @@ public class LogInActivity extends AppCompatActivity {
 
                                 }
                                 else{
-                                    Log.d(TAG, "New User!");
                                     Intent intent = new Intent(LogInActivity.this, MainActivity.class);
                                     Bundle extras = new Bundle();
                                     extras.putString("Display_Name", account.getDisplayName() );

@@ -2,6 +2,7 @@ package com.cpen321.gruwup;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -54,8 +55,7 @@ public class ProfileFragment extends Fragment {
     Dialog profileDialog;
     Button editButton;
     final static String TAG = "ProfileFragment";
-    // TO DO: Replace this later with userId obtained after tokenID validation from backend
-    String UserID = "27";
+    String UserID;
     RecyclerView categoryView ;
     RecyclerView selectedCategories ;
 
@@ -77,6 +77,9 @@ public class ProfileFragment extends Fragment {
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
+
+        // Note: get stored UserID this way for fragment
+        UserID = SupportSharedPreferences.getUserId(this.getActivity());
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
         displayName = (TextView) view.findViewById(R.id.userName);
