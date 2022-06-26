@@ -437,7 +437,7 @@ paths:
                   - $ref: '#/components/schemas/Error'
   /user/request/{userId}/get:
     get:
-      summary: Get all request user has not processed (state is pending)
+      summary: Get all request user has not processed and not rejected by other users i adventure, or request that are sent out by user (as requester). Returned requests are in descending timestamp order.
       tags:
       - Request
       parameters:
@@ -458,34 +458,26 @@ paths:
                  pagination: 0,
                  requests: [
                     {
-                      "ReqId": "string",
-                      "AdventureId": "string",
-                      "Requester": "Bob John",
-                      "State": 1,
-                      "dateTime": "2022-12-11 11:20:01",
+                      "adventureId": "string",
+                      "adventureParticipants": ["useid1", "userid2"],
+                      "requester": "Bob John",
+                      "requesterId": "bobjohnuserid",
+                      "accepted": ["userid1"],
+                      "rejected": [],
+                      "status": "PENDING",
+                      "dateTime": "123456789",
                     },
                     {
-                      "ReqId": "string",
-                      "AdventureId": "string",
-                      "Requester": "Bob John",
-                      "State": 2,
-                      "dateTime": "2022-12-11 11:01:00",
-                    },
-                    {
-                      "ReqId": "string",
-                      "AdventureId": "string",
-                      "Requester": "Bob John",
-                      "State": 1,
-                      "dateTime": "2022-12-11 11:00:00",
-                    },
-                    {
-                      "ReqId": "string",
-                      "AdventureId": "string",
-                      "Requester": "Bob John",
-                      "State": 1,
-                      "dateTime": "2022-10-11 12:14:14",
-                    },
-                   ]
+                      "adventureId": "string",
+                      "adventureParticipants": ["useid3", "userid4"],
+                      "requester": "user",
+                      "requesterId": "userId",
+                      "accepted": ["userid3"],
+                      "rejected": ["userid4"],
+                      "status": "REJECTED",
+                      "dateTime": "123456789",
+                    }
+                  ]
                }
         "400":
           description: Could be any other error code

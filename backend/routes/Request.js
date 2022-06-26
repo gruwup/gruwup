@@ -69,14 +69,19 @@ router.post("/:adventureId/make-request", async (req, res) => {
 	}
 });
 
-router.get("/:userId/get", (req, res) => {
-    if (DataValidator.isTokenValid(req.params.userId)) {
-        res.status(200).send(example_req);
-        //TODO
-    }
-    else {
-        res.sendStatus(400);
-    }
+router.get("/:userId/get", async (req, res) => {
+    try {
+		var result = await RequestStore.getRequests(req.params.userId);
+		if (result.code === 200) {
+			res.status(200).send(result.payload);
+		}
+		else {
+			res.status(result.code).send(result.message);
+		}
+	}
+	catch (err) {
+		res.status(500).send(err);
+	}
 });
 
 router.post("/:userId/respond", (req, res) => {
