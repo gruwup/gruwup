@@ -1,20 +1,21 @@
 const CryptoJS = require("crypto-js");
-const session = {};
+const session = [];
 const name = "gruwup-session";
 
 const createSession = (userId) => {
     var encrypt = CryptoJS.SHA256(userId + Date.now());
     var token = CryptoJS.enc.Hex.stringify(encrypt);
-    session[name + "=" + token] = userId;
+    session.push(name + "=" + token);
     return token;
 }
 
-const getSessionInfo = (token) => {
-    return session[token];
+const validSession = (token) => {
+    console.log(session);
+    return session.includes(token);
 }
 
 const deleteSession = (token) => {
-    delete session[token];
+    session.filter(item => {item == token})
 }
 
-module.exports = {createSession, deleteSession, getSessionInfo, name};
+module.exports = {createSession, deleteSession, validSession, name};

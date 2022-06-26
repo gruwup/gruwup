@@ -14,10 +14,10 @@ router.post("/sign-in", (req, res) => {
                 res.status(500).send({message: err.toString()});
             }
             else if (!user) {
-                res.status(404).send({userExists: false});
+                res.status(404).send({userId: userId, userExists: false});
             }
             else {
-                res.status(200).send({userExists: true});
+                res.status(200).send({userId: userId, userExists: true});
             } 
         });
     })
@@ -27,7 +27,7 @@ router.post("/sign-in", (req, res) => {
 });
 
 router.post("/sign-out", (req, res) => {
-    if (Session.getSessionInfo(req.headers.cookie)) {
+    if (Session.validSession(req.headers.cookie)) {
         Session.deleteSession(req.headers.cookie);
         res.sendStatus(200);
     }
