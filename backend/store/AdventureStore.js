@@ -52,7 +52,6 @@ module.exports = class AdventureStore {
                 { _id: adventureId },
                 { $set: adventure },
                 {new: true});
-            console.log("updated result: " + result);
             return {
                 code: 200,
                 message: "Adventure updated successfully",
@@ -124,14 +123,17 @@ module.exports = class AdventureStore {
         }
     };
 
-    static getAdventureParticipants = async (adventureId) => {
+    static addAdventureParticipant = async (adventureId, userId) => {
         try {
-            var result = await Adventure.findById(adventureId);
+            var result = await Adventure.findOneAndUpdate(
+                { _id: adventureId },
+                { $push: { peopleGoing: userId } },
+                { new: true }
+            );
             if (result) {
                 return {
                     code: 200,
-                    message: "Adventure participants found",
-                    payload: result.peopleGoing
+                    message: "Adventure participant added successfully"
                 };
             }
             else {
@@ -147,5 +149,5 @@ module.exports = class AdventureStore {
                 message: err
             };
         }
-    }
+    };
 };
