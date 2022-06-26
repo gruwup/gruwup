@@ -91,12 +91,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("http://10.0.2.2:8081/user/adventure/search/{pagination}")
-                .build();
-
-        get("http://10.0.2.2:8081/user/adventure/search/{pagination}",  new Callback() {
+        get("http://20.227.142.169:8081/user/adventure/search/{pagination}",  new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
