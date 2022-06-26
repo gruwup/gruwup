@@ -1,17 +1,27 @@
 const mongoose = require("mongoose");
 
 const schema = mongoose.Schema({
-    requestId: {
+    adventureId: {
         type: String,
         required: true
     },
-    adventureId: {
-        type: String,
+    adventureParticipants: {
+        type: [String],
         required: true
     },
     requester: {
         type: String,
         required: true
+    },
+    requesterId: {
+        type: String,
+        required: true
+    },
+    accepted: {
+        type: [String],
+    },
+    rejected: {
+        type: [String],
     },
     status: {
         type: String,
@@ -23,16 +33,6 @@ const schema = mongoose.Schema({
     },
     dateTime: {
         type: String,
-        validate: {
-            validator: function (value) {
-                console.log(value);
-                var val = new Date(Number(value));
-                var now = new Date();
-                console.log(val);
-                return val > now;
-            },
-            message: '{VALUE} dateTime cannot be in the past'
-        },
         required: true
     }
 });

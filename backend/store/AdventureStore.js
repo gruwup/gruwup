@@ -1,28 +1,151 @@
 const Adventure = require("../models/Adventure");
 
 module.exports = class AdventureStore {
-    static createAdventure = async (req, res) => {
-        var adventure = new Adventure({
-            owner: req.body.owner,
-            title: req.body.title,
-            description: req.body.description,
-            peopleGoing: [req.body.owner],
-            dateTime: req.body.dateTime,
-            location: req.body.location,
-            category: req.body.category,
-            status: "OPEN",
-            image: req.body.image ? new Buffer(req.body.image.split(",")[1],"base64") : null,
-            city: req.body.location.split(", ")[1] ?? "unknown"
-        });
-    
-        adventure.save((err, adventureAdded) => {
-            if (err) {
-                res.status(500).send(err);
+    static createAdventure = async (adventure) => {
+        var adventure = new Adventure(adventure);
+        
+        try {
+            var result = await adventure.save();
+            result.adventureId = result._id;
+            return {
+                code: 200,
+                message: "Adventure created successfully",
+                payload: result
+            };
+        }
+        catch (err) {
+            return {
+                code: 400,
+                message: err
+            };
+        }
+    };
+
+    static getAdventureDetail = async (adventureId) => {
+        try {
+            var result = await Adventure.findById(adventureId);
+            if (result) {
+                return {
+                    code: 200,
+                    message: "Adventure found",
+                    payload: result
+                };
             }
             else {
-                adventure.adventureId = adventureAdded._id;
-                res.status(200).send(adventure);
+                return {
+                    code: 404,
+                    message: "Adventure not found"
+                };
             }
-        });
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        };
     };
+
+    static updateAdventure = async (adventureId, adventure) => {
+        try {
+            var result = await Adventure.findOneAndUpdate(
+                { _id: adventureId },
+                { $set: adventure },
+                {new: true});
+            console.log("updated result: " + result);
+            return {
+                code: 200,
+                message: "Adventure updated successfully",
+                payload: result
+            };
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
+
+    static cancelAdventure = async (req, res) => {
+        try {
+            var result = await Adventure.findOneAndUpdate(
+                { _id: req.params.adventureId },
+                { $set: { status: "CANCELLED" } },
+                {new: true});
+            if (result) {
+                return {
+                    code: 200,
+                    message: "Adventure cancelled successfully",
+                    payload: result
+                };
+            }
+            else {
+                return {
+                    code: 404,
+                    message: "Adventure not found"
+                };
+            }
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
+
+    static getUsersAdventures = async (userId) => {
+        try {
+            var result = await Adventure.find({
+                $and: [
+                    { 
+                        $or: [
+                            { owner: userId },
+                            { peopleGoing: { $in: userId} },
+                        ]
+                    },
+                    {
+                        status: "OPEN"
+                    }
+                ]
+            });
+            return {
+                code: 200,
+                message: "Adventures found",
+                payload: result.map(adventure => adventure._id)
+            };
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
+
+    static getAdventureParticipants = async (adventureId) => {
+        try {
+            var result = await Adventure.findById(adventureId);
+            if (result) {
+                return {
+                    code: 200,
+                    message: "Adventure participants found",
+                    payload: result.peopleGoing
+                };
+            }
+            else {
+                return {
+                    code: 404,
+                    message: "Adventure not found"
+                };
+            }
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    }
 };
