@@ -11,6 +11,7 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.content.pm.PackageManager;
 import android.os.Bundle;
 import android.util.Log;
@@ -25,6 +26,19 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.gms.common.api.ApiException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.MediaType;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
+import okhttp3.RequestBody;
+import okhttp3.Response;
 
 public class LogInActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
@@ -55,8 +69,6 @@ public class LogInActivity extends AppCompatActivity {
             }
         });
 
-        // TO DO : Add Use without SignIn Option to be able to go to MainActivity without
-        // sign in
     }
 
     private void signIn() {
@@ -105,7 +117,6 @@ public class LogInActivity extends AppCompatActivity {
             Log.d(TAG, "There is no user signed in");
         }
         else{
-            // TO DO:  navigate to MainActivity with User Profile Information Passed In
 
             Log.d(TAG, "Display Name: " + account.getDisplayName());
             Log.d(TAG, "Email: " + account.getEmail());
@@ -114,8 +125,6 @@ public class LogInActivity extends AppCompatActivity {
             Log.d(TAG, "Photo URL: "+ account.getPhotoUrl());
             Log.d(TAG, "Token: " + account.getIdToken());
 
-            Intent intent = new Intent(LogInActivity.this, MainActivity.class);
-            Bundle extras = new Bundle();
 
             String imageUrl = "";
 
@@ -123,13 +132,80 @@ public class LogInActivity extends AppCompatActivity {
                 imageUrl = account.getPhotoUrl().toString();
             }
 
-            extras.putString("Display_Name", account.getDisplayName() );
-            // Note: Photo URL is converted to String
-            extras.putString("Photo_URL", imageUrl);
-            intent.putExtras(extras);
-            startActivity(intent);
+            JSONObject jsonObject = new JSONObject();
+            try {
+                jsonObject.put("authentication_code", account.getIdToken());
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+            //TO DO: change this to remote server url
+            String finalImageUrl = imageUrl;
+            SupportRequests.post("http://10.0.2.2:8081/account/sign-in", jsonObject.toString(), new Callback(){
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            Log.d(TAG, "login unsucessful");
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            Log.d(TAG, "login successful");
+
+                            String jsonData = response.body().string();
+                            String cookie = response.headers().get("Set-Cookie");
+
+                            try {
+                                Log.d(TAG, "response body is "+ jsonData);
+                                Log.d(TAG, "cookie is "+ cookie);
+                                JSONObject jsonObj = new JSONObject(jsonData);
+                                Log.d(TAG, "json Obj "+ jsonObj.toString());
+                                boolean userExists = jsonObj.getBoolean("userExists");
+                                String userId = jsonObj.getString("userId");
+                                Log.d(TAG, "User exits: "+ userExists);
+                                Log.d(TAG, "User id"+ userId);
+
+                                // Note: For storing userId locally used SharedPreferences
+                                final String PREF_NAME = "LogIn";
+                                final String DATA_TAG = "UserId";
+                                final String COOKIE_TAG = "Cookie";
+                                SharedPreferences settings = getApplicationContext().getSharedPreferences(PREF_NAME,0);
+                                SharedPreferences.Editor editor = settings.edit();
+
+                                // store userId
+                                editor.putString(DATA_TAG, userId);
+                                editor.commit();
+
+                                editor.putString(COOKIE_TAG, cookie);
+                                editor.commit();
+
+                                if (!userExists){
+                                    Log.d(TAG, "New User!");
+                                    Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
+                                    Bundle extras = new Bundle();
+                                    extras.putString("Display_Name", account.getDisplayName() );
+                                    extras.putString("Photo_URL", finalImageUrl);
+                                    intent.putExtras(extras);
+                                    startActivity(intent);
+
+                                }
+                                else{
+                                    Intent intent = new Intent(LogInActivity.this, MainActivity.class);
+                                    Bundle extras = new Bundle();
+                                    extras.putString("Display_Name", account.getDisplayName() );
+                                    extras.putString("Photo_URL", finalImageUrl);
+                                    intent.putExtras(extras);
+                                    startActivity(intent);
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+            });
+
 
         }
 
     }
+
 }

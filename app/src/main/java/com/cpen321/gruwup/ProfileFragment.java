@@ -2,6 +2,7 @@ package com.cpen321.gruwup;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -46,7 +47,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ProfileFragment extends Fragment {
-    private String address = "10.0.2.2";
     TextView displayName;
     ImageView profilePic;
     Button signOutButton;
@@ -55,14 +55,17 @@ public class ProfileFragment extends Fragment {
     Dialog profileDialog;
     Button editButton;
     final static String TAG = "ProfileFragment";
-    // TO DO: Replace this later with userId obtained after tokenID validation from backend
-    String UserID = "27";
+
+    String UserID;
+    String cookie;
+
     RecyclerView categoryView ;
     RecyclerView selectedCategories ;
 
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
 
+    // TO DO: Can make this common later to avoid DRY
     private void initCategories(){
         mCategoryNames.add("MOVIE");
         mCategoryNames.add("MUSIC");
@@ -78,9 +81,14 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
 
+        // Note: get stored UserID this way for fragment
+        UserID = SupportSharedPreferences.getUserId(this.getActivity());
+        cookie = SupportSharedPreferences.getCookie(this.getActivity());
+
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
         displayName = (TextView) view.findViewById(R.id.userName);
         displayName.setText(this.getArguments().getString("Display_Name"));
+
         profilePic = (ImageView) view.findViewById(R.id.userImage);
         if(this.getArguments().getString("Photo_URL") != null && !this.getArguments().getString("Photo_URL").equals("")) {
             Picasso.get().load(this.getArguments().getString("Photo_URL")).into(profilePic);
@@ -99,7 +107,6 @@ public class ProfileFragment extends Fragment {
         profileDialog = new Dialog(getActivity());
 
         editButton = view.findViewById(R.id.edit_profile_button);
-
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -114,10 +121,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 Log.d("ProfileFragment", "Signing out");
                 mGoogleSignInClient.signOut();
-                Intent intent = new Intent(getActivity(), LogInActivity.class);
-                startActivity(intent);
-
-                //should return user to login screen in the LoginActivity
+                signOutRequest();
             }
         });
         Log.d(TAG, "Selected Categories "+mSelectedCategoryNames);
@@ -146,16 +150,14 @@ public class ProfileFragment extends Fragment {
         // for categories
         initCategories();
         Log.d(TAG, "Initialize Category Recycler View");
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-//        RecyclerView categoryView = (RecyclerView) profileDialog.findViewById(R.id.categoryRecyclerView);
         categoryView = (RecyclerView) profileDialog.findViewById(R.id.categoryRecyclerView);
-//        categoryView.setHasFixedSize(true);
         categoryView.setLayoutManager(layoutManager);
         CategoryViewAdapter adapter = new CategoryViewAdapter(getActivity(),mCategoryNames);
         categoryView.setAdapter(adapter);
 
         LinearLayoutManager categoriesLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-//        RecyclerView selectedCategories = (RecyclerView) getView().findViewById(R.id.selectedCategories);
         selectedCategories = (RecyclerView) getView().findViewById(R.id.selectedCategories);
         selectedCategories.setLayoutManager(categoriesLayoutManager);
 
@@ -194,7 +196,7 @@ public class ProfileFragment extends Fragment {
                     // Note: Can store this in cache
                     Log.d(TAG, "Selected categories names are: "+ mSelectedCategoryNames);
                     try {
-                        editProfileRequest(bioInput.getText().toString(), mSelectedCategoryNames.toString());
+                        editProfileRequest(bioInput.getText().toString(), mSelectedCategoryNames);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -208,12 +210,36 @@ public class ProfileFragment extends Fragment {
         profileDialog.show();
     }
 
-    OkHttpClient client = new OkHttpClient();
-    MediaType JSON = MediaType.parse("application/json");
+    private void signOutRequest(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("userId", UserID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        SupportRequests.postWithCookie("http://10.0.2.2:8081/account/sign-out", jsonObject.toString(), cookie, new Callback(){
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d(TAG, "sign out successful");
+
+                //return user to login screen in the LoginActivity
+                Intent intent = new Intent(getActivity(), LogInActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "sign out failed");
+            }
+        });
+
+    }
 
     private void getProfileRequest() throws IOException{
         // To do: replace this with server url
-        get("http://"+address+":8081/user/profile/" + UserID + "/get",  new Callback() {
+        SupportRequests.get("http://10.0.2.2:8081/user/profile/" + UserID + "/get",  new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -231,12 +257,16 @@ public class ProfileFragment extends Fragment {
                         Log.d(TAG, "json Obj "+ jsonObj.toString());
                         String bio = jsonObj.getString("biography");
                         Log.d(TAG, "Bio is "+ bio);
-                        String pref = jsonObj.getString("categories");
+                        JSONArray pref = jsonObj.getJSONArray("categories");
                         Log.d(TAG, "Pref is "+ pref);
-                        // format example of categories : "["[MOVIE, MUSIC, SPORTS]"]"
-                        String pref_str = pref.substring(3,pref.length()-3);
-                        ArrayList<String> preferences_list = new ArrayList<String>(Arrays.asList(pref_str.split(", ")));
-                        Log.d(TAG, "StrList: "+pref_str);
+
+                        ArrayList<String> preferences_list = new ArrayList<String>();
+                        if (pref !=null){
+                            for (int i=0; i<pref.length(); i++){
+                                preferences_list.add(pref.getString(i));
+                            }
+                        }
+
                         Log.d(TAG, "List: "+ preferences_list);
                         // Display preferences in profile
                         mSelectedCategoryNames = preferences_list;
@@ -267,22 +297,24 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private void editProfileRequest(String bioInput, String categoryNames) throws IOException {
+    private void editProfileRequest(String bioInput, ArrayList<String> categoryNames) throws IOException {
 
         Log.d(TAG, "bio is "+ bioInput);
         JSONObject jsonObject = new JSONObject();
+
+        JSONArray preferences = new JSONArray(categoryNames);
         try {
             jsonObject.put("userId", UserID);
             jsonObject.put("name", displayName.toString());
             jsonObject.put("biography", bioInput);
-            jsonObject.put("categories", categoryNames);
+            jsonObject.put("categories", preferences);
             jsonObject.put("image", this.getArguments().getString("Photo_URL"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         // To do: change this later with server url
-        put("http://"+address+":8081/user/profile/" + UserID + "/edit", jsonObject.toString(), new Callback() {
+        SupportRequests.put("http://10.0.2.2:8081/user/profile/" + UserID + "/edit", jsonObject.toString(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "could not edit the user profile");
@@ -301,31 +333,6 @@ public class ProfileFragment extends Fragment {
                 }
             }
         });
-
-    }
-
-    private Call put(String url , String json , Callback callback){ //should probably make this a static method for code reuse, just pass in client
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .put(body)
-                .build();
-
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
-
-    }
-
-    private Call get(String url , Callback callback){
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
-
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
 
     }
 
