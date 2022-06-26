@@ -48,4 +48,5 @@ dependencies {
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation 'com.squareup.okhttp3:okhttp:4.1.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 }

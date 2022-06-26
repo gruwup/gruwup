@@ -93,12 +93,21 @@
             android:text="Description: Lorem ipsum dolor sit amet, consectetur adipiscing. Dolor sit amet, consectetur adipiscing. " />
 
         <Button
+            android:id="@+id/adventure_open_in_maps"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:background="@drawable/rounded_btn"
+            android:layout_marginTop="180dp"
+            android:text="View on Google Maps" />
+
+        <Button
             android:id="@+id/request_join_adventure"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:background="@drawable/rounded_btn"
-            android:layout_marginTop="320dp"
+            android:layout_marginTop="80dp"
             android:text="Request to Join" />
 
     </LinearLayout>
