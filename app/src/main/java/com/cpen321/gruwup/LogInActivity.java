@@ -142,7 +142,7 @@ public class LogInActivity extends AppCompatActivity {
 
             //TO DO: change this to remote server url
             String finalImageUrl = imageUrl;
-            post("http://10.0.2.2:8081/account/sign-in", jsonObject.toString(), new Callback(){
+            SupportRequests.post("http://10.0.2.2:8081/account/sign-in", jsonObject.toString(), new Callback(){
                         @Override
                         public void onFailure(Call call, IOException e) {
                             Log.d(TAG, "login unsucessful");
@@ -209,19 +209,19 @@ public class LogInActivity extends AppCompatActivity {
 
     }
 
-    OkHttpClient client = new OkHttpClient();
-    MediaType JSON = MediaType.parse("application/json");
-
-     private Call post(String url , String json , Callback callback){
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
-
-    }
+//    OkHttpClient client = new OkHttpClient();
+//    MediaType JSON = MediaType.parse("application/json");
+//
+//     private Call post(String url , String json , Callback callback){
+//        RequestBody body = RequestBody.create(JSON, json);
+//        Request request = new Request.Builder()
+//                .url(url)
+//                .post(body)
+//                .build();
+//
+//        Call call = client.newCall(request);
+//        call.enqueue(callback);
+//        return call;
+//
+//    }
 }

@@ -55,7 +55,10 @@ public class ProfileFragment extends Fragment {
     Dialog profileDialog;
     Button editButton;
     final static String TAG = "ProfileFragment";
+
     String UserID;
+    String cookie;
+
     RecyclerView categoryView ;
     RecyclerView selectedCategories ;
 
@@ -80,6 +83,7 @@ public class ProfileFragment extends Fragment {
 
         // Note: get stored UserID this way for fragment
         UserID = SupportSharedPreferences.getUserId(this.getActivity());
+        cookie = SupportSharedPreferences.getCookie(this.getActivity());
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
         displayName = (TextView) view.findViewById(R.id.userName);
@@ -117,10 +121,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 Log.d("ProfileFragment", "Signing out");
                 mGoogleSignInClient.signOut();
-                Intent intent = new Intent(getActivity(), LogInActivity.class);
-                startActivity(intent);
-
-                //should return user to login screen in the LoginActivity
+                signOutRequest();
             }
         });
         Log.d(TAG, "Selected Categories "+mSelectedCategoryNames);
@@ -207,6 +208,33 @@ public class ProfileFragment extends Fragment {
         });
 
         profileDialog.show();
+    }
+
+    private void signOutRequest(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("userId", UserID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        SupportRequests.postWithCookie("http://10.0.2.2:8081/account/sign-out", jsonObject.toString(), cookie, new Callback(){
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                Log.d(TAG, "sign out successful");
+
+                //return user to login screen in the LoginActivity
+                Intent intent = new Intent(getActivity(), LogInActivity.class);
+                startActivity(intent);
+            }
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "sign out failed");
+            }
+        });
+
     }
 
     private void getProfileRequest() throws IOException{

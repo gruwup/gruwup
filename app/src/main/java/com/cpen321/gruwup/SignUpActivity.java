@@ -106,7 +106,7 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
     }
-    
+
     private void createProfileRequest( String UserID, String displayName, String profileUrl, String bioInput, ArrayList<String> categoryNames) throws IOException {
 
         Log.d(TAG, "bio is "+ bioInput);

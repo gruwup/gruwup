@@ -26,10 +26,25 @@ public class SupportRequests {
     }
 
     public static Call post(String url , String json , Callback callback){
-        OkHttpClient client = new OkHttpClient();
-        MediaType JSON = MediaType.parse("application/json");
+//        OkHttpClient client = new OkHttpClient();
+//        MediaType JSON = MediaType.parse("application/json");
+
         RequestBody body = RequestBody.create(JSON, json);
         Request request = new Request.Builder()
+                .url(url)
+                .post(body)
+                .build();
+
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+        return call;
+
+    }
+
+    public static Call postWithCookie(String url , String json , String cookie, Callback callback){
+        RequestBody body = RequestBody.create(JSON, json);
+        Request request = new Request.Builder()
+                .addHeader("Set-Cookie", cookie)
                 .url(url)
                 .post(body)
                 .build();
