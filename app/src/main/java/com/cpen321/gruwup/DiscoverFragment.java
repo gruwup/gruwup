@@ -237,6 +237,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
     }
+
     private void initAdventures() throws JSONException {
         mAdventureList = new ArrayList<Map<String, String>>();
         JSONArray jsonArray = new JSONArray(HTTPRESULT);
@@ -247,8 +248,8 @@ public class DiscoverFragment extends Fragment {
             mAdventureList.get(i).put("event", jsonObject.getString("id"));
             mAdventureList.get(i).put("time", jsonObject.getString("dateTime"));
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
-            mAdventureList.get(i).put("count", ("3"));
-            mAdventureList.get(i).put("description", ("Description " + String.valueOf(i)));
+            mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
+            mAdventureList.get(i).put("description", ("Description (currently none) " + String.valueOf(i)));
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
     }

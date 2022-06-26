@@ -46,6 +46,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ProfileFragment extends Fragment {
+    private String address = "10.0.2.2";
     TextView displayName;
     ImageView profilePic;
     Button signOutButton;
@@ -212,7 +213,7 @@ public class ProfileFragment extends Fragment {
 
     private void getProfileRequest() throws IOException{
         // To do: replace this with server url
-        get("http://20.227.142.169:8081/user/profile/" + UserID + "/get",  new Callback() {
+        get("http://"+address+":8081/user/profile/" + UserID + "/get",  new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -281,7 +282,7 @@ public class ProfileFragment extends Fragment {
         }
 
         // To do: change this later with server url
-        put("http://20.227.142.169:8081/user/profile/" + UserID + "/edit", jsonObject.toString(), new Callback() {
+        put("http://"+address+":8081/user/profile/" + UserID + "/edit", jsonObject.toString(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "could not edit the user profile");
