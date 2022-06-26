@@ -101,9 +101,63 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/adventure/{userId}/get-adventure-ids:
+  /user/adventure/{userId}/discover:
     get:
-      summary: Ger all adventure user has
+      summary: Search adventure using filters
+      tags:
+       - Adventure
+      parameters:
+        - name: userId
+          in: path
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success returns a list of adventures
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/AdventureWithId'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/nearby:
+    get:
+      summary: Search adventure using filters
+      tags:
+       - Adventure
+      parameters:
+        - name: currentCity
+          in: query
+          required: true
+          style: simple
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Success returns a list of adventures
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/AdventureWithId'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/{userId}/get-adventures:
+    get:
+      summary: Get the id of all adventures the user owns or participates in (to check if user owns it, just check if the owner field of adventure euqal to user's id)
       tags:
        - Adventure
       parameters:
@@ -192,8 +246,8 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Error'
   /user/adventure/{adventureId}/cancel:
-    delete:
-      summary: Cancel the adventure and delete chat room
+    put:
+      summary: Update the status of adventure to CANCELLED
       tags:
        - Adventure
       parameters:
@@ -254,12 +308,7 @@ paths:
                 - $ref: '#/components/schemas/Account'
       responses:
         "200":
-          description: Successfully created account. Return created account details.
-          content:
-            application/json:
-              schema: 
-                allOf:
-                  - $ref: '#/components/schemas/Account'
+          description: Successfully created account.
         "400":
           description: Could be any other error code
           content:
@@ -344,12 +393,7 @@ paths:
                 - $ref: '#/components/schemas/Account'
       responses:
         "200":
-          description: Successfully updated account details. Return account details.
-          content:
-            application/json:
-              schema: 
-                allOf:
-                  - $ref: '#/components/schemas/Account'
+          description: Successfully updated account details.
         "400":
           description: Could be any other error code
           content:
@@ -357,7 +401,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/request/{adventureId}/make-request:
+  /user/request/{adventureId}/send-request:
     post:
       summary: request to join 
       tags:
@@ -391,18 +435,12 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/request/{userId}/check/{pagination}:
+  /user/request/{userId}/get:
     get:
-      summary: Get 10 requests for the user starting at given pagination (so pagination 0 will return most recent 10 requests, if the batch has less then 10 requests it will return whatever it can, so if you have 15 messages, and pagination is at 9, it will return message 9-15 instead of 9-19)
+      summary: Get all request user has not processed and not rejected by other users i adventure, or request that are sent out by user (as requester). Returned requests are in descending timestamp order.
       tags:
       - Request
       parameters:
-      - name: pagination
-        in: path
-        required: true
-        style: simple
-        schema:
-          type: number
       - name: userId
         in: path
         required: true
@@ -411,7 +449,7 @@ paths:
           type: number
       responses:
         "200":
-          description: Success, return given pagination and the messages
+          description: Success, return the requests
           content:
             application/json:
               schema:
@@ -420,34 +458,26 @@ paths:
                  pagination: 0,
                  requests: [
                     {
-                      "ReqId": "string",
-                      "AdventureId": "string",
-                      "Requester": "Bob John",
-                      "State": 1,
-                      "dateTime": "2022-12-11 11:20:01",
+                      "adventureId": "string",
+                      "adventureParticipants": ["useid1", "userid2"],
+                      "requester": "Bob John",
+                      "requesterId": "bobjohnuserid",
+                      "accepted": ["userid1"],
+                      "rejected": [],
+                      "status": "PENDING",
+                      "dateTime": "123456789",
                     },
                     {
-                      "ReqId": "string",
-                      "AdventureId": "string",
-                      "Requester": "Bob John",
-                      "State": 2,
-                      "dateTime": "2022-12-11 11:01:00",
-                    },
-                    {
-                      "ReqId": "string",
-                      "AdventureId": "string",
-                      "Requester": "Bob John",
-                      "State": 1,
-                      "dateTime": "2022-12-11 11:00:00",
-                    },
-                    {
-                      "ReqId": "string",
-                      "AdventureId": "string",
-                      "Requester": "Bob John",
-                      "State": 1,
-                      "dateTime": "2022-10-11 12:14:14",
-                    },
-                   ]
+                      "adventureId": "string",
+                      "adventureParticipants": ["useid3", "userid4"],
+                      "requester": "user",
+                      "requesterId": "userId",
+                      "accepted": ["userid3"],
+                      "rejected": ["userid4"],
+                      "status": "REJECTED",
+                      "dateTime": "123456789",
+                    }
+                  ]
                }
         "400":
           description: Could be any other error code
@@ -719,7 +749,7 @@ components:
           type: string
           example: "I am a 20 year old living in Vancouver"
         categories:
-          type: object
+          type: string
           example: ["MOVIE", "MUSIC"]
           enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
         image:
@@ -728,7 +758,7 @@ components:
     code:
       type: object
       properties:
-        authentication-code:
+        authentication_code:
           type: string
     userId:
       type: object
@@ -738,20 +768,32 @@ components:
     Request:
       type: object
       properties:
-        requestId:
-          type: string
         adventureId:
           type: string
+        adventureParticipants:
+          type: array
+          items: 
+            type: string
         requester:
           type: string
           example: "Bob John"
+        requesterId:
+          type: string
+        accepted:
+          type: array
+          items: 
+            type: string
+        rejected: 
+          type: array
+          items: 
+            type: string
         status:
-          type: integer
-          enum: [1, 2, 3] #"accept", "reject", "pending"
-          example: 3
+          type: string
+          enum: ["ACCEPTED", "PENDING", "REJECTED"]
+          example: "PENDING"
         dateTime:
           type: string
-          example: "yyyy-mm-dd hh:mm:ss"
+          example: "13131238"
   securitySchemes:
     accessCode:
       type: oauth2

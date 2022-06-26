@@ -1,37 +1,38 @@
 const express = require("express");
-const DataValidator = require("../constants/DataValidator");
+const UserAccount = require("../services/UserAccount");
+const UserStore = require("../store/UserStore");
+const Session = require("../services/Session");
 const router = express.Router();
 
-// TODO: need database to store profile information based on user token
-
-// can delete this later, just for early testing
-const example = {
-    "userId": "string",
-    "name": "Bob John",
-    "biography": "I am a 20 year old living in Vancouver",
-    "categories": [1, 2, 3]
-  }
-
-router.post("/create", (req, res) => {
-    // TODO: authentication
-    
-});
-
 router.post("/sign-in", (req, res) => {
-    if (DataValidator.isTokenValid(req.body.userId)) {
-        res.status(200).send(example);
-    }
-    else {
-        res.sendStatus(400);
-    }
+    UserAccount.checkValidToken(req.body.authentication_code).then(response => {
+        var userId = response.payload['sub'];
+        var token = Session.createSession(userId);
+        UserStore.findUser(userId).then((user, err) => {
+            res.cookie(Session.name, token);
+            if (err) {
+                res.status(500).send({message: err.toString()});
+            }
+            else if (!user) {
+                res.status(404).send({userId: userId, userExists: false});
+            }
+            else {
+                res.status(200).send({userId: userId, userExists: true});
+            } 
+        });
+    })
+    .catch(err => {
+        res.status(404).send({message: err.toString()});
+    });
 });
 
 router.post("/sign-out", (req, res) => {
-    if (DataValidator.isTokenValid(req.body.userId)) {
+    if (Session.validSession(req.headers.cookie)) {
+        Session.deleteSession(req.headers.cookie);
         res.sendStatus(200);
     }
     else {
-        res.sendStatus(400);
+        res.status(403).send({message: "Invalid cookie"});
     }
 });
 
