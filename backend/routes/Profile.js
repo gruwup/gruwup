@@ -1,68 +1,83 @@
 const express = require("express");
-const Profile = require("../models/Profile");
+const UserStore = require("../store/UserStore");
+const Session = require("../services/Session");
 
 const router = express.Router();
 
-router.post("/create", (req, res) => {
-    const profile = new Profile({
-        userId: req.body.userId,
-        name: req.body.name,
-        biography: req.body.biography,
-        categories: req.body.categories,
-        image: req.body.image ? req.body.image : null
-    });
-
-    profile.save((err) => {
-        if (err) {
-            res.status(500).send({
-                message: err.toString()
-            });
-        }
-        else {
-            res.status(200).send(profile);
-        }
-    });
-});
-
-router.get("/:userId/get", (req, res) => {
-    Profile.findOne({ userId: req.params.userId }, (err, profile) => {
-        if (err) {
-            res.status(500).send({
-                message: err.toString()
-            });
-        }
-        else if (!profile) {
-            res.status(404).send({
-                message: "Profile not found"
-            });
-        }
-        else {
-            res.status(200).send(profile);
-        }
-    });
-});
-
-router.put("/:userId/edit", (req, res) => {
-    Profile.findOneAndUpdate(
-        { userId: req.params.userId }, 
-        { $set: { name: req.body.name, biography: req.body.biography, categories: req.body.categories, image: req.body.image } },
-        {new: true},
-        (err, profile) => {
-            if (err) {
-                res.status(500).send({
-                    message: err.toString()
-                });
-            }
-            else if (!profile) {
-                res.status(404).send({
-                    message: "Profile not found"
-                });
+router.post("/create", async (req, res) => {
+    if (Session.validSession(req.headers.cookie)) {
+        var profile = {
+            userId: req.body.userId,
+            name: req.body.name,
+            biography: req.body.biography,
+            categories: req.body.categories,
+            image: req.body.image ? req.body.image : null
+        };
+    
+        try {
+            var result = await UserStore.createUser(profile);
+            if (result.code === 200) {
+                res.sendStatus(200);
             }
             else {
-                res.status(200).send(profile);
+                res.status(result.code).send(result.message);
             }
         }
-    );
+        catch (err) {
+            res.status(500).send({ message: err.toString() });
+        }
+    }
+    else {
+        res.status(403).send({ message: "Invalid cookie" });
+    }
+});
+
+router.get("/:userId/get", async (req, res) => {
+    if (Session.validSession(req.headers.cookie)) {
+        try {
+            var result = await UserStore.getUserProfile(req.params.userId);
+            
+            if (result.code === 200) {
+                res.status(200).send(result.payload);
+            }
+            else {
+                res.status(result.code).send(result.message);
+            }
+        }
+        catch (err) {
+            res.status(500).send({ message: err.toString() });
+        }
+    }
+    else {
+        res.status(403).send({ message: "Invalid cookie" });
+    }
+});
+
+router.put("/:userId/edit", async (req, res) => {
+    if (Session.validSession(req.headers.cookie)) {
+        var profile = {
+            name: req.body.name,
+            biography: req.body.biography,
+            categories: req.body.categories,
+            image: req.body.image ? req.body.image : null
+        };
+
+        try {
+            var result = await UserStore.updateUser(req.params.userId, profile);
+            if (result.code === 200) {
+                res.sendStatus(200);
+            }
+            else {
+                res.status(result.code).send(result.message);
+            }
+        }
+        catch (err) {
+            res.status(500).send({ message: err.toString() });
+        }
+    }
+    else {
+        res.status(403).send({ message: "Invalid cookie" });
+    }
 });
 
 module.exports = router;

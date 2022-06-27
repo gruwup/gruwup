@@ -10,7 +10,6 @@ const createSession = (userId) => {
 }
 
 const validSession = (token) => {
-    console.log(session);
     return session.includes(token);
 }
 
