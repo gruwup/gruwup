@@ -4,9 +4,9 @@ const findUser = (userId) => {
     return Profile.findOne({ userId: userId });
 };
 
-const getUserProfile = (userId) => {
+const getUserProfile = async (userId) => {
     try {
-        var result = Profile.findOne({ userId: userId });
+        var result = await Profile.findOne({ userId: userId });
 
         if (result) {
             return {
@@ -50,7 +50,7 @@ const createUser = async (profile) => {
     }
 };
 
-const updateUser = (userId, profile) => {
+const updateUser = async (userId, profile) => {
     try {
         var result = await Profile.findOneAndUpdate(
             { userId: userId },
