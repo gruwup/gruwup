@@ -1,27 +1,34 @@
 const express = require("express");
-const Profile = require("../models/Profile");
+const UserStore = require("../store/UserStore");
 
 const router = express.Router();
 
 router.post("/create", (req, res) => {
-    const profile = new Profile({
-        userId: req.body.userId,
-        name: req.body.name,
-        biography: req.body.biography,
-        categories: req.body.categories,
-        image: req.body.image ? req.body.image : null
-    });
-
-    profile.save((err) => {
-        if (err) {
-            res.status(500).send({
-                message: err.toString()
-            });
+    if (Session.validSession(req.headers.cookie)) {
+        const profile = {
+            userId: req.body.userId,
+            name: req.body.name,
+            biography: req.body.biography,
+            categories: req.body.categories,
+            image: req.body.image ? req.body.image : null
+        };
+    
+        try {
+            var result = await UserStore.createUser(profile);
+            if (result.code === 200) {
+                res.sendStatus(200);
+            }
+            else {
+                res.status(res.code).send(res.message);
+            }
         }
-        else {
-            res.status(200).send(profile);
+        catch (err) {
+            res.status(500).send(err);
         }
-    });
+    }
+    else {
+        res.status(403).send({message: "Invalid cookie"});
+    }
 });
 
 router.get("/:userId/get", (req, res) => {

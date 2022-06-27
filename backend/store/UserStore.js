@@ -8,7 +8,24 @@ const getUserProfile = (userId) => {
 
 };
 
-const createUser = (profile) => {
+const createUser = async (profile) => {
+    var user = new Profile(profile);
+        
+    try {
+        var result = await user.save();
+        result.adventureId = result._id;
+        return {
+            code: 200,
+            message: "Profile created successfully",
+            payload: result
+        };
+    }
+    catch (err) {
+        return {
+            code: 400,
+            message: err
+        };
+    }
 
 };
 
