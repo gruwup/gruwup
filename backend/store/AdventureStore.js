@@ -71,10 +71,10 @@ module.exports = class AdventureStore {
         }
     };
 
-    static cancelAdventure = async (req, res) => {
+    static cancelAdventure = async (adventureId) => {
         try {
             var result = await Adventure.findOneAndUpdate(
-                { _id: req.params.adventureId },
+                { _id: adventureId },
                 { $set: { status: "CANCELLED" } },
                 {new: true});
             if (result) {
@@ -90,6 +90,23 @@ module.exports = class AdventureStore {
                     message: "Adventure not found"
                 };
             }
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
+
+    static searchAdventuresByTitle = async (title) => {
+        try {
+            var result = await Adventure.find({ title: { $regex: title, $options: "i" } });
+            return {
+                code: 200,
+                message: "Adventures found",
+                payload: result
+            };
         }
         catch (err) {
             return {

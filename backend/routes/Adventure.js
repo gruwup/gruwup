@@ -82,12 +82,28 @@ router.post("/create", async (req, res) => {
     }
 });
 
-// search adventures
-router.get("/search/:pagination", (req, res) => {
+// search adventures by filter
+router.get("/search-by-filter", async (req, res) => {
     // TODO: validate token
     console.log("pagination: " + req.params.pagination);
     console.log("pagination limit: " + Constants.SEARCH_PAGINATION_LIMIT);
     res.status(200).send([TestAdventure, TestAdventure]);
+});
+
+// search adventures by title
+router.get("/search-by-title", async (req, res) => {
+    try {
+        var result = await AdventureStore.searchAdventuresByTitle(req.query.title);
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
+    }
+    catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 // get adventure details
@@ -138,7 +154,7 @@ router.put("/:adventureId/cancel", async (req, res) => {
     // TODO: validate token
     // TODO: delete chat room
     try {
-        var result = await AdventureStore.cancelAdventure(req, res);
+        var result = await AdventureStore.cancelAdventure(req.params.adventureId);
         if (result.code === 200) {
             res.status(200).send(result.payload);
         }
