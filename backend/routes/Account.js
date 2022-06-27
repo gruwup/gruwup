@@ -30,7 +30,7 @@ router.post("/sign-out", (req, res) => {
         res.sendStatus(200);
     }
     else {
-        res.status(403).send({message: "Invalid cookie"});
+        res.status(403).send({ message: Session.invalid_msg });
     }
 });
 

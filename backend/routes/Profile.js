@@ -28,7 +28,7 @@ router.post("/create", async (req, res) => {
         }
     }
     else {
-        res.status(403).send({ message: "Invalid cookie" });
+        res.status(403).send({ message: Session.invalid_msg });
     }
 });
 
@@ -49,7 +49,7 @@ router.get("/:userId/get", async (req, res) => {
         }
     }
     else {
-        res.status(403).send({ message: "Invalid cookie" });
+        res.status(403).send({ message: Session.invalid_msg });
     }
 });
 
@@ -76,7 +76,7 @@ router.put("/:userId/edit", async (req, res) => {
         }
     }
     else {
-        res.status(403).send({ message: "Invalid cookie" });
+        res.status(403).send({ message: Session.invalid_msg });
     }
 });
 
