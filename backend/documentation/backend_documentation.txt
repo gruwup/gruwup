@@ -267,6 +267,33 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
+  /user/adventure/{adventureId}/quit:
+    put:
+      summary: Remove user from adventure, if the user was adventure creator, the next person on peopleGoing list become the new adventure creator/admin,, if no other people going, the adventure would be REMOVED from database (instead of just showing as cancelled)
+      tags:
+       - Adventure
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: userId
+        in: query
+        required: true
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
   /user/profile/{userId}/get:
     get:
       summary: Get user profile
