@@ -25,6 +25,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
+
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
@@ -64,8 +65,8 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
-public class DiscoverFragment extends Fragment {
 
+public class DiscoverFragment extends Fragment {
     private String address = "10.0.2.2";
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
@@ -80,7 +81,7 @@ public class DiscoverFragment extends Fragment {
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
-    private void initCategories(){
+    private void initCategories() {
         mCategoryNames.add("MOVIE");
         mCategoryNames.add("MUSIC");
         mCategoryNames.add("SPORTS");
@@ -89,6 +90,7 @@ public class DiscoverFragment extends Fragment {
         mCategoryNames.add("DANCE");
         mCategoryNames.add("ART");
     }
+
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
@@ -104,14 +106,14 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        SupportRequests.get("http://"+address+":8081/user/adventure/search/{pagination}",  new Callback() {
+        SupportRequests.get("http://" + address + ":8081/user/adventure/search/{pagination}", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
                         HTTPRESULT = response.body().string();
                         initAdventures();
@@ -124,8 +126,7 @@ public class DiscoverFragment extends Fragment {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
-                else {
+                } else {
                     System.out.println("HTTP req failed");
                 }
             }
@@ -133,11 +134,12 @@ public class DiscoverFragment extends Fragment {
         displayAdventures(view);
         return view;
     }
+
     private void displayAdventures(View view) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         RecyclerView adventureListView = (RecyclerView) view.findViewById(R.id.discoveredAdventures);
         adventureListView.setLayoutManager(layoutManager);
-        DiscAdvViewAdapter adapter = new DiscAdvViewAdapter(getActivity(),mAdventureList);
+        DiscAdvViewAdapter adapter = new DiscAdvViewAdapter(getActivity(), mAdventureList);
         adventureListView.setAdapter(adapter);
     }
 
@@ -180,20 +182,17 @@ public class DiscoverFragment extends Fragment {
         confirmCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ProfileFragment.verifyUserInput(title) != "valid" ||
+                if (ProfileFragment.verifyUserInput(title) != "valid" ||
                         ProfileFragment.verifyUserInput(description) != "valid" ||
                         ProfileFragment.verifyUserInput(time) != "valid" ||
-                        ProfileFragment.verifyUserInput(location) != "valid"){
+                        ProfileFragment.verifyUserInput(location) != "valid") {
                     Toast.makeText(getActivity(), "Make sure all fields are not empty and use alphanumeric characters!", Toast.LENGTH_SHORT).show();
-                }
-                else if(imageBMP == null) {
+                } else if (imageBMP == null) {
                     Toast.makeText(getActivity(), "Choose an image!", Toast.LENGTH_SHORT).show();
-                }
-                else if(adapter.getSelectedCategoriesCount() < 1) {
+                } else if (adapter.getSelectedCategoriesCount() < 1) {
                     Toast.makeText(getActivity(), "Choose at least one activity tag!", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    for (int i = 0 ; i < adapter.getSelectedCategoriesCount(); i++) {
+                } else {
+                    for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
                         mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
                     }
                     System.out.println(title.getText().toString().trim() + " " //put the POST here
@@ -216,7 +215,7 @@ public class DiscoverFragment extends Fragment {
                     }
 
                     // To do: change this later with server url
-                    SupportRequests.post("http://"+address+":8081/user/adventure/create", jsonObject.toString(), new Callback() {
+                    SupportRequests.post("http://" + address + ":8081/user/adventure/create", jsonObject.toString(), new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             System.out.println("failure on post");
@@ -224,9 +223,8 @@ public class DiscoverFragment extends Fragment {
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
-                            if(response.isSuccessful()){
-                            }
-                            else{
+                            if (response.isSuccessful()) {
+                            } else {
                                 System.out.println("failure on response " + response.code() + " " + response.message() + " " + response.body().string() + " ");
                             }
                         }
@@ -243,8 +241,8 @@ public class DiscoverFragment extends Fragment {
         mAdventureList = new ArrayList<Map<String, String>>();
         JSONArray jsonArray = new JSONArray(HTTPRESULT);
         int arrlen = jsonArray.length();
-        for(int i = 0; i < arrlen; i++){
-            JSONObject jsonObject = (JSONObject)jsonArray.getJSONObject(i);
+        for (int i = 0; i < arrlen; i++) {
+            JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());
             mAdventureList.get(i).put("event", jsonObject.getString("id"));
             mAdventureList.get(i).put("time", jsonObject.getString("dateTime"));
@@ -255,42 +253,11 @@ public class DiscoverFragment extends Fragment {
         }
     }
 
-    private void asyncHttpRequester(Request request) {
-        OkHttpClient client = new OkHttpClient();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                System.out.println("Request failed");
-            }
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                try {
-                    String responseData = response.body().string();
-                    HTTPRESULT = responseData;
-                } catch (Exception e) {
-                }
-            }
-        });
-    }
-
-    @Nullable
-    private Response syncHttpRequester(Request request) {
-        try {
-            OkHttpClient client = new OkHttpClient();
-            Response response = client.newCall(request).execute();
-            return response;
-        }
-        catch (Exception e) {
-            System.out.println("Request failed");
-            return null;
-        }
-    }
-
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
 
         //Detects request codes
-        if(requestCode==GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+        if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
 
             Bitmap bitmap = null;
@@ -307,8 +274,8 @@ public class DiscoverFragment extends Fragment {
         }
     }
 
-    public  static String bmpToB64(Bitmap bmp) {
-        if(bmp == null) return null;
+    public static String bmpToB64(Bitmap bmp) {
+        if (bmp == null) return null;
         ByteArrayOutputStream baos = new ByteArrayOutputStream();
         bmp.compress(Bitmap.CompressFormat.JPEG, 0, baos);
         byte[] b = baos.toByteArray();
@@ -317,7 +284,7 @@ public class DiscoverFragment extends Fragment {
     }
 
     public static Bitmap B64ToBmp(String b64) {
-        if(b64 == null) return null;
+        if (b64 == null) return null;
         byte[] decodedString = Base64.decode(b64, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
