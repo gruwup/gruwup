@@ -101,7 +101,11 @@ module.exports = class AdventureStore {
 
     static searchAdventuresByTitle = async (title) => {
         try {
-            var result = await Adventure.find({ title: { $regex: title, $options: "i" } });
+            var result = await Adventure.find(
+                { $and: [
+                    { status: "OPEN" },
+                    { title: { $regex: title, $options: "i" }}
+                ] });
             return {
                 code: 200,
                 message: "Adventures found",
