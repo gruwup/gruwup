@@ -75,18 +75,17 @@ router.get("/:adventureId/detail", async (req, res) => {
     }
 });
 
-// update adventure details
+// update adventure details (you cannot manually update adventure status this way)
 router.put("/:adventureId/update", async (req, res) => {
     // TODO: validate token
     var adventure = {
         owner: req.body.owner,
         title: req.body.title,
         description: req.body.description,
-        peopleGoing: [req.body.owner],
+        peopleGoing: req.body.peopleGoing,
         dateTime: req.body.dateTime,
         location: req.body.location,
         category: req.body.category,
-        status: "OPEN",
         image: req.body.image ? new Buffer(req.body.image.split(",")[1],"base64") : null,
         city: req.body.location.split(", ")[1] ?? "unknown"
     };
@@ -131,6 +130,22 @@ router.get("/:userId/get-adventures", async (req, res) => {
             res.status(result.code).send(result.message);
         }
     } catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+// removes user from adventure, select new adventure admin/owner or delete adventure
+router.put("/:adventureId/quit", async (req, res) => {
+    try {
+        var result = await AdventureStore.removeAdventureParticipant(req.params.adventureId, req.query.userId);
+        if (result.code === 200) {
+            res.status(200).send(result.message);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
+    }
+    catch (err) {
         res.status(500).send(err);
     }
 });
