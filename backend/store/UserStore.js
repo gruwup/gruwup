@@ -13,7 +13,7 @@ const createUser = async (profile) => {
         
     try {
         var result = await user.save();
-        result.adventureId = result._id;
+        
         return {
             code: 200,
             message: "Profile created successfully",
@@ -26,11 +26,35 @@ const createUser = async (profile) => {
             message: err
         };
     }
-
 };
 
-const updateUser = (profile) => {
+const updateUser = (userId, profile) => {
+    try {
+        var result = await Profile.findOneAndUpdate(
+            { userId: userId },
+            { $set: profile },
+            {new: true});
 
+        if (result) {
+            return {
+                code: 200,
+                message: "User Profile updated successfully",
+                payload: result
+            }
+        }
+        else {
+            return {
+                code: 404,
+                message: "User Profile not found"
+            }
+        }
+    }
+    catch (err) {
+        return {
+            code: 500,
+            message: err
+        };
+    }
 };
 
 module.exports = {findUser, getUserProfile, createUser, updateUser};
