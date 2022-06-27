@@ -3,7 +3,7 @@ const UserStore = require("../store/UserStore");
 
 const router = express.Router();
 
-router.post("/create", (req, res) => {
+router.post("/create", async (req, res) => {
     if (Session.validSession(req.headers.cookie)) {
         var profile = {
             userId: req.body.userId,
@@ -31,7 +31,7 @@ router.post("/create", (req, res) => {
     }
 });
 
-router.get("/:userId/get", (req, res) => {
+router.get("/:userId/get", async (req, res) => {
     if (Session.validSession(req.headers.cookie)) {
         try {
             var result = await UserStore.getUserProfile(req.params.userId);
@@ -51,7 +51,7 @@ router.get("/:userId/get", (req, res) => {
     }
 });
 
-router.put("/:userId/edit", (req, res) => {
+router.put("/:userId/edit", async (req, res) => {
     if (Session.validSession(req.headers.cookie)) {
         var profile = {
             name: req.body.name,
