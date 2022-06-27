@@ -1,5 +1,6 @@
 const express = require("express");
 const UserStore = require("../store/UserStore");
+const Session = require("../services/Session");
 
 const router = express.Router();
 
@@ -19,7 +20,7 @@ router.post("/create", async (req, res) => {
                 res.sendStatus(200);
             }
             else {
-                res.status(res.code).send(res.message);
+                res.status(result.code).send(result.message);
             }
         }
         catch (err) {
@@ -35,11 +36,12 @@ router.get("/:userId/get", async (req, res) => {
     if (Session.validSession(req.headers.cookie)) {
         try {
             var result = await UserStore.getUserProfile(req.params.userId);
+            
             if (result.code === 200) {
-                res.status(200).send(profile);
+                res.status(200).send(result.payload);
             }
             else {
-                res.status(res.code).send(res.message);
+                res.status(result.code).send(result.message);
             }
         }
         catch (err) {
@@ -66,7 +68,7 @@ router.put("/:userId/edit", async (req, res) => {
                 res.sendStatus(200);
             }
             else {
-                res.status(res.code).send(res.message);
+                res.status(result.code).send(result.message);
             }
         }
         catch (err) {
