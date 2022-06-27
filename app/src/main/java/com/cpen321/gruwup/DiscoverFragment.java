@@ -104,7 +104,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        get("http://"+address+":8081/user/adventure/search/{pagination}",  new Callback() {
+        SupportRequests.get("http://"+address+":8081/user/adventure/search/{pagination}",  new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -140,6 +140,7 @@ public class DiscoverFragment extends Fragment {
         DiscAdvViewAdapter adapter = new DiscAdvViewAdapter(getActivity(),mAdventureList);
         adventureListView.setAdapter(adapter);
     }
+
     private void createAdventure(View v) {
         EditText title;
         EditText description;
@@ -215,7 +216,7 @@ public class DiscoverFragment extends Fragment {
                     }
 
                     // To do: change this later with server url
-                    post("http://"+address+":8081/user/adventure/create", jsonObject.toString(), new Callback() {
+                    SupportRequests.post("http://"+address+":8081/user/adventure/create", jsonObject.toString(), new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             System.out.println("failure on post");
@@ -283,31 +284,6 @@ public class DiscoverFragment extends Fragment {
             System.out.println("Request failed");
             return null;
         }
-    }
-
-    @NonNull
-    private Call get(String url , Callback callback){
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
-        OkHttpClient client = new OkHttpClient();
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
-    }
-
-    @NonNull
-    private Call post(String url , String json , Callback callback){ //should probably make this a static method for code reuse, just pass in client
-        RequestBody body = RequestBody.create(MediaType.parse("application/json"), json);
-        Request request = new Request.Builder()
-                .url(url)
-                .post(body)
-                .build();
-        OkHttpClient client = new OkHttpClient();
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

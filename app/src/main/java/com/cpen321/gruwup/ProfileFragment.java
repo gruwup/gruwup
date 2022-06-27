@@ -340,7 +340,7 @@ public class ProfileFragment extends Fragment {
         if (field.getText().toString().trim().equals("")){
             return "This field cannot be empty.";
         }
-        else if (!field.getText().toString().matches("[a-zA-Z.? ]*")){
+        else if (!field.getText().toString().matches("[0-9a-zA-Z.? ]*")){
             return "This field only allows numbers, spaces and letters.";
         }
         else {
