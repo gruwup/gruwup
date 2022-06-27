@@ -5,7 +5,29 @@ const findUser = (userId) => {
 };
 
 const getUserProfile = (userId) => {
+    try {
+        var result = Profile.findOne({ userId: userId });
 
+        if (result) {
+            return {
+                code: 200,
+                message: "User Profile found",
+                payload: result
+            }
+        }
+        else {
+            return {
+                code: 404,
+                message: "User Profile not found"
+            }
+        }
+    }
+    catch (err) {
+        return {
+            code: 500,
+            message: err
+        };
+    }
 };
 
 const createUser = async (profile) => {
@@ -13,7 +35,7 @@ const createUser = async (profile) => {
         
     try {
         var result = await user.save();
-        
+
         return {
             code: 200,
             message: "Profile created successfully",
@@ -22,7 +44,7 @@ const createUser = async (profile) => {
     }
     catch (err) {
         return {
-            code: 400,
+            code: 500,
             message: err
         };
     }

@@ -23,30 +23,32 @@ router.post("/create", (req, res) => {
             }
         }
         catch (err) {
-            res.status(500).send(err);
+            res.status(500).send({ message: err.toString() });
         }
     }
     else {
-        res.status(403).send({message: "Invalid cookie"});
+        res.status(403).send({ message: "Invalid cookie" });
     }
 });
 
 router.get("/:userId/get", (req, res) => {
-    Profile.findOne({ userId: req.params.userId }, (err, profile) => {
-        if (err) {
-            res.status(500).send({
-                message: err.toString()
-            });
+    if (Session.validSession(req.headers.cookie)) {
+        try {
+            var result = await UserStore.getUserProfile(req.params.userId);
+            if (result.code === 200) {
+                res.status(200).send(profile);
+            }
+            else {
+                res.status(res.code).send(res.message);
+            }
         }
-        else if (!profile) {
-            res.status(404).send({
-                message: "Profile not found"
-            });
+        catch (err) {
+            res.status(500).send({ message: err.toString() });
         }
-        else {
-            res.status(200).send(profile);
-        }
-    });
+    }
+    else {
+        res.status(403).send({ message: "Invalid cookie" });
+    }
 });
 
 router.put("/:userId/edit", (req, res) => {
@@ -68,8 +70,11 @@ router.put("/:userId/edit", (req, res) => {
             }
         }
         catch (err) {
-            res.status(500).send(err);
+            res.status(500).send({ message: err.toString() });
         }
+    }
+    else {
+        res.status(403).send({ message: "Invalid cookie" });
     }
 });
 
