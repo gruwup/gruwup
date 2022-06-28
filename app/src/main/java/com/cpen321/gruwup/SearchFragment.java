@@ -71,10 +71,9 @@ public class SearchFragment extends Fragment {
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
-    TextView confirmCreateButton;
-    TextView cancelCreate;
     RecyclerView categoryView;
     Button uploadImage;
+    Button filterButton;
     Bitmap imageBMP = null;
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     private ArrayList<String> mCategoryNames = new ArrayList<>();
@@ -96,6 +95,15 @@ public class SearchFragment extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         View view = inflater.inflate(R.layout.fragment_search, container, false);
+
+        filterButton = (Button) view.findViewById(R.id.filter_button);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Create adventure button clicked");
+                filterAdventure(v);
+            }
+        });
 
         SupportRequests.get("http://" + address + ":8081/user/adventure/search/{pagination}", new Callback() {
             @Override
@@ -148,6 +156,13 @@ public class SearchFragment extends Fragment {
             mAdventureList.get(i).put("description", ("Description (currently none) " + String.valueOf(i)));
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
+    }
+
+    private void filterAdventure(View view) {
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.filter_adventure_pop_up);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {

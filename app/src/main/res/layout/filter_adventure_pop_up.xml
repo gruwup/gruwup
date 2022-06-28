@@ -40,30 +40,36 @@
             android:layout_marginTop="10dp"
             />
 
-        <RadioButton
+        <RadioGroup
             android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:layout_marginTop="13dp"
-            android:id="@+id/todayRadioButton"
-            android:text="Today" />
+            android:layout_height="wrap_content">
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_marginTop="13dp"
+                android:id="@+id/todayRadioButton"
+                android:text="Today" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:id="@+id/weekRadioButton"
-            android:text="This week" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:id="@+id/weekRadioButton"
+                android:text="This week" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:id="@+id/monthRadioButton"
-            android:text="This month" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:id="@+id/monthRadioButton"
+                android:text="This month" />
 
-        <RadioButton
-            android:layout_width="wrap_content"
-            android:layout_height="30dp"
-            android:id="@+id/anyRadioButton"
-            android:text="Any" />
+            <RadioButton
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:id="@+id/anyRadioButton"
+                android:text="Any" />
+        </RadioGroup>
+
+
 
         <TextView
             android:layout_width="wrap_content"
