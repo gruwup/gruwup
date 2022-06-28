@@ -588,11 +588,6 @@ paths:
       responses:
         "200":
           description: Success
-          content:
-            application/json:
-              schema: 
-                allOf:
-                  - $ref: '#/components/schemas/Message'
         "400":
           description: Could be any other error code
           content:
@@ -630,8 +625,9 @@ paths:
                  messages: [
                     {
                       "userId": "string",
+                      "name": "Bob John",
                       "message": "hi everyone :)",
-                      "dateTime": "2022-10-11 12:14:14"
+                      "dateTime": "13131238"
                     },
                    ]
                }
@@ -777,12 +773,15 @@ components:
       properties:
         userId:
           type: string
+        name:
+          type: string
+          example: "Bob John"
         message:
           type: string
           example: "hi everyone :)"
         dateTime:
           type: string
-          example: "yyyy-mm-dd hh:mm:ss"
+          example: "13131238"
     Account:
       type: object
       properties:
