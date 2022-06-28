@@ -48,16 +48,20 @@ module.exports = class AdventureStore {
 
     static updateAdventure = async (adventureId, adventure) => {
         try {
-            var result = await Adventure.findOneAndUpdate(
-                { _id: adventureId },
-                { $set: adventure },
-                {new: true});
-            console.log("updated result: " + result);
-            return {
-                code: 200,
-                message: "Adventure updated successfully",
-                payload: result
-            };
+            var result = await Adventure.findByIdAndUpdate(adventureId, adventure, {new: true});
+            if (result) {
+                return {
+                    code: 200,
+                    message: "Adventure updated successfully",
+                    payload: result
+                };
+            }
+            else {
+                return {
+                    code: 404,
+                    message: "Adventure not found"
+                };
+            }
         }
         catch (err) {
             return {
@@ -67,10 +71,10 @@ module.exports = class AdventureStore {
         }
     };
 
-    static cancelAdventure = async (req, res) => {
+    static cancelAdventure = async (adventureId) => {
         try {
             var result = await Adventure.findOneAndUpdate(
-                { _id: req.params.adventureId },
+                { _id: adventureId },
                 { $set: { status: "CANCELLED" } },
                 {new: true});
             if (result) {
@@ -86,6 +90,27 @@ module.exports = class AdventureStore {
                     message: "Adventure not found"
                 };
             }
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
+
+    static searchAdventuresByTitle = async (title) => {
+        try {
+            var result = await Adventure.find(
+                { $and: [
+                    { status: "OPEN" },
+                    { title: { $regex: title, $options: "i" }}
+                ] });
+            return {
+                code: 200,
+                message: "Adventures found",
+                payload: result
+            };
         }
         catch (err) {
             return {
@@ -124,14 +149,17 @@ module.exports = class AdventureStore {
         }
     };
 
-    static getAdventureParticipants = async (adventureId) => {
+    static addAdventureParticipant = async (adventureId, userId) => {
         try {
-            var result = await Adventure.findById(adventureId);
+            var result = await Adventure.findOneAndUpdate(
+                { _id: adventureId },
+                { $push: { peopleGoing: userId } },
+                { new: true }
+            );
             if (result) {
                 return {
                     code: 200,
-                    message: "Adventure participants found",
-                    payload: result.peopleGoing
+                    message: "Adventure participant added successfully"
                 };
             }
             else {
@@ -147,5 +175,66 @@ module.exports = class AdventureStore {
                 message: err
             };
         }
-    }
+    };
+
+    static removeAdventureParticipant = async (adventureId, userId) => {
+        try {
+            var adventure = await Adventure.findById(adventureId);
+            console.log(adventure.peopleGoing);
+            console.log(adventure.owner);
+            console.log(userId);
+            console.log(adventure.owner === userId);
+            if (!adventure) {
+                return {
+                    code: 404,
+                    message: "Adventure not found"
+                };
+            }
+            else {
+                if (adventure.peopleGoing.length === 1 && adventure.owner === userId) {
+                    await Adventure.findByIdAndRemove(adventureId);
+                    return {
+                        code: 200,
+                        message: "Adventure removed due to no participants attending anymore"
+                    };
+                }
+                else {
+                    var result = {};
+                    if (adventure.owner === userId) {
+                        var participants = adventure.peopleGoing.filter(participant => participant !== userId);
+                        result = await Adventure.findOneAndUpdate(
+                            { _id: adventureId },
+                            { $set: { owner: participants[0] }, $pull: { peopleGoing: userId } },
+                        );
+                    }
+                    else {
+                        result = await Adventure.findOneAndUpdate(
+                        { _id: adventureId },
+                        { $pull: { peopleGoing: userId } },
+                        { new: true }
+                    );
+                    }
+                    
+                    if (result) {
+                        return {
+                            code: 200,
+                            message: "Adventure participant removed successfully"
+                        };
+                    }
+                    else {
+                        return {
+                            code: 404,
+                            message: "Adventure not found"
+                        };
+                    }
+                }
+            }
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
 };
