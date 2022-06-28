@@ -2,7 +2,6 @@ package com.cpen321.gruwup;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -13,7 +12,6 @@ import android.widget.Button;
 import android.widget.EditText;
 
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,16 +32,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ProfileFragment extends Fragment {
@@ -86,7 +77,7 @@ public class ProfileFragment extends Fragment {
         cookie = SupportSharedPreferences.getCookie(this.getActivity());
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
-        displayName = (TextView) view.findViewById(R.id.userName);
+        displayName = (TextView) view.findViewById(R.id.requesterName);
         displayName.setText(this.getArguments().getString("Display_Name"));
 
         profilePic = (ImageView) view.findViewById(R.id.userImage);

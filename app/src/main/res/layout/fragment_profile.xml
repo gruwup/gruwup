@@ -58,7 +58,7 @@
 
                 android:layout_marginLeft="7dp"
                 android:layout_marginTop="45dp"
-                android:layout_toRightOf="@+id/userName"
+                android:layout_toRightOf="@+id/requesterName"
                 android:background="@android:color/transparent"
                 android:backgroundTint="@android:color/transparent"
                 app:backgroundTint="@color/white"
@@ -69,7 +69,7 @@
                 tools:ignore="TouchTargetSizeCheck,SpeakableTextPresentCheck" />
 
             <TextView
-                android:id="@+id/userName"
+                android:id="@+id/requesterName"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_centerHorizontal="true"
