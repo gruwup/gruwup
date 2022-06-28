@@ -77,7 +77,7 @@ public class ProfileFragment extends Fragment {
         cookie = SupportSharedPreferences.getCookie(this.getActivity());
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
-        displayName = (TextView) view.findViewById(R.id.requesterName);
+        displayName = (TextView) view.findViewById(R.id.userName);
         displayName.setText(this.getArguments().getString("Display_Name"));
 
         profilePic = (ImageView) view.findViewById(R.id.userImage);
