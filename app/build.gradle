@@ -28,7 +28,6 @@ android {
 }
 
 dependencies {
-
     implementation 'androidx.appcompat:appcompat:1.4.2'
     implementation 'com.google.android.material:material:1.6.1'
     implementation 'androidx.constraintlayout:constraintlayout:2.1.4'
@@ -48,7 +47,6 @@ dependencies {
     //animation
     def lottieVersion = "3.4.0"
     implementation "com.airbnb.android:lottie:$lottieVersion"
-    //token
-    implementation 'com.google.gms:google-services:4.3.10'
-
+    implementation 'com.squareup.okhttp3:okhttp:4.4.0'
+    implementation 'com.google.android.gms:play-services-maps:17.0.0'
 }

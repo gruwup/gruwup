@@ -15,7 +15,6 @@ import android.widget.Toast;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.bumptech.glide.Glide;
 
 import java.util.ArrayList;
 
@@ -34,14 +33,11 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
         this.mContext = mContext;
     }
 
-
-
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
         // To do: Same for create profile // here is done for edit profile
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_list, parent, false);
-
         return new ViewHolder(view);
     }
 
@@ -54,7 +50,7 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clcked on an image: "+ mCategoryNames.get(position));
+                Log.d(TAG, "onClick: clicked on an item: "+ mCategoryNames.get(position));
                 Toast.makeText(mContext, mCategoryNames.get(position),Toast.LENGTH_SHORT).show();
 
                 isSelectMode = true;
@@ -76,8 +72,6 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
             }
         });
-
-
     }
 
     @Override
@@ -94,14 +88,10 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-
-        ImageView image;
         TextView categoryName;
-
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-//            image = itemView.findViewById(R.id.category_image);
             categoryName = itemView.findViewById(R.id.categoryName);
         }
     }
