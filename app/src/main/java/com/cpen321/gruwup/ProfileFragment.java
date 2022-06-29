@@ -35,6 +35,8 @@ import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.OkHttpClient;
+import okhttp3.Request;
 import okhttp3.Response;
 
 public class ProfileFragment extends Fragment {
@@ -46,6 +48,10 @@ public class ProfileFragment extends Fragment {
     Dialog profileDialog;
     Button editButton;
     final static String TAG = "ProfileFragment";
+
+    // local : "10.0.2.2" , remote: "20.227.142.169"
+//    private String address = "10.0.2.2";
+    private String address = "20.227.142.169";
 
     String UserID;
     String cookie;
@@ -73,6 +79,7 @@ public class ProfileFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Note: get stored UserID this way for fragment
+        // temporary fix
         UserID = SupportSharedPreferences.getUserId(this.getActivity());
         cookie = SupportSharedPreferences.getCookie(this.getActivity());
 
@@ -209,15 +216,19 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        SupportRequests.postWithCookie("http://10.0.2.2:8081/account/sign-out", jsonObject.toString(), cookie, new Callback(){
+        SupportRequests.postWithCookie("http://"+address+":8081/account/sign-out", jsonObject.toString(), cookie, new Callback(){
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d(TAG, "sign out successful");
-
-                //return user to login screen in the LoginActivity
-                Intent intent = new Intent(getActivity(), LogInActivity.class);
-                startActivity(intent);
+                if(response.isSuccessful()){
+                    Log.d(TAG, "sign out successful");
+                    Intent intent = new Intent(getActivity(), LogInActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Log.d(TAG, "sign out unsuccessful");
+                    Log.d(TAG, response.body().string());
+                }
             }
 
             @Override
@@ -230,11 +241,14 @@ public class ProfileFragment extends Fragment {
 
     private void getProfileRequest() throws IOException{
         // To do: replace this with server url
-        SupportRequests.get("http://10.0.2.2:8081/user/profile/" + UserID + "/get",  new Callback() {
+        String cookie = SupportSharedPreferences.getCookie(this.getActivity());
+        Log.d(TAG, "User Id is "+ UserID);
+        get("http://"+address+":8081/user/profile/" + UserID + "/get", new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "get profile unsuccessful");
+                Log.d(TAG, "get profile not successful");
+                Log.d(TAG, e.toString());
             }
 
             @Override
@@ -281,10 +295,26 @@ public class ProfileFragment extends Fragment {
 
                 }
                 else {
-                    Log.d(TAG, "get profile unsuccessful");
+                    Log.d(TAG, "get profile is ----- unsuccessful");
+                    Log.d(TAG, "Cookie is "+cookie);
+                    Log.d(TAG, response.body().string());
                 }
             }
         });
+
+    }
+
+    public static Call get(String url , Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        Log.d(TAG, "Get request from "+url);
+        Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+        return call;
 
     }
 
@@ -305,7 +335,7 @@ public class ProfileFragment extends Fragment {
         }
 
         // To do: change this later with server url
-        SupportRequests.put("http://10.0.2.2:8081/user/profile/" + UserID + "/edit", jsonObject.toString(), new Callback() {
+        SupportRequests.put("http://"+address+":8081/user/profile/" + UserID + "/edit", jsonObject.toString(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "could not edit the user profile");

@@ -1,5 +1,7 @@
 package com.cpen321.gruwup;
 
+import android.util.Log;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -11,10 +13,26 @@ public class SupportRequests {
 
     static OkHttpClient client = new OkHttpClient();
     static MediaType JSON = MediaType.parse("application/json");
+    static String TAG = "SupportRequests";
 
 
     public static Call get(String url , Callback callback){
+        OkHttpClient client = new OkHttpClient();
+        Log.d(TAG, "Get request from "+url);
         Request request = new Request.Builder()
+                .url(url)
+                .get()
+                .build();
+
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+        return call;
+
+    }
+
+    public static Call getWithCookie(String url , String cookie, Callback callback){
+        Request request = new Request.Builder()
+                .addHeader("Set-Cookie", cookie)
                 .url(url)
                 .get()
                 .build();
