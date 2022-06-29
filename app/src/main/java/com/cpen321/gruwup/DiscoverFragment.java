@@ -106,7 +106,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        SupportRequests.get("http://" + address + ":8081/user/adventure/search/{pagination}", new Callback() {
+        SupportRequests.get("http://" + address + ":8081/user/adventure/search-by-filter", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }

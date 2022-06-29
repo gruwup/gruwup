@@ -244,6 +244,7 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "get profile unsuccessful");
+                e.printStackTrace();
             }
 
             @Override

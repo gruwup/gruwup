@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -145,6 +146,7 @@ public class LogInActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             Log.d(TAG, "login unsucessful");
+                            System.out.println(e.getMessage());
                         }
 
                         @Override
