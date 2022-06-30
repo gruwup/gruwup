@@ -1,9 +1,13 @@
 package com.cpen321.gruwup;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
+import android.content.ContextWrapper;
 import android.graphics.Color;
+import android.media.Image;
+import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,7 +18,9 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
+import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
@@ -47,6 +53,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         holder.adventureLocation.setText(mAdvNames.get(position).get("location"));
         holder.adventureCount.setText(mAdvNames.get(position).get("count"));
         holder.adventureDescription.setText(mAdvNames.get(position).get("description"));
+        holder.adventureImage.setImageBitmap(DiscoverFragment.B64ToBmp(mAdvNames.get(position).get("image")));
         holder.adventureCard.setOnClickListener(new View.OnClickListener(){
             @Override
             public void onClick(View view) {
@@ -63,6 +70,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         TextView memberCount;
         TextView time;
         TextView location;
+        Button viewInMap;
 
         profileDialog.setContentView(R.layout.view_adventure_pop_up);
         profileDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -72,6 +80,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         time = (TextView) profileDialog.findViewById(R.id.view_adventure_time);
         location = (TextView) profileDialog.findViewById(R.id.view_adventure_location);
         requestToJoin = (Button) profileDialog.findViewById(R.id.request_join_adventure);
+        viewInMap = (Button) profileDialog.findViewById(R.id.adventure_open_in_maps);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -85,6 +94,15 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         time.setText(mAdvNames.get(position).get("time"));
         location.setText(mAdvNames.get(position).get("location"));
 
+        viewInMap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                AppCompatActivity activity = (AppCompatActivity) unwrap(view.getContext());
+                Fragment mvf = new MapViewFragment();
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mvf).addToBackStack(null).commit();
+                profileDialog.dismiss();
+            }
+        });
         profileDialog.show();
     }
 
@@ -101,6 +119,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         TextView adventureCount;
         TextView adventureDescription;
         CardView adventureCard;
+        ImageView adventureImage;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             adventureName = itemView.findViewById(R.id.disc_adventure_name);
@@ -109,6 +128,15 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
             adventureCount = itemView.findViewById(R.id.disc_adventure_people_count);
             adventureDescription = itemView.findViewById(R.id.disc_adventure_description);
             adventureCard = itemView.findViewById(R.id.adventure_card);
+            adventureImage = itemView.findViewById(R.id.disc_adventure_image);
         }
+    }
+
+    private static Activity unwrap(Context context) {
+        while (!(context instanceof Activity) && context instanceof ContextWrapper) {
+            context = ((ContextWrapper) context).getBaseContext();
+        }
+
+        return (Activity) context;
     }
 }

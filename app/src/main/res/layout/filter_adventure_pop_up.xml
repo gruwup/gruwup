@@ -33,51 +33,43 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/lightGray"
-            android:text="Title"
+            android:text="Time"
             android:textSize="25dp"
             android:textStyle="bold"
             android:gravity="center"
             android:layout_marginTop="10dp"
             />
 
-        <EditText
-            android:id="@+id/create_adventure_title_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/rectangle_border"
-            android:hint="Enter title..."
-            android:minHeight="48dp"
-            android:padding="10dp" />
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:layout_marginTop="13dp"
+            android:id="@+id/todayRadioButton"
+            android:text="Today" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/weekRadioButton"
+            android:text="This week" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/monthRadioButton"
+            android:text="This month" />
+
+        <RadioButton
+            android:layout_width="wrap_content"
+            android:layout_height="30dp"
+            android:id="@+id/anyRadioButton"
+            android:text="Any" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/lightGray"
-            android:text="Description"
-            android:textSize="25dp"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:layout_marginTop="10dp"
-            />
-
-        <EditText
-            android:id="@+id/create_adventure_description_input"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="10dp"
-            android:layout_marginRight="30dp"
-            android:background="@drawable/rectangle_border"
-            android:hint="Enter description..."
-            android:minHeight="48dp"
-            android:padding="10dp" />
-
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textColor="@color/lightGray"
-            android:text="Categories"
+            android:text="Category"
             android:textSize="25dp"
             android:textStyle="bold"
             android:gravity="center"
@@ -86,32 +78,13 @@
 
         <androidx.recyclerview.widget.RecyclerView
             android:layout_width="match_parent"
-            android:layout_height="90dp"
-            android:layout_marginTop="0dp"
-            android:id="@+id/create_adventure_recycler_view"
-            android:orientation="horizontal"
-            />
-
-        <Button
-            android:id="@+id/create_adventure_upload_image_button"
-            android:layout_width="match_parent"
-            android:layout_height="40dp"
-            android:layout_alignParentBottom="true"
-            android:layout_marginRight="30dp"
-            android:layout_marginBottom="0dp"
-            android:layout_marginTop="10dp"
-            android:background="@drawable/rounded_btn"
-            android:gravity="center"
-            android:text="Upload Image"
-            android:textSize="14sp"
-
-            />
+            android:layout_height="90dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/lightGray"
-            android:text="Time"
+            android:text="Location (City)"
             android:textSize="25dp"
             android:textStyle="bold"
             android:gravity="center"
@@ -119,13 +92,13 @@
             />
 
         <EditText
-            android:id="@+id/create_adventure_time_input"
+            android:id="@+id/searchAdventureCity"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/rectangle_border"
-            android:hint="Enter a time, yyyy-mm-dd hh:mm:ss"
+            android:hint="City name"
             android:minHeight="48dp"
             android:padding="10dp" />
 
@@ -133,7 +106,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/lightGray"
-            android:text="Location"
+            android:text="Number of People"
             android:textSize="25dp"
             android:textStyle="bold"
             android:gravity="center"
@@ -141,31 +114,31 @@
             />
 
         <EditText
-            android:id="@+id/create_adventure_location_input"
+            android:id="@+id/searchPeopleCount"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/rectangle_border"
-            android:hint="Format: address, city, province, postal code"
+            android:hint="Number of people"
             android:minHeight="48dp"
             android:padding="10dp" />
 
         <Button
-            android:id="@+id/confirmButton"
+            android:id="@+id/applyFilterButton"
             android:layout_width="match_parent"
             android:layout_height="40dp"
             android:layout_alignParentBottom="true"
-
             android:layout_marginRight="30dp"
             android:layout_marginBottom="20dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="60dp"
             android:background="@drawable/rounded_btn"
             android:gravity="center"
-            android:text="Confirm Change"
+            android:text="Apply Filters"
             android:textSize="14sp"
 
             />
+
     </LinearLayout>
 
 

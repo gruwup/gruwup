@@ -3,13 +3,20 @@ package com.cpen321.gruwup;
 import static com.airbnb.lottie.network.FileExtension.JSON;
 
 import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
+import android.content.Intent;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
+import android.provider.MediaStore;
+import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -25,12 +32,18 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.cpen321.gruwup.R;
+
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
@@ -47,24 +60,28 @@ import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
+import okhttp3.MediaType;
 import okhttp3.OkHttpClient;
 import okhttp3.Request;
+import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class DiscoverFragment extends Fragment {
-
+    private String address = "10.0.2.2";
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
+    static int GET_FROM_GALLERY = 69;
     TextView createButton;
     TextView confirmCreateButton;
     TextView cancelCreate;
     RecyclerView categoryView;
+    Button uploadImage;
+    Bitmap imageBMP = null;
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper());
 
-
-    private void initCategories(){
+    private void initCategories() {
         mCategoryNames.add("MOVIE");
         mCategoryNames.add("MUSIC");
         mCategoryNames.add("SPORTS");
@@ -80,7 +97,6 @@ public class DiscoverFragment extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
-
         createButton = (TextView) view.findViewById(R.id.create_adventure);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -90,43 +106,32 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        OkHttpClient client = new OkHttpClient();
-        Request request = new Request.Builder()
-                .url("http://10.0.2.2:8081/user/adventure/search/{pagination}")
-                .build();
-
-        get("http://10.0.2.2:8081/user/adventure/search/{pagination}",  new Callback() {
-
+        SupportRequests.get("http://" + address + ":8081/user/adventure/search/{pagination}", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
-
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     try {
-                       HTTPRESULT = response.body().string();
-                       initAdventures();
-
-                       mHandler.post(new Runnable() {
-                           @Override
-                           public void run() {
-                               displayAdventures(view);
-                           }
-                       });
+                        HTTPRESULT = response.body().string();
+                        initAdventures();
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                displayAdventures(view);
+                            }
+                        });
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
-                else {
+                } else {
                     System.out.println("HTTP req failed");
                 }
             }
         });
-
         displayAdventures(view);
-
         return view;
     }
 
@@ -134,7 +139,7 @@ public class DiscoverFragment extends Fragment {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         RecyclerView adventureListView = (RecyclerView) view.findViewById(R.id.discoveredAdventures);
         adventureListView.setLayoutManager(layoutManager);
-        DiscAdvViewAdapter adapter = new DiscAdvViewAdapter(getActivity(),mAdventureList);
+        DiscAdvViewAdapter adapter = new DiscAdvViewAdapter(getActivity(), mAdventureList);
         adventureListView.setAdapter(adapter);
     }
 
@@ -143,19 +148,16 @@ public class DiscoverFragment extends Fragment {
         EditText description;
         EditText time;
         EditText location;
-
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.create_adventure_pop_up);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
-
         initCategories();
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         categoryView = (RecyclerView) dialog.findViewById(R.id.create_adventure_recycler_view);
         categoryView.setLayoutManager(layoutManager);
         CategoryViewAdapter adapter = new CategoryViewAdapter(getActivity(), mCategoryNames);
         categoryView.setAdapter(adapter);
-
         cancelCreate = (TextView) dialog.findViewById(R.id.create_adventure_go_back);
         cancelCreate.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -163,29 +165,72 @@ public class DiscoverFragment extends Fragment {
                 dialog.dismiss();
             }
         });
-
         title = (EditText) dialog.findViewById(R.id.create_adventure_title_input);
         description = (EditText) dialog.findViewById(R.id.create_adventure_description_input);
         time = (EditText) dialog.findViewById(R.id.create_adventure_time_input);
         location = (EditText) dialog.findViewById(R.id.create_adventure_location_input);
+        uploadImage = (Button) dialog.findViewById(R.id.create_adventure_upload_image_button);
+        uploadImage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+            }
+        });
+
         confirmCreateButton = (TextView) dialog.findViewById(R.id.confirmButton);
         confirmCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if(ProfileFragment.verifyUserInput(title) != "valid" ||
+                if (ProfileFragment.verifyUserInput(title) != "valid" ||
                         ProfileFragment.verifyUserInput(description) != "valid" ||
                         ProfileFragment.verifyUserInput(time) != "valid" ||
-                        ProfileFragment.verifyUserInput(location) != "valid"){
+                        ProfileFragment.verifyUserInput(location) != "valid") {
                     Toast.makeText(getActivity(), "Make sure all fields are not empty and use alphanumeric characters!", Toast.LENGTH_SHORT).show();
-                }
-                else {
-                    for (int i = 0 ; i < adapter.getSelectedCategoriesCount(); i++) {
+                } else if (imageBMP == null) {
+                    Toast.makeText(getActivity(), "Choose an image!", Toast.LENGTH_SHORT).show();
+                } else if (adapter.getSelectedCategoriesCount() < 1) {
+                    Toast.makeText(getActivity(), "Choose at least one activity tag!", Toast.LENGTH_SHORT).show();
+                } else {
+                    for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
                         mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
                     }
-                    System.out.println(title.getText().toString().trim() + " "
+                    System.out.println(title.getText().toString().trim() + " " //put the POST here
                             + description.getText().toString().trim() + " "
                             + time.getText().toString().trim() + " "
                             + location.getText().toString().trim() + " " + mSelectedCategoryNames);
+
+                    JSONObject jsonObject = new JSONObject();
+                    try {
+                        jsonObject.put("owner", "test owner");
+                        jsonObject.put("title", title.getText().toString().trim());
+                        jsonObject.put("description", description.getText().toString().trim());
+                        jsonObject.put("dateTime", time.getText().toString().trim());
+                        jsonObject.put("location", location.getText().toString().trim());
+                        jsonObject.put("category", "MOVIE");
+                        jsonObject.put("image", bmpToB64(imageBMP));
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                        System.out.println("JSON EXCEPTION!!!");
+                    }
+
+                    // To do: change this later with server url
+                    SupportRequests.post("http://" + address + ":8081/user/adventure/create", jsonObject.toString(), new Callback() {
+                        @Override
+                        public void onFailure(Call call, IOException e) {
+                            System.out.println("failure on post");
+                        }
+
+                        @Override
+                        public void onResponse(Call call, Response response) throws IOException {
+                            if (response.isSuccessful()) {
+                            } else {
+                                System.out.println("failure on response " + response.code() + " " + response.message() + " " + response.body().string() + " ");
+                            }
+                        }
+                    });
+
+                    imageBMP = null; //clear image for next upload
                     dialog.dismiss();
                 }
             }
@@ -194,63 +239,54 @@ public class DiscoverFragment extends Fragment {
 
     private void initAdventures() throws JSONException {
         mAdventureList = new ArrayList<Map<String, String>>();
-
         JSONArray jsonArray = new JSONArray(HTTPRESULT);
         int arrlen = jsonArray.length();
-
-        for(int i = 0; i < arrlen; i++){
-            JSONObject jsonObject = (JSONObject)jsonArray.getJSONObject(i);
+        for (int i = 0; i < arrlen; i++) {
+            JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());
             mAdventureList.get(i).put("event", jsonObject.getString("id"));
             mAdventureList.get(i).put("time", jsonObject.getString("dateTime"));
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
-            mAdventureList.get(i).put("count", ("3"));
-            mAdventureList.get(i).put("description", ("Description " + String.valueOf(i)));
+            mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
+            mAdventureList.get(i).put("description", ("Description (currently none) " + String.valueOf(i)));
+            mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
     }
 
-    private void asyncHttpRequester(Request request) {
-        OkHttpClient client = new OkHttpClient();
-        client.newCall(request).enqueue(new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                System.out.println("Request failed");
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        //Detects request codes
+        if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
+            Uri selectedImage = data.getData();
+
+            Bitmap bitmap = null;
+            try {
+                bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), selectedImage);
+                imageBMP = bitmap;
+            } catch (FileNotFoundException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            } catch (IOException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
             }
-            @Override
-            public void onResponse(Call call, final Response response) throws IOException {
-                try {
-                    String responseData = response.body().string();
-                    HTTPRESULT = responseData;
-                } catch (Exception e) {
-
-                }
-            }
-        });
-    }
-
-    @Nullable
-    private Response syncHttpRequester(Request request) {
-        try {
-            OkHttpClient client = new OkHttpClient();
-            Response response = client.newCall(request).execute();
-            return response;
-        }
-        catch (Exception e) {
-            System.out.println("Request failed");
-            return null;
         }
     }
 
-    @NonNull
-    private Call get(String url , Callback callback){
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
-        OkHttpClient client = new OkHttpClient();
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
+    public static String bmpToB64(Bitmap bmp) {
+        if (bmp == null) return null;
+        ByteArrayOutputStream baos = new ByteArrayOutputStream();
+        bmp.compress(Bitmap.CompressFormat.JPEG, 0, baos);
+        byte[] b = baos.toByteArray();
+        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
+        return (imageEncoded);
+    }
 
+    public static Bitmap B64ToBmp(String b64) {
+        if (b64 == null) return null;
+        byte[] decodedString = Base64.decode(b64, Base64.DEFAULT);
+        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+        return decodedByte;
     }
 }
