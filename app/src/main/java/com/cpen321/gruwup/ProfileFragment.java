@@ -29,6 +29,7 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.riversun.okhttp3.OkHttp3CookieHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -243,7 +244,7 @@ public class ProfileFragment extends Fragment {
         // To do: replace this with server url
         String cookie = SupportSharedPreferences.getCookie(this.getActivity());
         Log.d(TAG, "User Id is "+ UserID);
-        get("http://"+address+":8081/user/profile/" + UserID + "/get", new Callback() {
+        SupportRequests.getWithCookie("http://"+address+":8081/user/profile/" + UserID + "/get", cookie, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -304,19 +305,6 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    public static Call get(String url , Callback callback){
-        OkHttpClient client = new OkHttpClient();
-        Log.d(TAG, "Get request from "+url);
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
-
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
-
-    }
 
     private void editProfileRequest(String bioInput, ArrayList<String> categoryNames) throws IOException {
 

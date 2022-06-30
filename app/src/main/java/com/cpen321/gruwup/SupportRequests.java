@@ -2,6 +2,8 @@ package com.cpen321.gruwup;
 
 import android.util.Log;
 
+import org.riversun.okhttp3.OkHttp3CookieHelper;
+
 import okhttp3.Call;
 import okhttp3.Callback;
 import okhttp3.MediaType;
@@ -30,9 +32,21 @@ public class SupportRequests {
 
     }
 
+
     public static Call getWithCookie(String url , String cookie, Callback callback){
+
+        // separate to cookie name and value
+        // Source: https://stackoverflow.com/questions/35743291/add-cookie-to-client-request-okhttp
+        String[] cookieList  =  cookie.split("=",2);
+        OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
+        cookieHelper.setCookie(url, cookieList[0], cookieList[1]);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(cookieHelper.cookieJar())
+                .build();
+
+        Log.d(TAG, "Get request from "+url);
         Request request = new Request.Builder()
-                .addHeader("Set-Cookie", cookie)
                 .url(url)
                 .get()
                 .build();
@@ -58,8 +72,20 @@ public class SupportRequests {
 
     public static Call postWithCookie(String url , String json , String cookie, Callback callback){
         RequestBody body = RequestBody.create(JSON, json);
+
+        String[] cookieList  =  cookie.split("=",2);
+        OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
+        cookieHelper.setCookie(url, cookieList[0], cookieList[1]);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(cookieHelper.cookieJar())
+                .build();
+
+//        Request request = new Request.Builder()
+//                .url(url)
+//                .get()
+//                .build();
         Request request = new Request.Builder()
-                .addHeader("Set-Cookie", cookie)
                 .url(url)
                 .post(body)
                 .build();
