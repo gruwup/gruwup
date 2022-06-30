@@ -36,6 +36,9 @@ public class SignUpActivity extends AppCompatActivity {
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     RecyclerView categoryView ;
     static final String TAG = "SignUpActivity";
+    
+    private String address = "10.0.2.2";
+//    private String address = "20.227.142.169";
 
     private void initCategories(){
         mCategoryNames.add("MOVIE");
@@ -126,7 +129,7 @@ public class SignUpActivity extends AppCompatActivity {
         }
 
         // To do: change this later with server url
-        SupportRequests.post("http://10.0.2.2:8081/user/profile/create", jsonObject.toString(), new Callback() {
+        SupportRequests.post("http://"+address+":8081/user/profile/create", jsonObject.toString(), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "could not create the user profile");

@@ -51,8 +51,8 @@ public class ProfileFragment extends Fragment {
     final static String TAG = "ProfileFragment";
 
     // local : "10.0.2.2" , remote: "20.227.142.169"
-//    private String address = "10.0.2.2";
-    private String address = "20.227.142.169";
+    private String address = "10.0.2.2";
+//    private String address = "20.227.142.169";
 
     String UserID;
     String cookie;
