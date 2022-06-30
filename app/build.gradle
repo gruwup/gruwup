@@ -49,4 +49,7 @@ dependencies {
     implementation "com.airbnb.android:lottie:$lottieVersion"
     implementation 'com.squareup.okhttp3:okhttp:4.4.0'
     implementation 'com.google.android.gms:play-services-maps:17.0.0'
+
+    //cookie helper
+    implementation 'org.riversun:okhttp3-cookie-helper:1.0.1'
 }

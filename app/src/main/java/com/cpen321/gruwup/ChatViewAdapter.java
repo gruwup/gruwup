@@ -40,7 +40,7 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
 
         holder.userName.setText(user.getName());
         // To do: change this to profile pic of individual users
-        holder.img.setImageResource(R.drawable.college_student);
+//        holder.img.setImageResource(R.drawable.college_student);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -45,6 +45,8 @@ public class LogInActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 1;
     final static String TAG = "LogInActivity";
+    private String address = "10.0.2.2";
+//    private String address = "20.227.142.169";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -142,7 +144,7 @@ public class LogInActivity extends AppCompatActivity {
 
             //TO DO: change this to remote server url
             String finalImageUrl = imageUrl;
-            SupportRequests.post("http://10.0.2.2:8081/account/sign-in", jsonObject.toString(), new Callback(){
+            SupportRequests.post("http://"+address+":8081/account/sign-in", jsonObject.toString(), new Callback(){
                         @Override
                         public void onFailure(Call call, IOException e) {
                             Log.d(TAG, "login unsucessful");
@@ -175,10 +177,11 @@ public class LogInActivity extends AppCompatActivity {
 
                                 // store userId
                                 editor.putString(DATA_TAG, userId);
-                                editor.commit();
-
                                 editor.putString(COOKIE_TAG, cookie);
                                 editor.commit();
+
+//                                editor.putString(COOKIE_TAG, cookie);
+//                                editor.commit();
 
                                 if (!userExists){
                                     Log.d(TAG, "New User!");
