@@ -108,4 +108,27 @@ public class SupportRequests {
         return call;
 
     }
+
+    public static Call putWithCookie(String url , String json , String cookie, Callback callback){
+
+        RequestBody body = RequestBody.create(JSON, json);
+
+        String[] cookieList  =  cookie.split("=",2);
+        OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
+        cookieHelper.setCookie(url, cookieList[0], cookieList[1]);
+
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(cookieHelper.cookieJar())
+                .build();
+
+        Request request = new Request.Builder()
+                .url(url)
+                .put(body)
+                .build();
+
+        Call call = client.newCall(request);
+        call.enqueue(callback);
+        return call;
+    }
+
 }

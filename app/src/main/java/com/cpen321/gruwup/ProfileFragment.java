@@ -308,6 +308,7 @@ public class ProfileFragment extends Fragment {
 
     private void editProfileRequest(String bioInput, ArrayList<String> categoryNames) throws IOException {
 
+        String cookie = SupportSharedPreferences.getCookie(this.getActivity());
         Log.d(TAG, "bio is "+ bioInput);
         JSONObject jsonObject = new JSONObject();
 
@@ -323,7 +324,7 @@ public class ProfileFragment extends Fragment {
         }
 
         // To do: change this later with server url
-        SupportRequests.put("http://"+address+":8081/user/profile/" + UserID + "/edit", jsonObject.toString(), new Callback() {
+        SupportRequests.putWithCookie("http://"+address+":8081/user/profile/" + UserID + "/edit", jsonObject.toString(), cookie, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "could not edit the user profile");
