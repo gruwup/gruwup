@@ -627,7 +627,8 @@ paths:
                       "userId": "string",
                       "name": "Bob John",
                       "message": "hi everyone :)",
-                      "dateTime": "13131238"
+                      "dateTime": "13131238",
+                      "prevTime": "13111111"
                     },
                    ]
                }
@@ -782,6 +783,9 @@ components:
         dateTime:
           type: string
           example: "13131238"
+        prevDateTime:
+          type: string
+          example: "13111111"
     Account:
       type: object
       properties:

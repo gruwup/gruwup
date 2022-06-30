@@ -1,10 +1,13 @@
+const e = require("express");
 const express = require("express");
+const Message = require("../models/Message");
+const Session = require("../services/Session");
 const router = express.Router();
-
-const Constants = require("../constants/Constants");
+const ChatStore = require("../store/ChatStore");
 
 const TestMessage = {
     "userId": "string",
+    "name": "Big Brain Billy Bob",
     "message": "hi everyone :)",
     "dateTime": "yyyy-mm-dd hh:mm:ss"
   };
@@ -18,23 +21,80 @@ const TestMessageList = {
     ]
 };
 
-// test endpoint
-router.get("/", (req, res) => {
-    res.send("Chat route live");
-});
-
+var messages = {}
 // sending a message
 router.post("/:adventureId/send", (req, res) => {
-    console.log(req.params.adventureId);
-    res.status(200).send(TestMessage);
+    if (Session.validSession(req.headers.cookie)) {
+        try {
+            var adventureId = req.params.adventureId;
+            var message = {
+                userId: req.body.userId,
+                name: req.body.name,
+                message: req.body.message,
+                dateTime: req.body.dateTime
+            };
+            messages[adventureId].push(message);
+            if (messages[adventureId].size() == 10) {
+                ChatStore.storeMessages(adventureId, messages[adventureId], req.body.dateTime);
+                if (result.code === 200) {
+                    res.sendStatus(200);
+                }
+                else {
+                    res.status(result.code).send(result.message);
+                }
+            }
+            else {
+                res.sendStatus(200);
+            }
+        }
+        catch (err) {
+            res.status(500).send({ message: err.toString() });
+        }
+    }
+    else {
+        res.status(403).send({ message: Session.invalid_msg });
+    }
+});
+
+router.get("/:adventureId/recentTime", (req, res) => {
+    if (Session.validSession(req.headers.cookie)) {
+        try {
+            var result = await Message.getPrevDateTime(req.params.adventureId, Date.now());
+            if (result.code === 200) {
+                res.status(200).send(result.payload);
+            }
+            else {
+                res.status(result.code).send(result.message);
+            }
+        }
+        catch (err) {
+            res.status(500).send({ message: err.toString() });
+        }
+    }
+    else {
+        res.status(403).send({ message: Session.invalid_msg });
+    }
 });
 
 // getting a message list
 router.get("/:adventureId/messages/:pagination", (req, res) => {
-    console.log("adventureId: " + req.params.adventureId);
-    console.log("pagination: " + req.params.pagination);
-    console.log("pagination limit: " + Constants.CHAT_PAGINATION_LIMIT);
-    res.status(200).send(TestMessageList);
+    if (Session.validSession(req.headers.cookie)) {
+        try {
+            var result = await Message.getMessages(req.params.adventureId, req.params.pagination);
+            if (result.code === 200) {
+                res.status(200).send(result.payload);
+            }
+            else {
+                res.status(result.code).send(result.message);
+            }
+        }
+        catch (err) {
+            res.status(500).send({ message: err.toString() });
+        }
+    }
+    else {
+        res.status(403).send({ message: Session.invalid_msg });
+    }
 });
 
 // removing user from chat
