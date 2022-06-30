@@ -36,7 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     RecyclerView categoryView ;
     static final String TAG = "SignUpActivity";
-    
+
     private String address = "10.0.2.2";
 //    private String address = "20.227.142.169";
 
@@ -128,8 +128,10 @@ public class SignUpActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        String cookie = SupportSharedPreferences.getCookie(getApplicationContext());
+
         // To do: change this later with server url
-        SupportRequests.post("http://"+address+":8081/user/profile/create", jsonObject.toString(), new Callback() {
+        SupportRequests.postWithCookie("http://"+address+":8081/user/profile/create", jsonObject.toString(), cookie,new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "could not create the user profile");
