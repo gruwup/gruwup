@@ -1,13 +1,22 @@
 package com.cpen321.gruwup;
 
 public class Request {
-    private String requesterName, requesterId, requestId, status;
+    private String requesterName, requesterId, requestId, adventureName, status;
 
-    public Request(String requesterName, String requesterId, String requestId, String status) {
+    public Request(String adventureName, String requesterName, String requesterId, String requestId, String status) {
+        this.adventureName = adventureName;
         this.requesterName = requesterName;
         this.requesterId = requesterId;
         this.requestId = requestId;
         this.status = status;
+    }
+
+    public String getAdventureName() {
+        return adventureName;
+    }
+
+    public void setAdventureName(String adventureName) {
+        this.adventureName = adventureName;
     }
 
     public String getRequesterName() {
