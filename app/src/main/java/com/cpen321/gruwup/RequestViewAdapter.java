@@ -15,12 +15,12 @@ import java.util.ArrayList;
 public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.ViewHolder> {
 
     Context context;
-    ArrayList<User> users;
+    ArrayList<Request> requests;
     static final String TAG = "RequestViewAdapter";
 
-    public RequestViewAdapter(Context context, ArrayList<User> users){
+    public RequestViewAdapter(Context context, ArrayList<Request> requests){
         this.context = context;
-        this.users = users;
+        this.requests = requests;
 
     }
     @NonNull
@@ -32,17 +32,17 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user = users.get(position);
+        Request request = requests.get(position);
 
         // To do: change user to requester
-        holder.requesterName.setText(user.getName());
+        holder.requesterName.setText(request.getRequesterName());
 
 
     }
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return requests.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{

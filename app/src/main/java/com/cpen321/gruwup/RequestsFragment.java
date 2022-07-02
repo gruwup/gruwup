@@ -15,21 +15,20 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class RequestsFragment extends Fragment {
-    ArrayList<User> users = new ArrayList<>();
+    ArrayList<Request> requests = new ArrayList<>();
 
-    private void initChatData(){
-        User tom = new User("1","Tom","", "yey", "['MOVIE', 'DANCE']");
-        User dan = new User("2","Dan","", "woo", "['MOVIE', 'DANCE']");
-        users.add(tom);
-        users.add(dan);
+    private void initRequestData(){
+        Request tom = new Request("Tom", "11", "22", "PENDING");
+        Request dan = new Request("Dan", "12", "23", "PENDING");
+
     }
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_requests, container, false);
 
-        initChatData();
-        RequestViewAdapter adapter = new RequestViewAdapter(getActivity(),users);
+        initRequestData();
+        RequestViewAdapter adapter = new RequestViewAdapter(getActivity(),requests);
         RecyclerView requestView = (RecyclerView) view.findViewById(R.id.getRequestView);
         requestView.setLayoutManager(new LinearLayoutManager(getActivity()));
         requestView.setAdapter(adapter);
