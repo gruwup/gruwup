@@ -10,7 +10,6 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -29,15 +28,12 @@ import com.squareup.picasso.Picasso;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.riversun.okhttp3.OkHttp3CookieHelper;
 
 import java.io.IOException;
 import java.util.ArrayList;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
 import okhttp3.Response;
 
 public class ProfileFragment extends Fragment {

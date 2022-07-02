@@ -7,6 +7,7 @@ import android.content.Context;
 import android.content.ContextWrapper;
 import android.graphics.Color;
 import android.media.Image;
+import android.os.Bundle;
 import android.provider.ContactsContract;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -99,6 +100,9 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
             public void onClick(View view) {
                 AppCompatActivity activity = (AppCompatActivity) unwrap(view.getContext());
                 Fragment mvf = new MapViewFragment();
+                Bundle locationArgs = new Bundle();
+                locationArgs.putString("address", mAdvNames.get(position).get("location"));
+                mvf.setArguments(locationArgs);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mvf).addToBackStack(null).commit();
                 profileDialog.dismiss();
             }

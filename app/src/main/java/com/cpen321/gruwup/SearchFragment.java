@@ -23,6 +23,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -53,6 +54,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
@@ -71,10 +73,10 @@ public class SearchFragment extends Fragment {
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
-    TextView confirmCreateButton;
-    TextView cancelCreate;
     RecyclerView categoryView;
     Button uploadImage;
+    Button filterButton;
+    TextView cancel;
     Bitmap imageBMP = null;
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     private ArrayList<String> mCategoryNames = new ArrayList<>();
@@ -97,7 +99,16 @@ public class SearchFragment extends Fragment {
         StrictMode.setThreadPolicy(policy);
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
-        SupportRequests.get("http://" + address + ":8081/user/adventure/search/{pagination}", new Callback() {
+        filterButton = (Button) view.findViewById(R.id.filter_button);
+        filterButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Create adventure button clicked");
+                filterAdventure(v);
+            }
+        });
+
+        SupportRequests.get("http://" + address + ":8081/user/adventure/search-by-filter", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -148,6 +159,47 @@ public class SearchFragment extends Fragment {
             mAdventureList.get(i).put("description", ("Description (currently none) " + String.valueOf(i)));
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
+    }
+
+    private void filterAdventure(View view) {
+        Button applyFilters;
+        EditText location;
+        EditText numPeople;
+        RadioGroup timeSelection;
+
+        final Dialog dialog = new Dialog(getActivity());
+        dialog.setContentView(R.layout.filter_adventure_pop_up);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+        initCategories();
+        cancel = (TextView) dialog.findViewById(R.id.filter_adventure_go_back);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        categoryView = (RecyclerView) dialog.findViewById(R.id.filterAdventureRecycler);
+        categoryView.setLayoutManager(layoutManager);
+        CategoryViewAdapter adapter = new CategoryViewAdapter(getActivity(), mCategoryNames);
+        categoryView.setAdapter(adapter);
+        location = (EditText) dialog.findViewById(R.id.searchAdventureCity);
+        numPeople = (EditText) dialog.findViewById(R.id.searchPeopleCount);
+        timeSelection = (RadioGroup) dialog.findViewById(R.id.filter_adventure_time_radio_group);
+        applyFilters = (Button) dialog.findViewById(R.id.applyFilterButton);
+        applyFilters.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                System.out.println("Apply filters button clicked");
+                for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
+                    mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
+                }
+                System.out.println(location.getText().toString() + " " + numPeople.getText().toString() + " " + timeSelection.getCheckedRadioButtonId() + " " + mSelectedCategoryNames.toString());
+                //update the list of adventures here with REST data
+                dialog.dismiss();
+            }
+        });
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
