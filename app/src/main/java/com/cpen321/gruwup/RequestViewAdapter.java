@@ -36,6 +36,8 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
 
         // To do: change user to requester
         holder.requesterName.setText(request.getRequesterName());
+        holder.adventureName.setText(request.getAdventureName());
+        holder.adventureTitle.setText(request.getAdventureName());
 
 
     }
@@ -48,13 +50,15 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView requesterName;
         TextView adventureName;
+        TextView adventureTitle;
 
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
             requesterName = itemView.findViewById(R.id.requesterName);
-            adventureName = itemView.findViewById(R.id.adventureName);
+            adventureName = itemView.findViewById(R.id.requestAdventureName);
+            adventureTitle = itemView.findViewById(R.id.adventureName);
 
         }
     }

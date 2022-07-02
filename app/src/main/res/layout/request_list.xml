@@ -42,13 +42,46 @@
         android:layout_marginLeft="52dp"
         android:layout_marginBottom="4dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Dan wants to join"
+        android:text="Dan "
         android:textColor="@color/lightGray"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.008"
         app:layout_constraintStart_toStartOf="@+id/userProfileImg" />
+    <TextView
+        android:id="@+id/textView5"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="0dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="wants to join "
+        android:textColor="@color/lightGray"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintStart_toEndOf="@+id/requesterName"
+        tools:layout_editor_absoluteY="25dp" />
+
+    <TextView
+        android:id="@+id/requestAdventureName"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="2dp"
+        android:layout_marginLeft="5dp"
+        android:layout_marginBottom="4dp"
+        android:fontFamily="sans-serif-medium"
+        android:text="Movie Night "
+        android:textColor="@color/lightGray"
+        android:textSize="14sp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.008"
+        app:layout_constraintStart_toEndOf="@+id/textView5"
+        tools:layout_editor_absoluteY="25dp" />
 
     <View
         android:layout_width="match_parent"
@@ -81,5 +114,7 @@
         app:layout_constraintHorizontal_bias="0.924"
         app:layout_constraintStart_toEndOf="@+id/requesterName"
         app:layout_constraintTop_toTopOf="parent" />
+
+
 
 </androidx.constraintlayout.widget.ConstraintLayout>

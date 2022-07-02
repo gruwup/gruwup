@@ -20,7 +20,8 @@ public class RequestsFragment extends Fragment {
     private void initRequestData(){
         Request tom = new Request("Movie", "Tom", "11", "22", "PENDING");
         Request dan = new Request("Sport", "Dan", "12", "23", "PENDING");
-
+        requests.add(tom);
+        requests.add(dan);
     }
     @Nullable
     @Override
