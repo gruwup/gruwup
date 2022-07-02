@@ -5,6 +5,7 @@ const app = express();
 const PORT = 8081;
 const defaultMongoPort = "27017";
 const customMongoPort = "27384";
+const chatPort = "3000";
 
 // Grant is using the custom mongo port 27384, leave this boolean to true if you want to use the default mongo port 27017
 var useDefaultMongoPort = true;
@@ -22,6 +23,9 @@ const profileRoute = require("./routes/Profile");
 const adventureRoute = require("./routes/Adventure");
 const chatRoute = require("./routes/Chat");
 const requestRoute = require("./routes/Request");
+
+// Chat server
+const chatServer = require("./services/ChatSocket");
 
 // applying routes
 app.use("/account", accountRoute);
@@ -41,8 +45,10 @@ async function run() {
                     var host = server.address().address;
                     var port = server.address().port;
                     console.log("App listening at http://%s:%s", host, port);
+                }
+                )
+                chatServer.runChat(server, chatPort);
             })
-        })
     }
     catch (err) {
         console.log(err.stack);

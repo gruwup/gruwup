@@ -3,7 +3,7 @@ const Message = require("../models/Message");
 module.exports = class User {
     static storeMessages = async (adventureId, messages, dateTime) => {
         try {
-            var paginationResult = await this.getClosestPagination(adventureId, dateTime);
+            var paginationResult = await this.getPrevDateTime(adventureId, dateTime);
             var result = await Message.save({ adventureId: adventureId, messages: messages, dateTime: dateTime, prevDateTime:  paginationResult.payload });
             
             return {
@@ -27,9 +27,9 @@ module.exports = class User {
             if (result) {
                 closestDateTime = result.forEach(message => message.dateTime).reduce((prev, curr) => {
                     if (prev > dateTime && curr > dateTime) return null;
-                    else if (prev > goal) return curr;
-                    else if (curr > goal) return prev;
-                    else return (Math.abs(curr - goal) < Math.abs(prev - goal) ? curr : prev);
+                    else if (prev > dateTime) return curr;
+                    else if (curr > dateTime) return prev;
+                    else return (Math.abs(curr - dateTime) < Math.abs(prev - dateTime) ? curr : prev);
                 });
 
                 return {
