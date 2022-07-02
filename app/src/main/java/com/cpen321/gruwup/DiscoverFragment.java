@@ -33,6 +33,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cpen321.gruwup.R;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -56,6 +60,7 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -71,6 +76,7 @@ public class DiscoverFragment extends Fragment {
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
+    EditText location; //need google autocomplete, so made global
     TextView createButton;
     TextView confirmCreateButton;
     TextView cancelCreate;
@@ -147,12 +153,12 @@ public class DiscoverFragment extends Fragment {
         EditText title;
         EditText description;
         EditText time;
-        EditText location;
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.create_adventure_pop_up);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
         initCategories();
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         categoryView = (RecyclerView) dialog.findViewById(R.id.create_adventure_recycler_view);
         categoryView.setLayoutManager(layoutManager);
@@ -165,10 +171,23 @@ public class DiscoverFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+
+        Places.initialize(getActivity().getApplicationContext(), "AIzaSyBTzzjkUX-5Snzfhc8JrGn1wA07jgKbluk");
+
         title = (EditText) dialog.findViewById(R.id.create_adventure_title_input);
         description = (EditText) dialog.findViewById(R.id.create_adventure_description_input);
         time = (EditText) dialog.findViewById(R.id.create_adventure_time_input);
         location = (EditText) dialog.findViewById(R.id.create_adventure_location_input);
+        location.setFocusable(false);
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList).build(getActivity());
+                startActivityForResult(intent, 100);
+            }
+        });
+
         uploadImage = (Button) dialog.findViewById(R.id.create_adventure_upload_image_button);
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -271,6 +290,10 @@ public class DiscoverFragment extends Fragment {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
             }
+        }
+        else if(requestCode == 100 && resultCode == Activity.RESULT_OK) {
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            location.setText(place.getAddress());
         }
     }
 
