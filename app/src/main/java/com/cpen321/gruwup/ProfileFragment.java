@@ -84,12 +84,12 @@ public class ProfileFragment extends Fragment {
         displayName = (TextView) view.findViewById(R.id.userName);
         displayName.setText(this.getArguments().getString("Display_Name"));
 
+        //set profile picture using the link from the bundle using Picasso
         profilePic = (ImageView) view.findViewById(R.id.userImage);
         if(this.getArguments().getString("Photo_URL") != null && !this.getArguments().getString("Photo_URL").equals("")) {
             Picasso.get().load(this.getArguments().getString("Photo_URL")).into(profilePic);
         }
-        System.out.println(this.getArguments().getString("Photo_URL"));
-        //set profile picture using the link from the bundle using Picasso
+
         try {
             getProfileRequest();
         } catch (IOException e) {
@@ -292,8 +292,7 @@ public class ProfileFragment extends Fragment {
 
                 }
                 else {
-                    Log.d(TAG, "get profile is ----- unsuccessful");
-                    Log.d(TAG, "Cookie is "+cookie);
+                    Log.d(TAG, "get profile is unsuccessful");
                     Log.d(TAG, response.body().string());
                 }
             }

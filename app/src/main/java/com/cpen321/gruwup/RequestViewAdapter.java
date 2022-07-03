@@ -1,8 +1,12 @@
 package com.cpen321.gruwup;
 
+import android.annotation.SuppressLint;
+import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Paint;
+import android.os.Handler;
+import android.os.Looper;
 import android.text.SpannableString;
 import android.text.style.UnderlineSpan;
 import android.util.Log;
@@ -13,17 +17,33 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import androidx.annotation.NonNull;
+import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Timer;
 import java.util.TimerTask;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.ViewHolder> {
 
     Context context;
     Dialog requestDialog;
     ArrayList<Request> requests;
+
+    // local : "10.0.2.2" , remote: "20.227.142.169"
+    private String address = "10.0.2.2";
+    //    private String address = "20.227.142.169";
     static final String TAG = "RequestViewAdapter";
 
     public RequestViewAdapter(Context context, ArrayList<Request> requests){
@@ -39,10 +59,9 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
     }
 
     @Override
-    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Request request = requests.get(position);
 
-        // To do: change user to requester
         holder.requesterName.setText(request.getRequesterName());
         holder.adventureName.setText(request.getAdventureName());
         holder.adventureTitle.setText(request.getAdventureName());
@@ -72,10 +91,34 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "clicked on requester name");
+                String requesterId = requests.get(position).getRequesterId();
+                try {
+                    showProfile(view, requesterId, request.getRequesterName());
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
+
         });
 
+    }
 
+    private void showProfile(View view, String userId, String requesterName) throws IOException {
+        requestDialog.setContentView(R.layout.requester_profile_pop_up);
+        this.getProfileRequest(userId);
+        requestDialog.show();
+
+        TextView closeProfile  = (TextView) requestDialog.findViewById(R.id.close);
+        TextView name = (TextView) requestDialog.findViewById(R.id.requesterProfileName);
+        name.setText(requesterName);
+
+
+        closeProfile.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                requestDialog.dismiss();
+            }
+        });
 
 
     }
@@ -84,14 +127,11 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         if (action=="accept"){
             requestDialog.setContentView(R.layout.accept_request_pop_up);
             requestDialog.show();
-
-
         }
         else if (action=="deny"){
             requestDialog.setContentView(R.layout.deny_request_pop_up);
             requestDialog.show();
         }
-
         final Timer t = new Timer();
         t.schedule(new TimerTask() {
             public void run() {
@@ -107,12 +147,86 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         return requests.size();
     }
 
+    private void getProfileRequest(String userId) throws IOException {
+
+        String cookie = SupportSharedPreferences.getCookie(this.context);
+        SupportRequests.getWithCookie("http://"+address+":8081/user/profile/" + userId + "/get", cookie, new Callback() {
+
+
+            @Override
+            public void onFailure(Call call, IOException e) {
+                Log.d(TAG, "get requester profile not successful");
+                Log.d(TAG, e.toString());
+            }
+
+            @Override
+            public void onResponse(Call call, Response response) throws IOException {
+                if(response.isSuccessful()){
+                    Log.d(TAG, "get requester profile successful");
+                    String jsonData = response.body().string();
+
+                    try {
+                        JSONObject jsonObj = new JSONObject(jsonData);
+                        Log.d(TAG, "json Obj for requester profile "+ jsonObj.toString());
+                        String bio = jsonObj.getString("biography");
+                        String image = jsonObj.getString("image");
+                        JSONArray pref = jsonObj.getJSONArray("categories");
+                        ArrayList<String> preferences_list = new ArrayList<String>();
+                        if (pref !=null){
+                            for (int i=0; i<pref.length(); i++){
+                                preferences_list.add(pref.getString(i));
+                            }
+                        }
+
+                        Log.d(TAG, "Requester Preferences List: "+ preferences_list);
+
+                        Handler uiHandler = new Handler(Looper.getMainLooper());
+                        uiHandler.post(new Runnable(){
+                            @Override
+                            public void run() {
+                                TextView requesterBio = (TextView) requestDialog.findViewById(R.id.requesterBio);
+                                RecyclerView requesterPref = (RecyclerView) requestDialog.findViewById(R.id.requesterPreferences);
+                                requesterBio.setText(bio);
+
+                                RecyclerView.LayoutManager mLayoutManafer = new LinearLayoutManager(requestDialog.getContext(), LinearLayoutManager.HORIZONTAL, false);
+                                requesterPref.setLayoutManager(mLayoutManafer);
+                                CategoryViewAdapter adapter = new CategoryViewAdapter(requestDialog.getContext(), preferences_list);
+                                requesterPref.setAdapter(adapter);
+
+
+                                ImageView requesterImg = (ImageView) requestDialog.findViewById(R.id.requesterImage);
+                                Picasso.get().load(image).into(requesterImg);;
+                            }
+                        });
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+                else {
+                    Log.d(TAG, "get requester profile is unsuccessful");
+                    Log.d(TAG, response.body().string());
+                }
+            }
+
+        });
+        
+    }
+
+
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView requesterName;
         TextView adventureName;
         TextView adventureTitle;
         TextView acceptRequest;
         TextView denyRequest;
+        ImageView requesterImage;
+        TextView requesterProfileName;
+        TextView requesterBio;
+        TextView closeProfile;
+
 
 
         public ViewHolder(@NonNull View itemView) {
@@ -123,6 +237,9 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             adventureTitle = itemView.findViewById(R.id.adventureName);
             acceptRequest = itemView.findViewById(R.id.acceptRequest);
             denyRequest = itemView.findViewById(R.id.denyRequest);
+            requesterProfileName = itemView.findViewById(R.id.requesterProfileName);
+            requesterBio = itemView.findViewById(R.id.requesterBio);
+            closeProfile = itemView.findViewById(R.id.close);
 
             requesterName.setPaintFlags(requesterName.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         }

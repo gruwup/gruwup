@@ -18,8 +18,8 @@ public class RequestsFragment extends Fragment {
     ArrayList<Request> requests = new ArrayList<>();
 
     private void initRequestData(){
-        Request tom = new Request("Movie", "Tom", "11", "22", "PENDING");
-        Request dan = new Request("Sport", "Dan", "12", "23", "PENDING");
+        Request tom = new Request("Movie", "Tom", "116853060753534924974", "22", "PENDING");
+        Request dan = new Request("Sport", "Dan", "112559584626040550555", "23", "PENDING");
         requests.add(tom);
         requests.add(dan);
     }
