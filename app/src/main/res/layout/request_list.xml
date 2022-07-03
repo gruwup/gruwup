@@ -7,38 +7,40 @@
     android:background="#FFFFFF"
     android:padding="5dp">
 
+
     <ImageView
         android:id="@+id/userProfileImg"
-        android:layout_width="50dp"
-        android:layout_height="50dp"
+        android:layout_width="25dp"
+        android:layout_height="25dp"
+        android:layout_marginBottom="8dp"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.013"
+        app:layout_constraintHorizontal_bias="0.012"
         app:layout_constraintStart_toStartOf="parent"
-        app:srcCompat="@drawable/college_student" />
-
+        app:srcCompat="@drawable/ic_requests_vector" />
 
     <TextView
         android:id="@+id/adventureName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="4dp"
+        android:layout_marginStart="18dp"
         android:layout_marginLeft="4dp"
-        android:layout_marginTop="4dp"
         android:fontFamily="@font/belleza"
         android:text="Movie Night"
         android:textSize="16sp"
         android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.0"
         app:layout_constraintStart_toEndOf="@+id/userProfileImg"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.06" />
 
     <TextView
         android:id="@+id/requesterName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="52dp"
+        android:layout_marginStart="40dp"
         android:layout_marginLeft="52dp"
         android:layout_marginBottom="4dp"
         android:fontFamily="sans-serif-medium"
@@ -99,7 +101,7 @@
         android:background="@drawable/ic_accept"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.723"
+        app:layout_constraintHorizontal_bias="0.822"
         app:layout_constraintStart_toEndOf="@+id/requesterName"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -111,10 +113,9 @@
         android:background="@drawable/ic_deny"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.924"
+        app:layout_constraintHorizontal_bias="0.947"
         app:layout_constraintStart_toEndOf="@+id/requesterName"
         app:layout_constraintTop_toTopOf="parent" />
-
 
 
 </androidx.constraintlayout.widget.ConstraintLayout>
