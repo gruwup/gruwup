@@ -6,7 +6,8 @@
     android:layout_gravity="center"
     android:background="#FF9D96"
     android:orientation="vertical"
-    android:padding="5dp">
+    android:padding="5dp"
+    >
 
     <TextView
         android:id="@+id/deniedText"

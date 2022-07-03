@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.graphics.Paint;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.text.SpannableString;
@@ -132,13 +133,18 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             requestDialog.setContentView(R.layout.deny_request_pop_up);
             requestDialog.show();
         }
-        final Timer t = new Timer();
-        t.schedule(new TimerTask() {
-            public void run() {
-                requestDialog.dismiss();
-                t.cancel();
+        new CountDownTimer(2000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
             }
-        }, 2000);
+
+            @Override
+            public void onFinish() {
+                requestDialog.dismiss();
+                notifyDataSetChanged();
+
+            }
+        }.start();
 
     }
 
@@ -212,7 +218,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             }
 
         });
-        
+
     }
 
 
