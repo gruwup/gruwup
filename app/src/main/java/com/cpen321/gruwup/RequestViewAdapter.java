@@ -16,6 +16,8 @@ import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.ViewHolder> {
 
@@ -83,11 +85,20 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             requestDialog.setContentView(R.layout.accept_request_pop_up);
             requestDialog.show();
 
+
         }
         else if (action=="deny"){
             requestDialog.setContentView(R.layout.deny_request_pop_up);
             requestDialog.show();
         }
+
+        final Timer t = new Timer();
+        t.schedule(new TimerTask() {
+            public void run() {
+                requestDialog.dismiss();
+                t.cancel();
+            }
+        }, 2000);
 
     }
 
