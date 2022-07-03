@@ -49,20 +49,20 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         holder.acceptRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // if backend request is successful
+                // To do: make backend request , do below if backend request is successful
                 showPopUp(view, "accept");
-                // To do: remove item from recycler view upon click
-//                requests.remove(position);
+                requests.remove(position);
+                notifyItemRemoved(position);
             }
         });
 
         holder.denyRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                // if backend request is successful
+                // To do: make backend request , do below if backend request is successful
                 showPopUp(view, "deny");
-                // To do: remove item from recycler view upon click
-//                requests.remove(position);
+                requests.remove(position);
+                notifyItemRemoved(position);
             }
         });
 
