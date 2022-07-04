@@ -595,6 +595,33 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
+  /user/chat/{adventureId}/recentTime:
+    get:
+      summary: get most recent pagination value for adventureId
+      tags:
+       - Chat
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                example: { "prevTime": "13111111" }
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
   /user/chat/{adventureId}/messages/{pagination}:
     get:
       summary: Get 30 messages in adventure starting at given pagination (so pagination 0 will return most recent 30 messages, if the batch has less then 30 messages it will return whatever it can, so if you have 50 messages, and pagination is at 29, it will return message 29-50 instead of 29-59)
@@ -627,7 +654,8 @@ paths:
                       "userId": "string",
                       "name": "Bob John",
                       "message": "hi everyone :)",
-                      "dateTime": "13131238"
+                      "dateTime": "13131238",
+                      "prevTime": "13111111"
                     },
                    ]
                }
@@ -782,6 +810,9 @@ components:
         dateTime:
           type: string
           example: "13131238"
+        prevDateTime:
+          type: string
+          example: "13111111"
     Account:
       type: object
       properties:
