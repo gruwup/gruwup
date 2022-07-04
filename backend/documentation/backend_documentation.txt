@@ -66,26 +66,46 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/adventure/search/{pagination}:
+  /user/adventure/search-by-filter:
     get:
       summary: Search adventure using filters
       tags:
        - Adventure
       parameters:
-        - name: pagination
-          in: path
-          required: true
-          style: simple
-          schema:
-            type: number
         - in: query
-          name: filters
+          name: filter
           required: true
           content:
             application/json:
               schema: 
                 allOf:
                   - $ref: '#/components/schemas/Search'
+      responses:
+        "200":
+          description: Success returns a list of adventures
+          content:
+            application/json:
+              schema: 
+                allOf:
+                  - $ref: '#/components/schemas/AdventureWithId'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/search-by-title:
+    get:
+      summary: Return adventures whoes titles contain a certain string combination (case-insensitive)
+      tags:
+       - Adventure
+      parameters:
+        - name: title
+          in: query
+          required: true
+          schema:
+            type: string
       responses:
         "200":
           description: Success returns a list of adventures
@@ -137,7 +157,6 @@ paths:
         - name: currentCity
           in: query
           required: true
-          style: simple
           schema:
             type: string
       responses:
@@ -255,6 +274,33 @@ paths:
         in: path
         required: true
         style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/adventure/{adventureId}/quit:
+    put:
+      summary: Remove user from adventure, if the user was adventure creator, the next person on peopleGoing list become the new adventure creator/admin,, if no other people going, the adventure would be REMOVED from database (instead of just showing as cancelled)
+      tags:
+       - Adventure
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      - name: userId
+        in: query
+        required: true
         schema:
           type: string
       responses:
@@ -486,13 +532,13 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/request/{userId}/respond:
-    post:
+  /user/request/{requestId}/respond:
+    put:
       summary: respond to request
       tags:
       - Request
       parameters:
-      - name: userId
+      - name: requestId
         in: path
         required: true
         style: simple
@@ -504,7 +550,7 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/Request'
+                - $ref: '#/components/schemas/RequestResponse'
       responses:
         "200":
           description: Successfully responded
@@ -542,11 +588,6 @@ paths:
       responses:
         "200":
           description: Success
-          content:
-            application/json:
-              schema: 
-                allOf:
-                  - $ref: '#/components/schemas/Message'
         "400":
           description: Could be any other error code
           content:
@@ -584,8 +625,9 @@ paths:
                  messages: [
                     {
                       "userId": "string",
+                      "name": "Bob John",
                       "message": "hi everyone :)",
-                      "dateTime": "2022-10-11 12:14:14"
+                      "dateTime": "13131238"
                     },
                    ]
                }
@@ -731,12 +773,15 @@ components:
       properties:
         userId:
           type: string
+        name:
+          type: string
+          example: "Bob John"
         message:
           type: string
           example: "hi everyone :)"
         dateTime:
           type: string
-          example: "yyyy-mm-dd hh:mm:ss"
+          example: "13131238"
     Account:
       type: object
       properties:
@@ -794,6 +839,15 @@ components:
         dateTime:
           type: string
           example: "13131238"
+    RequestResponse: 
+      type: object
+      properties:
+        userId:
+          type: string
+        response:
+          type: string
+          enum: ["ACCEPT", "REJECT"]
+          example: "ACCEPT"
   securitySchemes:
     accessCode:
       type: oauth2

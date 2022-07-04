@@ -10,9 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -33,16 +31,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ProfileFragment extends Fragment {
@@ -54,14 +45,21 @@ public class ProfileFragment extends Fragment {
     Dialog profileDialog;
     Button editButton;
     final static String TAG = "ProfileFragment";
-    // TO DO: Replace this later with userId obtained after tokenID validation from backend
-    String UserID = "27";
+
+    // local : "10.0.2.2" , remote: "20.227.142.169"
+    private String address = "10.0.2.2";
+//    private String address = "20.227.142.169";
+
+    String UserID;
+    String cookie;
+
     RecyclerView categoryView ;
     RecyclerView selectedCategories ;
 
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
 
+    // TO DO: Can make this common later to avoid DRY
     private void initCategories(){
         mCategoryNames.add("MOVIE");
         mCategoryNames.add("MUSIC");
@@ -77,15 +75,21 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
 
+        // Note: get stored UserID this way for fragment
+        // temporary fix
+        UserID = SupportSharedPreferences.getUserId(this.getActivity());
+        cookie = SupportSharedPreferences.getCookie(this.getActivity());
+
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
         displayName = (TextView) view.findViewById(R.id.userName);
         displayName.setText(this.getArguments().getString("Display_Name"));
+
+        //set profile picture using the link from the bundle using Picasso
         profilePic = (ImageView) view.findViewById(R.id.userImage);
         if(this.getArguments().getString("Photo_URL") != null && !this.getArguments().getString("Photo_URL").equals("")) {
             Picasso.get().load(this.getArguments().getString("Photo_URL")).into(profilePic);
         }
-        System.out.println(this.getArguments().getString("Photo_URL"));
-        //set profile picture using the link from the bundle using Picasso
+
         try {
             getProfileRequest();
         } catch (IOException e) {
@@ -98,7 +102,6 @@ public class ProfileFragment extends Fragment {
         profileDialog = new Dialog(getActivity());
 
         editButton = view.findViewById(R.id.edit_profile_button);
-
         editButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -113,10 +116,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 Log.d("ProfileFragment", "Signing out");
                 mGoogleSignInClient.signOut();
-                Intent intent = new Intent(getActivity(), LogInActivity.class);
-                startActivity(intent);
-
-                //should return user to login screen in the LoginActivity
+                signOutRequest();
             }
         });
         Log.d(TAG, "Selected Categories "+mSelectedCategoryNames);
@@ -145,16 +145,14 @@ public class ProfileFragment extends Fragment {
         // for categories
         initCategories();
         Log.d(TAG, "Initialize Category Recycler View");
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-//        RecyclerView categoryView = (RecyclerView) profileDialog.findViewById(R.id.categoryRecyclerView);
         categoryView = (RecyclerView) profileDialog.findViewById(R.id.categoryRecyclerView);
-//        categoryView.setHasFixedSize(true);
         categoryView.setLayoutManager(layoutManager);
         CategoryViewAdapter adapter = new CategoryViewAdapter(getActivity(),mCategoryNames);
         categoryView.setAdapter(adapter);
 
         LinearLayoutManager categoriesLayoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-//        RecyclerView selectedCategories = (RecyclerView) getView().findViewById(R.id.selectedCategories);
         selectedCategories = (RecyclerView) getView().findViewById(R.id.selectedCategories);
         selectedCategories.setLayoutManager(categoriesLayoutManager);
 
@@ -193,7 +191,7 @@ public class ProfileFragment extends Fragment {
                     // Note: Can store this in cache
                     Log.d(TAG, "Selected categories names are: "+ mSelectedCategoryNames);
                     try {
-                        editProfileRequest(bioInput.getText().toString(), mSelectedCategoryNames.toString());
+                        editProfileRequest(bioInput.getText().toString(), mSelectedCategoryNames);
                     } catch (IOException e) {
                         e.printStackTrace();
                     }
@@ -207,16 +205,47 @@ public class ProfileFragment extends Fragment {
         profileDialog.show();
     }
 
-    OkHttpClient client = new OkHttpClient();
-    MediaType JSON = MediaType.parse("application/json");
+    private void signOutRequest(){
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("userId", UserID);
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        SupportRequests.postWithCookie("http://"+address+":8081/account/sign-out", jsonObject.toString(), cookie, new Callback(){
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(response.isSuccessful()){
+                    Log.d(TAG, "sign out successful");
+                    Intent intent = new Intent(getActivity(), LogInActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Log.d(TAG, "sign out unsuccessful");
+                    Log.d(TAG, response.body().string());
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "sign out failed");
+            }
+        });
+
+    }
 
     private void getProfileRequest() throws IOException{
         // To do: replace this with server url
-        get("http://10.0.2.2:8081/user/profile/" + UserID + "/get",  new Callback() {
+        String cookie = SupportSharedPreferences.getCookie(this.getActivity());
+        Log.d(TAG, "User Id is "+ UserID);
+        SupportRequests.getWithCookie("http://"+address+":8081/user/profile/" + UserID + "/get", cookie, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "get profile unsuccessful");
+                Log.d(TAG, "get profile not successful");
+                Log.d(TAG, e.toString());
             }
 
             @Override
@@ -230,12 +259,16 @@ public class ProfileFragment extends Fragment {
                         Log.d(TAG, "json Obj "+ jsonObj.toString());
                         String bio = jsonObj.getString("biography");
                         Log.d(TAG, "Bio is "+ bio);
-                        String pref = jsonObj.getString("categories");
+                        JSONArray pref = jsonObj.getJSONArray("categories");
                         Log.d(TAG, "Pref is "+ pref);
-                        // format example of categories : "["[MOVIE, MUSIC, SPORTS]"]"
-                        String pref_str = pref.substring(3,pref.length()-3);
-                        ArrayList<String> preferences_list = new ArrayList<String>(Arrays.asList(pref_str.split(", ")));
-                        Log.d(TAG, "StrList: "+pref_str);
+
+                        ArrayList<String> preferences_list = new ArrayList<String>();
+                        if (pref !=null){
+                            for (int i=0; i<pref.length(); i++){
+                                preferences_list.add(pref.getString(i));
+                            }
+                        }
+
                         Log.d(TAG, "List: "+ preferences_list);
                         // Display preferences in profile
                         mSelectedCategoryNames = preferences_list;
@@ -259,30 +292,34 @@ public class ProfileFragment extends Fragment {
 
                 }
                 else {
-                    Log.d(TAG, "get profile unsuccessful");
+                    Log.d(TAG, "get profile is unsuccessful");
+                    Log.d(TAG, response.body().string());
                 }
             }
         });
 
     }
 
-    private void editProfileRequest(String bioInput, String categoryNames) throws IOException {
 
+    private void editProfileRequest(String bioInput, ArrayList<String> categoryNames) throws IOException {
+
+        String cookie = SupportSharedPreferences.getCookie(this.getActivity());
         Log.d(TAG, "bio is "+ bioInput);
         JSONObject jsonObject = new JSONObject();
+
+        JSONArray preferences = new JSONArray(categoryNames);
         try {
-            jsonObject.put("userId", UserID);
             jsonObject.put("userId", UserID);
             jsonObject.put("name", displayName.toString());
             jsonObject.put("biography", bioInput);
-            jsonObject.put("categories", categoryNames);
+            jsonObject.put("categories", preferences);
             jsonObject.put("image", this.getArguments().getString("Photo_URL"));
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         // To do: change this later with server url
-        put("http://10.0.2.2:8081/user/profile/" + UserID + "/edit", jsonObject.toString(), new Callback() {
+        SupportRequests.putWithCookie("http://"+address+":8081/user/profile/" + UserID + "/edit", jsonObject.toString(), cookie, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "could not edit the user profile");
@@ -304,36 +341,13 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private Call put(String url , String json , Callback callback){ //should probably make this a static method for code reuse, just pass in client
-        RequestBody body = RequestBody.create(JSON, json);
-        Request request = new Request.Builder()
-                .url(url)
-                .put(body)
-                .build();
-
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
-
-    }
-
-    private Call get(String url , Callback callback){
-        Request request = new Request.Builder()
-                .url(url)
-                .get()
-                .build();
-
-        Call call = client.newCall(request);
-        call.enqueue(callback);
-        return call;
-
-    }
-
     public static String verifyUserInput(EditText field) {
         if (field.getText().toString().trim().equals("")){
+            System.out.println("Empty field");
             return "This field cannot be empty.";
         }
-        else if (!field.getText().toString().matches("[a-zA-Z.? ]*")){
+        else if (!field.getText().toString().matches("[0-9a-zA-Z.? ,]*")){
+            System.out.println("Regex failure");
             return "This field only allows numbers, spaces and letters.";
         }
         else {
