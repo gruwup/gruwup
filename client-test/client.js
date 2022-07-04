@@ -1,7 +1,7 @@
 const io = require("socket.io-client");
 const socket = io("http://localhost:8000");
 var cookie = "gruwup-session=123";
-var userId = "123";
+var userId = "124";
 
 const run = () => {
     socket.emit("userInfo", cookie, userId);
