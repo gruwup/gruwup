@@ -37,17 +37,8 @@ router.get("/:adventureId/messages/:pagination", (req, res) => {
     res.status(200).send(TestMessageList);
 });
 
-// removing user from chat
-router.delete("/:adventureId/:userId/delete-user", (req, res) => {
-    console.log("adventureId: " + req.params.adventureId);
-    console.log("userId: " + req.params.userId);
-    res.status(200).send();
-});
-
-// removing user from chat
-router.delete("/:adventureId/delete-chat", (req, res) => {
-    console.log("adventureId: " + req.params.adventureId);
-    res.status(200).send();
+router.delete("/:adventureId/delete-chat", async (req, res) => {
+    res.sendStatus(200).send();
 });
 
 module.exports = router;
