@@ -595,7 +595,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/chat/{adventureId}/recentTime:
+  /user/chat/{adventureId}/recent:
     get:
       summary: get most recent pagination value for adventureId
       tags:
@@ -659,34 +659,6 @@ paths:
                     },
                    ]
                }
-        "400":
-          description: Could be any other error code
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/Error'
-  /user/chat/{adventureId}/{userId}/delete-user:
-    delete:
-      summary: Remove user from chat
-      tags:
-       - Chat
-      parameters:
-      - name: adventureId
-        in: path
-        required: true
-        style: simple
-        schema:
-          type: string
-      - name: userId
-        in: path
-        required: true
-        style: simple
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Success
         "400":
           description: Could be any other error code
           content:
