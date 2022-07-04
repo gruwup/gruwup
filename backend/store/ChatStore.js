@@ -4,8 +4,15 @@ module.exports = class User {
     static storeMessages = async (adventureId, messages, dateTime) => {
         try {
             var paginationResult = await this.getPrevDateTime(adventureId, dateTime);
-            var result = await Message.save({ adventureId: adventureId, messages: messages, dateTime: dateTime, prevDateTime:  paginationResult.payload });
-            
+            var message = { 
+                adventureId: adventureId, 
+                messages: messages, 
+                dateTime: dateTime, 
+                prevDateTime:  paginationResult.payload ? paginationResult : null
+            }
+            var message = new Message(message);
+            var result = await message.save();
+
             return {
                 code: 200,
                 message: "Profile created successfully",
@@ -65,6 +72,32 @@ module.exports = class User {
                 return {
                     code: 404,
                     message: "Messages not found"
+                }
+            }
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
+
+    static deleteChat = async (adventureId) => {
+        try {
+            var result = await Message.deleteMany({ adventureId: adventureId });
+            
+            if (result) {
+                return {
+                    code: 200,
+                    message: "Adventure chat deleted",
+                    payload: result
+                }
+            }
+            else {
+                return {
+                    code: 404,
+                    message: "Adventure not found"
                 }
             }
         }

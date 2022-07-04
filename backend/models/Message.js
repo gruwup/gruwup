@@ -12,6 +12,9 @@ const schema = mongoose.Schema({
     dateTime: {
         type: String,
         required: true
+    },
+    prevDateTime: {
+        type: String
     }
 });
 

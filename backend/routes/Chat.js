@@ -35,7 +35,7 @@ router.post("/:adventureId/send", async (req, res) => {
                         res.sendStatus(200);
                     }
                     else {
-                        res.status(result.code).send(result.message);
+                        res.status(result.code).send({ message: result.message.toString() });
                     }
                 }
                 else {
@@ -55,7 +55,7 @@ router.post("/:adventureId/send", async (req, res) => {
     }
 });
 
-router.get("/:adventureId/recentTime", async (req, res) => {
+router.get("/:adventureId/recent", async (req, res) => {
     if (Session.validSession(req.headers.cookie)) {
         try {
             var result = await ChatStore.getPrevDateTime(req.params.adventureId, Date.now());
@@ -63,7 +63,7 @@ router.get("/:adventureId/recentTime", async (req, res) => {
                 res.status(200).send(result.payload);
             }
             else {
-                res.status(result.code).send(result.message);
+                res.status(result.code).send({ message: result.message.toString() });
             }
         }
         catch (err) {
@@ -84,7 +84,7 @@ router.get("/:adventureId/messages/:pagination", async (req, res) => {
                 res.status(200).send(result.payload);
             }
             else {
-                res.status(result.code).send(result.message);
+                res.status(result.code).send({ message: result.message.toString() });
             }
         }
         catch (err) {
@@ -97,7 +97,23 @@ router.get("/:adventureId/messages/:pagination", async (req, res) => {
 });
 
 router.delete("/:adventureId/delete-chat", async (req, res) => {
-    res.sendStatus(200).send();
+    if (Session.validSession(req.headers.cookie)) {
+        try {
+            var result = await ChatStore.deleteChat(req.params.adventureId);
+            if (result.code === 200) {
+                res.sendStatus(200);
+            }
+            else {
+                res.status(result.code).send({ message: result.message.toString() });
+            }
+        }
+        catch (err) {
+            res.status(500).send({ message: err.toString() });
+        }
+    }
+    else {
+        res.status(403).send({ message: Session.invalid_msg });
+    }
 });
 
 module.exports = router;
