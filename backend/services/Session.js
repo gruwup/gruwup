@@ -1,7 +1,7 @@
 const CryptoJS = require("crypto-js");
 
 module.exports = class Session {
-    static session = [];
+    static session = ["gruwup-session=123"];
     static name = "gruwup-session";
     static invalid_msg = "Invalid cookie";
 
