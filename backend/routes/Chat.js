@@ -96,17 +96,8 @@ router.get("/:adventureId/messages/:pagination", async (req, res) => {
     }
 });
 
-// removing user from chat
-router.delete("/:adventureId/:userId/delete-user", async (req, res) => {
-    console.log("adventureId: " + req.params.adventureId);
-    console.log("userId: " + req.params.userId);
-    res.status(200).send();
-});
-
-// removing user from chat
 router.delete("/:adventureId/delete-chat", async (req, res) => {
-    console.log("adventureId: " + req.params.adventureId);
-    res.status(200).send();
+    res.sendStatus(200).send();
 });
 
 module.exports = router;

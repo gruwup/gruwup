@@ -28,13 +28,10 @@ module.exports = class ChatSocket {
             var sockets = io.sockets.sockets;
 
             sockets.forEach(async (socket, key) => {
-                console.log(socket.username);
                 if (userId !== socket.username) {
                     var adventure = await AdventureStore.getAdventureDetail(adventureId);
-                    console.log(adventure);
                     var participants = adventure['payload']['peopleGoing'];
                     if (participants.includes(socket.username)) {
-                        console.log("sent");
                         socket.emit('message', adventureId, message);
                     }
                 }
