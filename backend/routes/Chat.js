@@ -4,41 +4,34 @@ const AdventureStore = require("../store/AdventureStore");
 const Session = require("../services/Session");
 const router = express.Router();
 const ChatStore = require("../store/ChatStore");
-
-const TestMessage = {
-    "userId": "string",
-    "name": "Big Brain Billy Bob",
-    "message": "hi everyone :)",
-    "dateTime": "yyyy-mm-dd hh:mm:ss"
-  };
-
-const TestMessageList = {
-    pagination: 0,
-    messages: [
-        TestMessage,
-        TestMessage,
-        TestMessage
-    ]
-};
+const ChatSocket = require("../services/ChatSocket");
 
 var messages = {}
-// sending a message
+
 router.post("/:adventureId/send", async (req, res) => {
     if (Session.validSession(req.headers.cookie)) {
         try {
             var adventureId = req.params.adventureId;
-            var participants = await AdventureStore.getAdventureDetail(adventureId).participants;
+            var userId = req.body.userId;
+            var adventure = await AdventureStore.getAdventureDetail(adventureId);
+            var participants = adventure['payload']['peopleGoing'];
+
             if (participants.includes(req.body.userId)) {
                 var message = {
-                    userId: req.body.userId,
+                    userId: userId,
                     name: req.body.name,
                     message: req.body.message,
-                    dateTime: req.body.dateTime
+                    dateTime: req.body.dateTime,
+                    prevTime: req.body.prevDateTime
                 };
+
+                if (!messages[adventureId]) messages[adventureId] = [];
                 messages[adventureId].push(message);
-                if (messages[adventureId].size() == 10) {
+                ChatSocket.sendMessage(userId, adventureId, message);
+                if (messages[adventureId].length == 10) {
                     var result = await ChatStore.storeMessages(adventureId, messages[adventureId], req.body.dateTime);
                     if (result.code === 200) {
+                        messages[adventureId] = [];
                         res.sendStatus(200);
                     }
                     else {
