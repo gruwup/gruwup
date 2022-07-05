@@ -1,22 +1,43 @@
 const Message = require("../models/Message");
 
 module.exports = class User {
-    static storeMessages = async (adventureId, messages, dateTime) => {
+    static storeNewMessageGroup = async (adventureId, messages, dateTime) => {
         try {
             var paginationResult = await this.getPrevPagination(adventureId, dateTime);
-            console.log(paginationResult);
             var message = { 
                 adventureId: adventureId, 
                 pagination: dateTime, 
-                prevPagination:  paginationResult.payload ? paginationResult.payload : null,
-                messages: messages
+                prevPagination: paginationResult.payload ? paginationResult.payload : null,
+                messages: [messages]
             }
             var message = new Message(message);
             var result = await message.save();
 
             return {
                 code: 200,
-                message: "Profile created successfully",
+                message: "Group created successfully",
+                payload: result
+            };
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
+
+    static storeExistingMessageGroup = async (adventureId, message, dateTime) => {
+        try {
+            var paginationResult = await this.getPrevPagination(adventureId, dateTime);
+            var result = await Message.findOneAndUpdate( // update pagination and add message to object array
+                                    { adventureId: adventureId, pagination: paginationResult.payload },
+                                    { $set: { pagination: dateTime },  $push: { messages: message } },
+                                    { new: true }
+                                );
+            return {
+                code: 200,
+                message: "Group updated successfully",
                 payload: result
             };
         }
@@ -33,7 +54,6 @@ module.exports = class User {
         try {
             var result = await Message.find({ adventureId: adventureId });
             var prevPagination = null;
-            console.log(result);
             if (result.length) {
                 prevPagination = result.map(chat => chat.pagination).reduce((prev, curr) => {
                     if (prev > pagination && curr > pagination) return null;
@@ -41,10 +61,9 @@ module.exports = class User {
                     else if (curr > pagination) return prev;
                     else return (Math.abs(curr - pagination) < Math.abs(prev - pagination) ? curr : prev);
                 });
-                console.log(prevPagination);
                 return {
                     code: 200,
-                    message: "Prev pagination found",
+                    message: "Previous pagination found",
                     payload: prevPagination
                 };
             }
