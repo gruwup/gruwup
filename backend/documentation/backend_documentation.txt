@@ -401,13 +401,6 @@ paths:
       summary: Sign out
       tags:
        - Account
-      requestBody:
-        description: All fields are mandatory
-        content:
-          application/json:
-            schema:
-              oneOf:
-                - $ref: '#/components/schemas/userId'
       responses:
         "200":
           description: Successfully signed out
@@ -676,14 +669,15 @@ paths:
               schema:
                type: object
                example: {
-                 pagination: 0,
+                 adventureId: "123",
+                 pagination: "13131238",
+                 prevPagination: "11111111",
                  messages: [
                     {
                       "userId": "string",
                       "name": "Bob John",
                       "message": "hi everyone :)",
-                      "dateTime": "13131238",
-                      "prevTime": "13111111"
+                      "dateTime": "13131238"
                     },
                    ]
                }
@@ -810,9 +804,6 @@ components:
         dateTime:
           type: string
           example: "13131238"
-        prevDateTime:
-          type: string
-          example: "13111111"
     Account:
       type: object
       properties:
