@@ -46,10 +46,12 @@ public class MessageViewAdapter extends RecyclerView.Adapter<MessageViewAdapter.
 
     public class ViewHolder extends RecyclerView.ViewHolder{
         TextView sentMessage;
+        TextView receivedMessage;
 
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             sentMessage = itemView.findViewById(R.id.sent_message);
+            receivedMessage = itemView.findViewById(R.id.received_message);
 
         }
     }

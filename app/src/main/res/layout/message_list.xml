@@ -9,10 +9,11 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textSize="15sp"
-        android:background="#FFFFFF"
+        android:background="@drawable/chat_border"
         android:id="@+id/received_message"
         android:layout_gravity="left"
         android:text="Received Message"
+        android:visibility="gone"
         android:padding="5dp">
 
     </TextView>
