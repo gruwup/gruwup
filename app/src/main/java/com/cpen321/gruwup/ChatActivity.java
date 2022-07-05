@@ -7,16 +7,22 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
 
 import java.util.ArrayList;
 
 public class ChatActivity extends AppCompatActivity {
 
     private RecyclerView messageRecyclerView;
-    ArrayList<Message> messages = new ArrayList<>();
-
-
+    private ArrayList<Message> messages = new ArrayList<>();
+    private Button sendButton;
+    private EditText editMessageBar;
+    private String UserID;
+    private String UserName;
+//    private ArrayList<String> messageList = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -39,6 +45,29 @@ public class ChatActivity extends AppCompatActivity {
         initMessages();
         MessageViewAdapter adapter = new MessageViewAdapter(this,messages);
         messageRecyclerView.setAdapter(adapter);
+
+        UserID = SupportSharedPreferences.getUserId(getApplicationContext());
+        UserName = SupportSharedPreferences.getUserName(getApplicationContext());
+        editMessageBar = findViewById(R.id.editMesssage);
+        sendButton = findViewById(R.id.sendMessage);
+        sendButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                String message = editMessageBar.getText().toString().trim();
+                if (message!=null && !message.isEmpty()){
+                    // TO DO: Add datetime later
+                    Message newMessage = new Message(UserID, UserName, message, "", "");
+                    messages.add(newMessage);
+
+                    if (adapter!=null){
+                        adapter.notifyDataSetChanged();
+                    }
+                }
+
+
+            }
+        });
+
     }
 
     private  void initMessages(){

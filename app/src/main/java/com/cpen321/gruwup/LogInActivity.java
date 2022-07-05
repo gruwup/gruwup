@@ -171,11 +171,13 @@ public class LogInActivity extends AppCompatActivity {
                                 // Note: For storing userId locally used SharedPreferences
                                 final String PREF_NAME = "LogIn";
                                 final String DATA_TAG = "UserId";
+                                final String USER_NAME = "UserName";
                                 final String COOKIE_TAG = "Cookie";
                                 SharedPreferences settings = getApplicationContext().getSharedPreferences(PREF_NAME,0);
                                 SharedPreferences.Editor editor = settings.edit();
 
                                 // store userId
+                                editor.putString(USER_NAME, account.getGivenName());
                                 editor.putString(DATA_TAG, userId);
                                 editor.putString(COOKIE_TAG, cookie);
                                 editor.commit();
