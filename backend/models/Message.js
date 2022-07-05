@@ -5,16 +5,16 @@ const schema = mongoose.Schema({
         type: String,
         required: true
     },
-    messages: {
-        type: Array,
-        required: true
-    },
-    dateTime: {
+    pagination: {
         type: String,
         required: true
     },
-    prevDateTime: {
+    prevPagination: {
         type: String
+    },
+    messages: {
+        type: Array,
+        required: true
     }
 });
 
