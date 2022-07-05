@@ -3,12 +3,13 @@ const Message = require("../models/Message");
 module.exports = class User {
     static storeMessages = async (adventureId, messages, dateTime) => {
         try {
-            var paginationResult = await this.getPrevDateTime(adventureId, dateTime);
+            var paginationResult = await this.getPrevPagination(adventureId, dateTime);
+            console.log(paginationResult);
             var message = { 
                 adventureId: adventureId, 
-                messages: messages, 
-                dateTime: dateTime, 
-                prevDateTime:  paginationResult.payload ? paginationResult : null
+                pagination: dateTime, 
+                prevPagination:  paginationResult.payload ? paginationResult.payload : null,
+                messages: messages
             }
             var message = new Message(message);
             var result = await message.save();
@@ -27,29 +28,31 @@ module.exports = class User {
         }
     };
 
-    static getPrevDateTime = async (adventureId, dateTime) => {
+    // get most recent message time before dateTime
+    static getPrevPagination = async (adventureId, pagination) => {
         try {
             var result = await Message.find({ adventureId: adventureId });
-            var closestDateTime = null;
-            if (result) {
-                closestDateTime = result.forEach(message => message.dateTime).reduce((prev, curr) => {
-                    if (prev > dateTime && curr > dateTime) return null;
-                    else if (prev > dateTime) return curr;
-                    else if (curr > dateTime) return prev;
-                    else return (Math.abs(curr - dateTime) < Math.abs(prev - dateTime) ? curr : prev);
+            var prevPagination = null;
+            console.log(result);
+            if (result.length) {
+                prevPagination = result.map(chat => chat.pagination).reduce((prev, curr) => {
+                    if (prev > pagination && curr > pagination) return null;
+                    else if (prev > pagination) return curr;
+                    else if (curr > pagination) return prev;
+                    else return (Math.abs(curr - pagination) < Math.abs(prev - pagination) ? curr : prev);
                 });
-
+                console.log(prevPagination);
                 return {
                     code: 200,
-                    message: "Prev dateTime found",
-                    payload: closestDateTime
+                    message: "Prev pagination found",
+                    payload: prevPagination
                 };
             }
             
             return {
                 code: 404,
-                message: "No previous dateTime found",
-                payload: closestDateTime
+                message: "No previous pagination found",
+                payload: prevPagination
             };
         }
         catch (err) {
@@ -57,9 +60,9 @@ module.exports = class User {
         }
     };
 
-    static getMessages = async (adventureId, dateTime) => {
+    static getMessages = async (adventureId, pagination) => {
         try {
-            var result = await Message.findOne({ adventureId: adventureId, dateTime: dateTime });
+            var result = await Message.findOne({ adventureId: adventureId, pagination: pagination });
             
             if (result) {
                 return {

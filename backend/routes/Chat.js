@@ -28,7 +28,7 @@ router.post("/:adventureId/send", async (req, res) => {
                 if (!messages[adventureId]) messages[adventureId] = [];
                 messages[adventureId].push(message);
                 ChatSocket.sendMessage(userId, adventureId, message);
-                if (messages[adventureId].length == 10) {
+                if (messages[adventureId].length == 2) {
                     var result = await ChatStore.storeMessages(adventureId, messages[adventureId], req.body.dateTime);
                     if (result.code === 200) {
                         messages[adventureId] = [];
@@ -60,7 +60,7 @@ router.get("/:adventureId/recent", async (req, res) => {
         try {
             var result = await ChatStore.getPrevDateTime(req.params.adventureId, Date.now());
             if (result.code === 200) {
-                res.status(200).send(result.payload);
+                res.status(200).send({ pagination: result.payload });
             }
             else {
                 res.status(result.code).send({ message: result.message.toString() });
