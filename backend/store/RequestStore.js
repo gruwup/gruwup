@@ -2,7 +2,7 @@ const Request = require("../models/Request");
 const AdventureStore = require("./AdventureStore");
 
 module.exports = class RequestStore {
-    static storePendingRequest = async (request) => {
+    static sendRequest = async (request) => {
         var request = new Request(request);
         try {
             var result = await request.save();

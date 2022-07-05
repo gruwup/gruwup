@@ -60,7 +60,7 @@ router.post("/:adventureId/send-request", async (req, res) => {
 			status: "PENDING",
 			dateTime: req.body.dateTime
 		};
-		var result = await RequestStore.storePendingRequest(request);
+		var result = await RequestStore.sendRequest(request);
 		if (result.code === 200) {
 			res.status(200).send(result.payload);
 		}
