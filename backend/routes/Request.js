@@ -55,6 +55,7 @@ router.post("/:adventureId/send-request", async (req, res) => {
 		var request = {
 			adventureId: req.params.adventureId,
 			adventureOwner: adventure.payload.owner,
+			adventureTitle: adventure.payload.title,
 			requester: req.body.userName,
 			requesterId: req.body.userId,
 			status: "PENDING",
@@ -77,7 +78,9 @@ router.get("/:userId/get-requests", async (req, res) => {
     try {
 		var result = await RequestStore.getRequests(req.params.userId);
 		if (result.code === 200) {
-			res.status(200).send(result.payload);
+			res.status(200).send({
+				requests: result.payload
+			});
 		}
 		else {
 			res.status(result.code).send(result.message);
