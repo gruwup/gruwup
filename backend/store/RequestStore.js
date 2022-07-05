@@ -2,7 +2,7 @@ const Request = require("../models/Request");
 const AdventureStore = require("./AdventureStore");
 
 module.exports = class RequestStore {
-    static storePendingRequest = async (request) => {
+    static sendRequest = async (request) => {
         var request = new Request(request);
         try {
             var result = await request.save();
@@ -22,16 +22,15 @@ module.exports = class RequestStore {
     };
 
     static getRequests = async (userId) => {
-        // FE would have to process through the accepted/rejected list to find out what state to show user
         try {
             var asRequester = await Request.find({ requesterId: userId });
-            var asAdventureParticipant = await Request.find({
+            var asCreator = await Request.find({
                 $and: [
-                    { adventureParticipants: {$in: userId} },
+                    { adventureOwner: userId },
                     { status: "PENDING" }
                 ]}
             );
-            var result = asRequester.concat(asAdventureParticipant);
+            var result = asRequester.concat(asCreator);
             result.sort((a, b) => {
                 return b.dateTime - a.dateTime;
             });
@@ -57,62 +56,59 @@ module.exports = class RequestStore {
         }
     };
 
-    static sendResponse = async (requestId, userId, response) => {
+    static acceptRequest = async (requestId) => {
         try {
-            var request = await Request.findById(requestId);
-            if (request.rejected.length > 0) {
-                return {
-                    code: 400,
-                    message: "Request already rejected by one or more other participants"
-                };
-            }
-            if (response === "REJECT") {
-                var rejectedRequest = await Request.updateOne({ _id: requestId }, { 
-                    $push: { rejected: userId },
-                    $set: { status: "REJECTED" }},
-                    { new: true }
-                );
-                if (rejectedRequest) {
-                    return {
-                        code: 200,
-                        message: "Request rejected successfully"
-                    };
-                }
-                else {
-                    return {
-                        code: 400,
-                        message: "Request not found"
-                    };
-                }
-            }
-            if (response === "ACCEPT") {
-                var acceptRequestQuery = {
-                    $push: { accepted: userId }
-                };
-                var accepted = request.accepted;
-                accepted.push(userId);
-                if (request.adventureParticipants.every(participant => accepted.includes(participant))) {
-                    acceptRequestQuery.$set = { status: "APPROVED" };
-                    await AdventureStore.addAdventureParticipant(request.adventureId, request.requester);
-                }
-                var acceptedRequest = await Request.updateOne({ _id: requestId }, acceptRequestQuery, { new: true });
-                if (acceptedRequest) {
-                    return {
-                        code: 200,
-                        message: "Request accepted successfully"
-                    };
-                }
-                else {
-                    return {
-                        code: 400,
-                        message: "Request not found"
-                    };
-                }
-            }
+            await Request.findByIdAndUpdate(requestId, { status: "ACCEPTED" });
             return {
-                code: 400,
-                message: "Invalid response option"
+                code: 200,
+                message: "Request accepted"
             };
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
+
+    static rejectRequest = async (requestId) => {
+        try {
+            await Request.findByIdAndUpdate(requestId, { status: "REJECTED" });
+            return {
+                code: 200,
+                message: "Request rejected"
+            };
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
+
+    static checkIfRequestExists = async (adventureId, userId) => {
+        try {
+            var result = await Request.findOne({
+                $and: [
+                    { adventureId: adventureId },
+                    { requesterId: userId }
+                ]
+            });
+            if (result) {
+                return {
+                    code: 200,
+                    message: "Request exists",
+                    payload: result
+                };
+            }
+            else {
+                return {
+                    code: 404,
+                    message: "Request not found"
+                };
+            }
         }
         catch (err) {
             return {
