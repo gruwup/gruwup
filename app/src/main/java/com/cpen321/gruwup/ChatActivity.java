@@ -43,7 +43,9 @@ public class ChatActivity extends AppCompatActivity {
 
     private  void initMessages(){
         Message m1 =  new Message("1", "sara", "hellooooo", "1111", "11111");
+        Message m2 =  new Message("1", "sara", "hey!!", "1111", "11111");
         messages.add(m1);
+        messages.add(m2);
 
     }
 }
