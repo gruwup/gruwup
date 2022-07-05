@@ -72,7 +72,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             @Override
             public void onClick(View view) {
                 // To do: make backend request , do below if backend request is successful
-                showPopUp(view, "accept");
+                showPopUp(view, "accept",position);
                 requests.remove(position);
                 notifyItemRemoved(position);
             }
@@ -82,7 +82,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             @Override
             public void onClick(View view) {
                 // To do: make backend request , do below if backend request is successful
-                showPopUp(view, "deny");
+                showPopUp(view, "deny",position);
                 requests.remove(position);
                 notifyItemRemoved(position);
             }
@@ -124,12 +124,40 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
 
     }
 
-    private void showPopUp(View view, String action) {
+    private void showPopUp(View view, String action, int position) {
         if (action=="accept"){
+            String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/accept";
+            String json = "";
+            SupportRequests.put(url,json, new Callback() {
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    String jsonData = response.body().string();
+                    Log.d(TAG, jsonData);
+                }
+
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    Log.d(TAG, "Accept Request Unsuccessful");
+                }
+            });
             requestDialog.setContentView(R.layout.accept_request_pop_up);
             requestDialog.show();
         }
         else if (action=="deny"){
+            String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/reject";
+            String json = "";
+            SupportRequests.put(url,json, new Callback() {
+                @Override
+                public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    String jsonData = response.body().string();
+                    Log.d(TAG, jsonData);
+                }
+
+                @Override
+                public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                    Log.d(TAG, "Reject Request Unsuccessful");
+                }
+            });
             requestDialog.setContentView(R.layout.deny_request_pop_up);
             requestDialog.show();
         }

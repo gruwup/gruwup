@@ -32,14 +32,10 @@ public class RequestsFragment extends Fragment {
     // local : "10.0.2.2" , remote: "20.227.142.169"
     private String address = "10.0.2.2";
     //    private String address = "20.227.142.169";
+    private RequestViewAdapter adapter;
 
     private void initRequestData() throws IOException {
-
         this.getAllRequests();
-        Request tom = new Request("Movie", "Tom", "116853060753534924974", "22", "PENDING");
-        Request dan = new Request("Sport", "Dan", "112559584626040550555", "23", "PENDING");
-        requests.add(tom);
-        requests.add(dan);
     }
 
     @Nullable
@@ -49,7 +45,7 @@ public class RequestsFragment extends Fragment {
 
         try {
             initRequestData();
-            RequestViewAdapter adapter = new RequestViewAdapter(getActivity(),requests);
+            adapter = new RequestViewAdapter(getActivity(),requests);
             RecyclerView requestView = (RecyclerView) view.findViewById(R.id.getRequestView);
             requestView.setLayoutManager(new LinearLayoutManager(getActivity()));
             requestView.setAdapter(adapter);
@@ -64,9 +60,7 @@ public class RequestsFragment extends Fragment {
 
     private void getAllRequests() throws IOException {
         String UserID = SupportSharedPreferences.getUserId(this.getActivity());
-
         Log.d(TAG, "User Id is "+ UserID);
-//        http://localhost:8081/user/request/116853060753534924974/get-requests
         SupportRequests.get("http://"+address+":8081/user/request/" + UserID + "/get-requests", new Callback() {
 
             @Override
@@ -82,9 +76,32 @@ public class RequestsFragment extends Fragment {
                     String jsonData = response.body().string();
 
                     try {
-                        Log.d(TAG, jsonData);
-//                        JSONObject jsonObj = new JSONObject(jsonData);
-                        // To do: Parse JSON response of requests from backend here
+                        JSONObject jsonObj = new JSONObject(jsonData);
+                        JSONArray requestArray = jsonObj.getJSONArray("requests");
+                        JSONObject requestObj = new JSONObject();
+
+                        if (requestArray !=null){
+                            for (int i=0; i<requestArray.length(); i++){
+                                requestObj = requestArray.getJSONObject(i);
+                                Log.d(TAG, requestObj.toString());
+                                String adventureName = requestObj.getString("adventureTitle");
+                                String requesterName = requestObj.getString("requester");
+                                String requesterId = requestObj.getString("requesterId");
+                                String requestId = requestObj.getString("_id");
+                                String status = requestObj.getString("status");
+
+                                getActivity().runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        Request request = new Request(adventureName,requesterName,requesterId, requestId, status);
+                                        requests.add(request);
+                                        adapter.notifyDataSetChanged();
+
+                                    }
+                                });
+
+                            }
+                        }
 
                     } catch (Exception e) {
                         e.printStackTrace();
