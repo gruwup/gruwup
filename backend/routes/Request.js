@@ -41,16 +41,17 @@ const example_req = {
 router.post("/:adventureId/send-request", async (req, res) => {
 	// TODO: validate token and request
 	try {
+		var checkRequestDuplicate = await RequestStore.checkIfRequestExists(req.params.adventureId, req.body.userId);
+		if (checkRequestDuplicate.code == 200) {
+			return res.status(400).send("You have already sent a request to this adventure");
+		}
+		
 		var adventure = await AdventureStore.getAdventureDetail(req.params.adventureId);
 		if (adventure.payload.status != "OPEN") {
 			return res.status(400).send("Adventure is not open");
 		}
 		if (adventure.payload.owner == req.body.userId) {
 			return res.status(400).send("You cannot request to join your own adventure");
-		}
-		var checkRequestDuplicate = await RequestStore.checkIfRequestExists(req.params.adventureId, req.body.userId);
-		if (checkRequestDuplicate.code == 200) {
-			return res.status(400).send("You have already sent a request to this adventure");
 		}
 		var request = {
 			adventureId: req.params.adventureId,
