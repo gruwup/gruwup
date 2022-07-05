@@ -458,7 +458,7 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/userId'
+                - $ref: '#/components/schemas/userInfo'
       parameters:
       - name: adventureId
         in: path
@@ -481,9 +481,9 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/request/{userId}/get:
+  /user/request/{userId}/get-requests:
     get:
-      summary: Get all request user has not processed and not rejected by other users i adventure, or request that are sent out by user (as requester). Returned requests are in descending timestamp order.
+      summary: Get all request user has not processed or is pending to be accepted
       tags:
       - Request
       parameters:
@@ -505,21 +505,15 @@ paths:
                  requests: [
                     {
                       "adventureId": "string",
-                      "adventureParticipants": ["useid1", "userid2"],
                       "requester": "Bob John",
                       "requesterId": "bobjohnuserid",
-                      "accepted": ["userid1"],
-                      "rejected": [],
                       "status": "PENDING",
                       "dateTime": "123456789",
                     },
                     {
                       "adventureId": "string",
-                      "adventureParticipants": ["useid3", "userid4"],
                       "requester": "user",
                       "requesterId": "userId",
-                      "accepted": ["userid3"],
-                      "rejected": ["userid4"],
                       "status": "REJECTED",
                       "dateTime": "123456789",
                     }
@@ -532,9 +526,9 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/request/{requestId}/respond:
+  /user/request/{requestId}/accept:
     put:
-      summary: respond to request
+      summary: accept request
       tags:
       - Request
       parameters:
@@ -550,7 +544,41 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/RequestResponse'
+                - $ref: '#/components/schemas/Request'
+      responses:
+        "200":
+          description: Successfully responded
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Request'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/request/{requestId}/reject:
+    put:
+      summary: reject request
+      tags:
+      - Request
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Request'
       responses:
         "200":
           description: Successfully responded
@@ -806,49 +834,32 @@ components:
       properties:
         authentication_code:
           type: string
-    userId:
+    userInfo:
       type: object
       properties:
+        userName:
+          type: string
         userId:
+          type: string
+        dateTime:
           type: string
     Request:
       type: object
       properties:
         adventureId:
           type: string
-        adventureParticipants:
-          type: array
-          items: 
-            type: string
         requester:
           type: string
           example: "Bob John"
         requesterId:
           type: string
-        accepted:
-          type: array
-          items: 
-            type: string
-        rejected: 
-          type: array
-          items: 
-            type: string
         status:
           type: string
-          enum: ["ACCEPTED", "PENDING", "REJECTED"]
+          enum: ["ACCEPTED", "PENDING", "REJECTED", "EXPIRED"]
           example: "PENDING"
         dateTime:
           type: string
           example: "13131238"
-    RequestResponse: 
-      type: object
-      properties:
-        userId:
-          type: string
-        response:
-          type: string
-          enum: ["ACCEPT", "REJECT"]
-          example: "ACCEPT"
   securitySchemes:
     accessCode:
       type: oauth2
