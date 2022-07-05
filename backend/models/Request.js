@@ -9,6 +9,10 @@ const schema = mongoose.Schema({
         type: String,
         required: true
     },
+    adventureTitle: {
+        type: String,
+        required: true
+    },
     requester: {
         type: String,
         required: true
