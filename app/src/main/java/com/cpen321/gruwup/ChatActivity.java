@@ -133,7 +133,7 @@ public class ChatActivity extends AppCompatActivity {
 
                         // To do: replace this with actual cookie and userId
                         String cookie = "gruwup-session=123";
-                        String userId = "1111111";
+                        String userId = "116853060753534924974";
 
                         socket.emit("userInfo",cookie, userId);
                         Toast.makeText(getApplicationContext(), "Socket Connected",Toast.LENGTH_SHORT).show();
