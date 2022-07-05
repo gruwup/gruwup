@@ -5,8 +5,8 @@ const schema = mongoose.Schema({
         type: String,
         required: true
     },
-    adventureParticipants: {
-        type: [String],
+    adventureOwner: {
+        type: String,
         required: true
     },
     requester: {
@@ -17,16 +17,10 @@ const schema = mongoose.Schema({
         type: String,
         required: true
     },
-    accepted: {
-        type: [String],
-    },
-    rejected: {
-        type: [String],
-    },
     status: {
         type: String,
         enum: {
-            values: ["PENDING", "APPROVED", "REJECTED"],
+            values: ["PENDING", "ACCEPTED", "REJECTED", "EXPIRED"],
             message: '{VALUE} is not a supported RequestStatus'
         },
         required: true

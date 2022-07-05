@@ -1,17 +1,20 @@
 const mongoose = require("mongoose");
 
 const schema = mongoose.Schema({
-    userId: {
+    adventureId: {
         type: String,
         required: true
     },
-    message: {
-        type: String,
+    messages: {
+        type: Array,
         required: true
     },
     dateTime: {
         type: String,
         required: true
+    },
+    prevDateTime: {
+        type: String
     }
 });
 
