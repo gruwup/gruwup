@@ -237,4 +237,27 @@ module.exports = class AdventureStore {
             };
         }
     };
+
+    static findAdventuresByFilter = async (filter) => {
+        // filter is a list of conditions that adventure needs to satisfy
+        try {
+            var result = await Adventure.find(
+                { $and: [
+                    { status: "OPEN" },
+                    { $or: filter }
+                ] }
+            );
+            return {
+                code: 200,
+                message: "Adventures found",
+                payload: result
+            };
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
 };
