@@ -6,7 +6,7 @@ const router = express.Router();
 const ChatStore = require("../store/ChatStore");
 const ChatSocket = require("../services/ChatSocket");
 
-var messages = {}
+var messageCount = {}
 
 router.post("/:adventureId/send", async (req, res) => {
     if (Session.validSession(req.headers.cookie)) {
@@ -15,31 +15,31 @@ router.post("/:adventureId/send", async (req, res) => {
             var userId = req.body.userId;
             var adventure = await AdventureStore.getAdventureDetail(adventureId);
             var participants = adventure['payload']['peopleGoing'];
+            var result;
 
             if (participants.includes(req.body.userId)) {
                 var message = {
                     userId: userId,
                     name: req.body.name,
                     message: req.body.message,
-                    dateTime: req.body.dateTime,
-                    prevTime: req.body.prevDateTime
+                    dateTime: req.body.dateTime
                 };
 
-                if (!messages[adventureId]) messages[adventureId] = [];
-                messages[adventureId].push(message);
+                if (!messageCount[adventureId] || messageCount[adventureId] == 10) messageCount[adventureId] = 0;
+                messageCount[adventureId]++;
                 ChatSocket.sendMessage(userId, adventureId, message);
-                if (messages[adventureId].length == 10) {
-                    var result = await ChatStore.storeMessages(adventureId, messages[adventureId], req.body.dateTime);
-                    if (result.code === 200) {
-                        messages[adventureId] = [];
-                        res.sendStatus(200);
-                    }
-                    else {
-                        res.status(result.code).send({ message: result.message.toString() });
-                    }
+
+                if (messageCount[adventureId] == 1) {
+                    result = await ChatStore.storeNewMessageGroup(adventureId, message, req.body.dateTime);
+                } else {
+                    result = await ChatStore.storeExistingMessageGroup(adventureId, message, req.body.dateTime);
+                }
+                    
+                if (result.code === 200) {
+                    res.sendStatus(200);
                 }
                 else {
-                    res.sendStatus(200);
+                    res.status(result.code).send({ message: result.message.toString() });
                 }
             }
             else {
@@ -55,12 +55,13 @@ router.post("/:adventureId/send", async (req, res) => {
     }
 });
 
-router.get("/:adventureId/recent", async (req, res) => {
+// allows front-end to obtain the pagination for the most recent chat for an adventure
+router.get("/:adventureId/recent-pagination", async (req, res) => {
     if (Session.validSession(req.headers.cookie)) {
         try {
-            var result = await ChatStore.getPrevDateTime(req.params.adventureId, Date.now());
+            var result = await ChatStore.getPrevPagination(req.params.adventureId, Date.now());
             if (result.code === 200) {
-                res.status(200).send(result.payload);
+                res.status(200).send({ pagination: result.payload });
             }
             else {
                 res.status(result.code).send({ message: result.message.toString() });
