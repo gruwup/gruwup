@@ -94,7 +94,6 @@ router.get("/:userId/get-requests", async (req, res) => {
 router.put("/:requestId/accept", async (req, res) => {
     //TODO: validate token
 	try {
-        console.log(req.params.requestId);
 		var result = await RequestStore.acceptRequest(req.params.requestId);
 		if (result.code === 200) {
 			res.status(200).send(result.message);

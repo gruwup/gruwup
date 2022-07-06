@@ -58,7 +58,7 @@ module.exports = class RequestStore {
 
     static acceptRequest = async (requestId) => {
         try {
-            var request = await Request.findByIdAndDelete({ _id: requestId });
+            var request = await Request.findByIdAndUpdate(requestId, { status: "ACCEPTED" });
             if (!request) {
                 return {
                     code: 404,
