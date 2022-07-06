@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
-const Constants = require("../constants/Constants");
 const FilterService = require("../services/FilterService");
+const RecommendationService = require("../services/RecommendationService");
 const AdventureStore = require("../store/AdventureStore");
 
 const TestAdventure = {
@@ -87,8 +87,23 @@ router.post("/create", async (req, res) => {
 router.get("/search-by-filter", async (req, res) => {
     // TODO: validate token
     console.log("pagination: " + req.params.pagination);
-    console.log("pagination limit: " + Constants.SEARCH_PAGINATION_LIMIT);
     res.status(200).send([TestAdventure, TestAdventure]);
+});
+
+// discover adventure by user favorite categories
+router.get("/:userId/discover", async (req, res) => {
+    try {
+        var result = await RecommendationService.getRecommendationFeed(req.params.userId);
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
+    }
+    catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 // search adventures by title

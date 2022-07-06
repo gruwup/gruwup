@@ -1,5 +1,5 @@
 
 const TestMode = {
-    on: true
-}
+    on: false
+};
 module.exports = TestMode;
