@@ -181,10 +181,6 @@ module.exports = class AdventureStore {
     static removeAdventureParticipant = async (adventureId, userId) => {
         try {
             var adventure = await Adventure.findById(adventureId);
-            console.log(adventure.peopleGoing);
-            console.log(adventure.owner);
-            console.log(userId);
-            console.log(adventure.owner === userId);
             if (!adventure) {
                 return {
                     code: 404,
@@ -245,7 +241,7 @@ module.exports = class AdventureStore {
             var result = await Adventure.find(
                 { $and: [
                     { status: "OPEN" },
-                    { $or: filter }
+                    filter
                 ] }
             );
             return {
@@ -261,36 +257,4 @@ module.exports = class AdventureStore {
             };
         }
     };
-
-    static getRecommendationFeed = async (userId) => {
-        try {
-            var userProfile = await UserStore.getUserProfile(userId);
-            console.log(userProfile.payload);
-            if (userProfile.code !== 200) {
-                return {
-                    code: userProfile.code,
-                    message: userProfile.message
-                };
-            }
-            var result = await Adventure.find(
-                { $and: [
-                    { status: "OPEN" },
-                    { category: { $in: userProfile.payload.categories } },
-                    { owner: { $ne: userId } },
-                    { peopleGoing: { $nin: userId } },
-                ] }
-            );
-            return {
-                code: 200,
-                message: "Adventures found",
-                payload: result
-            };
-        }
-        catch {
-            return {
-                code: 500,
-                message: err
-            };
-        }
-    }
 };

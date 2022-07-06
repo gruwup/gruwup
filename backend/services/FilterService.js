@@ -2,7 +2,7 @@ const AdventureStore = require("../store/AdventureStore");
 
 module.exports = class FilterService {
     static getNearbyAdventures = async (cityName) => {
-        const nearbyFilter = [{city: cityName}];
+        const nearbyFilter = {city: cityName};
         try {
             const adventures = await AdventureStore.findAdventuresByFilter(nearbyFilter);
             if (adventures.code !== 200) {
