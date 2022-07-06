@@ -93,7 +93,7 @@ router.get("/search-by-filter", async (req, res) => {
 // discover adventure by user favorite categories
 router.get("/:userId/discover", async (req, res) => {
     try {
-        var result = await RecommendationService.getRecommendationFeed(req.params.userId);
+        var result = await FilterService.getRecommendationFeed(req.params.userId);
         if (result.code === 200) {
             res.status(200).send(result.payload);
         }
