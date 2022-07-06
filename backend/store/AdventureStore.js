@@ -1,4 +1,5 @@
 const Adventure = require("../models/Adventure");
+const UserStore = require("../store/UserStore");
 
 module.exports = class AdventureStore {
     static createAdventure = async (adventure) => {
@@ -260,4 +261,36 @@ module.exports = class AdventureStore {
             };
         }
     };
+
+    static getRecommendationFeed = async (userId) => {
+        try {
+            var userProfile = await UserStore.getUserProfile(userId);
+            console.log(userProfile.payload);
+            if (userProfile.code !== 200) {
+                return {
+                    code: userProfile.code,
+                    message: userProfile.message
+                };
+            }
+            var result = await Adventure.find(
+                { $and: [
+                    { status: "OPEN" },
+                    { category: { $in: userProfile.payload.categories } },
+                    { owner: { $ne: userId } },
+                    { peopleGoing: { $nin: userId } },
+                ] }
+            );
+            return {
+                code: 200,
+                message: "Adventures found",
+                payload: result
+            };
+        }
+        catch {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    }
 };
