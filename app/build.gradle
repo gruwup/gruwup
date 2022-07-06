@@ -11,6 +11,7 @@ android {
         targetSdk 32
         versionCode 1
         versionName "1.0"
+        multiDexEnabled true
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
@@ -53,4 +54,7 @@ dependencies {
     implementation 'com.android.volley:volley:1.2.1'
     //cookie helper
     implementation 'org.riversun:okhttp3-cookie-helper:1.0.1'
+    //socket dependencies
+    implementation 'com.github.nkzawa:socket.io-client:0.3.0'
+
 }

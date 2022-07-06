@@ -7,6 +7,7 @@ const run = () => {
     socket.emit("userInfo", cookie, userId);
 
     socket.on('connected', (result) => {
+        console.log("connected to socket")
         if (result) {
             socket.on('message', (adventureId, message) => {
                 console.log(adventureId);

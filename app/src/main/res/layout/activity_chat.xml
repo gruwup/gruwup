@@ -27,30 +27,34 @@
             android:orientation="horizontal">
 
             <EditText
-                android:id="@+id/editTextTextPersonName"
-                android:layout_width="wrap_content"
+                android:id="@+id/editMesssage"
+                android:layout_width="0dp"
                 android:layout_height="50dp"
                 android:layout_weight="1"
                 android:background="@null"
                 android:ems="10"
-                android:hint="Enter Message"
-                android:inputType="textLongMessage|textPersonName|textEmailAddress"
+                android:hint="@string/enter_message"
+                android:inputType="textNoSuggestions"
                 android:padding="10dp"
                 android:textColorHint="#78909C"
-                android:textSize="19sp" />
+                android:textSize="19sp"
+                android:autofillHints="" />
 
         </LinearLayout>
 
     </androidx.cardview.widget.CardView>
 
-    <ImageView
+    <Button
         android:id="@+id/sendMessage"
         android:layout_width="40dp"
         android:layout_height="50dp"
+        android:background="@android:color/transparent"
+        android:drawableBottom="@drawable/ic_send"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="@+id/cardView"
-        app:srcCompat="@drawable/ic_send" />
+
+        tools:ignore="SpeakableTextPresentCheck" />
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/messageRecyclerView"
@@ -76,7 +80,11 @@
             android:id="@+id/leaveChat"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_leave_chat">
+            android:src="@drawable/ic_leave_chat"
+            tools:ignore="ImageContrastCheck"
+            tools:layout_editor_absoluteX="16dp"
+            tools:layout_editor_absoluteY="16dp"
+            android:contentDescription="TODO">
 
         </ImageView>
 
@@ -87,6 +95,7 @@
             android:layout_gravity="end"
             android:paddingRight="10dp"
             android:src="@drawable/ic_info_adv"
+            tools:ignore="ImageContrastCheck"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="16dp"></ImageView>
     </androidx.appcompat.widget.Toolbar>
@@ -97,7 +106,7 @@
         android:layout_height="wrap_content"
         android:layout_marginBottom="21dp"
         android:text="Adventure Title"
-        android:textColor="@android:color/white"
+        android:textColor="#616161"
         android:textStyle="bold"
         app:layout_constraintBottom_toBottomOf="@+id/titleBar"
         app:layout_constraintEnd_toEndOf="parent"
