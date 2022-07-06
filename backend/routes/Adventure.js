@@ -1,6 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const Constants = require("../constants/Constants");
+const FilterService = require("../services/FilterService");
 const AdventureStore = require("../store/AdventureStore");
 
 const TestAdventure = {
@@ -187,6 +188,21 @@ router.put("/:adventureId/quit", async (req, res) => {
         var result = await AdventureStore.removeAdventureParticipant(req.params.adventureId, req.query.userId);
         if (result.code === 200) {
             res.status(200).send(result.message);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
+    }
+    catch (err) {
+        res.status(500).send(err);
+    }
+});
+
+router.get("/nearby", async (req, res) => {
+    try {
+        var result = await FilterService.getNearbyAdventures(req.query.city);
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
         }
         else {
             res.status(result.code).send(result.message);
