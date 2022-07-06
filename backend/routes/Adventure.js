@@ -1,7 +1,6 @@
 const express = require("express");
 const router = express.Router();
 const FilterService = require("../services/FilterService");
-const RecommendationService = require("../services/RecommendationService");
 const AdventureStore = require("../store/AdventureStore");
 
 const TestAdventure = {
@@ -86,8 +85,18 @@ router.post("/create", async (req, res) => {
 // search adventures by filter
 router.get("/search-by-filter", async (req, res) => {
     // TODO: validate token
-    console.log("pagination: " + req.params.pagination);
-    res.status(200).send([TestAdventure, TestAdventure]);
+    try {
+        var result = await FilterService.findAdventuresByFilter(req.body);
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
+        }
+        else {
+            res.status(result.code).send(result.message);
+        }
+    }
+    catch (err) {
+        res.status(500).send(err);
+    }
 });
 
 // discover adventure by user favorite categories
