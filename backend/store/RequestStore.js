@@ -1,5 +1,5 @@
 const Request = require("../models/Request");
-const AdventureStore = require("./AdventureStore");
+const Adventure = require("../models/Adventure");
 
 module.exports = class RequestStore {
     static sendRequest = async (request) => {
@@ -58,11 +58,32 @@ module.exports = class RequestStore {
 
     static acceptRequest = async (requestId) => {
         try {
-            await Request.findByIdAndUpdate(requestId, { status: "ACCEPTED" });
-            return {
-                code: 200,
-                message: "Request accepted"
-            };
+            var request = await Request.findByIdAndDelete({ _id: requestId });
+            if (!request) {
+                return {
+                    code: 404,
+                    message: "Request not found"
+                }
+            }
+            var result = await Adventure.findOneAndUpdate(
+                                    { _id: request.adventureId },
+                                    { $push: { peopleGoing: request.requesterId } },
+                                    { new: true }
+                                );
+            if (result) {
+                return {
+                    code: 200,
+                    message: "Request accepted",
+                    payload: result
+                }
+            }
+            else {
+                return {
+                    code: 404,
+                    message: "Adventure not found"
+                }
+            }
+
         }
         catch (err) {
             return {
