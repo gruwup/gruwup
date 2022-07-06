@@ -15,6 +15,7 @@ import android.widget.EditText;
 import android.widget.Toast;
 
 import com.github.nkzawa.emitter.Emitter;
+import com.github.nkzawa.engineio.client.transports.WebSocket;
 import com.github.nkzawa.socketio.client.IO;
 import com.github.nkzawa.socketio.client.Socket;
 
@@ -36,8 +37,8 @@ public class ChatActivity extends AppCompatActivity {
     static final String TAG = "ChatActivity";
 
     // local : "10.0.2.2" , remote: "20.227.142.169"
-    private String address = "10.0.2.2";
-    //    private String address = "20.227.142.169";
+//    private String address = "10.0.2.2";
+    private String address = "20.227.142.169";
 
     // socket implementation
     private Socket socket;
@@ -119,8 +120,8 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    // Source: https://stackoverflow.com/questions/59324648/error-failed-to-resolve-com-github-nkzawasocket-io-client1-0-0,
-    // https://socket.io/blog/native-socket-io-and-android/
+//     Source: https://stackoverflow.com/questions/59324648/error-failed-to-resolve-com-github-nkzawasocket-io-client1-0-0,
+//     https://socket.io/blog/native-socket-io-and-android/
 
     private Emitter.Listener onConnect = new Emitter.Listener(){
 
