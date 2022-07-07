@@ -237,6 +237,7 @@ module.exports = class AdventureStore {
 
     static findAdventuresByFilter = async (filter) => {
         // filter is a list of conditions that adventure needs to satisfy
+        console.log("findAdventuresByFilter: ", filter);
         try {
             var result = await Adventure.find(
                 { $and: [
