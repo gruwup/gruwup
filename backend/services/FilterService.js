@@ -68,14 +68,18 @@ module.exports = class FilterService {
     static findAdventuresByFilter = async (filter) => {
         console.log("findAdventuresByFilter: " + JSON.stringify(filter));
         try {
-            var adventureFilter = {
+            var adventureFilter = filter.city ? 
+            {
+                $and: [
+                    { category: { $in: filter.categories } },
+                    { city: filter.city }
+                ]
+            } : {
                 $and: [
                     { category: { $in: filter.categories } }
                 ]
             };
-            console.log("adventureFilter: " + JSON.stringify(adventureFilter));
             var searchResult = await AdventureStore.findAdventuresByFilter(adventureFilter);
-            console.log("searchResult: " + JSON.stringify(searchResult));
             var arr = searchResult.payload.reduce((acc, adventure) => {
                 if (adventure.dateTime <= filter.maxTimeStamp && adventure.peopleGoing.length <= filter.maxPeopleGoing) {
                     acc.push(adventure);
