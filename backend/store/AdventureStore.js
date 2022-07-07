@@ -1,4 +1,5 @@
 const Adventure = require("../models/Adventure");
+const UserStore = require("../store/UserStore");
 
 module.exports = class AdventureStore {
     static createAdventure = async (adventure) => {
@@ -180,10 +181,6 @@ module.exports = class AdventureStore {
     static removeAdventureParticipant = async (adventureId, userId) => {
         try {
             var adventure = await Adventure.findById(adventureId);
-            console.log(adventure.peopleGoing);
-            console.log(adventure.owner);
-            console.log(userId);
-            console.log(adventure.owner === userId);
             if (!adventure) {
                 return {
                     code: 404,
@@ -229,6 +226,29 @@ module.exports = class AdventureStore {
                     }
                 }
             }
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
+
+    static findAdventuresByFilter = async (filter) => {
+        // filter is a list of conditions that adventure needs to satisfy
+        try {
+            var result = await Adventure.find(
+                { $and: [
+                    { status: "OPEN" },
+                    filter
+                ] }
+            );
+            return {
+                code: 200,
+                message: "Adventures found",
+                payload: result
+            };
         }
         catch (err) {
             return {

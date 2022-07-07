@@ -25,7 +25,7 @@ const schema = mongoose.Schema({
             validator: function (value) {
                 var val = new Date(Number(value));
                 var now = new Date();
-                return val > now;
+                return 1000*val > now;
             },
             message: '{VALUE} dateTime cannot be in the past'
         },
