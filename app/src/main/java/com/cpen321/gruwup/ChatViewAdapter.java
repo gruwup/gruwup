@@ -18,12 +18,13 @@ import java.util.ArrayList;
 public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHolder>{
 
     Context context;
-    ArrayList <User> users;
+//    ArrayList <User> users;
+    ArrayList <Adventure> adventures;
     static final String TAG = "ChatViewAdapter";
 
-    public ChatViewAdapter(Context context, ArrayList<User> users){
+    public ChatViewAdapter(Context context, ArrayList <Adventure> adventures){
         this.context = context;
-        this.users = users;
+        this.adventures = adventures;
 
     }
 
@@ -36,9 +37,10 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user = users.get(position);
+//        User user = users.get(position);
 
-        holder.userName.setText(user.getName());
+        Adventure adventure = adventures.get(position);
+        holder.adventureName.setText(adventure.getAdventureName());
         // To do: change this to profile pic of individual users
 //        holder.img.setImageResource(R.drawable.college_student);
 
@@ -48,8 +50,8 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
                 Intent intent = new Intent(context, ChatActivity.class);
                 // To do: Can pass in user information, such as their name and id here
                 // or the adventure group name
-                intent.putExtra("name", user.getName());
-                intent.putExtra("userId", user.getUserId());
+                intent.putExtra("name", adventure.getAdventureName());
+                intent.putExtra("adventureId", adventure.getAdventureId());
                 context.startActivity(intent);
             }
         });
@@ -58,11 +60,11 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return adventures.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView userName;
+        TextView adventureName;
         TextView lastMessage;
         TextView messageTime;
         ImageView img;
@@ -70,10 +72,10 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            userName = itemView.findViewById(R.id.user);
+            adventureName = itemView.findViewById(R.id.adventureName);
             lastMessage = itemView.findViewById(R.id.lastMessage);
             messageTime = itemView.findViewById(R.id.messageTime);
-            img = itemView.findViewById(R.id.userProfileImg);
+            img = itemView.findViewById(R.id.adventureImg);
         }
     }
 }

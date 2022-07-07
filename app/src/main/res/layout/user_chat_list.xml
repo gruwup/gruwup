@@ -8,7 +8,7 @@
     android:padding="5dp">
 
     <ImageView
-        android:id="@+id/userProfileImg"
+        android:id="@+id/adventureImg"
         android:layout_width="50dp"
         android:layout_height="50dp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -20,17 +20,17 @@
         app:srcCompat="@drawable/college_student" />
 
     <TextView
-        android:id="@+id/user"
+        android:id="@+id/adventureName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginStart="4dp"
         android:layout_marginLeft="4dp"
         android:layout_marginTop="18dp"
         android:fontFamily="@font/belleza"
-        android:text="Dan Bay"
+        android:text="Gruwup"
         android:textSize="16sp"
         android:textStyle="bold"
-        app:layout_constraintStart_toEndOf="@+id/userProfileImg"
+        app:layout_constraintStart_toEndOf="@+id/adventureImg"
         app:layout_constraintTop_toTopOf="parent" />
 
     <TextView
@@ -44,8 +44,8 @@
         android:text="Hi How are you ?"
         android:textColor="@color/lightGray"
         android:textSize="14sp"
-        app:layout_constraintStart_toEndOf="@+id/userProfileImg"
-        app:layout_constraintTop_toBottomOf="@+id/user" />
+        app:layout_constraintStart_toEndOf="@+id/adventureImg"
+        app:layout_constraintTop_toBottomOf="@+id/adventureName" />
 
     <TextView
         android:id="@+id/messageTime"
@@ -58,7 +58,7 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.951"
-        app:layout_constraintStart_toEndOf="@+id/user"
+        app:layout_constraintStart_toEndOf="@+id/adventureName"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintVertical_bias="0.378" />
 
@@ -75,7 +75,7 @@
 <!--        app:layout_constraintBottom_toBottomOf="parent"-->
 <!--        app:layout_constraintEnd_toEndOf="parent"-->
 <!--        app:layout_constraintStart_toStartOf="parent"-->
-<!--        app:layout_constraintTop_toBottomOf="@+id/userProfileImg"-->
+<!--        app:layout_constraintTop_toBottomOf="@+id/adventureImg"-->
 <!--        app:layout_constraintVertical_bias="1.0" />-->
 
 </androidx.constraintlayout.widget.ConstraintLayout>
