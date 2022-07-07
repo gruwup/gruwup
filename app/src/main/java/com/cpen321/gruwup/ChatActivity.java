@@ -260,7 +260,6 @@ public class ChatActivity extends AppCompatActivity {
                                 Date date = new Date(Long.parseLong(time, 10)*1000);
                                 DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                                 String formatted = format.format(date);
-                                System.out.println(formatted);
                                 formatted = format.format(date);
                                 timeView.setText(formatted);
 
@@ -269,7 +268,7 @@ public class ChatActivity extends AppCompatActivity {
 
                                 TextView descriptionView = adventureDialog.findViewById(R.id.adventure_description);
                                 descriptionView.setText(description);
-                                
+
                             }
                         });
 

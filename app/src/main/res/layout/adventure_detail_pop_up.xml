@@ -33,7 +33,6 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:layout_marginTop="50dp"
-            android:text="Title"
             android:textSize="30dp"
             android:id="@+id/advTitle"
             android:textStyle="bold" />
@@ -45,7 +44,6 @@
             android:layout_marginTop="10dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:text="Event type"
             android:drawablePadding="5dp"
             android:drawableLeft="@drawable/ic_category"
             />
@@ -56,7 +54,6 @@
             android:layout_marginTop="4dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:text="Member count"
             android:drawablePadding="5dp"
             android:id="@+id/view_adventure_member_count"
             android:drawableLeft="@drawable/ic_group"/>
@@ -67,7 +64,6 @@
             android:layout_marginTop="4dp"
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
-            android:text="Time"
             android:drawablePadding="5dp"
             android:id="@+id/view_adventure_time"
             android:drawableLeft="@drawable/ic_icons8_clock"/>
@@ -78,7 +74,6 @@
             android:layout_marginTop="4dp"
             android:layout_marginLeft="21dp"
             android:layout_marginRight="20dp"
-            android:text="Location"
             android:drawablePadding="5dp"
             android:id="@+id/view_adventure_location"
             android:drawableLeft="@drawable/ic_location"/>
@@ -90,7 +85,7 @@
             android:layout_marginLeft="20dp"
             android:layout_marginRight="20dp"
             android:id="@+id/adventure_description"
-            android:text="Description: Lorem ipsum dolor sit amet, consectetur adipiscing. Dolor sit amet, consectetur adipiscing. " />
+            />
 
 
     </LinearLayout>

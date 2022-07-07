@@ -13,7 +13,10 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHolder>{
 
@@ -41,6 +44,23 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
 
         Adventure adventure = adventures.get(position);
         holder.adventureName.setText(adventure.getAdventureName());
+
+        if (adventure.getLastMessage().equals("")){
+            holder.lastMessage.setText("no messages in this group yet");
+            holder.messageTime.setText(adventure.getLastMessageTime());
+        }
+        else {
+            holder.lastMessage.setText(adventure.getLastMessage());
+            String time = adventure.getLastMessageTime();
+            Date date = new Date(Long.parseLong(time, 10)*1000);
+            DateFormat format = new SimpleDateFormat(" HH:mm");
+            String formatted = format.format(date);
+            System.out.println(formatted);
+            formatted = format.format(date);
+            holder.messageTime.setText(formatted);
+        }
+
+
         // To do: change this to profile pic of individual users
 //        holder.img.setImageResource(R.drawable.college_student);
 
