@@ -57,8 +57,11 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -112,7 +115,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        SupportRequests.get("http://" + address + ":8081/user/adventure/search-by-filter", new Callback() {
+        SupportRequests.get("http://" + address + ":8081/user/adventure/" + SupportSharedPreferences.getUserId(this.getActivity()) + "/discover", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -221,10 +224,11 @@ public class DiscoverFragment extends Fragment {
 
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("owner", "test owner");
+                        jsonObject.put("owner", SupportSharedPreferences.getUserId(v.getContext().getApplicationContext()));
                         jsonObject.put("title", title.getText().toString().trim());
                         jsonObject.put("description", description.getText().toString().trim());
-                        jsonObject.put("dateTime", time.getText().toString().trim());
+                        jsonObject.put("dateTime", dateToEpoch(time.getText().toString().trim()));
+                        System.out.println(dateToEpoch(time.getText().toString().trim()));
                         jsonObject.put("location", location.getText().toString().trim());
                         jsonObject.put("category", "MOVIE");
                         jsonObject.put("image", bmpToB64(imageBMP));
@@ -263,11 +267,12 @@ public class DiscoverFragment extends Fragment {
         for (int i = 0; i < arrlen; i++) {
             JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());
-            mAdventureList.get(i).put("event", jsonObject.getString("id"));
-            mAdventureList.get(i).put("time", jsonObject.getString("dateTime"));
+            mAdventureList.get(i).put("event", jsonObject.getString("title"));
+            mAdventureList.get(i).put("id", jsonObject.getString("_id"));
+            mAdventureList.get(i).put("time", epochToDate(jsonObject.getString("dateTime")));
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
             mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
-            mAdventureList.get(i).put("description", ("Description (currently none) " + String.valueOf(i)));
+            mAdventureList.get(i).put("description", jsonObject.getString("description"));
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
     }
@@ -311,5 +316,23 @@ public class DiscoverFragment extends Fragment {
         byte[] decodedString = Base64.decode(b64, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
+    }
+
+    public static String dateToEpoch(String date) {
+        try {
+            return Long.toString(new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").parse(date).getTime() / 1000);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "D2E error!";
+        }
+    }
+
+    public static String epochToDate(String epoch) {
+        try {
+            return new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new Date(Long.parseLong(epoch) * 1000));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return "E2D error!";
+        }
     }
 }

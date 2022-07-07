@@ -37,7 +37,6 @@
         <activity
             android:name=".MainActivity"
             android:exported="true">
-<!--            temp fix for sign in not working , issue with local server -->
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
 <!--                <category android:name="android.intent.category.LAUNCHER" />-->
