@@ -635,7 +635,7 @@ paths:
             application/json:
               schema:
                 type: object
-                example: { "prevTime": "13111111" }
+                example: { "pagination": "13111111" }
         "400":
           description: Could be any other error code
           content:
