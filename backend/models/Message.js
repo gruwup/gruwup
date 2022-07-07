@@ -1,16 +1,19 @@
 const mongoose = require("mongoose");
 
 const schema = mongoose.Schema({
-    userId: {
+    adventureId: {
         type: String,
         required: true
     },
-    message: {
+    pagination: {
         type: String,
         required: true
     },
-    dateTime: {
-        type: String,
+    prevPagination: {
+        type: String
+    },
+    messages: {
+        type: Array,
         required: true
     }
 });

@@ -3,6 +3,7 @@ const mongoose = require("mongoose");
 
 const app = express();
 const PORT = 8081;
+const PORT_SOCKET = 8000;
 const defaultMongoPort = "27017";
 const customMongoPort = "27384";
 
@@ -23,6 +24,9 @@ const adventureRoute = require("./routes/Adventure");
 const chatRoute = require("./routes/Chat");
 const requestRoute = require("./routes/Request");
 
+// Chat server
+const ChatSocket = require("./services/ChatSocket");
+
 // applying routes
 app.use("/account", accountRoute);
 app.use("/user/profile", profileRoute);
@@ -41,8 +45,14 @@ async function run() {
                     var host = server.address().address;
                     var port = server.address().port;
                     console.log("App listening at http://%s:%s", host, port);
+                })
+                var socketServer = app.listen(PORT_SOCKET, (req, res) => {
+                    var host = socketServer.address().address;
+                    var port = socketServer.address().port;
+                    console.log("Chat listening at http://%s:%s", host, port);
+                    ChatSocket.runChat(socketServer);
+                }) 
             })
-        })
     }
     catch (err) {
         console.log(err.stack);

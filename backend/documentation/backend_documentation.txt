@@ -401,13 +401,6 @@ paths:
       summary: Sign out
       tags:
        - Account
-      requestBody:
-        description: All fields are mandatory
-        content:
-          application/json:
-            schema:
-              oneOf:
-                - $ref: '#/components/schemas/userId'
       responses:
         "200":
           description: Successfully signed out
@@ -458,7 +451,7 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/userId'
+                - $ref: '#/components/schemas/userInfo'
       parameters:
       - name: adventureId
         in: path
@@ -481,9 +474,9 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/request/{userId}/get:
+  /user/request/{userId}/get-requests:
     get:
-      summary: Get all request user has not processed and not rejected by other users i adventure, or request that are sent out by user (as requester). Returned requests are in descending timestamp order.
+      summary: Get all request user has not processed or is pending to be accepted
       tags:
       - Request
       parameters:
@@ -505,21 +498,15 @@ paths:
                  requests: [
                     {
                       "adventureId": "string",
-                      "adventureParticipants": ["useid1", "userid2"],
                       "requester": "Bob John",
                       "requesterId": "bobjohnuserid",
-                      "accepted": ["userid1"],
-                      "rejected": [],
                       "status": "PENDING",
                       "dateTime": "123456789",
                     },
                     {
                       "adventureId": "string",
-                      "adventureParticipants": ["useid3", "userid4"],
                       "requester": "user",
                       "requesterId": "userId",
-                      "accepted": ["userid3"],
-                      "rejected": ["userid4"],
                       "status": "REJECTED",
                       "dateTime": "123456789",
                     }
@@ -532,9 +519,9 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/request/{requestId}/respond:
+  /user/request/{requestId}/accept:
     put:
-      summary: respond to request
+      summary: accept request
       tags:
       - Request
       parameters:
@@ -550,7 +537,41 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: '#/components/schemas/RequestResponse'
+                - $ref: '#/components/schemas/Request'
+      responses:
+        "200":
+          description: Successfully responded
+          content:
+            application/json:
+              schema:
+                oneOf:
+                  - $ref: '#/components/schemas/Request'
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
+  /user/request/{requestId}/reject:
+    put:
+      summary: reject request
+      tags:
+      - Request
+      parameters:
+      - name: requestId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      requestBody:
+        description: All fields are mandatory
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: '#/components/schemas/Request'
       responses:
         "200":
           description: Successfully responded
@@ -595,6 +616,33 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
+  /user/chat/{adventureId}/recent:
+    get:
+      summary: get most recent pagination value for adventureId
+      tags:
+       - Chat
+      parameters:
+      - name: adventureId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                example: { "pagination": "13111111" }
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
   /user/chat/{adventureId}/messages/{pagination}:
     get:
       summary: Get 30 messages in adventure starting at given pagination (so pagination 0 will return most recent 30 messages, if the batch has less then 30 messages it will return whatever it can, so if you have 50 messages, and pagination is at 29, it will return message 29-50 instead of 29-59)
@@ -621,7 +669,9 @@ paths:
               schema:
                type: object
                example: {
-                 pagination: 0,
+                 adventureId: "123",
+                 pagination: "13131238",
+                 prevPagination: "11111111",
                  messages: [
                     {
                       "userId": "string",
@@ -631,34 +681,6 @@ paths:
                     },
                    ]
                }
-        "400":
-          description: Could be any other error code
-          content:
-            application/json:
-              schema:
-                allOf:
-                  - $ref: '#/components/schemas/Error'
-  /user/chat/{adventureId}/{userId}/delete-user:
-    delete:
-      summary: Remove user from chat
-      tags:
-       - Chat
-      parameters:
-      - name: adventureId
-        in: path
-        required: true
-        style: simple
-        schema:
-          type: string
-      - name: userId
-        in: path
-        required: true
-        style: simple
-        schema:
-          type: string
-      responses:
-        "200":
-          description: Success
         "400":
           description: Could be any other error code
           content:
@@ -805,49 +827,32 @@ components:
       properties:
         authentication_code:
           type: string
-    userId:
+    userInfo:
       type: object
       properties:
+        userName:
+          type: string
         userId:
+          type: string
+        dateTime:
           type: string
     Request:
       type: object
       properties:
         adventureId:
           type: string
-        adventureParticipants:
-          type: array
-          items: 
-            type: string
         requester:
           type: string
           example: "Bob John"
         requesterId:
           type: string
-        accepted:
-          type: array
-          items: 
-            type: string
-        rejected: 
-          type: array
-          items: 
-            type: string
         status:
           type: string
-          enum: ["ACCEPTED", "PENDING", "REJECTED"]
+          enum: ["ACCEPTED", "PENDING", "REJECTED", "EXPIRED"]
           example: "PENDING"
         dateTime:
           type: string
           example: "13131238"
-    RequestResponse: 
-      type: object
-      properties:
-        userId:
-          type: string
-        response:
-          type: string
-          enum: ["ACCEPT", "REJECT"]
-          example: "ACCEPT"
   securitySchemes:
     accessCode:
       type: oauth2

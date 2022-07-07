@@ -31,13 +31,23 @@ module.exports = class User {
         var user = new Profile(profile);
             
         try {
-            var result = await user.save();
+            var exists = await Profile.findOne({ userId: profile.userId });
+            if (!exists) {
+                var result = await user.save();
     
-            return {
-                code: 200,
-                message: "Profile created successfully",
-                payload: result
-            };
+                return {
+                    code: 200,
+                    message: "Profile created successfully",
+                    payload: result
+                };
+            }
+            else {
+                return {
+                    code: 400,
+                    message: "Profile exists for userId",
+                    payload: result
+                };
+            }
         }
         catch (err) {
             return {
