@@ -4,14 +4,14 @@ module.exports = class User {
     static storeNewMessageGroup = async (adventureId, messages, dateTime) => {
         try {
             var paginationResult = await this.getPrevPagination(adventureId, dateTime);
-            var message = { 
+            var messageGroup = { 
                 adventureId: adventureId, 
                 pagination: dateTime, 
                 prevPagination: paginationResult.payload ? paginationResult.payload : null,
                 messages: [messages]
             }
-            var message = new Message(message);
-            var result = await message.save();
+            var messageGroup = new Message(messageGroup);
+            var result = await messageGroup.save();
 
             return {
                 code: 200,
@@ -90,6 +90,36 @@ module.exports = class User {
                     payload: result
                 }
             }
+            else {
+                return {
+                    code: 404,
+                    message: "Messages not found"
+                }
+            }
+        }
+        catch (err) {
+            return {
+                code: 500,
+                message: err
+            };
+        }
+    };
+
+    static getMostRecentMessage = async (adventureId, dateTime) => {
+        try {
+            var paginationResult = await this.getPrevPagination(adventureId, dateTime);
+            var result = await Message.findOne({ adventureId: adventureId, pagination: paginationResult.payload });
+            if (result) {
+                var message = result.messages[result.messages.length - 1];
+                if (result) {
+                    return {
+                        code: 200,
+                        message: "Messages found",
+                        payload: message
+                    }
+                }
+            }
+            
             else {
                 return {
                     code: 404,
