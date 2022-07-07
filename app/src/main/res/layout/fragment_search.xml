@@ -18,7 +18,8 @@
             android:background="@drawable/rectangle_border"
             android:hint="Search events..."
             android:minHeight="48dp"
-            android:padding="10dp" />
+            android:padding="10dp"
+            android:imeOptions="actionSend"/>
 
         <Button
             android:id="@+id/filter_button"

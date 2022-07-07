@@ -18,9 +18,11 @@ import android.os.StrictMode;
 import android.provider.MediaStore;
 import android.util.Base64;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -69,13 +71,16 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class SearchFragment extends Fragment {
+    RecyclerView recyclerView;
     private String address = "10.0.2.2";
-    ArrayList<Map<String, String>> mAdventureList;
+    static ArrayList<Map<String, String>> mAdventureList;
+    DiscAdvViewAdapter AdventureAdapter;
     static String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
     RecyclerView categoryView;
     Button uploadImage;
     Button filterButton;
+    EditText searchText;
     TextView cancel;
     Bitmap imageBMP = null;
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
@@ -103,12 +108,29 @@ public class SearchFragment extends Fragment {
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Create adventure button clicked");
+                System.out.println("Filter button clicked");
                 filterAdventure(v);
+                System.out.println("Update recycler view");
+                AdventureAdapter.notifyDataSetChanged();
+                recyclerView.invalidate();
             }
         });
 
-        SupportRequests.get("http://" + address + ":8081/user/adventure/search-by-filter", new Callback() {
+        searchText = (EditText) view.findViewById(R.id.search_events);
+        searchText.setOnKeyListener(new View.OnKeyListener() {
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                // If the event is a key-down event on the "enter" button
+                if (true) {
+                    // Perform action on key press
+                    System.out.println("Search button clicked");
+                    searchAdventure(view);
+                    return true;
+                }
+                return false;
+            }
+        });
+
+        SupportRequests.get("http://" + address + ":8081/user/adventure/search-by-title?title=test", new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -140,9 +162,10 @@ public class SearchFragment extends Fragment {
     private void displayAdventures(View view) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
         RecyclerView adventureListView = (RecyclerView) view.findViewById(R.id.searchedAdventures);
+        recyclerView = adventureListView;
         adventureListView.setLayoutManager(layoutManager);
-        DiscAdvViewAdapter adapter = new DiscAdvViewAdapter(getActivity(), mAdventureList);
-        adventureListView.setAdapter(adapter);
+        AdventureAdapter = new DiscAdvViewAdapter(getActivity(), mAdventureList);
+        adventureListView.setAdapter(AdventureAdapter); //update via global reference
     }
 
     private void initAdventures() throws JSONException {
@@ -152,7 +175,7 @@ public class SearchFragment extends Fragment {
         for (int i = 0; i < arrlen; i++) {
             JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());
-            mAdventureList.get(i).put("event", jsonObject.getString("id"));
+            mAdventureList.get(i).put("event", jsonObject.getString("_id"));
             mAdventureList.get(i).put("time", jsonObject.getString("dateTime"));
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
             mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
@@ -161,7 +184,33 @@ public class SearchFragment extends Fragment {
         }
     }
 
+    public void testInitAd() {
+        mAdventureList = new ArrayList<Map<String, String>>();
+        mAdventureList.add(new HashMap<String, String>());
+        mAdventureList.get(0).put("event", "1");
+        mAdventureList.get(0).put("time", "12:00");
+        mAdventureList.get(0).put("location", "123 Main St");
+        mAdventureList.get(0).put("count", "1");
+        mAdventureList.get(0).put("description", "Description (currently none) 0");
+        mAdventureList.get(0).put("image", "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png");
+        mAdventureList.add(new HashMap<String, String>());
+        mAdventureList.get(1).put("event", "2");
+        mAdventureList.get(1).put("time", "12:00");
+        mAdventureList.get(1).put("location", "123 Main St");
+        mAdventureList.get(1).put("count", "1");
+        mAdventureList.get(1).put("description", "Description (currently none) 1");
+        mAdventureList.get(1).put("image", "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png");
+        mAdventureList.add(new HashMap<String, String>());
+        mAdventureList.get(2).put("event", "3");
+        mAdventureList.get(2).put("time", "12:00");
+        mAdventureList.get(2).put("location", "123 Main St");
+        mAdventureList.get(2).put("count", "1");
+        mAdventureList.get(2).put("description", "Description (currently none) 2");
+        mAdventureList.get(2).put("image", "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png");
+    }
+
     private void filterAdventure(View view) {
+        System.out.println("Filter adventure");
         Button applyFilters;
         EditText location;
         EditText numPeople;
@@ -196,10 +245,76 @@ public class SearchFragment extends Fragment {
                     mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
                 }
                 System.out.println(location.getText().toString() + " " + numPeople.getText().toString() + " " + timeSelection.getCheckedRadioButtonId() + " " + mSelectedCategoryNames.toString());
+
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("category", "[\"MOVIE\"]");
+                    jsonObject.put("maxPeopleGoing", "1000");
+                    jsonObject.put("maxTimeStamp", "3333333222222");
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                    System.out.println("JSON EXCEPTION!!!");
+                }
+                System.out.println(jsonObject.toString());
+                RequestBody requestBody = RequestBody.create("application/json", MediaType.parse(jsonObject.toString()));
+                Request request = new Request.Builder()
+                        .url("http://" + address + ":8081/user/adventure/search-by-filter")
+                        .post(requestBody)
+                        .build();
+                OkHttpClient client = new OkHttpClient();
+                Call call = client.newCall(request);
+                try {
+                    Response response = call.execute();
+                    HTTPRESULT = response.body().string();
+                    System.out.println("httpresult = " + HTTPRESULT);
+                    initAdventures();
+                    AdventureAdapter.notifyDataSetChanged();
+                    recyclerView.setAdapter(new DiscAdvViewAdapter(getActivity(), mAdventureList));
+                    recyclerView.invalidate();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+//                mAdventureList.clear();
+                AdventureAdapter.notifyDataSetChanged();
+                recyclerView.invalidate();
+
                 //update the list of adventures here with REST data
                 dialog.dismiss();
+                return;
             }
         });
+    }
+
+    private void searchAdventure(View view) {
+        System.out.println("searching...");
+        String search = searchText.getText().toString();
+        if (search.length() > 0) {
+            SupportRequests.get("http://" + address + ":8081/user/adventure/search-by-title?title=" + search, new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                }
+
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    if (response.isSuccessful()) {
+                        try {
+                            HTTPRESULT = response.body().string();
+                            initAdventures();
+                            mHandler.post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    displayAdventures(view);
+                                }
+                            });
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    } else {
+                        System.out.println("HTTP req failed");
+                    }
+                }
+            });
+        }
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
