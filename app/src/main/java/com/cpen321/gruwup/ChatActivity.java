@@ -73,7 +73,6 @@ public class ChatActivity extends AppCompatActivity {
         } catch (URISyntaxException e) {}
     }
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -104,7 +103,10 @@ public class ChatActivity extends AppCompatActivity {
         findViewById(R.id.leaveChat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+
                 finish();
+//                Intent i = new Intent( ChatActivity.this,ChatFragment.class);
+//                startActivity(i);
             }
         });
 

@@ -40,7 +40,7 @@ public class ChatFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-        initChatData();
+//        initChatData();
         adapter = new ChatViewAdapter(getActivity(),adventures);
         RecyclerView chatView = (RecyclerView) view.findViewById(R.id.chatView);
         chatView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -50,13 +50,19 @@ public class ChatFragment extends Fragment {
         return view;
     }
 
+    @Override
+    public void onResume() {
+        super.onResume();
+        getAllChats();
+    }
+
     private void initChatData(){
 //        Adventure movie = new Adventure("","Movie Night", "62c65ee5b7831254ed671749","hows it going everyone", "1011", "John");
 //        adventures.add(movie);
         getAllChats();
     }
 
-    private void getAllChats() {
+    public void getAllChats() {
 
         String UserID = SupportSharedPreferences.getUserId(this.getActivity());
         Log.d(TAG, "User Id is "+ UserID);
@@ -71,6 +77,14 @@ public class ChatFragment extends Fragment {
                     String jsonData = response.body().string();
 
                     try {
+                        getActivity().runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                adventures.clear();
+                                adapter.notifyDataSetChanged();
+                            }
+                        });
+
                         JSONObject jsonObj = new JSONObject(jsonData);
                         JSONArray messageArray = jsonObj.getJSONArray("messages");
                         JSONObject messageObj = new JSONObject();
