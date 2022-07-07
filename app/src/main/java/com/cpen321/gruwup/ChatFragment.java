@@ -38,7 +38,7 @@ public class ChatFragment extends Fragment {
 //        users.add(tom);
 //        users.add(dan);
 
-        Adventure movie = new Adventure("","Movie Night", "62bd32f3193cbe5ebcfb1c10","hows it going everyone", "1011");
+        Adventure movie = new Adventure("","Movie Night", "62c65ee5b7831254ed671749","hows it going everyone", "1011");
 
         adventures.add(movie);
     }

@@ -53,7 +53,7 @@ public class ChatActivity extends AppCompatActivity {
     private String address = "10.0.2.2";
 //    private String address = "20.227.142.169";
 
-    // to do: add cookie
+
     private String cookie;
 
 //    private String serverUrl = "http://20.227.142.169:8000";
@@ -64,63 +64,12 @@ public class ChatActivity extends AppCompatActivity {
     private Socket mSocket;
     {
         try {
-//            mSocket = IO.socket("http://chat.socket.io");
             mSocket = IO.socket(serverUrl);
-            // TP DO: replace with actual cookie and userId
-            mSocket.emit("userInfo", "gruwup-session=123",  "116853060753534924974");
+            mSocket.emit("userInfo", cookie, UserID);
 
         } catch (URISyntaxException e) {}
     }
 
-
-    public void sendChat(String message){
-//        SupportRequests.postWithCookie();
-        Log.d(TAG, "send ====>"+ message);
-        // To do: replace with actual userId, name, dateTimes
-        Message sendMessage = new Message("116853060753534924974","Sijan",message,"", "", SENT_MESSAGE);
-
-        // send to : http://localhost:8000/user/chat/62bd32f3193cbe5ebcfb1c10/send
-        // json structure:
-//        {
-//            "userId": "116853060753534924974",
-//                "name": "Sijan",
-//                "message": "cool wanna hang out?",
-//                "dateTime": "13131238",
-//                "prevTime":"13131233"
-//        }
-
-        JSONObject jsonObject = new JSONObject();
-        try {
-            jsonObject.put("userId", sendMessage.getUserId());
-            jsonObject.put("name", sendMessage.getName());
-            jsonObject.put("dateTime", sendMessage.getDateTime());
-            jsonObject.put("prevTime", sendMessage.getPrevTime());
-            jsonObject.put("message", sendMessage.getMessage());
-
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-
-        // To do: replace this with intent value , and cookie value
-        adventureId = "62bd32f3193cbe5ebcfb1c10";
-        cookie = "gruwup-session=123";
-        SupportRequests.postWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/send",  jsonObject.toString(), cookie, new Callback() {
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d(TAG, "Could not send message");
-            }
-
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if(response.isSuccessful()) {
-                    Log.d(TAG, "message sent successfully");
-                }
-                else{
-                    Log.d(TAG, "message failed to send" + response.toString());
-                }
-            }
-        });
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -131,6 +80,10 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent= getIntent();
         adventureTitle = intent.getStringExtra("name");
         adventureId = intent.getStringExtra("adventureId");
+        UserName = SupportSharedPreferences.getUserName(getApplicationContext());
+        cookie = SupportSharedPreferences.getCookie(getApplicationContext());
+        UserID = SupportSharedPreferences.getUserId(getApplicationContext());
+
 
         TextView adventureName = (TextView) findViewById(R.id.advTitle);
         adventureName.setText(adventureTitle);
@@ -179,12 +132,12 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String message = editMessageBar.getText().toString().trim();
                 if (message!=null && !message.isEmpty()){
-                    // TO DO: Add datetime later
-                    Message newMessage = new Message(UserID, UserName, message, "", "",SENT_MESSAGE);
+
+                    // check datetime format
+                    long currentTimestamp = System.currentTimeMillis()/1000;
+                    Message newMessage = new Message(UserID, UserName, message, Long.toString(currentTimestamp), "",SENT_MESSAGE);
                     messages.add(newMessage);
                     editMessageBar.setText("");
-                    // To do: make post request inside sendChat
-
                     sendChat(message);
                     if (adapter!=null){
                         adapter.notifyDataSetChanged();
@@ -197,8 +150,55 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+
+    public void sendChat(String message){
+        Log.d(TAG, "send ====>"+ message);
+
+        // check if userId is assigned
+        long currentTimestamp = System.currentTimeMillis()/1000;
+        Message sendMessage = new Message(UserID,UserName,message,Long.toString(currentTimestamp), "", SENT_MESSAGE);
+
+
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("userId", sendMessage.getUserId());
+            jsonObject.put("name", sendMessage.getName());
+            jsonObject.put("dateTime", sendMessage.getDateTime());
+            jsonObject.put("prevTime", sendMessage.getPrevTime());
+            jsonObject.put("message", sendMessage.getMessage());
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+
+//        cookie = "gruwup-session=123";
+        SupportRequests.postWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/send",  jsonObject.toString(), cookie, new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "Could not send message");
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    Log.d(TAG, "message sent successfully");
+                }
+                else{
+                    Log.d(TAG, "message failed to send" + response.toString());
+                }
+            }
+        });
+    }
+
+
     private void showPopUp(View view){
         adventureDialog.setContentView(R.layout.adventure_detail_pop_up);
+
+        // make get request for adventures
+
+        getAdventureDetails();
+
         adventureDialog.show();
 
         TextView goBack = adventureDialog.findViewById(R.id.go_back_chat);
@@ -210,6 +210,45 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    private void getAdventureDetails() {
+
+        // url: http://localhost:8081/user/adventure/62c65ee5b7831254ed671749/detail
+
+        SupportRequests.get("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", new Callback() {
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "Failed to get adventure details");
+            }
+
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                if(response.isSuccessful()) {
+                    Log.d(TAG, "get profile successful");
+                    String jsonData = response.body().string();
+
+                    try {
+                        JSONObject jsonObj = new JSONObject(jsonData);
+                        Log.d(TAG, "json Obj "+ jsonObj.toString());
+//                        String bio = jsonObj.getString("biography");
+//                        Log.d(TAG, "Bio is "+ bio);
+
+                        String title = jsonObj.getString("title");
+                        String description = jsonObj.getString("description");
+                        String eventType = jsonObj.getString("category");
+                        Integer memberCount = jsonObj.getJSONArray("peopleGoing").length();
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else{
+                    Log.d(TAG, "Failed to get adventure details");
+                }
+            }
+        });
     }
 
     private Emitter.Listener isConnected = new Emitter.Listener() {
