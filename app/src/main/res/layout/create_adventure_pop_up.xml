@@ -125,7 +125,7 @@
             android:layout_marginTop="10dp"
             android:layout_marginRight="30dp"
             android:background="@drawable/rectangle_border"
-            android:hint="yyyy-mm-dd hh:mm:ss"
+            android:hint="MM-dd-yyyy hh:mm:ss"
             android:minHeight="48dp"
             android:padding="10dp" />
 

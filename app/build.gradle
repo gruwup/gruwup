@@ -56,5 +56,8 @@ dependencies {
     implementation 'org.riversun:okhttp3-cookie-helper:1.0.1'
     //socket dependencies
     implementation 'com.github.nkzawa:socket.io-client:0.3.0'
-
+    implementation ('io.socket:socket.io-client:2.0.1') {
+        // excluding org.json which is provided by Android
+        exclude group: 'org.json', module: 'json'
+    }
 }

@@ -346,7 +346,7 @@ public class ProfileFragment extends Fragment {
             System.out.println("Empty field");
             return "This field cannot be empty.";
         }
-        else if (!field.getText().toString().matches("[0-9a-zA-Z.? ,]*")){
+        else if (!field.getText().toString().matches("[0-9a-zA-Z.? ,:\\-/\\//]*")){
             System.out.println("Regex failure");
             return "This field only allows numbers, spaces and letters.";
         }
