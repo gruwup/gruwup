@@ -55,6 +55,40 @@ router.post("/:adventureId/send", async (req, res) => {
     }
 });
 
+
+router.get("/:userId/recent-list", async (req, res) => {
+    if (Session.validSession(req.headers.cookie)) {
+        try {
+            var adventureList = await AdventureStore.getUsersAdventures(req.params.userId);
+            if (adventureList.code === 200) {
+                messages = [];
+                var message;
+                var adventure;
+                var timestamp = Date.now();
+                var adventureIds = adventureList.payload.map(adventure => adventure.toString());
+                for (var i = 0; i < adventureIds.length; i++) {
+                    message = await ChatStore.getMostRecentMessage(adventureIds[i], timestamp);
+                    adventure = await AdventureStore.getAdventureDetail(adventureIds[i]);
+                    if (message.code === 200) {
+                        message.payload = {adventureId: adventureIds[i], adventureTitle: adventure.payload.title, ...message.payload}
+                        messages.push(message.payload);
+                    }
+                }
+                res.status(200).send({ messages: messages });
+            }
+            else {
+                res.status(result.code).send({ message: result.message.toString() });
+            }
+        }
+        catch (err) {
+            res.status(500).send({ message: err.toString() });
+        }
+    }
+    else {
+        res.status(403).send({ message: Session.invalid_msg });
+    }
+});
+
 // allows front-end to obtain the pagination for the most recent chat for an adventure
 router.get("/:adventureId/recent-pagination", async (req, res) => {
     if (Session.validSession(req.headers.cookie)) {
