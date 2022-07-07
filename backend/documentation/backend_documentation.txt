@@ -83,7 +83,7 @@ paths:
                  category: ["MOVIE", "MUSIC"],
                  maxPeopleGoing: number,
                  maxTimeStamp: "string",
-                 
+                 city: string
                }
       responses:
         "200":

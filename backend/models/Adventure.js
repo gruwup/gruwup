@@ -23,7 +23,7 @@ const schema = mongoose.Schema({
         type: String,
         validate: {
             validator: function (value) {
-                var val = new Date(Number(value));
+                var val = new Date(Number(value)*1000);
                 var now = new Date();
                 return val > now;
             },
