@@ -24,5 +24,15 @@ public class SupportSharedPreferences {
         return cookie;
     }
 
+    public static String getUserName(Context context){
+        final String USER_NAME = "UserName";
+        final String PREF_NAME = "LogIn";
+        SharedPreferences settings = context.getSharedPreferences(PREF_NAME,0);
+        String cookie = settings.getString(USER_NAME, null);
+        return cookie;
+    }
+
+
+
 
 }

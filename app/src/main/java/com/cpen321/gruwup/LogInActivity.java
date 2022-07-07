@@ -31,6 +31,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.sql.SQLOutput;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -44,6 +45,8 @@ public class LogInActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 1;
     final static String TAG = "LogInActivity";
+    private String address = "10.0.2.2";
+//    private String address = "20.227.142.169";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -141,10 +144,11 @@ public class LogInActivity extends AppCompatActivity {
 
             //TO DO: change this to remote server url
             String finalImageUrl = imageUrl;
-            SupportRequests.post("http://10.0.2.2:8081/account/sign-in", jsonObject.toString(), new Callback(){
+            SupportRequests.post("http://"+address+":8081/account/sign-in", jsonObject.toString(), new Callback(){
                         @Override
                         public void onFailure(Call call, IOException e) {
                             Log.d(TAG, "login unsucessful");
+                            System.out.println(e.getMessage());
                         }
 
                         @Override
@@ -167,16 +171,19 @@ public class LogInActivity extends AppCompatActivity {
                                 // Note: For storing userId locally used SharedPreferences
                                 final String PREF_NAME = "LogIn";
                                 final String DATA_TAG = "UserId";
+                                final String USER_NAME = "UserName";
                                 final String COOKIE_TAG = "Cookie";
                                 SharedPreferences settings = getApplicationContext().getSharedPreferences(PREF_NAME,0);
                                 SharedPreferences.Editor editor = settings.edit();
 
                                 // store userId
+                                editor.putString(USER_NAME, account.getGivenName());
                                 editor.putString(DATA_TAG, userId);
-                                editor.commit();
-
                                 editor.putString(COOKIE_TAG, cookie);
                                 editor.commit();
+
+//                                editor.putString(COOKIE_TAG, cookie);
+//                                editor.commit();
 
                                 if (!userExists){
                                     Log.d(TAG, "New User!");
