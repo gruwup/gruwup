@@ -57,7 +57,7 @@ router.post("/:adventureId/send", async (req, res) => {
 
 
 router.get("/:userId/recent-list", async (req, res) => {
-    if (Session.validSession(req.headers.cookie) || true) {
+    if (Session.validSession(req.headers.cookie)) {
         try {
             var adventureList = await AdventureStore.getUsersAdventures(req.params.userId);
             if (adventureList.code === 200) {
