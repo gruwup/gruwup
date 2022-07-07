@@ -35,6 +35,7 @@
             android:layout_marginTop="50dp"
             android:text="Title"
             android:textSize="30dp"
+            android:id="@+id/advTitle"
             android:textStyle="bold" />
 
         <TextView

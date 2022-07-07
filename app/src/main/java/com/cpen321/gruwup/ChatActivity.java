@@ -24,7 +24,10 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.net.URISyntaxException;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import io.socket.client.IO;
 import io.socket.client.Socket;
@@ -233,11 +236,43 @@ public class ChatActivity extends AppCompatActivity {
                         Log.d(TAG, "json Obj "+ jsonObj.toString());
 //                        String bio = jsonObj.getString("biography");
 //                        Log.d(TAG, "Bio is "+ bio);
-
                         String title = jsonObj.getString("title");
                         String description = jsonObj.getString("description");
                         String eventType = jsonObj.getString("category");
                         Integer memberCount = jsonObj.getJSONArray("peopleGoing").length();
+                        String time = jsonObj.getString("dateTime");
+                        String location = jsonObj.getString("location");
+
+                        runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                TextView titleView = adventureDialog.findViewById(R.id.advTitle);
+                                titleView.setText(title);
+
+                                TextView typeView = adventureDialog.findViewById(R.id.view_adventure_event_type);
+                                typeView.setText(eventType);
+
+                                TextView countView = adventureDialog.findViewById(R.id.view_adventure_member_count) ;
+                                countView.setText(memberCount.toString());
+
+                                TextView timeView = adventureDialog.findViewById(R.id.view_adventure_time);
+                                // assuming time is obtained in seconds epoch time
+                                Date date = new Date(Long.parseLong(time, 10)*1000);
+                                DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
+                                String formatted = format.format(date);
+                                System.out.println(formatted);
+                                formatted = format.format(date);
+                                timeView.setText(formatted);
+
+                                TextView locationView = adventureDialog.findViewById(R.id.view_adventure_location);
+                                locationView.setText(location);
+
+                                TextView descriptionView = adventureDialog.findViewById(R.id.adventure_description);
+                                descriptionView.setText(description);
+                                
+                            }
+                        });
+
 
 
                     } catch (JSONException e) {

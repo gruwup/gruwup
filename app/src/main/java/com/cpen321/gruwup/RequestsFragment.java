@@ -94,9 +94,10 @@ public class RequestsFragment extends Fragment {
                                     @Override
                                     public void run() {
                                         Request request = new Request(adventureName,requesterName,requesterId, requestId, status);
-                                        requests.add(request);
-                                        adapter.notifyDataSetChanged();
-
+                                        if (request.getStatus().equals("PENDING")){
+                                            requests.add(request);
+                                            adapter.notifyDataSetChanged();
+                                        }
                                     }
                                 });
 
