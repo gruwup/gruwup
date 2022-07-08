@@ -184,7 +184,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         }
     }
 
-    private static Activity unwrap(Context context) {
+    public static Activity unwrap(Context context) {
         while (!(context instanceof Activity) && context instanceof ContextWrapper) {
             context = ((ContextWrapper) context).getBaseContext();
         }

@@ -31,6 +31,7 @@ import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -81,6 +82,7 @@ public class SearchFragment extends Fragment {
     RecyclerView categoryView;
     Button uploadImage;
     Button filterButton;
+    Button nearbyButton;
     EditText searchText;
     TextView cancel;
     Bitmap imageBMP = null;
@@ -128,6 +130,42 @@ public class SearchFragment extends Fragment {
                     return true;
                 }
                 return false;
+            }
+        });
+
+        nearbyButton = (Button) view.findViewById(R.id.nearby_button);
+        nearbyButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                String cookie = SupportSharedPreferences.getCookie(getActivity());
+                String[] cookieList  =  cookie.split("=",2);
+                OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
+                cookieHelper.setCookie("http://" + address + ":8081/user/adventure/search-by-title?title=t", cookieList[0], cookieList[1]);
+                Request request = new Request.Builder()
+                        .url("http://" + address + ":8081/user/adventure/search-by-title?title=t")
+                        .build();
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .cookieJar(cookieHelper.cookieJar())
+                        .build();
+                Call call = client.newCall(request);
+                String responseData = "";
+                try {
+                    Response response = call.execute();
+                    responseData = response.body().string();
+                    System.out.println("map response data" + responseData);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+
+                AppCompatActivity activity = (AppCompatActivity) DiscAdvViewAdapter.unwrap(view.getContext());
+                Fragment mvf = new MapViewFragment();
+                Bundle locationArgs = new Bundle();
+                locationArgs.putString("adventures", responseData);
+                locationArgs.putString("address", "2110 Burrard St, Vancouver, BC V6J 3H6");
+                mvf.setArguments(locationArgs);
+                activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mvf).addToBackStack(null).commit();
             }
         });
 
@@ -257,11 +295,8 @@ public class SearchFragment extends Fragment {
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
-//                mAdventureList.clear();
                 AdventureAdapter.notifyDataSetChanged();
                 recyclerView.invalidate();
-
-                //update the list of adventures here with REST data
                 dialog.dismiss();
                 return;
             }
