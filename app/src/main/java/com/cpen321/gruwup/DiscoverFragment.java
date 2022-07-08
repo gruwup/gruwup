@@ -115,7 +115,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        SupportRequests.get("http://" + address + ":8081/user/adventure/" + SupportSharedPreferences.getUserId(this.getActivity()) + "/discover", new Callback() {
+        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + SupportSharedPreferences.getUserId(this.getActivity()) + "/discover", SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -238,7 +238,7 @@ public class DiscoverFragment extends Fragment {
                     }
 
                     // To do: change this later with server url
-                    SupportRequests.post("http://" + address + ":8081/user/adventure/create", jsonObject.toString(), new Callback() {
+                    SupportRequests.postWithCookie("http://" + address + ":8081/user/adventure/create", jsonObject.toString(), SupportSharedPreferences.getCookie(v.getContext()), new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             System.out.println("failure on post");

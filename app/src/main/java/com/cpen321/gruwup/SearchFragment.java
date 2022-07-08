@@ -40,6 +40,7 @@ import com.cpen321.gruwup.R;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.riversun.okhttp3.OkHttp3CookieHelper;
 import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
@@ -130,7 +131,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        SupportRequests.get("http://" + address + ":8081/user/adventure/search-by-title?title=test", new Callback() {
+        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/search-by-title?title=test", SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -231,13 +232,19 @@ public class SearchFragment extends Fragment {
                     e.printStackTrace();
                     System.out.println("JSON EXCEPTION!!!");
                 }
+                String cookie = SupportSharedPreferences.getCookie(getActivity());
+                String[] cookieList  =  cookie.split("=",2);
+                OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
+                cookieHelper.setCookie("http://" + address + ":8081/user/adventure/search-by-filter", cookieList[0], cookieList[1]);
                 System.out.println(jsonObject.toString());
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
                 Request request = new Request.Builder()
                         .url("http://" + address + ":8081/user/adventure/search-by-filter")
                         .post(requestBody)
                         .build();
-                OkHttpClient client = new OkHttpClient();
+                OkHttpClient client = new OkHttpClient.Builder()
+                        .cookieJar(cookieHelper.cookieJar())
+                        .build();
                 Call call = client.newCall(request);
                 try {
                     Response response = call.execute();
@@ -265,7 +272,7 @@ public class SearchFragment extends Fragment {
         System.out.println("searching...");
         String search = searchText.getText().toString();
         if (search.length() > 0) {
-            SupportRequests.get("http://" + address + ":8081/user/adventure/search-by-title?title=" + search, new Callback() {
+            SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/search-by-title?title=" + search, SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                 }
