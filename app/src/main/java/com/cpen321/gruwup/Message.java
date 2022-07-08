@@ -12,12 +12,11 @@ public class Message {
         this.messageStatus = messageStatus;
     }
 
-    public Message(String userId, String name, String message, String dateTime, String prevTime, String messageStatus) {
+    public Message(String userId, String name, String message, String dateTime,  String messageStatus) {
         this.userId = userId;
         this.name = name;
         this.message = message;
         this.dateTime = dateTime;
-        this.prevTime = prevTime;
         this.messageStatus = messageStatus;
     }
 
@@ -53,11 +52,4 @@ public class Message {
         this.dateTime = dateTime;
     }
 
-    public String getPrevTime() {
-        return prevTime;
-    }
-
-    public void setPrevTime(String prevTime) {
-        this.prevTime = prevTime;
-    }
 }

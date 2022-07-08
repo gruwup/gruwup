@@ -72,6 +72,8 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
                 // or the adventure group name
                 intent.putExtra("name", adventure.getAdventureName());
                 intent.putExtra("adventureId", adventure.getAdventureId());
+                intent.putExtra("dateTime", adventure.getLastMessageTime());
+
                 context.startActivity(intent);
             }
         });
