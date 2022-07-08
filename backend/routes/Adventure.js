@@ -3,6 +3,7 @@ const router = express.Router();
 const FilterService = require("../services/FilterService");
 const AdventureStore = require("../store/AdventureStore");
 const TestMode = require("../TestMode");
+const Session = require("../services/Session");
 
 const TestAdventure = {
     "id": "string",

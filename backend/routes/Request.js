@@ -3,6 +3,7 @@ const router = express.Router();
 const AdventureStore = require("../store/AdventureStore");
 const RequestStore = require("../store/RequestStore");
 const TestMode = require("../TestMode");
+const Session = require("../services/Session");
 
 // these are just for testing, delete later
 const example = {
