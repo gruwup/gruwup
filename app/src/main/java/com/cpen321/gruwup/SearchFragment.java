@@ -75,7 +75,7 @@ public class SearchFragment extends Fragment {
     private String address = "10.0.2.2";
     static ArrayList<Map<String, String>> mAdventureList;
     DiscAdvViewAdapter AdventureAdapter;
-    static String HTTPRESULT = "";
+    String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
     RecyclerView categoryView;
     Button uploadImage;
@@ -175,38 +175,13 @@ public class SearchFragment extends Fragment {
         for (int i = 0; i < arrlen; i++) {
             JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());
-            mAdventureList.get(i).put("event", jsonObject.getString("_id"));
+            mAdventureList.get(i).put("event", jsonObject.getString("title"));
             mAdventureList.get(i).put("time", jsonObject.getString("dateTime"));
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
             mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
-            mAdventureList.get(i).put("description", ("Description (currently none) " + String.valueOf(i)));
+            mAdventureList.get(i).put("description", jsonObject.getString("description"));
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
-    }
-
-    public void testInitAd() {
-        mAdventureList = new ArrayList<Map<String, String>>();
-        mAdventureList.add(new HashMap<String, String>());
-        mAdventureList.get(0).put("event", "1");
-        mAdventureList.get(0).put("time", "12:00");
-        mAdventureList.get(0).put("location", "123 Main St");
-        mAdventureList.get(0).put("count", "1");
-        mAdventureList.get(0).put("description", "Description (currently none) 0");
-        mAdventureList.get(0).put("image", "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png");
-        mAdventureList.add(new HashMap<String, String>());
-        mAdventureList.get(1).put("event", "2");
-        mAdventureList.get(1).put("time", "12:00");
-        mAdventureList.get(1).put("location", "123 Main St");
-        mAdventureList.get(1).put("count", "1");
-        mAdventureList.get(1).put("description", "Description (currently none) 1");
-        mAdventureList.get(1).put("image", "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png");
-        mAdventureList.add(new HashMap<String, String>());
-        mAdventureList.get(2).put("event", "3");
-        mAdventureList.get(2).put("time", "12:00");
-        mAdventureList.get(2).put("location", "123 Main St");
-        mAdventureList.get(2).put("count", "1");
-        mAdventureList.get(2).put("description", "Description (currently none) 2");
-        mAdventureList.get(2).put("image", "https://www.google.com/images/branding/googlelogo/2x/googlelogo_color_272x92dp.png");
     }
 
     private void filterAdventure(View view) {
@@ -241,22 +216,23 @@ public class SearchFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 System.out.println("Apply filters button clicked");
+                JSONArray jsonArray = new JSONArray();
                 for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
                     mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
+                    jsonArray.put(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
                 }
-                System.out.println(location.getText().toString() + " " + numPeople.getText().toString() + " " + timeSelection.getCheckedRadioButtonId() + " " + mSelectedCategoryNames.toString());
-
                 JSONObject jsonObject = new JSONObject();
                 try {
-                    jsonObject.put("category", "[\"MOVIE\"]");
-                    jsonObject.put("maxPeopleGoing", "1000");
-                    jsonObject.put("maxTimeStamp", "3333333222222");
+                    jsonObject.put("categories", jsonArray);
+                    jsonObject.put("maxPeopleGoing",  numPeople.getText().toString());
+                    jsonObject.put("maxTimeStamp", buttonToEpoch(timeSelection.getCheckedRadioButtonId()));
+                    jsonObject.put("city", location.getText().toString());
                 } catch (JSONException e) {
                     e.printStackTrace();
                     System.out.println("JSON EXCEPTION!!!");
                 }
                 System.out.println(jsonObject.toString());
-                RequestBody requestBody = RequestBody.create("application/json", MediaType.parse(jsonObject.toString()));
+                RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
                 Request request = new Request.Builder()
                         .url("http://" + address + ":8081/user/adventure/search-by-filter")
                         .post(requestBody)
@@ -352,5 +328,20 @@ public class SearchFragment extends Fragment {
         byte[] decodedString = Base64.decode(b64, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
+    }
+
+    private String buttonToEpoch(int buttonId) {
+        switch (buttonId) {
+            case R.id.todayRadioButton:
+                return System.currentTimeMillis() / 1000L + 86400L + "";
+            case R.id.weekRadioButton:
+                return System.currentTimeMillis() / 1000L + 604800L + "";
+            case R.id.monthRadioButton:
+                return System.currentTimeMillis() / 1000L + 2628000L + "";
+            case R.id.anyRadioButton:
+                return Integer.MAX_VALUE + "";
+            default:
+                return "error";
+        }
     }
 }

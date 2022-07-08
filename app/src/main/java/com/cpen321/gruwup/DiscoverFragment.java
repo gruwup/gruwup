@@ -230,7 +230,7 @@ public class DiscoverFragment extends Fragment {
                         jsonObject.put("dateTime", dateToEpoch(time.getText().toString().trim()));
                         System.out.println(dateToEpoch(time.getText().toString().trim()));
                         jsonObject.put("location", location.getText().toString().trim());
-                        jsonObject.put("category", "MOVIE");
+                        jsonObject.put("category", mSelectedCategoryNames.get(0));
                         jsonObject.put("image", bmpToB64(imageBMP));
                     } catch (JSONException e) {
                         e.printStackTrace();

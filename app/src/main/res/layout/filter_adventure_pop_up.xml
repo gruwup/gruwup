@@ -115,7 +115,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/lightGray"
-            android:text="Number of People"
+            android:text="Max Number of People"
             android:textSize="25dp"
             android:textStyle="bold"
             android:gravity="center"
