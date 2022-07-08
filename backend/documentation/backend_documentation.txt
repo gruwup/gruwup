@@ -67,7 +67,7 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Error'
   /user/adventure/search-by-filter:
-    get:
+    post:
       summary: Search adventure using filters (PUT DATA IN BODY NOT HEADER)
       tags:
        - Adventure
@@ -80,7 +80,7 @@ paths:
               schema:
                type: object
                example: {
-                 category: ["MOVIE", "MUSIC"],
+                 categories: ["MOVIE", "MUSIC"],
                  maxPeopleGoing: number,
                  maxTimeStamp: "string",
                  city: string
@@ -923,6 +923,19 @@ components:
         dateTime:
           type: string
           example: "13131238"
+    AdventureThumbnail:
+      type: object
+      properties:
+        adventureId:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        location:
+          type: string
+        image:
+          type: string
   securitySchemes:
     accessCode:
       type: oauth2

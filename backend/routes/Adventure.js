@@ -88,7 +88,7 @@ router.post("/create", async (req, res) => {
 });
 
 // search adventures by filter
-router.get("/search-by-filter", async (req, res) => {
+router.post("/search-by-filter", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
         try {
             var result = await FilterService.findAdventuresByFilter(req.body);
