@@ -163,7 +163,6 @@ public class SearchFragment extends Fragment {
                 Fragment mvf = new MapViewFragment();
                 Bundle locationArgs = new Bundle();
                 locationArgs.putString("adventures", responseData);
-                locationArgs.putString("address", "2110 Burrard St, Vancouver, BC V6J 3H6");
                 mvf.setArguments(locationArgs);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mvf).addToBackStack(null).commit();
             }

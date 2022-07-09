@@ -136,7 +136,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, "Request sent!", Toast.LENGTH_SHORT).show();
-                SupportRequests.post("http://" + address + ":8081/user/request/" + id + "/send-request", jsonObject.toString(), new Callback() {
+                SupportRequests.postWithCookie("http://" + address + ":8081/user/request/" + id + "/send-request", jsonObject.toString(), SupportSharedPreferences.getCookie(view.getContext()), new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                     }
