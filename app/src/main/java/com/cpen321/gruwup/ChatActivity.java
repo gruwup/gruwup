@@ -193,6 +193,7 @@ public class ChatActivity extends AppCompatActivity {
 
         UserID = SupportSharedPreferences.getUserId(getApplicationContext());
         cookie = SupportSharedPreferences.getCookie(getApplicationContext());
+        loadOldMessage = (TextView) findViewById(R.id.loadMessage);
         SupportRequests.getWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/messages/" + pagination, cookie, new Callback() {
 
             @Override
@@ -242,12 +243,13 @@ public class ChatActivity extends AppCompatActivity {
 
                         // if prevPagination is not null display load older messages
                         // upon clicking display old messages call api call and hide text view
-                        loadOldMessage = (TextView) findViewById(R.id.loadMessage);
+
                         loadOldMessage.setOnClickListener(new View.OnClickListener() {
                             @Override
                             public void onClick(View view) {
                                 if (!(("null").equals(prevPagination))){
 //                                    loadOlderMessages(prevPagination);
+                                    Log.d("prevvvvvvvvv", prevPagination);
                                     getPreviousMessages(prevPagination);
                                 }
                                 else {
@@ -266,6 +268,7 @@ public class ChatActivity extends AppCompatActivity {
                 }
                 else{
                     Log.d(TAG, "message history failed to load" + response.toString());
+                    loadOldMessage.setText("");
                 }
             }
 
@@ -335,8 +338,8 @@ public class ChatActivity extends AppCompatActivity {
     private void getAdventureDetails() {
 
         // url: http://localhost:8081/user/adventure/62c65ee5b7831254ed671749/detail
-
-        SupportRequests.get("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", new Callback() {
+        String cookie = SupportSharedPreferences.getCookie(getApplicationContext());
+        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.d(TAG, "Failed to get adventure details");
