@@ -125,10 +125,11 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
     }
 
     private void showPopUp(View view, String action, int position) {
+        String cookie = SupportSharedPreferences.getCookie(this.context);
         if (action=="accept"){
             String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/accept";
             String json = "";
-            SupportRequests.put(url,json, new Callback() {
+            SupportRequests.putWithCookie(url,json, cookie, new Callback() {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String jsonData = response.body().string();
@@ -146,7 +147,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         else if (action=="deny"){
             String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/reject";
             String json = "";
-            SupportRequests.put(url,json, new Callback() {
+            SupportRequests.putWithCookie(url,json, cookie,new Callback() {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String jsonData = response.body().string();
