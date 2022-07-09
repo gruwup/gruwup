@@ -5,11 +5,12 @@ const Session = require("../services/Session");
 const router = express.Router();
 const ChatStore = require("../store/ChatStore");
 const ChatSocket = require("../services/ChatSocket");
+const TestMode = require("../TestMode");
 
 var messageCount = {}
 
 router.post("/:adventureId/send", async (req, res) => {
-    if (Session.validSession(req.headers.cookie)) {
+    if (Session.validSession(req.headers.cookie) || TestMode.on) {
         try {
             var adventureId = req.params.adventureId;
             var userId = req.body.userId;
@@ -57,7 +58,7 @@ router.post("/:adventureId/send", async (req, res) => {
 
 
 router.get("/:userId/recent-list", async (req, res) => {
-    if (Session.validSession(req.headers.cookie)) {
+    if (Session.validSession(req.headers.cookie) || TestMode.on) {
         try {
             var adventureList = await AdventureStore.getUsersAdventures(req.params.userId);
             if (adventureList.code === 200) {
@@ -98,7 +99,7 @@ router.get("/:userId/recent-list", async (req, res) => {
 
 // allows front-end to obtain the pagination for the most recent chat for an adventure
 router.get("/:adventureId/recent-pagination", async (req, res) => {
-    if (Session.validSession(req.headers.cookie)) {
+    if (Session.validSession(req.headers.cookie) || TestMode.on) {
         try {
             var result = await ChatStore.getPrevPagination(req.params.adventureId, Date.now());
             if (result.code === 200) {
@@ -119,7 +120,7 @@ router.get("/:adventureId/recent-pagination", async (req, res) => {
 
 // getting a message list
 router.get("/:adventureId/messages/:pagination", async (req, res) => {
-    if (Session.validSession(req.headers.cookie)) {
+    if (Session.validSession(req.headers.cookie) || TestMode.on) {
         try {
             var result = await ChatStore.getMessages(req.params.adventureId, req.params.pagination);
             if (result.code === 200) {
@@ -139,7 +140,7 @@ router.get("/:adventureId/messages/:pagination", async (req, res) => {
 });
 
 router.delete("/:adventureId/delete-chat", async (req, res) => {
-    if (Session.validSession(req.headers.cookie)) {
+    if (Session.validSession(req.headers.cookie) || TestMode.on) {
         try {
             var result = await ChatStore.deleteChat(req.params.adventureId);
             if (result.code === 200) {

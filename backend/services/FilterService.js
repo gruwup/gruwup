@@ -81,8 +81,15 @@ module.exports = class FilterService {
             };
             var searchResult = await AdventureStore.findAdventuresByFilter(adventureFilter);
             var arr = searchResult.payload.reduce((acc, adventure) => {
-                if (adventure.dateTime <= filter.maxTimeStamp && adventure.peopleGoing.length <= filter.maxPeopleGoing) {
-                    acc.push(adventure);
+                if (filter.maxPeopleGoing && adventure.peopleGoing.length <= filter.maxPeopleGoing) {
+                    if ( filter.maxTimeStamp ) {
+                        if (adventure.dateTime <= filter.maxTimeStamp) {
+                            acc.push(adventure);
+                        }
+                    }
+                    else {
+                        acc.push(adventure);
+                    }
                 }
                 return acc;
             }
