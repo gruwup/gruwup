@@ -72,7 +72,7 @@ public class ChatActivity extends AppCompatActivity {
 
     // socket implementation
     private Socket mSocket;
-//    {
+    {
 //        try {
 ////            cookie = SupportSharedPreferences.getCookie(getApplicationContext());
 ////            UserID = SupportSharedPreferences.getUserId(getApplicationContext());
@@ -82,7 +82,7 @@ public class ChatActivity extends AppCompatActivity {
 //            mSocket.emit("userInfo", cookie, UserID);
 //
 //        } catch (URISyntaxException e) {}
-//    }
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -94,6 +94,7 @@ public class ChatActivity extends AppCompatActivity {
         adventureTitle = intent.getStringExtra("name");
         adventureId = intent.getStringExtra("adventureId");
         pagination = intent.getStringExtra("dateTime");
+
 
         getPreviousMessages(pagination);
 
@@ -174,7 +175,7 @@ public class ChatActivity extends AppCompatActivity {
                     editMessageBar.setText("");
                     sendChat(message);
                     if (adapter!=null){
-                        adapter.notifyDataSetChanged();
+//                        adapter.notifyDataSetChanged();
                         messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
                     }
                 }
@@ -201,37 +202,16 @@ public class ChatActivity extends AppCompatActivity {
                     Log.d(TAG, "message history received successfully");
                     String jsonData = response.body().string();
 
-
-
                     try {
                         JSONObject jsonObj = new JSONObject(jsonData);
-
                         JSONArray messageArray = jsonObj.getJSONArray("messages");
                         prevPagination = jsonObj.getString("prevPagination");
-
-                        // if prevPagination is not null display load older messages
-                        // upon clicking display old messages call api call and hide text view
-                        loadOldMessage = (TextView) findViewById(R.id.loadMessage);
-                        loadOldMessage.setOnClickListener(new View.OnClickListener() {
-                            @Override
-                            public void onClick(View view) {
-                                if (!(("null").equals(prevPagination))){
-                                    getPreviousMessages(prevPagination);
-                                }
-                                else {
-                                    Log.d("Prev ", "set visibility to none");
-                                    loadOldMessage.setText("This is start of your conversations");
-                                }
-
-                            }
-                        });
-
                         JSONObject messageObj = new JSONObject();
                         if (messageArray !=null ){
-                            for (int i=messageArray.length()-1; i>0; i--) {
+                            for (int i=messageArray.length()-1; i>=0; i--) {
 
                                 messageObj = messageArray.getJSONObject(i);
-                                Log.d(TAG, messageObj.toString());
+//                                Log.d(TAG, messageObj.toString());
                                 String name = messageObj.getString("name");
                                 String userId = messageObj.getString("userId");
                                 String message = messageObj.getString("message");
@@ -244,6 +224,7 @@ public class ChatActivity extends AppCompatActivity {
                                 else{
                                     oldMessage = new Message(userId, name, message, dateTime, RECEIVED_MESSAGE);
                                 }
+                                Log.d(TAG, ">>>>>>>>>>>"+oldMessage.name+":"+oldMessage.message);
 
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -258,6 +239,26 @@ public class ChatActivity extends AppCompatActivity {
                             }}
 
                         Log.d(TAG, " message history json Obj " + jsonObj.toString());
+
+                        // if prevPagination is not null display load older messages
+                        // upon clicking display old messages call api call and hide text view
+                        loadOldMessage = (TextView) findViewById(R.id.loadMessage);
+                        loadOldMessage.setOnClickListener(new View.OnClickListener() {
+                            @Override
+                            public void onClick(View view) {
+                                if (!(("null").equals(prevPagination))){
+//                                    loadOlderMessages(prevPagination);
+                                    getPreviousMessages(prevPagination);
+                                }
+                                else {
+                                    Log.d("Prev ", "set visibility to none");
+                                    loadOldMessage.setText("This is start of your conversations");
+                                }
+
+                            }
+                        });
+
+
                     }catch (Exception e){
                         e.printStackTrace();
                     }
@@ -349,7 +350,7 @@ public class ChatActivity extends AppCompatActivity {
 
                     try {
                         JSONObject jsonObj = new JSONObject(jsonData);
-                        Log.d(TAG, "json Obj "+ jsonObj.toString());
+//                        Log.d(TAG, "json Obj "+ jsonObj.toString());
                         String title = jsonObj.getString("title");
                         String description = jsonObj.getString("description");
                         String eventType = jsonObj.getString("category");
