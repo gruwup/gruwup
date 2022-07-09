@@ -36,14 +36,15 @@ public class MessageViewAdapter extends RecyclerView.Adapter<MessageViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewAdapter.ViewHolder holder, int position) {
-        Message message = messages.get(position);
-        if (messages.get(position).getMessageStatus().equals(SENT_MESSAGE)){
+
+        Message message = messages.get(holder.getAdapterPosition());
+        if (messages.get(holder.getAdapterPosition()).getMessageStatus().equals(SENT_MESSAGE)){
 //            holder.senderName.setText(message.getName());
 //            holder.sentMessage.setVisibility(View.VISIBLE);
             holder.sentMessage.setText(message.getMessage());
             holder.sentMessage.setVisibility(View.VISIBLE);
         }
-        else if (messages.get(position).getMessageStatus().equals(RECEIVED_MESSAGE)){
+        else if (messages.get(holder.getAdapterPosition()).getMessageStatus().equals(RECEIVED_MESSAGE)){
             holder.receiverName.setText(message.getName());
             holder.receiverName.setVisibility(View.VISIBLE);
             holder.receivedMessage.setText(message.getMessage());

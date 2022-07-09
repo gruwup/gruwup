@@ -55,23 +55,19 @@ public class ChatActivity extends AppCompatActivity {
     private String adventureId;
     private Dialog adventureDialog;
     private String pagination;
-    private String prevPagination;
+    private String prevPagination = "null";
 
 
     static final String TAG = "ChatActivity";
 
-    // local : "10.0.2.2" , remote: "20.227.142.169"
     private String address = "10.0.2.2";
 //    private String address = "20.227.142.169";
 
 
     private String cookie;
-
-//    private String serverUrl = "http://20.227.142.169:8000";
     private String serverUrl = "http://"+address+":8000";
 
 
-    // socket implementation
     private Socket mSocket;
 
     @Override
@@ -138,14 +134,12 @@ public class ChatActivity extends AppCompatActivity {
             cookie = "gruwup-session=123";
 //            cookie = SupportSharedPreferences.getCookie(getApplicationContext());
             UserID = SupportSharedPreferences.getUserId(getApplicationContext());
-
             mSocket = IO.socket(serverUrl);
             mSocket.emit("userInfo", cookie, UserID);
 
         } catch (URISyntaxException e) {}
 
         mSocket.on("connected", isConnected);
-
         mSocket.connect();
 
 //        Intent serviceIntent = new Intent(this, SocketService.class);
@@ -158,9 +152,28 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new MessageViewAdapter(this,messages);
         messageRecyclerView.setAdapter(adapter);
 
-//        getPreviousMessages(pagination);
         pagination = intent.getStringExtra("dateTime");
-        getPreviousMessages(pagination);
+//        getPreviousMessages(pagination); // change back later
+//        getChatMessages(pagination);
+        prevPagination = pagination;
+        getOldMessages(prevPagination);
+
+        loadOldMessage = (TextView) findViewById(R.id.loadMessage);
+        loadOldMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!(("null").equals(prevPagination))){
+
+//                    getChatMessages(prevPagination); //check
+                    getOldMessages(prevPagination);
+//                    getPreviousMessages(prevPagination);
+                }
+                else {
+                    loadOldMessage.setText("This is start of your conversations");
+                }
+
+            }
+        });
 
         UserID = SupportSharedPreferences.getUserId(getApplicationContext());
         UserName = SupportSharedPreferences.getUserName(getApplicationContext());
@@ -185,31 +198,27 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
+    private void getChatMessages(String pagination){
 
-    private void getPreviousMessages(String pagination) {
-        UserID = SupportSharedPreferences.getUserId(getApplicationContext());
         cookie = SupportSharedPreferences.getCookie(getApplicationContext());
-        loadOldMessage = (TextView) findViewById(R.id.loadMessage);
-        prevPagination = "null";
         SupportRequests.getWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/messages/" + pagination, cookie, new Callback() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d(TAG, "");
+
                 if(response.isSuccessful()) {
                     Log.d(TAG, "message history received successfully");
                     String jsonData = response.body().string();
 
+                    Log.d(TAG, jsonData);
                     try {
                         JSONObject jsonObj = new JSONObject(jsonData);
                         JSONArray messageArray = jsonObj.getJSONArray("messages");
                         prevPagination = jsonObj.getString("prevPagination");
                         JSONObject messageObj = new JSONObject();
-                        ArrayList<Message> oldMessageList = new ArrayList<>();
                         if (messageArray !=null ){
-                            for (int i=0; i<messageArray.length(); i++) {
+                            for (int i = 0; i<messageArray.length(); i++) {
 
                                 messageObj = messageArray.getJSONObject(i);
-                                Log.d(TAG, "_______"+messageObj.toString());
                                 String name = messageObj.getString("name");
                                 String userId = messageObj.getString("userId");
                                 String message = messageObj.getString("message");
@@ -223,27 +232,19 @@ public class ChatActivity extends AppCompatActivity {
                                     oldMessage = new Message(userId, name, message, dateTime, RECEIVED_MESSAGE);
                                 }
 
-                                oldMessageList.add(oldMessage);
+                                runOnUiThread(new Runnable() {
+                                    @Override
+                                    public void run() {
+                                        if (adapter!=null){
+//                                    adapter.notifyDataSetChanged(); // check
+                                            messages.add(oldMessage);
+                                            adapter.notifyItemInserted(messages.size() - 1);
+                                            messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
+                                        }
+                                    }
+                                });
 
                             }}
-                        runOnUiThread(new Runnable() {
-                            @Override
-                            public void run() {
-//                                        messages.add(0,oldMessage);
-                                messages.addAll(0,oldMessageList);
-                                adapter.notifyItemRangeInserted(0, oldMessageList.size());
-                                adapter.notifyItemChanged(oldMessageList.size());
-//                                        chatMessages.addAll(0, items);
-//                                        notifyItemRangeInserted(0,items.size());
-//                                        notifyItemChanged(items.size());
-                                if (adapter!=null){
-//                                            adapter.notifyDataSetChanged();
-                                    messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
-
-                                }
-                            }
-                        });
-
 
                     }catch (Exception e){
                         e.printStackTrace();
@@ -262,22 +263,83 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        loadOldMessage.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                if (!(("null").equals(prevPagination))){
-
-                    getPreviousMessages(prevPagination);
-                }
-                else {
-                    loadOldMessage.setText("This is start of your conversations");
-                }
-
-            }
-        });
-
     }
 
+    private void getOldMessages(String pagination){
+        cookie = SupportSharedPreferences.getCookie(getApplicationContext());
+        SupportRequests.getWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/messages/" + pagination, cookie, new Callback() {
+            @Override
+            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+
+                if(response.isSuccessful()) {
+
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Log.d(TAG, "message history received successfully");
+
+                            try {
+                                String jsonData = response.body().string();
+                                JSONObject jsonObj = new JSONObject(jsonData);
+                                JSONArray messageArray = jsonObj.getJSONArray("messages");
+                                prevPagination = jsonObj.getString("prevPagination");
+                                JSONObject messageObj = new JSONObject();
+
+
+                                if (messageArray !=null ){
+                                    for (int i = messageArray.length()-1;i>=0; i--) {
+
+                                        messageObj = messageArray.getJSONObject(i);
+                                        String name = messageObj.getString("name");
+                                        String userId = messageObj.getString("userId");
+                                        String message = messageObj.getString("message");
+                                        String dateTime = messageObj.getString("dateTime");
+                                        Message oldMessage;
+
+                                        if(UserID.equals(userId)){
+                                            oldMessage = new Message(userId, name, message, dateTime, SENT_MESSAGE);
+                                        }
+                                        else{
+                                            oldMessage = new Message(userId, name, message, dateTime, RECEIVED_MESSAGE);
+                                        }
+
+                                        Log.d(TAG, ":: "+ oldMessage.getMessage());
+
+
+                                        messages.add(0,oldMessage);
+                                        adapter.notifyItemInserted(0);
+
+//                                        if (adapter!=null){
+//                                            messageRecyclerView.scrollToPosition(0);
+//                                        }
+
+                                    }}
+
+                            }catch (Exception e){
+                                e.printStackTrace();
+                            }
+                        }
+                    });
+
+
+                    for (int i = 0; i <messages.size();i++){
+                        Log.d(TAG, "> "+ messages.get(i).getMessage());
+                    }
+
+
+                }
+                else{
+                    Log.d(TAG, "message history failed to load" + response.toString());
+                    loadOldMessage.setText("");
+                }
+            }
+
+            @Override
+            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                Log.d(TAG, "Failed to retrieve chat history");
+            }
+        });
+    }
 
 
 //    private void getPreviousMessages(String pagination) {
@@ -403,9 +465,11 @@ public class ChatActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            messages.add(sendMessage); //check
+                            messages.add(sendMessage);
+                            adapter.notifyItemInserted(messages.size() - 1);
                             if (adapter!=null){
                                 messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
+//                                adapter.notifyDataSetChanged();
                             }
                             Log.d(TAG, "message sent successfully");
                         }
@@ -492,8 +556,6 @@ public class ChatActivity extends AppCompatActivity {
                             }
                         });
 
-
-
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
@@ -539,26 +601,28 @@ public class ChatActivity extends AppCompatActivity {
                     String userId;
                     String message;
                     String dateTime;
-                    // To do: need adventureId?
                     String messageStatus;
 
-                    try {
-                        userName = data.getString("name");
-                        userId = data.getString("userId");
-                        message = data.getString("message");
-                        dateTime = data.getString("dateTime");
-                        messageStatus = RECEIVED_MESSAGE;
-                        Message newMessage = new Message(userId,userName,message,dateTime,messageStatus);
-                        messages.add(newMessage);
-//                        if (adapter!=null){
-//                            adapter.notifyDataSetChanged();
-//                        }
+                    Log.d(TAG, "THIS ADVENTURE ID:"+adventureId);
+                    if (adventureId.equals(args[0].toString())){
+                        try {
+                            userName = data.getString("name");
+                            userId = data.getString("userId");
+                            message = data.getString("message");
+                            dateTime = data.getString("dateTime");
+                            messageStatus = RECEIVED_MESSAGE;
+                            Message newMessage = new Message(userId,userName,message,dateTime,messageStatus);
+                            messages.add(newMessage);
+                            if (adapter!=null){
+//                                adapter.notifyDataSetChanged();
+                                adapter.notifyItemInserted(messages.size() - 1);
+                            }
 
 
-                    } catch (JSONException e) {
-                        return;
+                        } catch (JSONException e) {
+                            return;
+                        }
                     }
-
                 }
             });
         }
