@@ -168,7 +168,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/search-by-title?title=test", SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
+        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby", SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -213,7 +213,8 @@ public class SearchFragment extends Fragment {
         for (int i = 0; i < arrlen; i++) {
             JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());
-            mAdventureList.get(i).put("event", jsonObject.getString("title"));
+            mAdventureList.get(i).put("title", jsonObject.getString("title"));
+            mAdventureList.get(i).put("event", jsonObject.getString("category"));
             mAdventureList.get(i).put("time", jsonObject.getString("dateTime"));
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
             mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));

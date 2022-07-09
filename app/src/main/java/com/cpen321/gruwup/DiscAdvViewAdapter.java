@@ -77,6 +77,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
     private void showPopUp(View view, int position) {
         Button requestToJoin;
         TextView cancel;
+        TextView title;
         TextView eventType;
         TextView memberCount;
         TextView time;
@@ -88,6 +89,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         viewAdventureDialog.setContentView(R.layout.view_adventure_pop_up);
         viewAdventureDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         cancel = (TextView) viewAdventureDialog.findViewById(R.id.cancel_view_adventure);
+        title = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_event_title);
         eventType = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_event_type);
         memberCount = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_member_count);
         time = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_time);
@@ -104,6 +106,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         id = mAdvNames.get(position).get("id");
         //set the contents of the popup
 
+        title.setText(mAdvNames.get(position).get("title"));
         eventType.setText(mAdvNames.get(position).get("event"));
         memberCount.setText(mAdvNames.get(position).get("count"));
         time.setText(mAdvNames.get(position).get("time"));
