@@ -182,14 +182,9 @@ public class ChatActivity extends AppCompatActivity {
 
                     // check datetime format
                     long currentTimestamp = System.currentTimeMillis()/1000;
-                    Message newMessage = new Message(UserID, UserName, message, Long.toString(currentTimestamp),SENT_MESSAGE);
-                    messages.add(newMessage);
+//                    Message newMessage = new Message(UserID, UserName, message, Long.toString(currentTimestamp),SENT_MESSAGE);
                     editMessageBar.setText("");
                     sendChat(message);
-                    if (adapter!=null){
-//                        adapter.notifyDataSetChanged();
-                        messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                    }
                 }
 
 
@@ -243,9 +238,9 @@ public class ChatActivity extends AppCompatActivity {
                                     public void run() {
                                         messages.add(0,oldMessage);
                                         if (adapter!=null){
-                                            adapter.notifyDataSetChanged();
+//                                            adapter.notifyDataSetChanged();
                                             messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                                       
+
                                         }
                                     }
                                 });
@@ -262,11 +257,9 @@ public class ChatActivity extends AppCompatActivity {
                             public void onClick(View view) {
                                 if (!(("null").equals(prevPagination))){
 //                                    loadOlderMessages(prevPagination);
-                                    Log.d("prevvvvvvvvv", prevPagination);
                                     getPreviousMessages(prevPagination);
                                 }
                                 else {
-                                    Log.d("Prev ", "set visibility to none");
                                     loadOldMessage.setText("This is start of your conversations");
                                 }
 
@@ -293,8 +286,6 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     public void sendChat(String message){
-
-        // check if userId is assigned
         long currentTimestamp = System.currentTimeMillis()/1000;
         Message sendMessage = new Message(UserID,UserName,message,Long.toString(currentTimestamp),SENT_MESSAGE);
 
@@ -320,7 +311,16 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(response.isSuccessful()) {
-                    Log.d(TAG, "message sent successfully");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            messages.add(sendMessage); //check
+                            if (adapter!=null){
+                                messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
+                            }
+                            Log.d(TAG, "message sent successfully");
+                        }
+                    });
                 }
                 else{
                     Log.d(TAG, "message failed to send" + response.toString());
@@ -451,8 +451,6 @@ public class ChatActivity extends AppCompatActivity {
                     String message;
                     String dateTime;
                     // To do: need adventureId?
-                    // To do: remove prevTime if not needed
-                    String prevTime;
                     String messageStatus;
 
                     try {
@@ -460,13 +458,12 @@ public class ChatActivity extends AppCompatActivity {
                         userId = data.getString("userId");
                         message = data.getString("message");
                         dateTime = data.getString("dateTime");
-                        prevTime = "";
                         messageStatus = RECEIVED_MESSAGE;
                         Message newMessage = new Message(userId,userName,message,dateTime,messageStatus);
                         messages.add(newMessage);
-                        if (adapter!=null){
-                            adapter.notifyDataSetChanged();
-                        }
+//                        if (adapter!=null){
+//                            adapter.notifyDataSetChanged();
+//                        }
 
 
                     } catch (JSONException e) {
