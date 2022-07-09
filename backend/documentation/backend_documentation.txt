@@ -159,7 +159,7 @@ paths:
       tags:
        - Adventure
       parameters:
-        - name: currentCity
+        - name: city
           in: query
           required: true
           schema:
@@ -808,10 +808,8 @@ components:
         dateTime:
           type: string
           example: "2312746523"
-        status:
+        image:
           type: string
-          enum: ["CLOSED", "OPEN", "CANCELLED"]
-          example: "OPEN"
     AdventureWithId:
       type: object
       properties:
