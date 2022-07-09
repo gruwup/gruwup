@@ -77,7 +77,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:textColor="@color/lightGray"
-            android:text="Categories"
+            android:text="Categories (pick one)"
             android:textSize="25dp"
             android:textStyle="bold"
             android:gravity="center"

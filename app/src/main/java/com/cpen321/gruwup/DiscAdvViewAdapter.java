@@ -29,6 +29,7 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -38,13 +39,13 @@ import okhttp3.Response;
 public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.ViewHolder> {
 
     private static final String TAG = "DiscAdvViewAdapter";
-    Dialog profileDialog;
+    Dialog viewAdventureDialog;
     private ArrayList<Map<String, String>> mAdvNames = new ArrayList<>();
     private Context mContext;
     private String address = "10.0.2.2";
 
     public DiscAdvViewAdapter(Context mContext, ArrayList<Map<String, String>> mAdvNames) {
-        profileDialog = new Dialog(mContext);
+        viewAdventureDialog = new Dialog(mContext);
         this.mAdvNames = mAdvNames;
         this.mContext = mContext;
     }
@@ -84,20 +85,20 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         Button viewInMap;
         String id;
 
-        profileDialog.setContentView(R.layout.view_adventure_pop_up);
-        profileDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        cancel = (TextView) profileDialog.findViewById(R.id.cancel_view_adventure);
-        eventType = (TextView) profileDialog.findViewById(R.id.view_adventure_event_type);
-        memberCount = (TextView) profileDialog.findViewById(R.id.view_adventure_member_count);
-        time = (TextView) profileDialog.findViewById(R.id.view_adventure_time);
-        location = (TextView) profileDialog.findViewById(R.id.view_adventure_location);
-        description = (TextView) profileDialog.findViewById(R.id.view_adventure_description);
-        requestToJoin = (Button) profileDialog.findViewById(R.id.request_join_adventure);
-        viewInMap = (Button) profileDialog.findViewById(R.id.adventure_open_in_maps);
+        viewAdventureDialog.setContentView(R.layout.view_adventure_pop_up);
+        viewAdventureDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        cancel = (TextView) viewAdventureDialog.findViewById(R.id.cancel_view_adventure);
+        eventType = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_event_type);
+        memberCount = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_member_count);
+        time = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_time);
+        location = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_location);
+        description = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_description);
+        requestToJoin = (Button) viewAdventureDialog.findViewById(R.id.request_join_adventure);
+        viewInMap = (Button) viewAdventureDialog.findViewById(R.id.adventure_open_in_maps);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                profileDialog.dismiss();
+                viewAdventureDialog.dismiss();
             }
         });
         id = mAdvNames.get(position).get("id");
@@ -118,7 +119,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
                 locationArgs.putString("address", mAdvNames.get(position).get("location"));
                 mvf.setArguments(locationArgs);
                 activity.getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, mvf).addToBackStack(null).commit();
-                profileDialog.dismiss();
+                viewAdventureDialog.dismiss();
             }
         });
 
@@ -150,11 +151,11 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
                         }
                     }
                 });
-                profileDialog.dismiss();
+                viewAdventureDialog.dismiss();
             }
         });
 
-        profileDialog.show();
+        viewAdventureDialog.show();
     }
 
     @Override
@@ -183,11 +184,12 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         }
     }
 
-    private static Activity unwrap(Context context) {
+    public static Activity unwrap(Context context) {
         while (!(context instanceof Activity) && context instanceof ContextWrapper) {
             context = ((ContextWrapper) context).getBaseContext();
         }
 
         return (Activity) context;
     }
+
 }

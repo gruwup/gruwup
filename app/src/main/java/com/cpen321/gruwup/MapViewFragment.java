@@ -21,8 +21,16 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.IOException;
 import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
 
 public class MapViewFragment extends Fragment {
 
@@ -34,6 +42,7 @@ public class MapViewFragment extends Fragment {
         View rootView = inflater.inflate(R.layout.location_fragment, container, false);
         Bundle locationArgs = getArguments();
         String address = locationArgs.getString("address", "");
+        String location_address = locationArgs.getString("adventures", "");
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
@@ -55,12 +64,29 @@ public class MapViewFragment extends Fragment {
                 googleMap.setMyLocationEnabled(true);
 
                 // For dropping a marker at a point on the Map
-                LatLng test = getLocationFromAddress(getActivity(), address);
-                googleMap.addMarker(new MarkerOptions().position(test).title("Event title"));
 
+                if(location_address != "") {
+                    System.out.println("special mode");
+                    try {
+                        JSONArray jsonArray = new JSONArray(location_address);
+                        //System.out.println("Map response" + response.body().string());
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
+                            LatLng test = getLocationFromAddress(getActivity(), jsonObject.getString("location"));
+                            googleMap.addMarker(new MarkerOptions().position(test).title("Event title"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    System.out.println("normal mode");
+                    LatLng test = getLocationFromAddress(getActivity(), address);
+                    googleMap.addMarker(new MarkerOptions().position(test).title("Event title"));
+                }
                 // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(test).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+//                CameraPosition cameraPosition = new CameraPosition.Builder().target(test).zoom(12).build();
+//                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
 

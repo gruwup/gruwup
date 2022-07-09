@@ -14,7 +14,7 @@ import okhttp3.RequestBody;
 public class SupportRequests {
 
     static OkHttpClient client = new OkHttpClient();
-    static MediaType JSON = MediaType.parse("application/json");
+            static MediaType JSON = MediaType.parse("application/json");
     static String TAG = "SupportRequests";
 
 
