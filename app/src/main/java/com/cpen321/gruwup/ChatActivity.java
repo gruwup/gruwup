@@ -2,6 +2,7 @@ package com.cpen321.gruwup;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.widget.NestedScrollView;
 import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -467,6 +468,10 @@ public class ChatActivity extends AppCompatActivity {
                         public void run() {
                             messages.add(sendMessage);
                             adapter.notifyItemInserted(messages.size() - 1);
+//                            messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
+                            NestedScrollView scrollView = (NestedScrollView)findViewById(R.id.nest);
+
+                            scrollView.smoothScrollTo(0, scrollView.getChildAt(0).getHeight());
                             if (adapter!=null){
                                 messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
 //                                adapter.notifyDataSetChanged();
