@@ -97,11 +97,13 @@ public class SocketService extends Service {
     };
 
     //Send message to activity
-    private void sendMessage(String userName, String message) {
+    private void sendMessage(String userName, String message, String dateTime, String adventureId) {
         Intent intent = new Intent("broadcastMsg");
         intent.putExtra("showalert",true);
         intent.putExtra("name",userName);
         intent.putExtra("message",message);
+        intent.putExtra("adventureId", adventureId);
+        intent.putExtra("dateTime", dateTime);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
@@ -119,19 +121,21 @@ public class SocketService extends Service {
                     String message;
                     String dateTime;
                     // To do: need adventureId?
-                    // To do: remove prevTime if not needed
-                    String prevTime;
+                    String adventureId;
                     String messageStatus;
 
                     try {
+                        adventureId = args[0].toString();
                         userName = data.getString("name");
                         userId = data.getString("userId");
                         message = data.getString("message");
                         dateTime = data.getString("dateTime");
-                        prevTime = "";
                         messageStatus = RECEIVED_MESSAGE;
                         Message newMessage = new Message(userId,userName,message,dateTime,messageStatus);
-                        sendMessage(userName, message);
+//                        sendMessage(userName, message);
+                        sendMessage(userName, message, dateTime, adventureId);
+
+
 
 
                     } catch (JSONException e) {

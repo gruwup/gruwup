@@ -113,6 +113,28 @@
             tools:ignore="ImageContrastCheck"
             tools:layout_editor_absoluteX="40dp"
             tools:layout_editor_absoluteY="16dp"></ImageView>
+
+        <ImageView
+            android:id="@+id/adventureEdit"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:paddingRight="10dp"
+            android:src="@drawable/ic_edit_adv"
+            tools:ignore="ImageContrastCheck"
+            tools:layout_editor_absoluteX="40dp"
+            tools:layout_editor_absoluteY="16dp"></ImageView>
+
+        <ImageView
+            android:id="@+id/adventureDelete"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="end"
+            android:paddingRight="10dp"
+            android:src="@drawable/ic_delete_adv"
+            tools:ignore="ImageContrastCheck"
+            tools:layout_editor_absoluteX="40dp"
+            tools:layout_editor_absoluteY="16dp"></ImageView>
     </androidx.appcompat.widget.Toolbar>
 
     <TextView

@@ -57,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
           startService(serviceIntent);
     }
 
+
     @Override
     public void onResume() {
         super.onResume();

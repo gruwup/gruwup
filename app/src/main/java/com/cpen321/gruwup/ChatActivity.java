@@ -95,9 +95,6 @@ public class ChatActivity extends AppCompatActivity {
         adventureId = intent.getStringExtra("adventureId");
         pagination = intent.getStringExtra("dateTime");
 
-
-        getPreviousMessages(pagination);
-
         UserName = SupportSharedPreferences.getUserName(getApplicationContext());
         cookie = SupportSharedPreferences.getCookie(getApplicationContext());
         UserID = SupportSharedPreferences.getUserId(getApplicationContext());
@@ -108,6 +105,8 @@ public class ChatActivity extends AppCompatActivity {
 
         adventureDialog = new Dialog(this);
         ImageView adventureInfo = (ImageView) findViewById(R.id.adventureInfo);
+        ImageView adventureEdit = (ImageView) findViewById(R.id.adventureEdit);
+        ImageView adventureDelete = (ImageView) findViewById(R.id.adventureDelete);
 
         adventureInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,13 +115,24 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+        adventureEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Edit Adventure");
+            }
+        });
+
+        adventureDelete.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Delete Adventure");
+            }
+        });
+
         findViewById(R.id.leaveChat).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-
                 finish();
-//                Intent i = new Intent( ChatActivity.this,ChatFragment.class);
-//                startActivity(i);
             }
         });
 
@@ -157,6 +167,8 @@ public class ChatActivity extends AppCompatActivity {
 
         adapter = new MessageViewAdapter(this,messages);
         messageRecyclerView.setAdapter(adapter);
+
+        getPreviousMessages(pagination);
 
         UserID = SupportSharedPreferences.getUserId(getApplicationContext());
         UserName = SupportSharedPreferences.getUserName(getApplicationContext());
@@ -225,7 +237,6 @@ public class ChatActivity extends AppCompatActivity {
                                 else{
                                     oldMessage = new Message(userId, name, message, dateTime, RECEIVED_MESSAGE);
                                 }
-                                Log.d(TAG, ">>>>>>>>>>>"+oldMessage.name+":"+oldMessage.message);
 
                                 runOnUiThread(new Runnable() {
                                     @Override
@@ -233,6 +244,8 @@ public class ChatActivity extends AppCompatActivity {
                                         messages.add(0,oldMessage);
                                         if (adapter!=null){
                                             adapter.notifyDataSetChanged();
+                                            messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
+                                       
                                         }
                                     }
                                 });

@@ -1,14 +1,25 @@
 package com.cpen321.gruwup;
 
+import android.app.AlertDialog;
+import android.content.BroadcastReceiver;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.content.IntentFilter;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.Window;
+import android.view.WindowManager;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.localbroadcastmanager.content.LocalBroadcastManager;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
@@ -54,13 +65,36 @@ public class ChatFragment extends Fragment {
     public void onResume() {
         super.onResume();
         getAllChats();
+        // This registers mMessageReceiver to receive messages.
+        LocalBroadcastManager.getInstance(this.getActivity())
+                .registerReceiver(mMessageReceiver,
+                        new IntentFilter("broadcastMsg"));
     }
 
-    private void initChatData(){
-//        Adventure movie = new Adventure("","Movie Night", "62c65ee5b7831254ed671749","hows it going everyone", "1011", "John");
-//        adventures.add(movie);
-        getAllChats();
-    }
+
+
+    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+        @Override
+        public void onReceive(Context context, Intent intent) {
+            if(intent.getBooleanExtra("showalert",false))
+            {
+                String adventureId = intent.getStringExtra("adventureId");
+                String lastMessage = intent.getStringExtra("message");
+                String lastMessageTime = intent.getStringExtra("dateTime");
+
+                for (int i=0; i<adventures.size(); i++){
+                    if (adventures.get(i).getAdventureId().equals(adventureId)){
+                        adventures.get(i).setLastMessage(lastMessage);
+                        adventures.get(i).setLastMessageTime(lastMessageTime);
+                    }
+                }
+                adapter.notifyDataSetChanged();
+
+            }
+        }
+
+    };
+
 
     public void getAllChats() {
 
