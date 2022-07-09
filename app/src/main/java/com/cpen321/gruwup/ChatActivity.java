@@ -3,14 +3,12 @@ package com.cpen321.gruwup;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.widget.NestedScrollView;
-import androidx.fragment.app.FragmentTransaction;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
@@ -25,7 +23,6 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
-import java.lang.reflect.Array;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -68,6 +65,8 @@ public class ChatActivity extends AppCompatActivity {
     private String cookie;
     private String serverUrl = "http://"+address+":8000";
 
+    private JSONArray peopleGoing;
+    private String adventureOwner;
 
     private Socket mSocket;
 
@@ -98,21 +97,88 @@ public class ChatActivity extends AppCompatActivity {
         adventureInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showPopUp(view);
+                showDetailPopUp(view);
             }
         });
 
         adventureEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "Edit Adventure");
+                showEditPopUp(view);
             }
         });
 
         adventureDelete.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "Delete Adventure");
+                adventureDialog.setContentView(R.layout.adventure_detail_pop_up);
+//                getAdventureDetails();
+                String cookie = SupportSharedPreferences.getCookie(getApplicationContext());
+                SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
+                    @Override
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                        Log.d(TAG, "Failed to get adventure details");
+                    }
+
+                    @Override
+                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                        if(response.isSuccessful()) {
+                            Log.d(TAG, "get profile successful");
+                            String jsonData = response.body().string();
+
+                            try {
+                                JSONObject jsonObj = new JSONObject(jsonData);
+                                adventureOwner = jsonObj.getString("owner");
+
+
+                                Log.d(TAG, "FOR DELETE UID"+ UserID );
+                                Log.d(TAG, "FOR DELETE AVID"+ adventureOwner);
+                                if (UserID.equals(adventureOwner)){
+                                    JSONObject jsonObject = new JSONObject();
+                                    Log.d(TAG, "Delete Adventure");
+
+                                    SupportRequests.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/cancel", jsonObject.toString(),cookie, new Callback() {
+                                        @Override
+                                        public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                                            if(response.isSuccessful()) {
+                                                Log.d(TAG, "Quit adventure succesful");
+                                            }
+                                            else{
+                                                Log.d(TAG, "Quit adventure failed" + response);
+                                            }
+                                        }
+
+                                        @Override
+                                        public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                                            Log.d(TAG, "Quit adventure failed" + e);
+                                        }
+                                    });
+
+                                    adventureDialog.dismiss();
+                                    finish();
+                                }
+
+                                else{
+                                    adventureDialog.dismiss();
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "Only adventure creator can cancel an adventure", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else{
+                            Log.d(TAG, "Failed to get adventure owner");
+                        }
+                    }
+                });
+
             }
         });
 
@@ -199,73 +265,6 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    private void getChatMessages(String pagination){
-
-        cookie = SupportSharedPreferences.getCookie(getApplicationContext());
-        SupportRequests.getWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/messages/" + pagination, cookie, new Callback() {
-            @Override
-            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-
-                if(response.isSuccessful()) {
-                    Log.d(TAG, "message history received successfully");
-                    String jsonData = response.body().string();
-
-                    Log.d(TAG, jsonData);
-                    try {
-                        JSONObject jsonObj = new JSONObject(jsonData);
-                        JSONArray messageArray = jsonObj.getJSONArray("messages");
-                        prevPagination = jsonObj.getString("prevPagination");
-                        JSONObject messageObj = new JSONObject();
-                        if (messageArray !=null ){
-                            for (int i = 0; i<messageArray.length(); i++) {
-
-                                messageObj = messageArray.getJSONObject(i);
-                                String name = messageObj.getString("name");
-                                String userId = messageObj.getString("userId");
-                                String message = messageObj.getString("message");
-                                String dateTime = messageObj.getString("dateTime");
-                                Message oldMessage;
-
-                                if(UserID.equals(userId)){
-                                    oldMessage = new Message(userId, name, message, dateTime, SENT_MESSAGE);
-                                }
-                                else{
-                                    oldMessage = new Message(userId, name, message, dateTime, RECEIVED_MESSAGE);
-                                }
-
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        if (adapter!=null){
-//                                    adapter.notifyDataSetChanged(); // check
-                                            messages.add(oldMessage);
-                                            adapter.notifyItemInserted(messages.size() - 1);
-                                            messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                                        }
-                                    }
-                                });
-
-                            }}
-
-                    }catch (Exception e){
-                        e.printStackTrace();
-                    }
-
-                }
-                else{
-                    Log.d(TAG, "message history failed to load" + response.toString());
-                    loadOldMessage.setText("");
-                }
-            }
-
-            @Override
-            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-                Log.d(TAG, "Failed to retrieve chat history");
-            }
-        });
-
-    }
-
     private void getOldMessages(String pagination){
         cookie = SupportSharedPreferences.getCookie(getApplicationContext());
         SupportRequests.getWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/messages/" + pagination, cookie, new Callback() {
@@ -342,101 +341,6 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-
-//    private void getPreviousMessages(String pagination) {
-//        // To do: get all the user chat history
-////http://localhost:8081/user/chat/62c65ee5b7831254ed671749/messages/1657196043
-//
-//        UserID = SupportSharedPreferences.getUserId(getApplicationContext());
-//        cookie = SupportSharedPreferences.getCookie(getApplicationContext());
-//        loadOldMessage = (TextView) findViewById(R.id.loadMessage);
-//        SupportRequests.getWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/messages/" + pagination, cookie, new Callback() {
-//
-//            @Override
-//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-//                Log.d(TAG, "");
-//                if(response.isSuccessful()) {
-//                    Log.d(TAG, "message history received successfully");
-//                    String jsonData = response.body().string();
-//
-//                    try {
-//                        JSONObject jsonObj = new JSONObject(jsonData);
-//                        JSONArray messageArray = jsonObj.getJSONArray("messages");
-//                        prevPagination = jsonObj.getString("prevPagination");
-//                        JSONObject messageObj = new JSONObject();
-//                        if (messageArray !=null ){
-//                            for (int i=messageArray.length()-1; i>=0; i--) {
-//
-//                                messageObj = messageArray.getJSONObject(i);
-////                                Log.d(TAG, messageObj.toString());
-//                                String name = messageObj.getString("name");
-//                                String userId = messageObj.getString("userId");
-//                                String message = messageObj.getString("message");
-//                                String dateTime = messageObj.getString("dateTime");
-//                                Message oldMessage;
-//
-//                                if(UserID.equals(userId)){
-//                                    oldMessage = new Message(userId, name, message, dateTime, SENT_MESSAGE);
-//                                }
-//                                else{
-//                                    oldMessage = new Message(userId, name, message, dateTime, RECEIVED_MESSAGE);
-//                                }
-//
-//                                runOnUiThread(new Runnable() {
-//                                    @Override
-//                                    public void run() {
-//                                        messages.add(0,oldMessage);
-//                                        if (adapter!=null){
-////                                            adapter.notifyDataSetChanged();
-//                                            messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
-//
-//                                        }
-//                                    }
-//                                });
-//
-//                            }}
-//
-//                        Log.d(TAG, " message history json Obj " + jsonObj.toString());
-//
-//                        // if prevPagination is not null display load older messages
-//                        // upon clicking display old messages call api call and hide text view
-//
-//                        loadOldMessage.setOnClickListener(new View.OnClickListener() {
-//                            @Override
-//                            public void onClick(View view) {
-//                                if (!(("null").equals(prevPagination))){
-//
-////                                    getPreviousMessages(prevPagination);
-//                                    getOlderMessages(prevPagination);
-//
-//                                }
-//                                else {
-//                                    loadOldMessage.setText("This is start of your conversations");
-//                                }
-//
-//                            }
-//                        });
-//
-//
-//                    }catch (Exception e){
-//                        e.printStackTrace();
-//                    }
-//
-//                }
-//                else{
-//                    Log.d(TAG, "message history failed to load" + response.toString());
-//                    loadOldMessage.setText("");
-//                }
-//            }
-//
-//            @Override
-//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
-//                Log.d(TAG, "Failed to retrieve chat history");
-//            }
-//        });
-//    }
-
-
     public void sendChat(String message){
         long currentTimestamp = System.currentTimeMillis()/1000;
         Message sendMessage = new Message(UserID,UserName,message,Long.toString(currentTimestamp),SENT_MESSAGE);
@@ -487,12 +391,74 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-
-    private void showPopUp(View view){
-        adventureDialog.setContentView(R.layout.adventure_detail_pop_up);
+    private void showEditPopUp(View view){
+        adventureDialog.setContentView(R.layout.adventure_edit_pop_up);
 
         // make get request for adventures
+        getAdventureDetails();
+        adventureDialog.show();
+        TextView goBack = adventureDialog.findViewById(R.id.go_back_chat);
+        TextView category = adventureDialog.findViewById(R.id.view_adventure_event_type);
+        TextView adventureTitle = adventureDialog.findViewById(R.id.advTitle);
+        TextView location = adventureDialog.findViewById(R.id.view_adventure_location);
+        EditText dateTime = adventureDialog.findViewById(R.id.view_adventure_time);
+        EditText adventureDetail = adventureDialog.findViewById(R.id.adventure_description);
+        Button confirmEdit = (Button) adventureDialog.findViewById(R.id.confirm_edit_adv);
 
+        confirmEdit.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Log.d(TAG, "Edit adventure");
+                JSONObject jsonObject = new JSONObject();
+                try {
+                    jsonObject.put("adventureId", adventureId);
+                    jsonObject.put("owner", UserID);
+                    jsonObject.put("title", adventureTitle.getText().toString());
+                    jsonObject.put("description", adventureDetail.getText().toString());
+                    jsonObject.put("category", category.getText().toString());
+                    jsonObject.put("location", location.getText().toString());
+//                    1688903225
+                    jsonObject.put("dateTime", "1688903225");
+
+//                    jsonObject.put("dateTime", dateTime.getText().toString());
+                    jsonObject.put("peopleGoing", peopleGoing);
+                    jsonObject.put("status", "OPEN");
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+                Log.d(TAG, "EDIT ADV"+ jsonObject.toString());
+                SupportRequests.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/edit", jsonObject.toString(),cookie, new Callback() {
+                    @Override
+                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                        if(response.isSuccessful()) {
+                            Log.d(TAG, "Edit adventure succesful");
+                        }
+                        else{
+                            Log.d(TAG, "Edit adventure failed" + response);
+                        }
+                    }
+
+                    @Override
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                        Log.d(TAG, "Edit adventure failed" + e);
+                    }
+                });
+
+                adventureDialog.dismiss();
+            }
+        });
+
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                adventureDialog.dismiss();
+            }
+        });
+    }
+
+    private void showDetailPopUp(View view){
+        adventureDialog.setContentView(R.layout.adventure_detail_pop_up);
         getAdventureDetails();
         adventureDialog.show();
         TextView goBack = adventureDialog.findViewById(R.id.go_back_chat);
@@ -531,6 +497,8 @@ public class ChatActivity extends AppCompatActivity {
                         Integer memberCount = jsonObj.getJSONArray("peopleGoing").length();
                         String time = jsonObj.getString("dateTime");
                         String location = jsonObj.getString("location");
+                        peopleGoing = jsonObj.getJSONArray("peopleGoing");
+                        adventureOwner = jsonObj.getString("owner");
 
                         runOnUiThread(new Runnable() {
                             @Override

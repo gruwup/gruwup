@@ -90,12 +90,13 @@ public class RequestsFragment extends Fragment {
                                 String requesterId = requestObj.getString("requesterId");
                                 String requestId = requestObj.getString("_id");
                                 String status = requestObj.getString("status");
+                                String adventureOwner = requestObj.getString("adventureOwner");
 
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         Request request = new Request(adventureName,requesterName,requesterId, requestId, status);
-                                        if (request.getStatus().equals("PENDING")){
+                                        if (request.getStatus().equals("PENDING") && UserID.equals(adventureOwner)){
                                             requests.add(request);
                                             adapter.notifyDataSetChanged();
                                         }

@@ -41,7 +41,6 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
 //        User user = users.get(position);
-
         Adventure adventure = adventures.get(position);
         holder.adventureName.setText(adventure.getAdventureName());
 
@@ -50,7 +49,7 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
             holder.messageTime.setText(adventure.getLastMessageTime());
         }
         else {
-            holder.lastMessage.setText(adventure.getLastMessage());
+            holder.lastMessage.setText(adventure.getLastMessageSender() + ": " +adventure.getLastMessage());
             String time = adventure.getLastMessageTime();
             Date date = new Date(Long.parseLong(time, 10)*1000);
             DateFormat format = new SimpleDateFormat(" HH:mm");
