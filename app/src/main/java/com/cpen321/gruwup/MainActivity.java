@@ -80,36 +80,42 @@ public class MainActivity extends AppCompatActivity {
 
     };
     public void showMsg(String name, String message){
-        AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
-                .setMessage("New Message by "+ name + ": " + message)
-                .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+
+        runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
+                        .setMessage("New Message by "+ name + ": " + message)
+                        .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
+                            @Override
+                            public void onClick(DialogInterface dialog, int which) {
+                            }
+                        }).create();
+                alertDialog.show();
+                Window window = alertDialog.getWindow();
+                WindowManager.LayoutParams wlp = window.getAttributes();
+
+                wlp.gravity = Gravity.TOP;
+                wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
+                window.setAttributes(wlp);
+                wlp.copyFrom(alertDialog.getWindow().getAttributes());
+                wlp.width = 1000;
+                wlp.height = 400;
+                wlp.x=-170;
+                wlp.y=100;
+                alertDialog.getWindow().setAttributes(wlp);
+                new CountDownTimer(2000, 1000) {
                     @Override
-                    public void onClick(DialogInterface dialog, int which) {
+                    public void onTick(long millisUntilFinished) {
                     }
-                }).create();
-        alertDialog.show();
-        Window window = alertDialog.getWindow();
-        WindowManager.LayoutParams wlp = window.getAttributes();
 
-        wlp.gravity = Gravity.TOP;
-        wlp.flags &= ~WindowManager.LayoutParams.FLAG_DIM_BEHIND;
-        window.setAttributes(wlp);
-        wlp.copyFrom(alertDialog.getWindow().getAttributes());
-        wlp.width = 1000;
-        wlp.height = 400;
-        wlp.x=-170;
-        wlp.y=100;
-        alertDialog.getWindow().setAttributes(wlp);
-        new CountDownTimer(2000, 1000) {
-            @Override
-            public void onTick(long millisUntilFinished) {
+                    @Override
+                    public void onFinish() {
+                        alertDialog.dismiss();
+                    }
+                }.start();
             }
-
-            @Override
-            public void onFinish() {
-                alertDialog.dismiss();
-            }
-        }.start();
+        });
     }
 
 

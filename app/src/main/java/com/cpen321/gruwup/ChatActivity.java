@@ -24,6 +24,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.IOException;
+import java.lang.reflect.Array;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
@@ -72,17 +73,6 @@ public class ChatActivity extends AppCompatActivity {
 
     // socket implementation
     private Socket mSocket;
-    {
-//        try {
-////            cookie = SupportSharedPreferences.getCookie(getApplicationContext());
-////            UserID = SupportSharedPreferences.getUserId(getApplicationContext());
-//            cookie = "gruwup-session=123";
-//            UserID = "112559584626040550555";
-//            mSocket = IO.socket(serverUrl);
-//            mSocket.emit("userInfo", cookie, UserID);
-//
-//        } catch (URISyntaxException e) {}
-    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -93,7 +83,7 @@ public class ChatActivity extends AppCompatActivity {
         Intent intent= getIntent();
         adventureTitle = intent.getStringExtra("name");
         adventureId = intent.getStringExtra("adventureId");
-        pagination = intent.getStringExtra("dateTime");
+//        pagination = intent.getStringExtra("dateTime");
 
         UserName = SupportSharedPreferences.getUserName(getApplicationContext());
         cookie = SupportSharedPreferences.getCookie(getApplicationContext());
@@ -168,6 +158,8 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new MessageViewAdapter(this,messages);
         messageRecyclerView.setAdapter(adapter);
 
+//        getPreviousMessages(pagination);
+        pagination = intent.getStringExtra("dateTime");
         getPreviousMessages(pagination);
 
         UserID = SupportSharedPreferences.getUserId(getApplicationContext());
@@ -195,14 +187,11 @@ public class ChatActivity extends AppCompatActivity {
 
 
     private void getPreviousMessages(String pagination) {
-        // To do: get all the user chat history
-//http://localhost:8081/user/chat/62c65ee5b7831254ed671749/messages/1657196043
-
         UserID = SupportSharedPreferences.getUserId(getApplicationContext());
         cookie = SupportSharedPreferences.getCookie(getApplicationContext());
         loadOldMessage = (TextView) findViewById(R.id.loadMessage);
+        prevPagination = "null";
         SupportRequests.getWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/messages/" + pagination, cookie, new Callback() {
-
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 Log.d(TAG, "");
@@ -215,11 +204,12 @@ public class ChatActivity extends AppCompatActivity {
                         JSONArray messageArray = jsonObj.getJSONArray("messages");
                         prevPagination = jsonObj.getString("prevPagination");
                         JSONObject messageObj = new JSONObject();
+                        ArrayList<Message> oldMessageList = new ArrayList<>();
                         if (messageArray !=null ){
-                            for (int i=messageArray.length()-1; i>=0; i--) {
+                            for (int i=0; i<messageArray.length(); i++) {
 
                                 messageObj = messageArray.getJSONObject(i);
-//                                Log.d(TAG, messageObj.toString());
+                                Log.d(TAG, "_______"+messageObj.toString());
                                 String name = messageObj.getString("name");
                                 String userId = messageObj.getString("userId");
                                 String message = messageObj.getString("message");
@@ -233,36 +223,24 @@ public class ChatActivity extends AppCompatActivity {
                                     oldMessage = new Message(userId, name, message, dateTime, RECEIVED_MESSAGE);
                                 }
 
-                                runOnUiThread(new Runnable() {
-                                    @Override
-                                    public void run() {
-                                        messages.add(0,oldMessage);
-                                        if (adapter!=null){
-//                                            adapter.notifyDataSetChanged();
-                                            messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
-
-                                        }
-                                    }
-                                });
+                                oldMessageList.add(oldMessage);
 
                             }}
-
-                        Log.d(TAG, " message history json Obj " + jsonObj.toString());
-
-                        // if prevPagination is not null display load older messages
-                        // upon clicking display old messages call api call and hide text view
-
-                        loadOldMessage.setOnClickListener(new View.OnClickListener() {
+                        runOnUiThread(new Runnable() {
                             @Override
-                            public void onClick(View view) {
-                                if (!(("null").equals(prevPagination))){
-//                                    loadOlderMessages(prevPagination);
-                                    getPreviousMessages(prevPagination);
-                                }
-                                else {
-                                    loadOldMessage.setText("This is start of your conversations");
-                                }
+                            public void run() {
+//                                        messages.add(0,oldMessage);
+                                messages.addAll(0,oldMessageList);
+                                adapter.notifyItemRangeInserted(0, oldMessageList.size());
+                                adapter.notifyItemChanged(oldMessageList.size());
+//                                        chatMessages.addAll(0, items);
+//                                        notifyItemRangeInserted(0,items.size());
+//                                        notifyItemChanged(items.size());
+                                if (adapter!=null){
+//                                            adapter.notifyDataSetChanged();
+                                    messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
 
+                                }
                             }
                         });
 
@@ -283,7 +261,118 @@ public class ChatActivity extends AppCompatActivity {
                 Log.d(TAG, "Failed to retrieve chat history");
             }
         });
+
+        loadOldMessage.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (!(("null").equals(prevPagination))){
+
+                    getPreviousMessages(prevPagination);
+                }
+                else {
+                    loadOldMessage.setText("This is start of your conversations");
+                }
+
+            }
+        });
+
     }
+
+
+
+//    private void getPreviousMessages(String pagination) {
+//        // To do: get all the user chat history
+////http://localhost:8081/user/chat/62c65ee5b7831254ed671749/messages/1657196043
+//
+//        UserID = SupportSharedPreferences.getUserId(getApplicationContext());
+//        cookie = SupportSharedPreferences.getCookie(getApplicationContext());
+//        loadOldMessage = (TextView) findViewById(R.id.loadMessage);
+//        SupportRequests.getWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/messages/" + pagination, cookie, new Callback() {
+//
+//            @Override
+//            public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+//                Log.d(TAG, "");
+//                if(response.isSuccessful()) {
+//                    Log.d(TAG, "message history received successfully");
+//                    String jsonData = response.body().string();
+//
+//                    try {
+//                        JSONObject jsonObj = new JSONObject(jsonData);
+//                        JSONArray messageArray = jsonObj.getJSONArray("messages");
+//                        prevPagination = jsonObj.getString("prevPagination");
+//                        JSONObject messageObj = new JSONObject();
+//                        if (messageArray !=null ){
+//                            for (int i=messageArray.length()-1; i>=0; i--) {
+//
+//                                messageObj = messageArray.getJSONObject(i);
+////                                Log.d(TAG, messageObj.toString());
+//                                String name = messageObj.getString("name");
+//                                String userId = messageObj.getString("userId");
+//                                String message = messageObj.getString("message");
+//                                String dateTime = messageObj.getString("dateTime");
+//                                Message oldMessage;
+//
+//                                if(UserID.equals(userId)){
+//                                    oldMessage = new Message(userId, name, message, dateTime, SENT_MESSAGE);
+//                                }
+//                                else{
+//                                    oldMessage = new Message(userId, name, message, dateTime, RECEIVED_MESSAGE);
+//                                }
+//
+//                                runOnUiThread(new Runnable() {
+//                                    @Override
+//                                    public void run() {
+//                                        messages.add(0,oldMessage);
+//                                        if (adapter!=null){
+////                                            adapter.notifyDataSetChanged();
+//                                            messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
+//
+//                                        }
+//                                    }
+//                                });
+//
+//                            }}
+//
+//                        Log.d(TAG, " message history json Obj " + jsonObj.toString());
+//
+//                        // if prevPagination is not null display load older messages
+//                        // upon clicking display old messages call api call and hide text view
+//
+//                        loadOldMessage.setOnClickListener(new View.OnClickListener() {
+//                            @Override
+//                            public void onClick(View view) {
+//                                if (!(("null").equals(prevPagination))){
+//
+////                                    getPreviousMessages(prevPagination);
+//                                    getOlderMessages(prevPagination);
+//
+//                                }
+//                                else {
+//                                    loadOldMessage.setText("This is start of your conversations");
+//                                }
+//
+//                            }
+//                        });
+//
+//
+//                    }catch (Exception e){
+//                        e.printStackTrace();
+//                    }
+//
+//                }
+//                else{
+//                    Log.d(TAG, "message history failed to load" + response.toString());
+//                    loadOldMessage.setText("");
+//                }
+//            }
+//
+//            @Override
+//            public void onFailure(@NonNull Call call, @NonNull IOException e) {
+//                Log.d(TAG, "Failed to retrieve chat history");
+//            }
+//        });
+//    }
+
 
     public void sendChat(String message){
         long currentTimestamp = System.currentTimeMillis()/1000;
