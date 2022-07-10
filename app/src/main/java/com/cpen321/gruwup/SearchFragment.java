@@ -218,7 +218,7 @@ public class SearchFragment extends Fragment {
             mAdventureList.get(i).put("title", jsonObject.getString("title"));
             mAdventureList.get(i).put("id", jsonObject.getString("_id"));
             mAdventureList.get(i).put("event", jsonObject.getString("category"));
-            mAdventureList.get(i).put("time", jsonObject.getString("dateTime"));
+            mAdventureList.get(i).put("time", DiscoverFragment.epochToDate(jsonObject.getString("dateTime")));
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
             mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
             mAdventureList.get(i).put("description", jsonObject.getString("description"));
