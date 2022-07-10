@@ -334,7 +334,12 @@ public class ChatActivity extends AppCompatActivity {
                 }
                 else{
                     Log.d(TAG, "message history failed to load" + response.toString());
-                    loadOldMessage.setText("");
+                    runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            loadOldMessage.setText("");
+                        }
+                    });
                 }
             }
 
