@@ -13,17 +13,21 @@ import androidx.annotation.NonNull;
 import androidx.fragment.app.FragmentActivity;
 import androidx.recyclerview.widget.RecyclerView;
 
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHolder>{
 
     Context context;
-    ArrayList <User> users;
+//    ArrayList <User> users;
+    ArrayList <Adventure> adventures;
     static final String TAG = "ChatViewAdapter";
 
-    public ChatViewAdapter(Context context, ArrayList<User> users){
+    public ChatViewAdapter(Context context, ArrayList <Adventure> adventures){
         this.context = context;
-        this.users = users;
+        this.adventures = adventures;
 
     }
 
@@ -36,9 +40,26 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-        User user = users.get(position);
+//        User user = users.get(position);
+        Adventure adventure = adventures.get(position);
+        holder.adventureName.setText(adventure.getAdventureName());
 
-        holder.userName.setText(user.getName());
+        if (adventure.getLastMessage().equals("")){
+            holder.lastMessage.setText("no messages in this group yet");
+            holder.messageTime.setText(adventure.getLastMessageTime());
+        }
+        else {
+            holder.lastMessage.setText(adventure.getLastMessageSender() + ": " +adventure.getLastMessage());
+            String time = adventure.getLastMessageTime();
+            Date date = new Date(Long.parseLong(time, 10)*1000);
+            DateFormat format = new SimpleDateFormat(" HH:mm");
+            String formatted = format.format(date);
+            System.out.println(formatted);
+            formatted = format.format(date);
+            holder.messageTime.setText(formatted);
+        }
+
+
         // To do: change this to profile pic of individual users
 //        holder.img.setImageResource(R.drawable.college_student);
 
@@ -48,8 +69,10 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
                 Intent intent = new Intent(context, ChatActivity.class);
                 // To do: Can pass in user information, such as their name and id here
                 // or the adventure group name
-                intent.putExtra("name", user.getName());
-                intent.putExtra("userId", user.getUserId());
+                intent.putExtra("name", adventure.getAdventureName());
+                intent.putExtra("adventureId", adventure.getAdventureId());
+                intent.putExtra("dateTime", adventure.getLastMessageTime());
+
                 context.startActivity(intent);
             }
         });
@@ -58,11 +81,11 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
 
     @Override
     public int getItemCount() {
-        return users.size();
+        return adventures.size();
     }
 
     public class ViewHolder extends RecyclerView.ViewHolder{
-        TextView userName;
+        TextView adventureName;
         TextView lastMessage;
         TextView messageTime;
         ImageView img;
@@ -70,10 +93,10 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
 
-            userName = itemView.findViewById(R.id.user);
+            adventureName = itemView.findViewById(R.id.adventureName);
             lastMessage = itemView.findViewById(R.id.lastMessage);
             messageTime = itemView.findViewById(R.id.messageTime);
-            img = itemView.findViewById(R.id.userProfileImg);
+            img = itemView.findViewById(R.id.adventureImg);
         }
     }
 }

@@ -16,6 +16,14 @@ android {
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
 
+    // supress warnings for release apk
+    lintOptions {
+        checkReleaseBuilds false
+        // Or, if you prefer, you can continue to check for errors in release builds,
+        // but continue the build even when errors are found:
+        abortOnError false
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -55,9 +63,10 @@ dependencies {
     //cookie helper
     implementation 'org.riversun:okhttp3-cookie-helper:1.0.1'
     //socket dependencies
-    implementation 'com.github.nkzawa:socket.io-client:0.3.0'
+
     implementation ('io.socket:socket.io-client:2.0.1') {
         // excluding org.json which is provided by Android
         exclude group: 'org.json', module: 'json'
     }
+
 }

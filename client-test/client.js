@@ -1,7 +1,11 @@
 const io = require("socket.io-client");
-const socket = io("http://localhost:8000");
+// const socket = io("http://20.227.142.169:8000");
+const socket = io("http://192.168.1.30:8000/");
+// const socket = io("http://10.0.2.2:8000");
+
+
 var cookie = "gruwup-session=123";
-var userId = "116853060753534924974";
+var userId = "1111111";
 
 const run = () => {
     socket.emit("userInfo", cookie, userId);
@@ -14,6 +18,12 @@ const run = () => {
                 console.log(message);
             })
         }
+        // if (result) {
+        //     socket.on('message', ( message) => {
+        //         console.log(adventureId);
+        //         console.log(message);
+        //     })
+        // }
     })
 
     socket.on('exception', (error) => {

@@ -67,19 +67,24 @@ paths:
                 allOf:
                   - $ref: '#/components/schemas/Error'
   /user/adventure/search-by-filter:
-    get:
-      summary: Search adventure using filters
+    post:
+      summary: Search adventure using filters (PUT DATA IN BODY NOT HEADER)
       tags:
        - Adventure
       parameters:
-        - in: query
+        - in: header
           name: filter
           required: true
           content:
             application/json:
-              schema: 
-                allOf:
-                  - $ref: '#/components/schemas/Search'
+              schema:
+               type: object
+               example: {
+                 categories: ["MOVIE", "MUSIC"],
+                 maxPeopleGoing: number,
+                 maxTimeStamp: "string",
+                 city: string
+               }
       responses:
         "200":
           description: Success returns a list of adventures
@@ -150,11 +155,11 @@ paths:
                   - $ref: '#/components/schemas/Error'
   /user/adventure/nearby:
     get:
-      summary: Search adventure using filters
+      summary: Search nearbyadventure
       tags:
        - Adventure
       parameters:
-        - name: currentCity
+        - name: city
           in: query
           required: true
           schema:
@@ -616,6 +621,58 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
+  /user/chat/{userId}/recent-list:
+    get:
+      summary: get list of most recent messages for all adventures a user is participating in
+      tags:
+       - Chat
+      parameters:
+      - name: userId
+        in: path
+        required: true
+        style: simple
+        schema:
+          type: string
+      responses:
+        "200":
+          description: Success
+          content:
+            application/json:
+              schema:
+                type: object
+                example: { "messages": [
+                    {
+                      "adventureId": "1111",
+                      "adventureTitle": "movie",
+                      "userId": "1111",
+                      "name": "Bob John",
+                      "message": "hi everyone :)",
+                      "dateTime": "13131238"
+                    },
+                    {
+                      "adventureId": "2222",
+                      "adventureTitle": "movie",
+                      "userId": "1111",
+                      "name": "Bob John",
+                      "message": "hi everyone :)",
+                      "dateTime": "13131238"
+                    },
+                    {
+                      "adventureId": "3333",
+                      "adventureTitle": "movie",
+                      "userId": "1111",
+                      "name": "Bob John",
+                      "message": "hi everyone :)",
+                      "dateTime": "13131238"
+                    },
+                   ]}
+        "400":
+          description: Could be any other error code
+          content:
+            application/json:
+              schema:
+                allOf:
+                  - $ref: '#/components/schemas/Error'
   /user/chat/{adventureId}/recent:
     get:
       summary: get most recent pagination value for adventureId
@@ -635,7 +692,7 @@ paths:
             application/json:
               schema:
                 type: object
-                example: { "pagination": "13111111" }
+                example: { "prevTime": "13111111" }
         "400":
           description: Could be any other error code
           content:
@@ -645,7 +702,7 @@ paths:
                   - $ref: '#/components/schemas/Error'
   /user/chat/{adventureId}/messages/{pagination}:
     get:
-      summary: Get 30 messages in adventure starting at given pagination (so pagination 0 will return most recent 30 messages, if the batch has less then 30 messages it will return whatever it can, so if you have 50 messages, and pagination is at 29, it will return message 29-50 instead of 29-59)
+      summary: Get 10 messages in adventure starting at given pagination (so pagination = 'prevTime' given by the '/user/chat/{adventureId}/recent' endpoint will return most recent 10 messages. If the batch has less then 10 messages it will return whatever it can. The returned item will have a pagination pointer to the batch before this one.
       tags:
        - Chat
       parameters:
@@ -672,12 +729,25 @@ paths:
                  adventureId: "123",
                  pagination: "13131238",
                  prevPagination: "11111111",
-                 messages: [
+                 messages: 
+                   [
+                    {
+                      "userId": "string",
+                      "name": "Bob John",
+                      "message": "hi everyone :)",
+                      "dateTime": "13131237"
+                    },
                     {
                       "userId": "string",
                       "name": "Bob John",
                       "message": "hi everyone :)",
                       "dateTime": "13131238"
+                    },
+                    {
+                      "userId": "string",
+                      "name": "Bob John",
+                      "message": "hi everyone :)",
+                      "dateTime": "13131239"
                     },
                    ]
                }
@@ -737,11 +807,9 @@ components:
           example: "2110 Burrard St, Vancouver, BC V6J 3H6"
         dateTime:
           type: string
-          example: "yyyy-mm-dd hh:mm:ss"
-        status:
+          example: "2312746523"
+        image:
           type: string
-          enum: ["CLOSED", "OPEN", "CANCELLED"]
-          example: "OPEN"
     AdventureWithId:
       type: object
       properties:
@@ -763,7 +831,7 @@ components:
           example: "2110 Burrard St, Vancouver, BC V6J 3H6"
         dateTime:
           type: string
-          example: "yyyy-mm-dd hh:mm:ss"
+          example: "2312746523"
         peopleGoing:
           type: array
           items:
@@ -853,6 +921,19 @@ components:
         dateTime:
           type: string
           example: "13131238"
+    AdventureThumbnail:
+      type: object
+      properties:
+        adventureId:
+          type: string
+        title:
+          type: string
+        category:
+          type: string
+        location:
+          type: string
+        image:
+          type: string
   securitySchemes:
     accessCode:
       type: oauth2

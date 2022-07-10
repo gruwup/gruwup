@@ -30,8 +30,8 @@ public class RequestsFragment extends Fragment {
     static final String TAG = "RequestsFragment";
 
     // local : "10.0.2.2" , remote: "20.227.142.169"
-    private String address = "10.0.2.2";
-    //    private String address = "20.227.142.169";
+//    private String address = "10.0.2.2";
+    private String address = "20.227.142.169";
     private RequestViewAdapter adapter;
 
     private void initRequestData() throws IOException {
@@ -60,8 +60,9 @@ public class RequestsFragment extends Fragment {
 
     private void getAllRequests() throws IOException {
         String UserID = SupportSharedPreferences.getUserId(this.getActivity());
+        String cookie = SupportSharedPreferences.getCookie(this.getActivity());
         Log.d(TAG, "User Id is "+ UserID);
-        SupportRequests.get("http://"+address+":8081/user/request/" + UserID + "/get-requests", new Callback() {
+        SupportRequests.getWithCookie("http://"+address+":8081/user/request/" + UserID + "/get-requests", cookie, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -89,14 +90,16 @@ public class RequestsFragment extends Fragment {
                                 String requesterId = requestObj.getString("requesterId");
                                 String requestId = requestObj.getString("_id");
                                 String status = requestObj.getString("status");
+                                String adventureOwner = requestObj.getString("adventureOwner");
 
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
                                         Request request = new Request(adventureName,requesterName,requesterId, requestId, status);
-                                        requests.add(request);
-                                        adapter.notifyDataSetChanged();
-
+                                        if (request.getStatus().equals("PENDING") && UserID.equals(adventureOwner)){
+                                            requests.add(request);
+                                            adapter.notifyDataSetChanged();
+                                        }
                                     }
                                 });
 

@@ -1,14 +1,23 @@
 package com.cpen321.gruwup;
 
 public class Message {
-    String userId, name, message, dateTime, prevTime;
+    String userId, name, message, dateTime, prevTime, messageStatus;
 
-    public Message(String userId, String name, String message, String dateTime, String prevTime) {
+    // "sent" or "received"
+    public String getMessageStatus() {
+        return messageStatus;
+    }
+
+    public void setMessageStatus(String messageStatus) {
+        this.messageStatus = messageStatus;
+    }
+
+    public Message(String userId, String name, String message, String dateTime,  String messageStatus) {
         this.userId = userId;
         this.name = name;
         this.message = message;
         this.dateTime = dateTime;
-        this.prevTime = prevTime;
+        this.messageStatus = messageStatus;
     }
 
     public String getUserId() {
@@ -43,11 +52,4 @@ public class Message {
         this.dateTime = dateTime;
     }
 
-    public String getPrevTime() {
-        return prevTime;
-    }
-
-    public void setPrevTime(String prevTime) {
-        this.prevTime = prevTime;
-    }
 }

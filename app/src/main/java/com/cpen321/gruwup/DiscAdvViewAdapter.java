@@ -42,8 +42,8 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
     Dialog viewAdventureDialog;
     private ArrayList<Map<String, String>> mAdvNames = new ArrayList<>();
     private Context mContext;
-    private String address = "10.0.2.2";
-
+//    private String address = "10.0.2.2";
+    private String address = "20.227.142.169";
     public DiscAdvViewAdapter(Context mContext, ArrayList<Map<String, String>> mAdvNames) {
         viewAdventureDialog = new Dialog(mContext);
         this.mAdvNames = mAdvNames;
@@ -139,7 +139,8 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, "Request sent!", Toast.LENGTH_SHORT).show();
-                SupportRequests.postWithCookie("http://" + address + ":8081/user/request/" + id + "/send-request", jsonObject.toString(), SupportSharedPreferences.getCookie(view.getContext()), new Callback() {
+                String cookie = SupportSharedPreferences.getCookie(mContext);
+                SupportRequests.postWithCookie("http://" + address + ":8081/user/request/" + id + "/send-request", jsonObject.toString(), cookie, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                     }

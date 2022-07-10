@@ -74,7 +74,8 @@ import okhttp3.Response;
 
 public class SearchFragment extends Fragment {
     RecyclerView recyclerView;
-    private String address = "10.0.2.2";
+//    private String address = "10.0.2.2";
+    private String address = "20.227.142.169";
     static ArrayList<Map<String, String>> mAdventureList;
     DiscAdvViewAdapter AdventureAdapter;
     String HTTPRESULT = "";
