@@ -140,7 +140,7 @@ public class SearchFragment extends Fragment {
                 String cookie = SupportSharedPreferences.getCookie(getActivity());
                 String[] cookieList  =  cookie.split("=",2);
                 OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
-                cookieHelper.setCookie("http://" + address + ":8081/user/adventure/search-by-title?title=t", cookieList[0], cookieList[1]);
+                cookieHelper.setCookie("http://" + address + ":8081/user/adventure/nearby?city=Vancouver", cookieList[0], cookieList[1]);
                 Request request = new Request.Builder()
                         .url("http://" + address + ":8081/user/adventure/search-by-title?title=t")
                         .build();
@@ -168,7 +168,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby", SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
+        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city=Vancouver", SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -178,6 +178,7 @@ public class SearchFragment extends Fragment {
                 if (response.isSuccessful()) {
                     try {
                         HTTPRESULT = response.body().string();
+                        System.out.println("!map response data" + HTTPRESULT);
                         initAdventures();
                         mHandler.post(new Runnable() {
                             @Override
