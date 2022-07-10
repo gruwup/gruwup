@@ -9,11 +9,16 @@ import androidx.recyclerview.widget.RecyclerView;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -36,6 +41,8 @@ public class SignUpActivity extends AppCompatActivity {
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     RecyclerView categoryView ;
     static final String TAG = "SignUpActivity";
+    private Integer age;
+    private GoogleSignInClient mGoogleSignInClient;
 
 //    private String address = "10.0.2.2";
     private String address = "20.227.142.169";
@@ -73,11 +80,36 @@ public class SignUpActivity extends AppCompatActivity {
         TextView categoryValidation = (TextView) findViewById(R.id.selectCategoryAlert);
         Button setProfileBtn = (Button) findViewById(R.id.setupProfileButton);
 
+        EditText ageInput = (EditText) findViewById(R.id.setAge);
+        TextView ageValidation  = (TextView) findViewById(R.id.setAgeAlert);
+        age = 0;
+
         setProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 if (!verifyUserInput(bioInput).equals("valid")){
                     bioValidation.setText(verifyUserInput(bioInput));
+                }
+                else if (!isStringInt(ageInput.getText().toString())){
+                    ageValidation.setText("Input valid number. ");
+                }
+                else if (Integer.parseInt(ageInput.getText().toString())<=18){
+                    ageValidation.setText("You must be over 18 to use the app :( ");
+                    new CountDownTimer(2000, 1000) {
+                        @Override
+                        public void onTick(long millisUntilFinished) {
+                        }
+
+                        @Override
+                        public void onFinish() {
+                            mGoogleSignInClient = GoogleSignIn.getClient(SignUpActivity.this, GoogleSignInOptions.DEFAULT_SIGN_IN);
+                            mGoogleSignInClient.signOut();
+                            Intent intent = new Intent(SignUpActivity.this, LogInActivity.class);
+                            startActivity(intent);
+                        }
+                    }.start();
+
+
                 }
                 else if(adapter.getSelectedCategoriesCount()<3){
                     categoryValidation.setText("Please select at least 3 categories.");
@@ -108,6 +140,18 @@ public class SignUpActivity extends AppCompatActivity {
             }
         });
 
+    }
+
+    public boolean isStringInt(String s)
+    {
+        try
+        {
+            Integer.parseInt(s);
+            return true;
+        } catch (NumberFormatException ex)
+        {
+            return false;
+        }
     }
 
     private void createProfileRequest( String UserID, String displayName, String profileUrl, String bioInput, ArrayList<String> categoryNames) throws IOException {
