@@ -2,7 +2,6 @@ package com.cpen321.gruwup;
 
 import android.app.Dialog;
 import android.content.Intent;
-import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -11,9 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
-
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -34,16 +31,9 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
 
 import okhttp3.Call;
 import okhttp3.Callback;
-import okhttp3.FormBody;
-import okhttp3.MediaType;
-import okhttp3.OkHttpClient;
-import okhttp3.Request;
-import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class ProfileFragment extends Fragment {
@@ -55,6 +45,10 @@ public class ProfileFragment extends Fragment {
     Dialog profileDialog;
     Button editButton;
     final static String TAG = "ProfileFragment";
+
+    // local : "10.0.2.2" , remote: "20.227.142.169"
+//    private String address = "10.0.2.2";
+    private String address = "20.227.142.169";
 
     String UserID;
     String cookie;
@@ -82,6 +76,7 @@ public class ProfileFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Note: get stored UserID this way for fragment
+        // temporary fix
         UserID = SupportSharedPreferences.getUserId(this.getActivity());
         cookie = SupportSharedPreferences.getCookie(this.getActivity());
 
@@ -89,12 +84,12 @@ public class ProfileFragment extends Fragment {
         displayName = (TextView) view.findViewById(R.id.userName);
         displayName.setText(this.getArguments().getString("Display_Name"));
 
+        //set profile picture using the link from the bundle using Picasso
         profilePic = (ImageView) view.findViewById(R.id.userImage);
         if(this.getArguments().getString("Photo_URL") != null && !this.getArguments().getString("Photo_URL").equals("")) {
             Picasso.get().load(this.getArguments().getString("Photo_URL")).into(profilePic);
         }
-        System.out.println(this.getArguments().getString("Photo_URL"));
-        //set profile picture using the link from the bundle using Picasso
+
         try {
             getProfileRequest();
         } catch (IOException e) {
@@ -218,15 +213,19 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        SupportRequests.postWithCookie("http://10.0.2.2:8081/account/sign-out", jsonObject.toString(), cookie, new Callback(){
+        SupportRequests.postWithCookie("http://"+address+":8081/account/sign-out", jsonObject.toString(), cookie, new Callback(){
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                Log.d(TAG, "sign out successful");
-
-                //return user to login screen in the LoginActivity
-                Intent intent = new Intent(getActivity(), LogInActivity.class);
-                startActivity(intent);
+                if(response.isSuccessful()){
+                    Log.d(TAG, "sign out successful");
+                    Intent intent = new Intent(getActivity(), LogInActivity.class);
+                    startActivity(intent);
+                }
+                else{
+                    Log.d(TAG, "sign out unsuccessful");
+                    Log.d(TAG, response.body().string());
+                }
             }
 
             @Override
@@ -239,11 +238,14 @@ public class ProfileFragment extends Fragment {
 
     private void getProfileRequest() throws IOException{
         // To do: replace this with server url
-        SupportRequests.get("http://10.0.2.2:8081/user/profile/" + UserID + "/get",  new Callback() {
+        String cookie = SupportSharedPreferences.getCookie(this.getActivity());
+        Log.d(TAG, "User Id is "+ UserID);
+        SupportRequests.getWithCookie("http://"+address+":8081/user/profile/" + UserID + "/get", cookie, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "get profile unsuccessful");
+                Log.d(TAG, "get profile not successful");
+                Log.d(TAG, e.toString());
             }
 
             @Override
@@ -290,15 +292,18 @@ public class ProfileFragment extends Fragment {
 
                 }
                 else {
-                    Log.d(TAG, "get profile unsuccessful");
+                    Log.d(TAG, "get profile is unsuccessful");
+                    Log.d(TAG, response.body().string());
                 }
             }
         });
 
     }
 
+
     private void editProfileRequest(String bioInput, ArrayList<String> categoryNames) throws IOException {
 
+        String cookie = SupportSharedPreferences.getCookie(this.getActivity());
         Log.d(TAG, "bio is "+ bioInput);
         JSONObject jsonObject = new JSONObject();
 
@@ -314,7 +319,7 @@ public class ProfileFragment extends Fragment {
         }
 
         // To do: change this later with server url
-        SupportRequests.put("http://10.0.2.2:8081/user/profile/" + UserID + "/edit", jsonObject.toString(), new Callback() {
+        SupportRequests.putWithCookie("http://"+address+":8081/user/profile/" + UserID + "/edit", jsonObject.toString(), cookie, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "could not edit the user profile");
@@ -338,9 +343,11 @@ public class ProfileFragment extends Fragment {
 
     public static String verifyUserInput(EditText field) {
         if (field.getText().toString().trim().equals("")){
+            System.out.println("Empty field");
             return "This field cannot be empty.";
         }
-        else if (!field.getText().toString().matches("[0-9a-zA-Z.? ]*")){
+        else if (!field.getText().toString().matches("[0-9a-zA-Z.? ,:\\-/\\//]*")){
+            System.out.println("Regex failure");
             return "This field only allows numbers, spaces and letters.";
         }
         else {

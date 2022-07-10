@@ -33,6 +33,10 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.cpen321.gruwup.R;
+import com.google.android.libraries.places.api.Places;
+import com.google.android.libraries.places.api.model.Place;
+import com.google.android.libraries.places.widget.Autocomplete;
+import com.google.android.libraries.places.widget.model.AutocompleteActivityMode;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -53,9 +57,13 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.ProtocolException;
 import java.net.URL;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -67,10 +75,12 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class DiscoverFragment extends Fragment {
-    private String address = "10.0.2.2";
+//    private String address = "10.0.2.2";
+    private String address = "20.227.142.169";
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
+    EditText location; //need google autocomplete, so made global
     TextView createButton;
     TextView confirmCreateButton;
     TextView cancelCreate;
@@ -106,7 +116,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        SupportRequests.get("http://" + address + ":8081/user/adventure/search/{pagination}", new Callback() {
+        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + SupportSharedPreferences.getUserId(this.getActivity()) + "/discover", SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -147,12 +157,12 @@ public class DiscoverFragment extends Fragment {
         EditText title;
         EditText description;
         EditText time;
-        EditText location;
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.create_adventure_pop_up);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
         initCategories();
+
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
         categoryView = (RecyclerView) dialog.findViewById(R.id.create_adventure_recycler_view);
         categoryView.setLayoutManager(layoutManager);
@@ -165,10 +175,23 @@ public class DiscoverFragment extends Fragment {
                 dialog.dismiss();
             }
         });
+
+        Places.initialize(getActivity().getApplicationContext(), "AIzaSyBTzzjkUX-5Snzfhc8JrGn1wA07jgKbluk");
+
         title = (EditText) dialog.findViewById(R.id.create_adventure_title_input);
         description = (EditText) dialog.findViewById(R.id.create_adventure_description_input);
         time = (EditText) dialog.findViewById(R.id.create_adventure_time_input);
         location = (EditText) dialog.findViewById(R.id.create_adventure_location_input);
+        location.setFocusable(false);
+        location.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                List<Place.Field> fieldList = Arrays.asList(Place.Field.ID, Place.Field.NAME, Place.Field.ADDRESS, Place.Field.LAT_LNG, Place.Field.NAME);
+                Intent intent = new Autocomplete.IntentBuilder(AutocompleteActivityMode.OVERLAY, fieldList).build(getActivity());
+                startActivityForResult(intent, 100);
+            }
+        });
+
         uploadImage = (Button) dialog.findViewById(R.id.create_adventure_upload_image_button);
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -202,12 +225,13 @@ public class DiscoverFragment extends Fragment {
 
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("owner", "test owner");
+                        jsonObject.put("owner", SupportSharedPreferences.getUserId(v.getContext().getApplicationContext()));
                         jsonObject.put("title", title.getText().toString().trim());
                         jsonObject.put("description", description.getText().toString().trim());
-                        jsonObject.put("dateTime", time.getText().toString().trim());
+                        jsonObject.put("dateTime", dateToEpoch(time.getText().toString().trim()));
+                        System.out.println(dateToEpoch(time.getText().toString().trim()));
                         jsonObject.put("location", location.getText().toString().trim());
-                        jsonObject.put("category", "MOVIE");
+                        jsonObject.put("category", mSelectedCategoryNames.get(0));
                         jsonObject.put("image", bmpToB64(imageBMP));
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -215,7 +239,7 @@ public class DiscoverFragment extends Fragment {
                     }
 
                     // To do: change this later with server url
-                    SupportRequests.post("http://" + address + ":8081/user/adventure/create", jsonObject.toString(), new Callback() {
+                    SupportRequests.postWithCookie("http://" + address + ":8081/user/adventure/create", jsonObject.toString(), SupportSharedPreferences.getCookie(v.getContext()), new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             System.out.println("failure on post");
@@ -244,11 +268,13 @@ public class DiscoverFragment extends Fragment {
         for (int i = 0; i < arrlen; i++) {
             JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());
-            mAdventureList.get(i).put("event", jsonObject.getString("id"));
-            mAdventureList.get(i).put("time", jsonObject.getString("dateTime"));
+            mAdventureList.get(i).put("title", jsonObject.getString("title"));
+            mAdventureList.get(i).put("event", jsonObject.getString("category"));
+            mAdventureList.get(i).put("id", jsonObject.getString("_id"));
+            mAdventureList.get(i).put("time", epochToDate(jsonObject.getString("dateTime")));
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
             mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
-            mAdventureList.get(i).put("description", ("Description (currently none) " + String.valueOf(i)));
+            mAdventureList.get(i).put("description", jsonObject.getString("description"));
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
     }
@@ -272,6 +298,10 @@ public class DiscoverFragment extends Fragment {
                 e.printStackTrace();
             }
         }
+        else if(requestCode == 100 && resultCode == Activity.RESULT_OK) {
+            Place place = Autocomplete.getPlaceFromIntent(data);
+            location.setText(place.getAddress());
+        }
     }
 
     public static String bmpToB64(Bitmap bmp) {
@@ -288,5 +318,23 @@ public class DiscoverFragment extends Fragment {
         byte[] decodedString = Base64.decode(b64, Base64.DEFAULT);
         Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
         return decodedByte;
+    }
+
+    public static String dateToEpoch(String date) {
+        try {
+            return Long.toString(new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").parse(date).getTime() / 1000);
+        } catch (ParseException e) {
+            e.printStackTrace();
+            return "D2E error!";
+        }
+    }
+
+    public static String epochToDate(String epoch) {
+        try {
+            return new SimpleDateFormat("MM/dd/yyyy HH:mm:ss").format(new Date(Long.parseLong(epoch) * 1000));
+        } catch (NumberFormatException e) {
+            e.printStackTrace();
+            return "E2D error!";
+        }
     }
 }

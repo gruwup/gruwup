@@ -1,10 +1,18 @@
 package com.cpen321.gruwup;
 
 import android.annotation.SuppressLint;
+import android.app.Dialog;
+import android.content.Context;
+import android.location.Address;
+import android.location.Geocoder;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
@@ -16,17 +24,33 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-public class MapViewFragment extends Fragment {
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
+import java.io.IOException;
+import java.util.List;
+
+import okhttp3.Call;
+import okhttp3.Callback;
+import okhttp3.Response;
+
+public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClickListener {
 
     MapView mMapView;
     private GoogleMap googleMap;
+    JSONArray HTTP_RESPONSE_ARRAY;
+    String address = "10.0.2.2";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View rootView = inflater.inflate(R.layout.location_fragment, container, false);
-
+        Bundle locationArgs = getArguments();
+        String address = locationArgs.getString("address", "");
+        String location_address = locationArgs.getString("adventures", "");
         mMapView = (MapView) rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
@@ -39,24 +63,60 @@ public class MapViewFragment extends Fragment {
         }
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
+            @SuppressLint("MissingPermission")
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
-
-                // For showing a move to my location button
-                googleMap.setMyLocationEnabled(true);
-
-                // For dropping a marker at a point on the Map
-                LatLng sydney = new LatLng(-34, 151);
-                googleMap.addMarker(new MarkerOptions().position(sydney).title("Marker Title").snippet("Marker Description"));
-
-                // For zooming automatically to the location of the marker
-                CameraPosition cameraPosition = new CameraPosition.Builder().target(sydney).zoom(12).build();
-                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                googleMap.setOnMarkerClickListener(MapViewFragment.this);
+                if(location_address != "") {
+                    System.out.println("special mode");
+                    try {
+                        JSONArray jsonArray = new JSONArray(location_address);
+                        HTTP_RESPONSE_ARRAY = jsonArray;
+                        //System.out.println("Map response" + response.body().string());
+                        for(int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
+                            LatLng test = getLocationFromAddress(getActivity(), jsonObject.getString("location"));
+                            googleMap.addMarker(new MarkerOptions().position(test).title(jsonObject.getString("title"))).setTag(jsonObject.getString("_id"));
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+                else {
+                    System.out.println("normal mode");
+                    LatLng test = getLocationFromAddress(getActivity(), address);
+                    googleMap.addMarker(new MarkerOptions().position(test).title("Event title"));
+                }
+//                CameraPosition cameraPosition = new CameraPosition.Builder().target(test).zoom(12).build();
+//                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
             }
         });
 
         return rootView;
+    }
+
+    public LatLng getLocationFromAddress(Context context, String strAddress) {
+        Geocoder coder = new Geocoder(context);
+        List<Address> address;
+        LatLng p1 = null;
+
+        try {
+            // May throw an IOException
+            address = coder.getFromLocationName(strAddress, 5);
+            if (address == null) {
+                return null;
+            }
+
+            Address location = address.get(0);
+            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+
+        } catch (IOException ex) {
+
+            ex.printStackTrace();
+        }
+
+        return p1;
     }
 
     @Override
@@ -81,5 +141,98 @@ public class MapViewFragment extends Fragment {
     public void onLowMemory() {
         super.onLowMemory();
         mMapView.onLowMemory();
+    }
+
+    @Override
+    public boolean onMarkerClick(Marker marker) {
+        System.out.println("Marker clicked!");
+        final Dialog dialog = new Dialog(getActivity());
+        Button requestToJoin;
+        TextView cancel;
+        TextView eventType;
+        TextView eventTitle;
+        TextView eventDescription;
+        TextView eventLocation;
+        TextView eventTime;
+        TextView eventMemberCount;
+
+        dialog.setContentView(R.layout.view_adventure_pop_up);
+        dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
+        dialog.show();
+
+        eventType = dialog.findViewById(R.id.view_adventure_event_type);
+        eventTitle = dialog.findViewById(R.id.view_adventure_event_title);
+        eventDescription = dialog.findViewById(R.id.view_adventure_description);
+        eventLocation = dialog.findViewById(R.id.view_adventure_location);
+        eventTime = dialog.findViewById(R.id.view_adventure_time);
+        eventMemberCount = dialog.findViewById(R.id.view_adventure_member_count);
+        requestToJoin = dialog.findViewById(R.id.request_join_adventure);
+
+        cancel = (TextView) dialog.findViewById(R.id.cancel_view_adventure);
+        cancel.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                dialog.dismiss();
+            }
+        });
+        String id;
+        JSONObject jsonObject = null;
+        for(int i = 0; i < HTTP_RESPONSE_ARRAY.length(); i++) {
+            try {
+                jsonObject = (JSONObject) HTTP_RESPONSE_ARRAY.getJSONObject(i);
+                if(jsonObject.getString("_id").equals(marker.getTag())) {
+                    System.out.println("found!!!");
+                    break;
+                }
+
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            eventType.setText(jsonObject.getString("category"));
+            eventTitle.setText(jsonObject.getString("title"));
+            eventDescription.setText(jsonObject.getString("description"));
+            eventLocation.setText(jsonObject.getString("location"));
+            eventMemberCount.setText(String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
+            eventTime.setText(DiscoverFragment.epochToDate(jsonObject.getString("dateTime")));
+            id = jsonObject.getString("_id");
+        } catch (JSONException e) {
+            e.printStackTrace();
+            return false;
+        }
+
+        JSONObject toPostObject = new JSONObject();
+        try {
+            toPostObject.put("userName", SupportSharedPreferences.getUserName(getContext()));
+            toPostObject.put("userId", SupportSharedPreferences.getUserId(getContext()));
+            toPostObject.put("dateTime", Long.valueOf(System.currentTimeMillis()));
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        requestToJoin.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SupportRequests.postWithCookie("http://" + address + ":8081/user/request/" + id + "/send-request", toPostObject.toString(), SupportSharedPreferences.getCookie(getActivity()), new Callback() {
+                    @Override
+                    public void onFailure(Call call, IOException e) {
+                    }
+
+                    @Override
+                    public void onResponse(Call call, Response response) throws IOException {
+                        if (response.isSuccessful()) {
+                            String responseData = response.body().string();
+                        } else {
+                            System.out.println("HTTP req failed inside map fragment" + response.body().string());
+                        }
+                    }
+                });
+                dialog.dismiss();
+                Toast.makeText(getActivity(), "Request sent!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        return true;
     }
 }
