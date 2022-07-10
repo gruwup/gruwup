@@ -201,8 +201,9 @@ public class ChatActivity extends AppCompatActivity {
 
         try {
             // Note: dynamic cookie is not working for chat
-            cookie = "gruwup-session=123";
-//            cookie = SupportSharedPreferences.getCookie(getApplicationContext());
+//            cookie = "gruwup-session=123";
+            cookie = SupportSharedPreferences.getCookie(getApplicationContext());
+            Log.d("CHAT ", cookie);
             UserID = SupportSharedPreferences.getUserId(getApplicationContext());
             mSocket = IO.socket(serverUrl);
             mSocket.emit("userInfo", cookie, UserID);
