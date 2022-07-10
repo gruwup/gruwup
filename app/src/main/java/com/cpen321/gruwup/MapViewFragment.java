@@ -148,6 +148,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
         System.out.println("Marker clicked!");
         final Dialog dialog = new Dialog(getActivity());
         Button requestToJoin;
+        Button viewOnGoogleMaps;
         TextView cancel;
         TextView eventType;
         TextView eventTitle;
@@ -167,7 +168,8 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
         eventTime = dialog.findViewById(R.id.view_adventure_time);
         eventMemberCount = dialog.findViewById(R.id.view_adventure_member_count);
         requestToJoin = dialog.findViewById(R.id.request_join_adventure);
-
+        viewOnGoogleMaps = dialog.findViewById(R.id.adventure_open_in_maps);
+        viewOnGoogleMaps.setVisibility(View.GONE);
         cancel = (TextView) dialog.findViewById(R.id.cancel_view_adventure);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
