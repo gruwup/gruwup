@@ -71,7 +71,6 @@ module.exports = class FilterService {
     };
 
     static findAdventuresByFilter = async (filter) => {
-        console.log("findAdventuresByFilter: " + JSON.stringify(filter));
         try {
             var adventureFilter = filter.city ? 
             {
