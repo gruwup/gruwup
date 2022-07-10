@@ -34,111 +34,58 @@
             app:cardPreventCornerOverlap="false"
             app:cardUseCompatPadding="true">
 
-            <!--            <TextView-->
-            <!--                android:id="@+id/disc_adventure_name"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_gravity="bottom|center_horizontal"-->
-            <!--                android:layout_marginTop="20dp"-->
-            <!--                android:layout_marginBottom="100dp"-->
-            <!--                android:text="event"-->
-            <!--                android:textSize="20sp"-->
-            <!--                android:textStyle="bold" />-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/disc_adventure_time"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_gravity="bottom|center_horizontal"-->
-            <!--                android:layout_marginTop="40dp"-->
-            <!--                android:layout_marginBottom="80dp"-->
-            <!--                android:text="time"-->
-            <!--                android:textSize="20sp"-->
-            <!--                android:textStyle="bold" />-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/disc_adventure_location"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_gravity="bottom|center_horizontal"-->
-            <!--                android:layout_marginTop="60dp"-->
-            <!--                android:layout_marginBottom="60dp"-->
-            <!--                android:text="location"-->
-            <!--                android:textSize="20sp"-->
-            <!--                android:textStyle="bold" />-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/disc_adventure_people_count"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_gravity="bottom|center_horizontal"-->
-            <!--                android:layout_marginTop="80dp"-->
-            <!--                android:layout_marginBottom="40dp"-->
-            <!--                android:text="people count"-->
-            <!--                android:textSize="20sp"-->
-            <!--                android:textStyle="bold" />-->
-
-            <!--            <TextView-->
-            <!--                android:id="@+id/disc_adventure_description"-->
-            <!--                android:layout_width="wrap_content"-->
-            <!--                android:layout_height="wrap_content"-->
-            <!--                android:layout_gravity="bottom|center_horizontal"-->
-            <!--                android:layout_marginTop="100dp"-->
-            <!--                android:layout_marginBottom="20dp"-->
-            <!--                android:text="description"-->
-            <!--                android:textSize="20sp"-->
-            <!--                android:textStyle="bold" />-->
-            <TextView
-                android:id="@+id/disc_adventure_name"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="10dp"
-                android:text="event"
-                />
+                android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/disc_adventure_time"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="10dp"
-                android:text="time" />
+                <TextView
+                    android:id="@+id/disc_adventure_title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="title"
+                    />
 
-            <TextView
-                android:id="@+id/disc_adventure_location"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="40dp"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="10dp"
-                android:text="location"
+                <TextView
+                    android:id="@+id/disc_adventure_name"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="event"
+                    />
 
-                />
+                <TextView
+                    android:id="@+id/disc_adventure_time"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="time" />
 
-            <TextView
-                android:id="@+id/disc_adventure_people_count"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="60dp"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="10dp"
-                android:text="people count"
+                <TextView
+                    android:id="@+id/disc_adventure_location"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="location" />
 
-                />
+                <TextView
+                    android:id="@+id/disc_adventure_people_count"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="people count"/>
 
-            <TextView
-                android:id="@+id/disc_adventure_description"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="80dp"
-                android:layout_gravity="center_horizontal"
-                android:paddingTop="10dp"
-                android:text="description"
-                />
-
+                <TextView
+                    android:id="@+id/disc_adventure_description"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center_horizontal"
+                    android:text="description"
+                    />
+            </LinearLayout>
 
         </androidx.cardview.widget.CardView>
+
     </androidx.cardview.widget.CardView>
 </RelativeLayout>

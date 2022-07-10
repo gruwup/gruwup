@@ -42,7 +42,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
     Dialog viewAdventureDialog;
     private ArrayList<Map<String, String>> mAdvNames = new ArrayList<>();
     private Context mContext;
-//    private String address = "10.0.2.2";
+//    private String address = "20.227.142.169";
     private String address = "20.227.142.169";
     public DiscAdvViewAdapter(Context mContext, ArrayList<Map<String, String>> mAdvNames) {
         viewAdventureDialog = new Dialog(mContext);
@@ -60,6 +60,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, @SuppressLint("RecyclerView") final int position) {
         holder.adventureName.setText("Event: " + mAdvNames.get(position).get("event"));
+        holder.adventureTitle.setText("Title: " + mAdvNames.get(position).get("title"));
         holder.adventureTime.setText("Time: " + mAdvNames.get(position).get("time"));
         holder.adventureLocation.setText(mAdvNames.get(position).get("location"));
         holder.adventureCount.setText("Person count: " + mAdvNames.get(position).get("count"));
@@ -173,12 +174,14 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         TextView adventureTime;
         TextView adventureLocation;
         TextView adventureCount;
+        TextView adventureTitle;
         TextView adventureDescription;
         CardView adventureCard;
         ImageView adventureImage;
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             adventureName = itemView.findViewById(R.id.disc_adventure_name);
+            adventureTitle = itemView.findViewById(R.id.disc_adventure_title);
             adventureTime = itemView.findViewById(R.id.disc_adventure_time);
             adventureLocation = itemView.findViewById(R.id.disc_adventure_location);
             adventureCount = itemView.findViewById(R.id.disc_adventure_people_count);
