@@ -56,8 +56,8 @@ public class SocketService extends Service {
 
         try {
             // Note: dynamic cookie is not working for chat
-            cookie = "gruwup-session=123";
-//            cookie = SupportSharedPreferences.getCookie(getApplicationContext());
+//            cookie = "gruwup-session=123";
+            cookie = SupportSharedPreferences.getCookie(getApplicationContext());
             UserID = SupportSharedPreferences.getUserId(getApplicationContext());
 
             mSocket = IO.socket(serverUrl);
