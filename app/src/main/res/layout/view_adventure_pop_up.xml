@@ -37,6 +37,7 @@
             android:layout_marginTop="0dp"
             android:text="Title"
             android:textSize="30dp"
+            android:id="@+id/view_adventure_event_title"
             android:textStyle="bold" />
 
         <TextView

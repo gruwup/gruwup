@@ -268,7 +268,8 @@ public class DiscoverFragment extends Fragment {
         for (int i = 0; i < arrlen; i++) {
             JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());
-            mAdventureList.get(i).put("event", jsonObject.getString("title"));
+            mAdventureList.get(i).put("title", jsonObject.getString("title"));
+            mAdventureList.get(i).put("event", jsonObject.getString("category"));
             mAdventureList.get(i).put("id", jsonObject.getString("_id"));
             mAdventureList.get(i).put("time", epochToDate(jsonObject.getString("dateTime")));
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
