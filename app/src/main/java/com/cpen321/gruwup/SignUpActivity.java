@@ -93,7 +93,7 @@ public class SignUpActivity extends AppCompatActivity {
                 else if (!isStringInt(ageInput.getText().toString())){
                     ageValidation.setText("Input valid number. ");
                 }
-                else if (Integer.parseInt(ageInput.getText().toString())<=18){
+                else if (Integer.parseInt(ageInput.getText().toString())<18){
                     ageValidation.setText("You must be over 18 to use the app :( ");
                     new CountDownTimer(2000, 1000) {
                         @Override
