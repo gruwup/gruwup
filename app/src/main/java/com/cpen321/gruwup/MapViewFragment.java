@@ -146,6 +146,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
     @Override
     public boolean onMarkerClick(Marker marker) {
         System.out.println("Marker clicked!");
+        if(HTTP_RESPONSE_ARRAY == null) return true;
         final Dialog dialog = new Dialog(getActivity());
         Button requestToJoin;
         Button viewOnGoogleMaps;
