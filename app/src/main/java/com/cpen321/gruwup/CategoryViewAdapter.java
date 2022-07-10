@@ -22,7 +22,6 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
     private static final String TAG = "CategoryViewAdapter";
 
-    //vars
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private Context mContext;
     boolean isSelectMode = false;
@@ -36,7 +35,6 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        // To do: Same for create profile // here is done for edit profile
         View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.category_list, parent, false);
         return new ViewHolder(view);
     }

@@ -76,7 +76,6 @@ public class ProfileFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Note: get stored UserID this way for fragment
-        // temporary fix
         UserID = SupportSharedPreferences.getUserId(this.getActivity());
         cookie = SupportSharedPreferences.getCookie(this.getActivity());
 

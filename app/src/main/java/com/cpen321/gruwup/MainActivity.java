@@ -46,7 +46,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-        // TO DO: If first time sign in show user tab otherwise show discover tab
 
 //        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
         bottomNav.getMenu().getItem(2).setChecked(true);

@@ -81,10 +81,6 @@ public class SupportRequests {
                 .cookieJar(cookieHelper.cookieJar())
                 .build();
 
-//        Request request = new Request.Builder()
-//                .url(url)
-//                .get()
-//                .build();
         Request request = new Request.Builder()
                 .url(url)
                 .post(body)

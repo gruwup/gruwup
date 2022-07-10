@@ -36,7 +36,6 @@ import okhttp3.Response;
 
 public class ChatFragment extends Fragment {
 
-//    ArrayList <User> users = new ArrayList<>();
     ArrayList <Adventure> adventures = new ArrayList<>();
     private static String TAG = "ChatFragment";
     // local : "10.0.2.2" , remote: "20.227.142.169"
@@ -51,7 +50,6 @@ public class ChatFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
 
-//        initChatData();
         adapter = new ChatViewAdapter(getActivity(),adventures);
         RecyclerView chatView = (RecyclerView) view.findViewById(R.id.chatView);
         chatView.setLayoutManager(new LinearLayoutManager(getActivity()));

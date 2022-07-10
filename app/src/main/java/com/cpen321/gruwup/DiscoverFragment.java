@@ -238,7 +238,7 @@ public class DiscoverFragment extends Fragment {
                         System.out.println("JSON EXCEPTION!!!");
                     }
 
-                    // To do: change this later with server url
+
                     SupportRequests.postWithCookie("http://" + address + ":8081/user/adventure/create", jsonObject.toString(), SupportSharedPreferences.getCookie(v.getContext()), new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {

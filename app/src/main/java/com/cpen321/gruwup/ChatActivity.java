@@ -200,8 +200,6 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         try {
-            // Note: dynamic cookie is not working for chat
-//            cookie = "gruwup-session=123";
             cookie = SupportSharedPreferences.getCookie(getApplicationContext());
             Log.d("CHAT ", cookie);
             UserID = SupportSharedPreferences.getUserId(getApplicationContext());
@@ -224,8 +222,7 @@ public class ChatActivity extends AppCompatActivity {
         messageRecyclerView.setAdapter(adapter);
 
         pagination = intent.getStringExtra("dateTime");
-//        getPreviousMessages(pagination); // change back later
-//        getChatMessages(pagination);
+
         prevPagination = pagination;
         getOldMessages(prevPagination);
 
@@ -234,10 +231,7 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 if (!(("null").equals(prevPagination))){
-
-//                    getChatMessages(prevPagination); //check
                     getOldMessages(prevPagination);
-//                    getPreviousMessages(prevPagination);
                 }
                 else {
                     loadOldMessage.setText("This is start of your conversations");
@@ -258,7 +252,6 @@ public class ChatActivity extends AppCompatActivity {
 
                     // check datetime format
                     long currentTimestamp = System.currentTimeMillis()/1000;
-//                    Message newMessage = new Message(UserID, UserName, message, Long.toString(currentTimestamp),SENT_MESSAGE);
                     editMessageBar.setText("");
                     sendChat(message);
                 }
@@ -365,8 +358,6 @@ public class ChatActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-
-//        cookie = "gruwup-session=123";
         SupportRequests.postWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/send",  jsonObject.toString(), cookie, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -403,7 +394,6 @@ public class ChatActivity extends AppCompatActivity {
     private void showEditPopUp(View view){
         adventureDialog.setContentView(R.layout.adventure_edit_pop_up);
 
-        // make get request for adventures
         getAdventureDetails();
         adventureDialog.show();
         TextView goBack = adventureDialog.findViewById(R.id.go_back_chat);
@@ -484,8 +474,6 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void getAdventureDetails() {
-
-        // url: http://localhost:8081/user/adventure/62c65ee5b7831254ed671749/detail
         String cookie = SupportSharedPreferences.getCookie(getApplicationContext());
         SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
             @Override
@@ -597,6 +585,9 @@ public class ChatActivity extends AppCompatActivity {
                             messageStatus = RECEIVED_MESSAGE;
                             Message newMessage = new Message(userId,userName,message,dateTime,messageStatus);
                             messages.add(newMessage);
+
+                            NestedScrollView scrollView = (NestedScrollView)findViewById(R.id.nest);
+                            scrollView.smoothScrollTo(0, scrollView.getChildAt(0).getHeight());
                             if (adapter!=null){
 //                                adapter.notifyDataSetChanged();
                                 adapter.notifyItemInserted(messages.size() - 1);

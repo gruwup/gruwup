@@ -55,8 +55,6 @@ public class SocketService extends Service {
 
 
         try {
-            // Note: dynamic cookie is not working for chat
-//            cookie = "gruwup-session=123";
             cookie = SupportSharedPreferences.getCookie(getApplicationContext());
             UserID = SupportSharedPreferences.getUserId(getApplicationContext());
 
@@ -78,14 +76,6 @@ public class SocketService extends Service {
             Log.d("SocketService", args[0].toString());
             if(args[0].toString().equals("true")){
                 Log.d(TAG, "===>connected to socket");
-//                new Handler(Looper.getMainLooper()).post(new Runnable() {
-//                    @Override
-//                    public void run() {
-//                        Toast.makeText(SocketService.this.getApplicationContext(),"NEW CHAT", Toast.LENGTH_LONG).show();
-//                        sendMessage();
-//                    }
-//                });
-
                 mSocket.on("message",onNewNotification);
             }
             else{

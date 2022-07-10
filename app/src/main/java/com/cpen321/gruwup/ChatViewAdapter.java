@@ -21,7 +21,6 @@ import java.util.Date;
 public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHolder>{
 
     Context context;
-//    ArrayList <User> users;
     ArrayList <Adventure> adventures;
     static final String TAG = "ChatViewAdapter";
 
@@ -40,7 +39,6 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
 
     @Override
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
-//        User user = users.get(position);
         Adventure adventure = adventures.get(position);
         holder.adventureName.setText(adventure.getAdventureName());
 
@@ -60,14 +58,14 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
         }
 
 
-        // To do: change this to profile pic of individual users
+        // Can change this to profile pic of individual users
 //        holder.img.setImageResource(R.drawable.college_student);
 
         holder.itemView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Intent intent = new Intent(context, ChatActivity.class);
-                // To do: Can pass in user information, such as their name and id here
+                // Can pass in user information, such as their name and id here
                 // or the adventure group name
                 intent.putExtra("name", adventure.getAdventureName());
                 intent.putExtra("adventureId", adventure.getAdventureId());
