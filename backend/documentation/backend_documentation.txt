@@ -159,7 +159,7 @@ paths:
       tags:
        - Adventure
       parameters:
-        - name: currentCity
+        - name: city
           in: query
           required: true
           schema:
@@ -702,7 +702,7 @@ paths:
                   - $ref: '#/components/schemas/Error'
   /user/chat/{adventureId}/messages/{pagination}:
     get:
-      summary: Get 30 messages in adventure starting at given pagination (so pagination 0 will return most recent 30 messages, if the batch has less then 30 messages it will return whatever it can, so if you have 50 messages, and pagination is at 29, it will return message 29-50 instead of 29-59)
+      summary: Get 10 messages in adventure starting at given pagination (so pagination = 'prevTime' given by the '/user/chat/{adventureId}/recent' endpoint will return most recent 10 messages. If the batch has less then 10 messages it will return whatever it can. The returned item will have a pagination pointer to the batch before this one.
       tags:
        - Chat
       parameters:
@@ -808,10 +808,8 @@ components:
         dateTime:
           type: string
           example: "2312746523"
-        status:
+        image:
           type: string
-          enum: ["CLOSED", "OPEN", "CANCELLED"]
-          example: "OPEN"
     AdventureWithId:
       type: object
       properties:

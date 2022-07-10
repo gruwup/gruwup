@@ -186,7 +186,7 @@ router.put("/:adventureId/update", async (req, res) => {
             dateTime: req.body.dateTime,
             location: req.body.location,
             category: req.body.category,
-            image: req.body.image ? new Buffer(req.body.image.split(",")[1],"base64") : null,
+            image: req.body.image,
             city: req.body.location.split(", ")[1] ?? "unknown"
         };
         try {
