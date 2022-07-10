@@ -40,8 +40,8 @@ public class ChatFragment extends Fragment {
     ArrayList <Adventure> adventures = new ArrayList<>();
     private static String TAG = "ChatFragment";
     // local : "10.0.2.2" , remote: "20.227.142.169"
-    private String address = "10.0.2.2";
-    //    private String address = "20.227.142.169";
+//    private String address = "10.0.2.2";
+    private String address = "20.227.142.169";
     private String cookie;
     private ChatViewAdapter adapter;
 

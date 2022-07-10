@@ -25,7 +25,9 @@ import org.json.JSONObject;
 import java.io.IOException;
 import java.net.URISyntaxException;
 import java.text.DateFormat;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Date;
 
@@ -54,12 +56,13 @@ public class ChatActivity extends AppCompatActivity {
     private Dialog adventureDialog;
     private String pagination;
     private String prevPagination = "null";
+    private String time;
 
 
     static final String TAG = "ChatActivity";
 
-    private String address = "10.0.2.2";
-//    private String address = "20.227.142.169";
+//    private String address = "10.0.2.2";
+    private String address = "20.227.142.169";
 
 
     private String cookie;
@@ -401,7 +404,12 @@ public class ChatActivity extends AppCompatActivity {
         TextView category = adventureDialog.findViewById(R.id.view_adventure_event_type);
         TextView adventureTitle = adventureDialog.findViewById(R.id.advTitle);
         TextView location = adventureDialog.findViewById(R.id.view_adventure_location);
-        EditText dateTime = adventureDialog.findViewById(R.id.view_adventure_time);
+        TextView dateTime = adventureDialog.findViewById(R.id.view_adventure_time);
+        try {
+            time = Long.toString(new SimpleDateFormat("MM-dd-yyyy HH:mm:ss").parse(dateTime.getText().toString()).getTime() / 1000);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
         EditText adventureDetail = adventureDialog.findViewById(R.id.adventure_description);
         Button confirmEdit = (Button) adventureDialog.findViewById(R.id.confirm_edit_adv);
 
@@ -417,10 +425,7 @@ public class ChatActivity extends AppCompatActivity {
                     jsonObject.put("description", adventureDetail.getText().toString());
                     jsonObject.put("category", category.getText().toString());
                     jsonObject.put("location", location.getText().toString());
-//                    1688903225
-                    jsonObject.put("dateTime", "1688903225");
-
-//                    jsonObject.put("dateTime", dateTime.getText().toString());
+                    jsonObject.put("dateTime", time);
                     jsonObject.put("peopleGoing", peopleGoing);
                     jsonObject.put("status", "OPEN");
 
@@ -428,7 +433,7 @@ public class ChatActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Log.d(TAG, "EDIT ADV"+ jsonObject.toString());
-                SupportRequests.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/edit", jsonObject.toString(),cookie, new Callback() {
+                SupportRequests.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/update", jsonObject.toString(),cookie, new Callback() {
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         if(response.isSuccessful()) {
