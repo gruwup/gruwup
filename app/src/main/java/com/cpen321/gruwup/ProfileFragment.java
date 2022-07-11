@@ -339,11 +339,11 @@ public class ProfileFragment extends Fragment {
     }
 
     public static String verifyUserInput(EditText field) {
-         return "valid";
-//        if (field.getText().toString().trim().equals("")){
-//            System.out.println("Empty field");
-//            return "This field cannot be empty.";
-//        }
+        if (field.getText().toString().trim().equals("")){
+            System.out.println("Empty field");
+            return "This field cannot be empty.";
+        }
+        return "valid";
 //        else if (!field.getText().toString().matches("[0-9a-zA-Z.? ,:\\-/\\//]*")){
 //            System.out.println("Regex failure");
 //            return "This field only allows numbers, spaces and letters.";
@@ -351,5 +351,6 @@ public class ProfileFragment extends Fragment {
 //        else {
 //            return "valid";
 //        }
+        }
     }
 }
