@@ -13,6 +13,7 @@ import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
+import android.os.CountDownTimer;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
@@ -33,6 +34,7 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.airbnb.lottie.LottieAnimationView;
 import com.cpen321.gruwup.R;
 import com.google.android.libraries.places.api.Places;
 import com.google.android.libraries.places.api.model.Place;
@@ -155,6 +157,27 @@ public class DiscoverFragment extends Fragment {
         adventureListView.setLayoutManager(layoutManager);
         DiscAdvViewAdapter adapter = new DiscAdvViewAdapter(getActivity(), mAdventureList);
         adventureListView.setAdapter(adapter);
+    }
+
+    @Override
+    public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+
+        LottieAnimationView loading = view.findViewById(R.id.loading_animation);
+
+        loading.setVisibility(View.VISIBLE);
+
+        new CountDownTimer(2000, 1000) {
+            @Override
+            public void onTick(long millisUntilFinished) {
+            }
+
+            @Override
+            public void onFinish() {
+                loading.setVisibility(View.GONE);;
+            }
+        }.start();
+
     }
 
     private void createAdventure(View v) {
