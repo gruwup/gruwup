@@ -38,7 +38,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/lightGray"
                 android:text="Title"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
@@ -54,16 +54,25 @@
                 android:hint="Enter title..."
                 android:minHeight="48dp"
                 android:padding="10dp" />
+            <TextView
+                android:id="@+id/setTitleAlert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="30dp"
+                android:textSize="10dp"
+                android:textColor="@color/design_default_color_error" />
 
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/lightGray"
                 android:text="Description"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 />
 
             <EditText
@@ -82,7 +91,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/lightGray"
                 android:text="Categories (pick one)"
-                android:textSize="25dp"
+                android:textSize="15dp"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
@@ -112,14 +121,24 @@
                 />
 
             <TextView
+                android:id="@+id/setImageAlert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="30dp"
+                android:textSize="15dp"
+                android:textColor="@color/design_default_color_error" />
+
+            <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textColor="@color/lightGray"
                 android:text="Time"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:gravity="center"
-                android:layout_marginTop="10dp"
+                android:layout_marginTop="2dp"
                 />
 
             <EditText
@@ -138,7 +157,7 @@
                 android:layout_height="wrap_content"
                 android:textColor="@color/lightGray"
                 android:text="Location"
-                android:textSize="25dp"
+                android:textSize="20dp"
                 android:textStyle="bold"
                 android:gravity="center"
                 android:layout_marginTop="10dp"
@@ -166,7 +185,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_btn"
                 android:gravity="center"
-                android:text="Confirm Change"
+                android:text="Create Adventure"
                 android:textSize="14sp"
 
                 />

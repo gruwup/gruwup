@@ -5,10 +5,16 @@ import static com.airbnb.lottie.network.FileExtension.JSON;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,6 +68,8 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -72,12 +80,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment{
     RecyclerView recyclerView;
-//    private String address = "10.0.2.2";
+//    private String address = "20.227.142.169";
     private String address = "20.227.142.169";
     static ArrayList<Map<String, String>> mAdventureList;
-    DiscAdvViewAdapter AdventureAdapter;
+    DiscAdvViewAdapter AdventureAdapter; 
     String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
     RecyclerView categoryView;
@@ -85,7 +93,10 @@ public class SearchFragment extends Fragment {
     Button filterButton;
     Button nearbyButton;
     EditText searchText;
+    private LocationManager locationManager;
+
     TextView cancel;
+    TextView noAdventures;
     Bitmap imageBMP = null;
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     private ArrayList<String> mCategoryNames = new ArrayList<>();
@@ -101,13 +112,33 @@ public class SearchFragment extends Fragment {
         mCategoryNames.add("ART");
     }
 
+    @SuppressLint("MissingPermission")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+            }
+        };
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location != null) {
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            Log.d("Location", "Latitude: " + latitude + ", Longitude: " + longitude);
+        }
+        else {
+            Log.d("Location", "Location is null");
+        }
+        String city = getCurrentCity(location);
+        System.out.println("city " + city);
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
+        noAdventures = view.findViewById(R.id.noSearchAdventures);
         filterButton = (Button) view.findViewById(R.id.filter_button);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -116,6 +147,15 @@ public class SearchFragment extends Fragment {
                 filterAdventure(v);
                 System.out.println("Update recycler view");
                 AdventureAdapter.notifyDataSetChanged();
+                if(mAdventureList != null) {
+                    if (mAdventureList.size() > 0) {
+                        System.out.println("invis");
+                        noAdventures.setVisibility(View.INVISIBLE);
+                    } else {
+                        System.out.println("vis");
+                        noAdventures.setVisibility(View.VISIBLE);
+                    }
+                }
                 recyclerView.invalidate();
             }
         });
@@ -141,9 +181,9 @@ public class SearchFragment extends Fragment {
                 String cookie = SupportSharedPreferences.getCookie(getActivity());
                 String[] cookieList  =  cookie.split("=",2);
                 OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
-                cookieHelper.setCookie("http://" + address + ":8081/user/adventure/nearby?city=Vancouver", cookieList[0], cookieList[1]);
+                cookieHelper.setCookie("http://" + address + ":8081/user/adventure/nearby?city=" + city, cookieList[0], cookieList[1]);
                 Request request = new Request.Builder()
-                        .url("http://" + address + ":8081/user/adventure/search-by-title?title=t")
+                        .url("http://" + address + ":8081/user/adventure/nearby?city="+city)
                         .build();
                 OkHttpClient client = new OkHttpClient.Builder()
                         .cookieJar(cookieHelper.cookieJar())
@@ -169,7 +209,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city=Vancouver", SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
+        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city="+city, SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -224,6 +264,21 @@ public class SearchFragment extends Fragment {
             mAdventureList.get(i).put("description", jsonObject.getString("description"));
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
+
+        getActivity().runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                if(mAdventureList.size() > 0) {
+                    noAdventures.setVisibility(View.INVISIBLE);
+                } else {
+                    noAdventures.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+
     }
 
     private void filterAdventure(View view) {
@@ -257,11 +312,20 @@ public class SearchFragment extends Fragment {
         applyFilters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 System.out.println("Apply filters button clicked");
                 JSONArray jsonArray = new JSONArray();
                 for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
                     mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
                     jsonArray.put(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
+                }
+                if(adapter.getSelectedCategoriesCount() < 1) {
+                    Toast.makeText(getActivity(), "Choose at least one activity tag!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(numPeople.getText().toString() == null || location.getText().toString() == null || timeSelection.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getActivity(), "Fill in all fields!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 JSONObject jsonObject = new JSONObject();
                 try {
@@ -295,11 +359,29 @@ public class SearchFragment extends Fragment {
                     AdventureAdapter.notifyDataSetChanged();
                     recyclerView.setAdapter(new DiscAdvViewAdapter(getActivity(), mAdventureList));
                     recyclerView.invalidate();
+                    if(mAdventureList != null) {
+                        if (mAdventureList.size() > 0) {
+                            System.out.println("invis");
+                            noAdventures.setVisibility(View.INVISIBLE);
+                        } else {
+                            System.out.println("vis");
+                            noAdventures.setVisibility(View.VISIBLE);
+                        }
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 AdventureAdapter.notifyDataSetChanged();
                 recyclerView.invalidate();
+                if(mAdventureList != null) {
+                    if (mAdventureList.size() > 0) {
+                        System.out.println("invis");
+                        noAdventures.setVisibility(View.INVISIBLE);
+                    } else {
+                        System.out.println("vis");
+                        noAdventures.setVisibility(View.VISIBLE);
+                    }
+                }
                 dialog.dismiss();
                 return;
             }
@@ -388,5 +470,19 @@ public class SearchFragment extends Fragment {
             default:
                 return "error";
         }
+    }
+
+    private String getCurrentCity(Location location) {
+        String city = "";
+        try {
+            Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
+            List<Address> addresses = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            if (addresses.size() > 0) {
+                city = addresses.get(0).getLocality();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return city;
     }
 }

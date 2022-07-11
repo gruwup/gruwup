@@ -46,8 +46,6 @@ public class ProfileFragment extends Fragment {
     Button editButton;
     final static String TAG = "ProfileFragment";
 
-    // local : "10.0.2.2" , remote: "20.227.142.169"
-//    private String address = "10.0.2.2";
     private String address = "20.227.142.169";
 
     String UserID;
@@ -345,12 +343,6 @@ public class ProfileFragment extends Fragment {
             System.out.println("Empty field");
             return "This field cannot be empty.";
         }
-        else if (!field.getText().toString().matches("[0-9a-zA-Z.? ,:\\-/\\//]*")){
-            System.out.println("Regex failure");
-            return "This field only allows numbers, spaces and letters.";
-        }
-        else {
-            return "valid";
-        }
+        return "valid";
     }
 }
