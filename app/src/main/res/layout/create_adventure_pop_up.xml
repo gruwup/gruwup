@@ -166,7 +166,7 @@
                 android:layout_marginTop="20dp"
                 android:background="@drawable/rounded_btn"
                 android:gravity="center"
-                android:text="Confirm Change"
+                android:text="Create Adventure"
                 android:textSize="14sp"
 
                 />
