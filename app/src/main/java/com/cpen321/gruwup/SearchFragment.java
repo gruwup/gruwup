@@ -5,10 +5,16 @@ import static com.airbnb.lottie.network.FileExtension.JSON;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Paint;
+import android.location.Address;
+import android.location.Geocoder;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -62,6 +68,8 @@ import java.sql.SQLOutput;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
+import java.util.Locale;
 import java.util.Map;
 
 import okhttp3.Call;
@@ -72,7 +80,7 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SearchFragment extends Fragment {
+public class SearchFragment extends Fragment{
     RecyclerView recyclerView;
 //    private String address = "10.0.2.2";
     private String address = "20.227.142.169";
@@ -85,6 +93,8 @@ public class SearchFragment extends Fragment {
     Button filterButton;
     Button nearbyButton;
     EditText searchText;
+    private LocationManager locationManager;
+
     TextView cancel;
     Bitmap imageBMP = null;
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
@@ -101,9 +111,29 @@ public class SearchFragment extends Fragment {
         mCategoryNames.add("ART");
     }
 
+    @SuppressLint("MissingPermission")
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+
+        LocationListener locationListener = new LocationListener() {
+            public void onLocationChanged(Location location) {
+            }
+        };
+        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
+        Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+        if (location != null) {
+            double latitude = location.getLatitude();
+            double longitude = location.getLongitude();
+            Log.d("Location", "Latitude: " + latitude + ", Longitude: " + longitude);
+        }
+        else {
+            Log.d("Location", "Location is null");
+        }
+        String city = getCurrentCity(location);
+        System.out.println("city " + city);
+
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         View view = inflater.inflate(R.layout.fragment_search, container, false);
@@ -141,7 +171,7 @@ public class SearchFragment extends Fragment {
                 String cookie = SupportSharedPreferences.getCookie(getActivity());
                 String[] cookieList  =  cookie.split("=",2);
                 OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
-                cookieHelper.setCookie("http://" + address + ":8081/user/adventure/nearby?city=Vancouver", cookieList[0], cookieList[1]);
+                cookieHelper.setCookie("http://" + address + ":8081/user/adventure/nearby?city=" + city, cookieList[0], cookieList[1]);
                 Request request = new Request.Builder()
                         .url("http://" + address + ":8081/user/adventure/search-by-title?title=t")
                         .build();
@@ -169,7 +199,7 @@ public class SearchFragment extends Fragment {
             }
         });
 
-        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city=Vancouver", SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
+        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city="+city, SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -388,5 +418,19 @@ public class SearchFragment extends Fragment {
             default:
                 return "error";
         }
+    }
+
+    private String getCurrentCity(Location location) {
+        String city = "";
+        try {
+            Geocoder gcd = new Geocoder(getActivity(), Locale.getDefault());
+            List<Address> addresses = gcd.getFromLocation(location.getLatitude(), location.getLongitude(), 1);
+            if (addresses.size() > 0) {
+                city = addresses.get(0).getLocality();
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return city;
     }
 }
