@@ -344,13 +344,5 @@ public class ProfileFragment extends Fragment {
             return "This field cannot be empty.";
         }
         return "valid";
-//        else if (!field.getText().toString().matches("[0-9a-zA-Z.? ,:\\-/\\//]*")){
-//            System.out.println("Regex failure");
-//            return "This field only allows numbers, spaces and letters.";
-//        }
-//        else {
-//            return "valid";
-//        }
-        }
     }
 }
