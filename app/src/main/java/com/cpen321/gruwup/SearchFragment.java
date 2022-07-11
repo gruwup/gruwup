@@ -82,7 +82,7 @@ import okhttp3.Response;
 
 public class SearchFragment extends Fragment{
     RecyclerView recyclerView;
-//    private String address = "10.0.2.2";
+//    private String address = "20.227.142.169";
     private String address = "20.227.142.169";
     static ArrayList<Map<String, String>> mAdventureList;
     DiscAdvViewAdapter AdventureAdapter;
@@ -96,6 +96,7 @@ public class SearchFragment extends Fragment{
     private LocationManager locationManager;
 
     TextView cancel;
+    TextView noAdventures;
     Bitmap imageBMP = null;
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     private ArrayList<String> mCategoryNames = new ArrayList<>();
@@ -115,7 +116,6 @@ public class SearchFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
             }
@@ -138,6 +138,7 @@ public class SearchFragment extends Fragment{
         StrictMode.setThreadPolicy(policy);
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
+        noAdventures = view.findViewById(R.id.noSearchAdventures);
         filterButton = (Button) view.findViewById(R.id.filter_button);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -146,6 +147,15 @@ public class SearchFragment extends Fragment{
                 filterAdventure(v);
                 System.out.println("Update recycler view");
                 AdventureAdapter.notifyDataSetChanged();
+                if(mAdventureList != null) {
+                    if (mAdventureList.size() > 0) {
+                        System.out.println("invis");
+                        noAdventures.setVisibility(View.INVISIBLE);
+                    } else {
+                        System.out.println("vis");
+                        noAdventures.setVisibility(View.VISIBLE);
+                    }
+                }
                 recyclerView.invalidate();
             }
         });
@@ -173,7 +183,7 @@ public class SearchFragment extends Fragment{
                 OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
                 cookieHelper.setCookie("http://" + address + ":8081/user/adventure/nearby?city=" + city, cookieList[0], cookieList[1]);
                 Request request = new Request.Builder()
-                        .url("http://" + address + ":8081/user/adventure/search-by-title?title=t")
+                        .url("http://" + address + ":8081/user/adventure/nearby?city="+city)
                         .build();
                 OkHttpClient client = new OkHttpClient.Builder()
                         .cookieJar(cookieHelper.cookieJar())
@@ -254,6 +264,21 @@ public class SearchFragment extends Fragment{
             mAdventureList.get(i).put("description", jsonObject.getString("description"));
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
+
+        getActivity().runOnUiThread(new Runnable() {
+
+            @Override
+            public void run() {
+
+                if(mAdventureList.size() > 0) {
+                    noAdventures.setVisibility(View.INVISIBLE);
+                } else {
+                    noAdventures.setVisibility(View.VISIBLE);
+                }
+
+            }
+        });
+
     }
 
     private void filterAdventure(View view) {
@@ -325,11 +350,29 @@ public class SearchFragment extends Fragment{
                     AdventureAdapter.notifyDataSetChanged();
                     recyclerView.setAdapter(new DiscAdvViewAdapter(getActivity(), mAdventureList));
                     recyclerView.invalidate();
+                    if(mAdventureList != null) {
+                        if (mAdventureList.size() > 0) {
+                            System.out.println("invis");
+                            noAdventures.setVisibility(View.INVISIBLE);
+                        } else {
+                            System.out.println("vis");
+                            noAdventures.setVisibility(View.VISIBLE);
+                        }
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
                 AdventureAdapter.notifyDataSetChanged();
                 recyclerView.invalidate();
+                if(mAdventureList != null) {
+                    if (mAdventureList.size() > 0) {
+                        System.out.println("invis");
+                        noAdventures.setVisibility(View.INVISIBLE);
+                    } else {
+                        System.out.println("vis");
+                        noAdventures.setVisibility(View.VISIBLE);
+                    }
+                }
                 dialog.dismiss();
                 return;
             }
