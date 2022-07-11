@@ -76,7 +76,7 @@
         android:layout_marginLeft="5dp"
         android:layout_marginBottom="4dp"
         android:fontFamily="sans-serif-medium"
-        android:text="Movie Night "
+        android:text="Movie Night and hang out "
         android:textColor="@color/lightGray"
         android:textSize="14sp"
         app:layout_constraintBottom_toBottomOf="parent"
@@ -101,7 +101,7 @@
         android:background="@drawable/ic_accept"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.822"
+        app:layout_constraintHorizontal_bias="0.89"
         app:layout_constraintStart_toEndOf="@+id/requesterName"
         app:layout_constraintTop_toTopOf="parent" />
 
@@ -113,7 +113,7 @@
         android:background="@drawable/ic_deny"
         android:text=""
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.947"
+        app:layout_constraintHorizontal_bias="0.99"
         app:layout_constraintStart_toEndOf="@+id/requesterName"
         app:layout_constraintTop_toTopOf="parent" />
 

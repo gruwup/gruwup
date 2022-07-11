@@ -104,10 +104,59 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
+//        adventureEdit.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View view) {
+//
+//
+//                showEditPopUp(view);
+//            }
+//        });
         adventureEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showEditPopUp(view);
+                SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
+                    @Override
+                    public void onFailure(@NonNull Call call, @NonNull IOException e) {
+                        Log.d(TAG, "Failed to get adventure details");
+                    }
+
+                    @Override
+                    public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                        if(response.isSuccessful()) {
+                            Log.d(TAG, "get profile successful");
+                            String jsonData = response.body().string();
+
+                            try {
+                                JSONObject jsonObj = new JSONObject(jsonData);
+                                adventureOwner = jsonObj.getString("owner");
+
+
+                                Log.d(TAG, "FOR EDIT UID"+ UserID );
+                                Log.d(TAG, "FOR EDIT AVID"+ adventureOwner);
+                                if (UserID.equals(adventureOwner)){
+                                    showEditPopUp(view);
+                                }
+
+                                else{
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(getApplicationContext(), "Only adventure creator can edit an adventure", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+                        }
+                        else{
+                            Log.d(TAG, "Failed to get adventure owner");
+                        }
+                    }
+                });
+
             }
         });
 

@@ -19,7 +19,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapter.ViewHolder> {
-
+//
     private static final String TAG = "CategoryViewAdapter";
 
     private ArrayList<String> mCategoryNames = new ArrayList<>();

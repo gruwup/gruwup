@@ -8,6 +8,7 @@ import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.Paint;
 import android.net.Uri;
 import android.os.AsyncTask;
@@ -87,6 +88,8 @@ public class DiscoverFragment extends Fragment {
     RecyclerView categoryView;
     Button uploadImage;
     Bitmap imageBMP = null;
+    private TextView imageAlert;
+    private TextView titleAlert;
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper());
@@ -183,6 +186,11 @@ public class DiscoverFragment extends Fragment {
         description = (EditText) dialog.findViewById(R.id.create_adventure_description_input);
         time = (EditText) dialog.findViewById(R.id.create_adventure_time_input);
         location = (EditText) dialog.findViewById(R.id.create_adventure_location_input);
+
+        titleAlert = (TextView) dialog.findViewById(R.id.setTitleAlert);
+        imageAlert = (TextView) dialog.findViewById(R.id.setImageAlert);
+        imageAlert.setText("Image not uploaded yet");
+
         location.setFocusable(false);
         location.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -199,6 +207,7 @@ public class DiscoverFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+
             }
         });
 
@@ -206,13 +215,18 @@ public class DiscoverFragment extends Fragment {
         confirmCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (ProfileFragment.verifyUserInput(title) != "valid" ||
+                if (title.getText().length()>25){
+                    titleAlert.setText("Title cannot be longer than 25 characters");
+                }
+                else if (ProfileFragment.verifyUserInput(title) != "valid" ||
                         ProfileFragment.verifyUserInput(description) != "valid" ||
                         ProfileFragment.verifyUserInput(time) != "valid" ||
                         ProfileFragment.verifyUserInput(location) != "valid") {
-                    Toast.makeText(getActivity(), "Make sure all fields are not empty and use alphanumeric characters!", Toast.LENGTH_SHORT).show();
+                    titleAlert.setText("Make sure all fields are not empty and use alphanumeric characters!");
+//                    Toast.makeText(getActivity(), "Make sure all fields are not empty and use alphanumeric characters!", Toast.LENGTH_SHORT).show();
                 } else if (imageBMP == null) {
-                    Toast.makeText(getActivity(), "Choose an image!", Toast.LENGTH_SHORT).show();
+                    imageAlert.setText("Please choose an image");
+//                    Toast.makeText(getActivity(), "Choose an image!", Toast.LENGTH_SHORT).show();
                 } else if (adapter.getSelectedCategoriesCount() < 1) {
                     Toast.makeText(getActivity(), "Choose at least one activity tag!", Toast.LENGTH_SHORT).show();
                 } else {
@@ -300,6 +314,12 @@ public class DiscoverFragment extends Fragment {
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), selectedImage);
                 imageBMP = bitmap;
+                if (imageBMP != null) {
+                    imageAlert.setTextColor(Color.rgb(0,204,0));
+                    imageAlert.setText("Image uploaded successfully");
+                }
+
+
             } catch (FileNotFoundException e) {
                 // TODO Auto-generated catch block
                 e.printStackTrace();
