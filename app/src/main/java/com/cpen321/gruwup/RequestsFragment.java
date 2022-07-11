@@ -49,6 +49,10 @@ public class RequestsFragment extends Fragment {
             RecyclerView requestView = (RecyclerView) view.findViewById(R.id.getRequestView);
             requestView.setLayoutManager(new LinearLayoutManager(getActivity()));
             requestView.setAdapter(adapter);
+            if (adapter.getItemCount()==0){
+                TextView requestList = view.findViewById(R.id.requestList);
+                requestList.setVisibility(View.VISIBLE);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
