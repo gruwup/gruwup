@@ -75,7 +75,6 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class DiscoverFragment extends Fragment {
-//    private String address = "10.0.2.2";
     private String address = "20.227.142.169";
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
@@ -84,6 +83,7 @@ public class DiscoverFragment extends Fragment {
     TextView createButton;
     TextView confirmCreateButton;
     TextView cancelCreate;
+    TextView noAdventures;
     RecyclerView categoryView;
     Button uploadImage;
     Bitmap imageBMP = null;
@@ -107,6 +107,8 @@ public class DiscoverFragment extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
+        noAdventures = (TextView) view.findViewById(R.id.noDiscAdventures);
+        noAdventures.setVisibility(View.INVISIBLE);
         createButton = (TextView) view.findViewById(R.id.create_adventure);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -115,7 +117,6 @@ public class DiscoverFragment extends Fragment {
                 createAdventure(v);
             }
         });
-
         SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + SupportSharedPreferences.getUserId(this.getActivity()) + "/discover", SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -265,6 +266,15 @@ public class DiscoverFragment extends Fragment {
         mAdventureList = new ArrayList<Map<String, String>>();
         JSONArray jsonArray = new JSONArray(HTTPRESULT);
         int arrlen = jsonArray.length();
+        if(noAdventures != null) {
+            if (arrlen > 0) {
+                System.out.println("invis");
+                noAdventures.setVisibility(View.INVISIBLE);
+            } else {
+                System.out.println("vis");
+                noAdventures.setVisibility(View.VISIBLE);
+            }
+        }
         for (int i = 0; i < arrlen; i++) {
             JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());

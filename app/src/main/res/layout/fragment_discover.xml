@@ -50,6 +50,18 @@
             android:textStyle="bold" />
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/noDiscAdventures"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="100dp"
+        android:gravity="center"
+        android:text="You don't have any recommended adventures!"
+        android:textColor="@color/lightGray"
+        android:textSize="30dp"
+        android:textStyle="bold" />
 
 </RelativeLayout>
 

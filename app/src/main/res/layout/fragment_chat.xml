@@ -4,11 +4,23 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <TextView
+        android:id="@+id/noMessages"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:gravity="center"
+        android:text="No new messages!"
+        android:textColor="@color/lightGray"
+        android:textSize="30dp"
+        android:visibility="invisible"
+        android:textStyle="bold" />
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/chatView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        tools:listitem="@layout/user_chat_list">
-
-    </androidx.recyclerview.widget.RecyclerView>
+        tools:listitem="@layout/user_chat_list"></androidx.recyclerview.widget.RecyclerView>
 </RelativeLayout>
