@@ -33,6 +33,7 @@ public class RequestsFragment extends Fragment {
 //    private String address = "10.0.2.2";
     private String address = "20.227.142.169";
     private RequestViewAdapter adapter;
+    private TextView requestList;
 
     private void initRequestData() throws IOException {
         this.getAllRequests();
@@ -49,10 +50,9 @@ public class RequestsFragment extends Fragment {
             RecyclerView requestView = (RecyclerView) view.findViewById(R.id.getRequestView);
             requestView.setLayoutManager(new LinearLayoutManager(getActivity()));
             requestView.setAdapter(adapter);
-            if (adapter.getItemCount()==0){
-                TextView requestList = view.findViewById(R.id.requestList);
-                requestList.setVisibility(View.VISIBLE);
-            }
+            requestList = view.findViewById(R.id.requestList);
+
+            requestList.setVisibility(View.GONE);
 
         } catch (IOException e) {
             e.printStackTrace();
@@ -103,10 +103,25 @@ public class RequestsFragment extends Fragment {
                                         if (request.getStatus().equals("PENDING") && UserID.equals(adventureOwner)){
                                             requests.add(request);
                                             adapter.notifyDataSetChanged();
+                                            if (adapter.getItemCount()==0){
+                                                requestList.setVisibility(View.VISIBLE);
+                                            }
+                                            else {
+                                                requestList.setVisibility(View.GONE);
+                                            }
+                                        }
+                                        else {
+                                            if (adapter.getItemCount()==0){
+                                                requestList.setVisibility(View.VISIBLE);
+                                            }
                                         }
                                     }
                                 });
 
+                            }
+                        } else{
+                            if (adapter.getItemCount()==0){
+                                requestList.setVisibility(View.VISIBLE);
                             }
                         }
 
@@ -116,6 +131,12 @@ public class RequestsFragment extends Fragment {
 
                 }
                 else {
+                    if (adapter.getItemCount()==0){
+                        requestList.setVisibility(View.VISIBLE);
+                    }
+                    else {
+                        requestList.setVisibility(View.GONE);
+                    }
                     Log.d(TAG, "get profile is unsuccessful");
                     Log.d(TAG, response.body().string());
                 }

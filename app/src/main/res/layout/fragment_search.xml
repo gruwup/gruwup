@@ -14,8 +14,8 @@
         android:gravity="center"
         android:text="No results found based on your search or location."
         android:textColor="@color/lightGray"
-        android:textSize="30dp"
-        android:textStyle="bold"
+        android:textSize="20sp"
+        android:fontFamily="@font/acme_regular"
         android:visibility="invisible" />
 
     <LinearLayout
