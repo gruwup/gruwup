@@ -15,6 +15,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.Window;
 import android.view.WindowManager;
+import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -26,6 +27,7 @@ import androidx.recyclerview.widget.RecyclerView;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -38,24 +40,22 @@ public class ChatFragment extends Fragment {
 
     ArrayList <Adventure> adventures = new ArrayList<>();
     private static String TAG = "ChatFragment";
-    // local : "10.0.2.2" , remote: "20.227.142.169"
-//    private String address = "10.0.2.2";
+
     private String address = "20.227.142.169";
     private String cookie;
     private ChatViewAdapter adapter;
+    private TextView noMessages;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
-
+        noMessages = view.findViewById(R.id.noMessages);
         adapter = new ChatViewAdapter(getActivity(),adventures);
         RecyclerView chatView = (RecyclerView) view.findViewById(R.id.chatView);
         chatView.setLayoutManager(new LinearLayoutManager(getActivity()));
         chatView.setAdapter(adapter);
-
-
         return view;
     }
 
@@ -86,8 +86,20 @@ public class ChatFragment extends Fragment {
                         adventures.get(i).setLastMessageTime(lastMessageTime);
                     }
                 }
-                adapter.notifyDataSetChanged();
+                if(adventures.size()>0) {
+                    noMessages.setVisibility(View.GONE);
+                }
+                else {
+                    noMessages.setVisibility(View.VISIBLE);
+                }
 
+                adapter.notifyDataSetChanged();
+                if(adventures.size()>0) {
+                    noMessages.setVisibility(View.INVISIBLE);
+                }
+                else {
+                    noMessages.setVisibility(View.VISIBLE);
+                }
             }
         }
 
@@ -114,6 +126,12 @@ public class ChatFragment extends Fragment {
                             public void run() {
                                 adventures.clear();
                                 adapter.notifyDataSetChanged();
+                                if(adventures.size()>0) {
+                                    noMessages.setVisibility(View.INVISIBLE);
+                                }
+                                else {
+                                    noMessages.setVisibility(View.VISIBLE);
+                                }
                             }
                         });
 
@@ -140,6 +158,12 @@ public class ChatFragment extends Fragment {
                                         Adventure adventure = new Adventure(image,adventureName,adventureId,lastMessage,lastMessageTime,lastMessageSender);
                                         adventures.add(adventure);
                                         adapter.notifyDataSetChanged();
+                                        if(adventures.size()>0) {
+                                            noMessages.setVisibility(View.INVISIBLE);
+                                        }
+                                        else {
+                                            noMessages.setVisibility(View.VISIBLE);
+                                        }
                                     }
                                 });
 
