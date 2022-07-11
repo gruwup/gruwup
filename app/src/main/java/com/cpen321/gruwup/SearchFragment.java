@@ -85,7 +85,7 @@ public class SearchFragment extends Fragment{
 //    private String address = "20.227.142.169";
     private String address = "20.227.142.169";
     static ArrayList<Map<String, String>> mAdventureList;
-    DiscAdvViewAdapter AdventureAdapter;
+    DiscAdvViewAdapter AdventureAdapter; 
     String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
     RecyclerView categoryView;
@@ -312,11 +312,20 @@ public class SearchFragment extends Fragment{
         applyFilters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
                 System.out.println("Apply filters button clicked");
                 JSONArray jsonArray = new JSONArray();
                 for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
                     mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
                     jsonArray.put(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
+                }
+                if(adapter.getSelectedCategoriesCount() < 1) {
+                    Toast.makeText(getActivity(), "Choose at least one activity tag!", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+                if(numPeople.getText().toString() == null || location.getText().toString() == null || timeSelection.getCheckedRadioButtonId() == -1) {
+                    Toast.makeText(getActivity(), "Fill in all fields!", Toast.LENGTH_SHORT).show();
+                    return;
                 }
                 JSONObject jsonObject = new JSONObject();
                 try {
