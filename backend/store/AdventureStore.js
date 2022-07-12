@@ -150,34 +150,6 @@ module.exports = class AdventureStore {
         }
     };
 
-    static addAdventureParticipant = async (adventureId, userId) => {
-        try {
-            var result = await Adventure.findOneAndUpdate(
-                { _id: adventureId },
-                { $push: { peopleGoing: userId } },
-                { new: true }
-            );
-            if (result) {
-                return {
-                    code: 200,
-                    message: "Adventure participant added successfully"
-                };
-            }
-            else {
-                return {
-                    code: 404,
-                    message: "Adventure not found"
-                };
-            }
-        }
-        catch (err) {
-            return {
-                code: 500,
-                message: err
-            };
-        }
-    };
-
     static removeAdventureParticipant = async (adventureId, userId) => {
         try {
             var adventure = await Adventure.findById(adventureId);
