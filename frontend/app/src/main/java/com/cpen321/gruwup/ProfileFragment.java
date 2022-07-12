@@ -40,13 +40,17 @@ public class ProfileFragment extends Fragment {
     TextView displayName;
     ImageView profilePic;
     Button signOutButton;
+    TextView userBio;
+    String bio;
+    EditText bioInput;
     private GoogleSignInClient mGoogleSignInClient;
 
     Dialog profileDialog;
     Button editButton;
     final static String TAG = "ProfileFragment";
 
-    private String address = "20.227.142.169";
+//    private String address = "20.227.142.169";
+    private String address = "10.0.2.2";
 
     String UserID;
     String cookie;
@@ -103,7 +107,11 @@ public class ProfileFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Edit Icon Clicked");
-                showPopUp(view);
+                try {
+                    showPopUp(view);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
         });
 
@@ -120,10 +128,9 @@ public class ProfileFragment extends Fragment {
         return view;
     }
 
-    public void showPopUp(View v){
+    public void showPopUp(View v) throws IOException {
         TextView goBack;
         Button confirmButton;
-        EditText bioInput;
         TextView bioValidation;
         TextView categoryValidation;
         TextView userBio;
@@ -138,7 +145,8 @@ public class ProfileFragment extends Fragment {
         bioValidation = (TextView) profileDialog.findViewById(R.id.biographyAlert);
         categoryValidation = (TextView) profileDialog.findViewById(R.id.categoryAlert);
         userBio = (TextView) getView().findViewById(R.id.userBio);
-
+        getProfileRequest();
+        bioInput.setText(bio);
         // for categories
         initCategories();
         Log.d(TAG, "Initialize Category Recycler View");
@@ -253,11 +261,8 @@ public class ProfileFragment extends Fragment {
 
                     try {
                         JSONObject jsonObj = new JSONObject(jsonData);
-                        Log.d(TAG, "json Obj "+ jsonObj.toString());
-                        String bio = jsonObj.getString("biography");
-                        Log.d(TAG, "Bio is "+ bio);
+                        bio = jsonObj.getString("biography");
                         JSONArray pref = jsonObj.getJSONArray("categories");
-                        Log.d(TAG, "Pref is "+ pref);
 
                         ArrayList<String> preferences_list = new ArrayList<String>();
                         if (pref !=null){
@@ -266,15 +271,13 @@ public class ProfileFragment extends Fragment {
                             }
                         }
 
-                        Log.d(TAG, "List: "+ preferences_list);
-                        // Display preferences in profile
                         mSelectedCategoryNames = preferences_list;
                         getActivity().runOnUiThread(new Runnable() {
 
                             @Override
                             public void run() {
                                 // Stuff that updates the UI
-                                TextView userBio = (TextView) getView().findViewById(R.id.userBio);
+                                userBio = (TextView) getView().findViewById(R.id.userBio);
                                 userBio.setText(bio);
                                 RecyclerView.LayoutManager mLayoutManafer = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
                                 selectedCategories.setLayoutManager(mLayoutManafer);
@@ -298,17 +301,18 @@ public class ProfileFragment extends Fragment {
     }
 
 
-    private void editProfileRequest(String bioInput, ArrayList<String> categoryNames) throws IOException {
-
+    private void editProfileRequest(String biography, ArrayList<String> categoryNames) throws IOException {
+        bio = biography;
         String cookie = SupportSharedPreferences.getCookie(this.getActivity());
-        Log.d(TAG, "bio is "+ bioInput);
+        Log.d(TAG, "bio is "+ biography);
+
         JSONObject jsonObject = new JSONObject();
 
         JSONArray preferences = new JSONArray(categoryNames);
         try {
             jsonObject.put("userId", UserID);
             jsonObject.put("name", displayName.toString());
-            jsonObject.put("biography", bioInput);
+            jsonObject.put("biography", biography);
             jsonObject.put("categories", preferences);
             jsonObject.put("image", this.getArguments().getString("Photo_URL"));
         } catch (JSONException e) {

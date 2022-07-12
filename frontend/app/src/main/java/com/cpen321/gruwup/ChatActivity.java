@@ -61,8 +61,8 @@ public class ChatActivity extends AppCompatActivity {
 
     static final String TAG = "ChatActivity";
 
-//    private String address = "10.0.2.2";
-    private String address = "20.227.142.169";
+    private String address = "10.0.2.2";
+//    private String address = "20.227.142.169";
 
 
     private String cookie;

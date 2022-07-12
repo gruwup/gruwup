@@ -78,7 +78,8 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class DiscoverFragment extends Fragment {
-    private String address = "20.227.142.169";
+//    private String address = "20.227.142.169";
+    private String address = "10.0.2.2";
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;

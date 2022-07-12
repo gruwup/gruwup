@@ -43,7 +43,8 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
     MapView mMapView;
     private GoogleMap googleMap;
     JSONArray HTTP_RESPONSE_ARRAY;
-    String address = "20.227.142.169";
+//    String address = "20.227.142.169";
+    private String address = "10.0.2.2";
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {

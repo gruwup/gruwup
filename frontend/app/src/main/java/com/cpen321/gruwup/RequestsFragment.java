@@ -30,8 +30,8 @@ public class RequestsFragment extends Fragment {
     static final String TAG = "RequestsFragment";
 
     // local : "10.0.2.2" , remote: "20.227.142.169"
-//    private String address = "10.0.2.2";
-    private String address = "20.227.142.169";
+    private String address = "10.0.2.2";
+//    private String address = "20.227.142.169";
     private RequestViewAdapter adapter;
     private TextView requestList;
 
