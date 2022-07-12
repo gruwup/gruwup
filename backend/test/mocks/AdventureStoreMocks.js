@@ -1,7 +1,7 @@
 const MockTestData = require('./MockTestData');
 
 module.exports = class AdventureStoreMocks {
-    static createAdventure = jest.fn(() => {
+    static createAdventure = jest.fn((adventure) => {
         return {
             code: 200,
             message: "Adventure created successfully",

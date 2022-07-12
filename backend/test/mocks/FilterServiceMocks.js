@@ -1,3 +1,5 @@
+const MockTestData = require('./MockTestData');
+
 module.exports = class FilterServiceMocks {
     static getNearbyAdventures = jest.fn((cityName) => {
         return {

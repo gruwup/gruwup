@@ -74,7 +74,7 @@ module.exports = class RequestStore {
                 return {
                     code: 200,
                     message: "Request accepted",
-                    payload: result
+                    payload: request
                 }
             }
             else {
