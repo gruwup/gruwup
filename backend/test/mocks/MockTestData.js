@@ -48,4 +48,40 @@ module.exports = class MockTestData {
         status: "PENDING",
         dateTime: "1887602981",
     }
+
+    static testUser = {
+        userId: "1",
+        name: "Bob John",
+        biography: "Hello, thanks for reading my bio!",
+        categories: ["MOVIE","MUSIC"],
+        image: "Test image"
+    }
+
+    static testMessage1 = {
+        "userId": "1",
+        "name": "Bob John",
+        "message": "Hi there",
+        "dateTime": "1907703292"
+    }
+
+    static testMessage2 = {
+        "userId": "2",
+        "name": "Larry Joe",
+        "message": "Hello",
+        "dateTime": "1802703302"
+    }
+
+    static testMessageGroup1 = {
+        adventureId: "1",
+        pagination: "1907703292",
+        prevPagination: "1",
+        messages: [testMessage1]
+    }
+
+    static testMessageGroup2 = {
+        adventureId: "1",
+        pagination: "1907703292",
+        prevPagination: "1",
+        messages: [testMessage2, testMessage1]
+    }
 }
