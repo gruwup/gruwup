@@ -7,7 +7,7 @@ jobs:
       - name: Check out repository code
         uses: actions/checkout@v3
       - name: Open tests folder
-        run: cd /backend/tests
+        run: cd ${{ github.workspace }}/backend/test
       - run: ls
       - run: npm install
       - name: Run tests
