@@ -12,20 +12,6 @@ module.exports = class FilterService {
                     message: adventures.message
                 }
             }
-            // var adventureThumbnails = adventures.payload.map(adventure => {
-            //     return {
-            //         adventureId: adventure._id,
-            //         title: adventure.title,
-            //         category: adventure.category,
-            //         image: adventure.image,
-            //         location: adventure.location
-            //     };
-            // });
-            // return {
-            //     code: 200,
-            //     message: "Nearby adventures found",
-            //     payload: adventureThumbnails
-            // };
             return {
                 code: 200,
                 message: "Nearby adventures found",

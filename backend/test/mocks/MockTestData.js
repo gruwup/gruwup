@@ -1,3 +1,5 @@
+const { ObjectId } = require("mongodb");
+
 module.exports = class MockTestData {
     static testAdventure1 = {
         _id: "1",
@@ -28,24 +30,26 @@ module.exports = class MockTestData {
     };
 
     static testRequest1 = {
-        _id: "1",
+        _id: new ObjectId("1"),
         adventureId: "1",
         adventureOwner: "minerva",
-        AdventureTitle: "Transfiguration Show",
+        adventureTitle: "Transfiguration Show",
         requester: "severus",
         requesterId: "severus",
         status: "PENDING",
         dateTime: "1887602251",
+        __v: 0
     };
 
     static testRequest2 = {
-        _id: "2",
+        _id: new ObjectId("2"),
         adventureId: "2",
         adventureOwner: "severus",
-        AdventureTitle: "Potion History",
+        adventureTitle: "Potion History",
         requester: "minerva",
         requesterId: "minerva",
         status: "PENDING",
         dateTime: "1887602981",
+        __v: 0
     }
 }
