@@ -179,7 +179,15 @@ public class ProfileFragment extends Fragment {
                 Log.d(TAG, "Pressed Confirm Button");
                 Log.d(TAG, bioInput.getText().toString());
 
-                if (!verifyUserInput(bioInput).equals("valid")){
+                if(!verifyUserInput(bioInput).equals("valid") && adapter.getSelectedCategoriesCount()<3){
+                    bioValidation.setText(verifyUserInput(bioInput));
+                    categoryValidation.setText("Please select at least 3 categories.");
+                }
+                else if (verifyUserInput(bioInput).equals("valid") && adapter.getSelectedCategoriesCount()<3){
+                    bioValidation.setText("");
+                    categoryValidation.setText("Please select at least 3 categories.");
+                }
+                else if (!verifyUserInput(bioInput).equals("valid")){
                     bioValidation.setText(verifyUserInput(bioInput));
                 }
                 else if(adapter.getSelectedCategoriesCount()<3){
