@@ -4,6 +4,7 @@ jobs:
   Explore-GitHub-Actions:
     runs-on: ubuntu-latest
     steps:
-      - run: cd backend/tests
+      - run: cd ${{ github.workspace }}/backend/tests
+      - run: ls
       - run: npm install
       - run: npm test
