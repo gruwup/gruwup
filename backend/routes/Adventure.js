@@ -121,19 +121,8 @@ router.get("/:adventureId/detail", async (req, res) => {
 // update adventure details (you cannot manually update adventure status this way)
 router.put("/:adventureId/update", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
-        var adventure = {
-            owner: req.body.owner,
-            title: req.body.title,
-            description: req.body.description,
-            peopleGoing: req.body.peopleGoing,
-            dateTime: req.body.dateTime,
-            location: req.body.location,
-            category: req.body.category,
-            image: req.body.image,
-            city: req.body.location.split(", ")[1] ?? "unknown"
-        };
         try {
-            var result = await AdventureStore.updateAdventure(req.params.adventureId, adventure);
+            var result = await AdventureStore.updateAdventure(req.params.adventureId, req.body);
             if (result.code === 200) {
                 res.status(200).send(result.payload);
             }

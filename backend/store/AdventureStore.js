@@ -35,7 +35,6 @@ module.exports = class AdventureStore {
     };
 
     static getAdventureDetail = async (adventureId) => {
-        console.log("details: " + adventureId);
         if (!ObjectId.isValid(adventureId)) {
             return {
                 code: 400,
@@ -67,6 +66,15 @@ module.exports = class AdventureStore {
     };
 
     static updateAdventure = async (adventureId, adventure) => {
+        if (!ObjectId.isValid(adventureId)) {
+            return {
+                code: 400,
+                message: "Invalid adventure id"
+            };
+        }
+        if (adventure.location) {
+            adventure.city = adventure.location.split(", ")[1] ?? "unknown";
+        }
         try {
             var result = await Adventure.findByIdAndUpdate(adventureId, adventure, {new: true});
             if (result) {
@@ -86,7 +94,7 @@ module.exports = class AdventureStore {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
