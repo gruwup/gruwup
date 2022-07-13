@@ -13,20 +13,8 @@ router.get("/", (req, res) => {
 // create new adventure
 router.post("/create", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
-        var adventure = {
-            owner: req.body.owner,
-            title: req.body.title,
-            description: req.body.description,
-            peopleGoing: [req.body.owner],
-            dateTime: req.body.dateTime,
-            location: req.body.location,
-            category: req.body.category,
-            status: "OPEN",
-            image: req.body.image,
-            city: req.body.location.split(", ")[1] ?? "unknown"
-        };
         try {
-            var result = await AdventureStore.createAdventure(adventure);
+            var result = await AdventureStore.createAdventure(req.body);
             if (result.code === 200) {
                 res.status(200).send(result.payload);
             }
@@ -113,6 +101,7 @@ router.get("/:adventureId/detail", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
         try {
             var result = await AdventureStore.getAdventureDetail(req.params.adventureId);
+            console.log(result);
             if (result.code === 200) {
                 res.status(200).send(result.payload);
             }

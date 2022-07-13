@@ -1,8 +1,20 @@
 const Adventure = require("../models/Adventure");
-const UserStore = require("../store/UserStore");
+var ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = class AdventureStore {
     static createAdventure = async (adventure) => {
+        var adventure = {
+            owner: adventure.owner,
+            title: adventure.title,
+            description: adventure.description,
+            peopleGoing: [adventure.owner],
+            dateTime: adventure.dateTime,
+            location: adventure.location,
+            category: adventure.category,
+            status: "OPEN",
+            image: adventure.image,
+            city: adventure.location.split(", ")[1] ?? "unknown"
+        };
         var adventure = new Adventure(adventure);
         
         try {
@@ -17,12 +29,19 @@ module.exports = class AdventureStore {
         catch (err) {
             return {
                 code: 400,
-                message: err
+                message: err._message
             };
         }
     };
 
     static getAdventureDetail = async (adventureId) => {
+        console.log("details: " + adventureId);
+        if (!ObjectId.isValid(adventureId)) {
+            return {
+                code: 400,
+                message: "Invalid adventure id"
+            };
+        }
         try {
             var result = await Adventure.findById(adventureId);
             if (result) {
@@ -42,7 +61,7 @@ module.exports = class AdventureStore {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         };
     };
