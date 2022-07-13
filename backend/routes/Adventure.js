@@ -164,6 +164,7 @@ router.get("/:userId/get-adventures", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
         try {
             var result = await AdventureStore.getUsersAdventures(req.params.userId);
+            console.log(result);
             if (result.code === 200) {
                 res.status(200).send(result.payload);
             }

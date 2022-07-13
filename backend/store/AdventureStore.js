@@ -100,6 +100,12 @@ module.exports = class AdventureStore {
     };
 
     static cancelAdventure = async (adventureId) => {
+        if (!ObjectId.isValid(adventureId)) {
+            return {
+                code: 400,
+                message: "Invalid adventure id"
+            };
+        }
         try {
             var result = await Adventure.findOneAndUpdate(
                 { _id: adventureId },
