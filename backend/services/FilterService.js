@@ -35,7 +35,7 @@ module.exports = class FilterService {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
@@ -65,7 +65,7 @@ module.exports = class FilterService {
         catch {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
@@ -107,7 +107,7 @@ module.exports = class FilterService {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     }

@@ -16,7 +16,7 @@ module.exports = class RequestStore {
         catch (err) {
             return {
                 code: 400,
-                message: err
+                message: err._message
             };
         }
     };
@@ -51,7 +51,7 @@ module.exports = class RequestStore {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
@@ -88,7 +88,7 @@ module.exports = class RequestStore {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
@@ -104,7 +104,7 @@ module.exports = class RequestStore {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
@@ -134,7 +134,7 @@ module.exports = class RequestStore {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
