@@ -61,6 +61,7 @@ module.exports = class User {
                     else if (curr > pagination) return prev;
                     else return (Math.abs(curr - pagination) < Math.abs(prev - pagination) ? curr : prev);
                 });
+                console.log(typeof prevPagination);
                 return {
                     code: 200,
                     message: "Previous pagination found",
@@ -138,12 +139,10 @@ module.exports = class User {
     static deleteChat = async (adventureId) => {
         try {
             var result = await Message.deleteMany({ adventureId: adventureId });
-            
             if (result) {
                 return {
                     code: 200,
-                    message: "Adventure chat deleted",
-                    payload: result
+                    message: "Adventure chat deleted"
                 }
             }
             else {

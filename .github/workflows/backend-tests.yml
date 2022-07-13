@@ -1,0 +1,13 @@
+name: Backend Tests
+on: [push]
+jobs:
+  Backend-Tests:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+      - name: Setup and run tests
+        working-directory: ./backend/test
+        run: |
+          ls
+          npm install
+          npm test
