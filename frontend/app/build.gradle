@@ -5,6 +5,10 @@ plugins {
 android {
     compileSdk 32
 
+    testOptions {
+        animationsDisabled = true
+    }
+
     defaultConfig {
         applicationId "com.cpen321.gruwup"
         minSdk 16
