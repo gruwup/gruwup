@@ -30,7 +30,7 @@ module.exports = class MockTestData {
     };
 
     static testRequest1 = {
-        _id: new ObjectId("1"),
+        _id: "1",
         adventureId: "1",
         adventureOwner: "minerva",
         adventureTitle: "Transfiguration Show",
@@ -42,7 +42,7 @@ module.exports = class MockTestData {
     };
 
     static testRequest2 = {
-        _id: new ObjectId("2"),
+        _id: "2",
         adventureId: "2",
         adventureOwner: "severus",
         adventureTitle: "Potion History",
