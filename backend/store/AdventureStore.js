@@ -184,6 +184,12 @@ module.exports = class AdventureStore {
     };
 
     static removeAdventureParticipant = async (adventureId, userId) => {
+        if (!ObjectId.isValid(adventureId)) {
+            return {
+                code: 400,
+                message: "Invalid adventure id"
+            };
+        }
         try {
             var adventure = await Adventure.findById(adventureId);
             if (!adventure) {
@@ -217,18 +223,10 @@ module.exports = class AdventureStore {
                     );
                     }
                     
-                    if (result) {
-                        return {
-                            code: 200,
-                            message: "Adventure participant removed successfully"
-                        };
-                    }
-                    else {
-                        return {
-                            code: 404,
-                            message: "Adventure not found"
-                        };
-                    }
+                    return {
+                        code: 200,
+                        message: "Adventure participant removed successfully"
+                    };
                 }
             }
         }

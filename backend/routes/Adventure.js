@@ -164,7 +164,6 @@ router.get("/:userId/get-adventures", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
         try {
             var result = await AdventureStore.getUsersAdventures(req.params.userId);
-            console.log(result);
             if (result.code === 200) {
                 res.status(200).send(result.payload);
             }
@@ -186,6 +185,7 @@ router.put("/:adventureId/quit", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
         try {
             var result = await AdventureStore.removeAdventureParticipant(req.params.adventureId, req.query.userId);
+            console.log(result);
             if (result.code === 200) {
                 res.status(200).send(result.message);
             }
