@@ -1,6 +1,7 @@
 const { Server } = require("socket.io");
 const AdventureStore = require("../store/AdventureStore");
 const Session = require("../services/Session");
+const TestMode = require("../TestMode");
 var io;
 
 module.exports = class ChatSocket {
@@ -10,7 +11,7 @@ module.exports = class ChatSocket {
         io = new Server(server);
         io.on('connection', (socket) => {
             socket.on('userInfo', (cookie, userId) => {
-                if (Session.validSession(cookie)) {
+                if (Session.validSession(cookie) || TestMode.on) {
                     socket.username = userId;
                     socket.emit('connected', true);
                 }
