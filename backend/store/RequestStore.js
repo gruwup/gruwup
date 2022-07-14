@@ -34,19 +34,11 @@ module.exports = class RequestStore {
             result.sort((a, b) => {
                 return b.dateTime - a.dateTime;
             });
-            if (result) {
-                return {
-                    code: 200,
-                    message: "Requests found",
-                    payload: result
-                };
-            }
-            else {
-                return {
-                    code: 404,
-                    message: "Requests not found"
-                };
-            }
+            return {
+                code: 200,
+                message: "Requests found",
+                payload: result
+            };
         }
         catch (err) {
             return {
