@@ -41,15 +41,15 @@ public class ChatFragment extends Fragment {
     ArrayList <Adventure> adventures = new ArrayList<>();
     private static String TAG = "ChatFragment";
 
-    private String address = "10.0.2.2";
+    private String address;
     private String cookie;
     private ChatViewAdapter adapter;
     private TextView noMessages;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        address = getActivity().getString(R.string.connection_address);
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         noMessages = view.findViewById(R.id.noMessages);
         adapter = new ChatViewAdapter(getActivity(),adventures);

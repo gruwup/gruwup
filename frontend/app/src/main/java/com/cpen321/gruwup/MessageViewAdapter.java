@@ -24,7 +24,6 @@ public class MessageViewAdapter extends RecyclerView.Adapter<MessageViewAdapter.
     public MessageViewAdapter(Context context, ArrayList<Message> messages){
         this.context = context;
         this.messages = messages;
-
     }
 
     @NonNull
@@ -36,11 +35,8 @@ public class MessageViewAdapter extends RecyclerView.Adapter<MessageViewAdapter.
 
     @Override
     public void onBindViewHolder(@NonNull MessageViewAdapter.ViewHolder holder, int position) {
-
         Message message = messages.get(holder.getAdapterPosition());
         if (messages.get(holder.getAdapterPosition()).getMessageStatus().equals(SENT_MESSAGE)){
-//            holder.senderName.setText(message.getName());
-//            holder.sentMessage.setVisibility(View.VISIBLE);
             holder.sentMessage.setText(message.getMessage());
             holder.sentMessage.setVisibility(View.VISIBLE);
         }
@@ -50,7 +46,6 @@ public class MessageViewAdapter extends RecyclerView.Adapter<MessageViewAdapter.
             holder.receivedMessage.setText(message.getMessage());
             holder.receivedMessage.setVisibility(View.VISIBLE);
         }
-
     }
 
     @Override
@@ -68,10 +63,8 @@ public class MessageViewAdapter extends RecyclerView.Adapter<MessageViewAdapter.
             super(itemView);
             sentMessage = itemView.findViewById(R.id.sent_message);
             receivedMessage = itemView.findViewById(R.id.received_message);
-
             senderName = itemView.findViewById(R.id.sender_name);
             receiverName = itemView.findViewById(R.id.receiver_name);
-
         }
     }
 }

@@ -44,8 +44,7 @@ public class SignUpActivity extends AppCompatActivity {
     private Integer age;
     private GoogleSignInClient mGoogleSignInClient;
 
-//    private String address = "10.0.2.2";
-    private String address = "10.0.2.2";
+    private String address;
 
     private void initCategories(){
         mCategoryNames.add("MOVIE");
@@ -60,7 +59,7 @@ public class SignUpActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-
+        address = getString(R.string.connection_address);
         // Note: get stores UserID this way for activity
         String UserID = SupportSharedPreferences.getUserId(getApplicationContext());
 
@@ -108,8 +107,6 @@ public class SignUpActivity extends AppCompatActivity {
                             startActivity(intent);
                         }
                     }.start();
-
-
                 }
                 else if(adapter.getSelectedCategoriesCount()<3){
                     categoryValidation.setText("Please select at least 3 categories.");
@@ -136,26 +133,22 @@ public class SignUpActivity extends AppCompatActivity {
                     intent.putExtras(extras);
                     startActivity(intent);
                 }
-
             }
         });
-
     }
 
     public boolean isStringInt(String s)
     {
-        try
-        {
+        try {
             Integer.parseInt(s);
             return true;
-        } catch (NumberFormatException ex)
-        {
+        }
+        catch (NumberFormatException ex) {
             return false;
         }
     }
 
     private void createProfileRequest( String UserID, String displayName, String profileUrl, String bioInput, ArrayList<String> categoryNames) throws IOException {
-
         Log.d(TAG, "bio is "+ bioInput);
         JSONObject jsonObject = new JSONObject();
         JSONArray preferences = new JSONArray(categoryNames);
@@ -167,14 +160,12 @@ public class SignUpActivity extends AppCompatActivity {
             jsonObject.put("categories", preferences);
             jsonObject.put("image", profileUrl);
             Log.d(TAG, "jsonObj"+ jsonObject);
-
         } catch (JSONException e) {
             e.printStackTrace();
         }
 
         String cookie = SupportSharedPreferences.getCookie(getApplicationContext());
 
-        // To do: change this later with server url
         SupportRequests.postWithCookie("http://"+address+":8081/user/profile/create", jsonObject.toString(), cookie,new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {

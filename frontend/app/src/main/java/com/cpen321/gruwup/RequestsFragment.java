@@ -28,10 +28,7 @@ import okhttp3.Response;
 public class RequestsFragment extends Fragment {
     ArrayList<Request> requests = new ArrayList<>();
     static final String TAG = "RequestsFragment";
-
-    // local : "10.0.2.2" , remote: "10.0.2.2"
-//    private String address = "10.0.2.2";
-    private String address = "10.0.2.2";
+    private String address;
     private RequestViewAdapter adapter;
     private TextView requestList;
 
@@ -42,8 +39,8 @@ public class RequestsFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        address = getActivity().getString(R.string.connection_address);
         View view = inflater.inflate(R.layout.fragment_requests, container, false);
-
         try {
             initRequestData();
             adapter = new RequestViewAdapter(getActivity(),requests);
@@ -70,14 +67,14 @@ public class RequestsFragment extends Fragment {
 
             @Override
             public void onFailure(Call call, IOException e) {
-                Log.d(TAG, "get request not successful");
+                Log.d(TAG, "GET request not successful");
                 Log.d(TAG, e.toString());
             }
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if(response.isSuccessful()){
-                    Log.d(TAG, "get request successful");
+                    Log.d(TAG, "GET request successful");
                     String jsonData = response.body().string();
 
                     try {
@@ -137,7 +134,7 @@ public class RequestsFragment extends Fragment {
                     else {
                         requestList.setVisibility(View.GONE);
                     }
-                    Log.d(TAG, "get profile is unsuccessful");
+                    Log.d(TAG, "GET profile is unsuccessful");
                     Log.d(TAG, response.body().string());
                 }
             }
