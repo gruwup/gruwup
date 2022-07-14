@@ -5,40 +5,6 @@ const RequestStore = require("../store/RequestStore");
 const TestMode = require("../TestMode");
 const Session = require("../services/Session");
 
-// these are just for testing, delete later
-const example = {
-    "adventureId": "string",
-    "requester": "Bob John",
-	"requesterId": "string",
-	"accepted": [],
-	"rejected": [],
-    "state": "pending",
-    "dateTime": "123456789"
-}
-
-const example_req = {
-    "requests": [
-		{
-			"adventureId": "string",
-			"requester": "Bob John",
-			"requesterId": "string",
-			"accepted": [],
-			"rejected": [],
-			"state": "pending",
-			"dateTime": "123456789"
-		},
-		{
-			"adventureId": "string",
-			"requester": "Bob John",
-			"requesterId": "string",
-			"accepted": [],
-			"rejected": [],
-			"state": "pending",
-			"dateTime": "123456789"
-		}
-    ]
-}
-
 router.post("/:adventureId/send-request", async (req, res) => {
 	if (Session.validSession(req.headers.cookie) || TestMode.on) {
 		try {

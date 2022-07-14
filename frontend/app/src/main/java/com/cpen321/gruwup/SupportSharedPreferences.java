@@ -33,8 +33,4 @@ public class SupportSharedPreferences {
         String cookie = settings.getString(USER_NAME, null);
         return cookie;
     }
-
-
-
-
 }
