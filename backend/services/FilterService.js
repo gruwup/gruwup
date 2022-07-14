@@ -3,6 +3,13 @@ const UserStore = require("../store/UserStore");
 
 module.exports = class FilterService {
     static getNearbyAdventures = async (cityName) => {
+        if (typeof cityName !== String) {
+            return {
+                code: 400,
+                message: "Invalid input"
+            }
+        }
+
         const nearbyFilter = {city: cityName};
         try {
             const adventures = await AdventureStore.findAdventuresByFilter(nearbyFilter);
