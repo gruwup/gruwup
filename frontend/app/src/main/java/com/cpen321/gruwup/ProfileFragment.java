@@ -46,7 +46,7 @@ public class ProfileFragment extends Fragment {
     Button editButton;
     final static String TAG = "ProfileFragment";
 
-    private String address = "20.227.142.169";
+    private String address = "10.0.2.2";
 
     String UserID;
     String cookie;

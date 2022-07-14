@@ -45,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
 
 //    private String address = "10.0.2.2";
-    private String address = "20.227.142.169";
+    private String address = "10.0.2.2";
 
     private void initCategories(){
         mCategoryNames.add("MOVIE");

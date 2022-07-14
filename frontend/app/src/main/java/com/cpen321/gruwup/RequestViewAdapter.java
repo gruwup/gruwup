@@ -42,9 +42,9 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
     Dialog requestDialog;
     ArrayList<Request> requests;
 
-    // local : "10.0.2.2" , remote: "20.227.142.169"
+    // local : "10.0.2.2" , remote: "10.0.2.2"
 //    private String address = "10.0.2.2";
-    private String address = "20.227.142.169";
+    private String address = "10.0.2.2";
     static final String TAG = "RequestViewAdapter";
 
     public RequestViewAdapter(Context context, ArrayList<Request> requests){

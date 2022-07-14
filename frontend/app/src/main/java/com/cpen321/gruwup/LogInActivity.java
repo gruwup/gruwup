@@ -46,7 +46,7 @@ public class LogInActivity extends AppCompatActivity {
     private int RC_SIGN_IN = 1;
     final static String TAG = "LogInActivity";
 //    private String address = "10.0.2.2";
-    private String address = "20.227.142.169";
+    private String address = "10.0.2.2";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

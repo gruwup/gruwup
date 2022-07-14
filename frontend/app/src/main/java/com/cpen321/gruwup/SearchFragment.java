@@ -82,8 +82,7 @@ import okhttp3.Response;
 
 public class SearchFragment extends Fragment{
     RecyclerView recyclerView;
-//    private String address = "20.227.142.169";
-    private String address = "20.227.142.169";
+    private String address;
     static ArrayList<Map<String, String>> mAdventureList;
     DiscAdvViewAdapter AdventureAdapter; 
     String HTTPRESULT = "";
@@ -116,6 +115,7 @@ public class SearchFragment extends Fragment{
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        address = getActivity().getString(R.string.connection_address);
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
             }
@@ -126,10 +126,6 @@ public class SearchFragment extends Fragment{
         if (location != null) {
             double latitude = location.getLatitude();
             double longitude = location.getLongitude();
-            Log.d("Location", "Latitude: " + latitude + ", Longitude: " + longitude);
-        }
-        else {
-            Log.d("Location", "Location is null");
         }
         String city = getCurrentCity(location);
         System.out.println("city " + city);
@@ -149,10 +145,8 @@ public class SearchFragment extends Fragment{
                 AdventureAdapter.notifyDataSetChanged();
                 if(mAdventureList != null) {
                     if (mAdventureList.size() > 0) {
-                        System.out.println("invis");
                         noAdventures.setVisibility(View.INVISIBLE);
                     } else {
-                        System.out.println("vis");
                         noAdventures.setVisibility(View.VISIBLE);
                     }
                 }
@@ -162,11 +156,8 @@ public class SearchFragment extends Fragment{
 
         searchText = (EditText) view.findViewById(R.id.search_events);
         searchText.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) {
-                // If the event is a key-down event on the "enter" button
+            public boolean onKey(View v, int keyCode, KeyEvent event) { //responds per alphabetical key press
                 if (true) {
-                    // Perform action on key press
-                    System.out.println("Search button clicked");
                     searchAdventure(view);
                     return true;
                 }
@@ -231,7 +222,7 @@ public class SearchFragment extends Fragment{
                         e.printStackTrace();
                     }
                 } else {
-                    System.out.println("HTTP req failed");
+                    System.out.println("HTTP request failed");
                 }
             }
         });
@@ -266,16 +257,13 @@ public class SearchFragment extends Fragment{
         }
 
         getActivity().runOnUiThread(new Runnable() {
-
             @Override
             public void run() {
-
                 if(mAdventureList.size() > 0) {
                     noAdventures.setVisibility(View.INVISIBLE);
                 } else {
                     noAdventures.setVisibility(View.VISIBLE);
                 }
-
             }
         });
 
@@ -312,7 +300,6 @@ public class SearchFragment extends Fragment{
         applyFilters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
                 System.out.println("Apply filters button clicked");
                 JSONArray jsonArray = new JSONArray();
                 for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
@@ -354,17 +341,15 @@ public class SearchFragment extends Fragment{
                 try {
                     Response response = call.execute();
                     HTTPRESULT = response.body().string();
-                    System.out.println("httpresult = " + HTTPRESULT);
+                    System.out.println("HTTP result = " + HTTPRESULT);
                     initAdventures();
                     AdventureAdapter.notifyDataSetChanged();
                     recyclerView.setAdapter(new DiscAdvViewAdapter(getActivity(), mAdventureList));
                     recyclerView.invalidate();
                     if(mAdventureList != null) {
                         if (mAdventureList.size() > 0) {
-                            System.out.println("invis");
                             noAdventures.setVisibility(View.INVISIBLE);
                         } else {
-                            System.out.println("vis");
                             noAdventures.setVisibility(View.VISIBLE);
                         }
                     }
@@ -375,10 +360,8 @@ public class SearchFragment extends Fragment{
                 recyclerView.invalidate();
                 if(mAdventureList != null) {
                     if (mAdventureList.size() > 0) {
-                        System.out.println("invis");
                         noAdventures.setVisibility(View.INVISIBLE);
                     } else {
-                        System.out.println("vis");
                         noAdventures.setVisibility(View.VISIBLE);
                     }
                 }
@@ -422,20 +405,16 @@ public class SearchFragment extends Fragment{
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-
         //Detects request codes
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
-
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), selectedImage);
                 imageBMP = bitmap;
             } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
         }
@@ -468,7 +447,7 @@ public class SearchFragment extends Fragment{
             case R.id.anyRadioButton:
                 return Integer.MAX_VALUE + "";
             default:
-                return "error";
+                return "error"; //should never happen
         }
     }
 
