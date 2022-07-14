@@ -1,8 +1,20 @@
 const Adventure = require("../models/Adventure");
-const UserStore = require("../store/UserStore");
+var ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = class AdventureStore {
     static createAdventure = async (adventure) => {
+        var adventure = {
+            owner: adventure.owner,
+            title: adventure.title,
+            description: adventure.description,
+            peopleGoing: [adventure.owner],
+            dateTime: adventure.dateTime,
+            location: adventure.location,
+            category: adventure.category,
+            status: "OPEN",
+            image: adventure.image,
+            city: adventure.location.split(", ")[1] ?? "unknown"
+        };
         var adventure = new Adventure(adventure);
         
         try {
@@ -17,12 +29,18 @@ module.exports = class AdventureStore {
         catch (err) {
             return {
                 code: 400,
-                message: err
+                message: err._message
             };
         }
     };
 
     static getAdventureDetail = async (adventureId) => {
+        if (!ObjectId.isValid(adventureId)) {
+            return {
+                code: 400,
+                message: "Invalid adventure id"
+            };
+        }
         try {
             var result = await Adventure.findById(adventureId);
             if (result) {
@@ -42,12 +60,21 @@ module.exports = class AdventureStore {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         };
     };
 
     static updateAdventure = async (adventureId, adventure) => {
+        if (!ObjectId.isValid(adventureId)) {
+            return {
+                code: 400,
+                message: "Invalid adventure id"
+            };
+        }
+        if (adventure.location) {
+            adventure.city = adventure.location.split(", ")[1] ?? "unknown";
+        }
         try {
             var result = await Adventure.findByIdAndUpdate(adventureId, adventure, {new: true});
             if (result) {
@@ -67,12 +94,18 @@ module.exports = class AdventureStore {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
 
     static cancelAdventure = async (adventureId) => {
+        if (!ObjectId.isValid(adventureId)) {
+            return {
+                code: 400,
+                message: "Invalid adventure id"
+            };
+        }
         try {
             var result = await Adventure.findOneAndUpdate(
                 { _id: adventureId },
@@ -150,35 +183,13 @@ module.exports = class AdventureStore {
         }
     };
 
-    static addAdventureParticipant = async (adventureId, userId) => {
-        try {
-            var result = await Adventure.findOneAndUpdate(
-                { _id: adventureId },
-                { $push: { peopleGoing: userId } },
-                { new: true }
-            );
-            if (result) {
-                return {
-                    code: 200,
-                    message: "Adventure participant added successfully"
-                };
-            }
-            else {
-                return {
-                    code: 404,
-                    message: "Adventure not found"
-                };
-            }
-        }
-        catch (err) {
+    static removeAdventureParticipant = async (adventureId, userId) => {
+        if (!ObjectId.isValid(adventureId)) {
             return {
-                code: 500,
-                message: err
+                code: 400,
+                message: "Invalid adventure id"
             };
         }
-    };
-
-    static removeAdventureParticipant = async (adventureId, userId) => {
         try {
             var adventure = await Adventure.findById(adventureId);
             if (!adventure) {
@@ -212,18 +223,10 @@ module.exports = class AdventureStore {
                     );
                     }
                     
-                    if (result) {
-                        return {
-                            code: 200,
-                            message: "Adventure participant removed successfully"
-                        };
-                    }
-                    else {
-                        return {
-                            code: 404,
-                            message: "Adventure not found"
-                        };
-                    }
+                    return {
+                        code: 200,
+                        message: "Adventure participant removed successfully"
+                    };
                 }
             }
         }
