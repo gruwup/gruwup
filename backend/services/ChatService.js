@@ -7,6 +7,12 @@ var messageCount = {}
 module.exports = class ChatService {
     static sendMessage = async (adventureId, message) => {
         var adventure = await AdventureStore.getAdventureDetail(adventureId);
+        if (adventure.code !== 200) {
+            return {
+                code: adventure.code,
+                message: adventure.message
+            }
+        }
         var participants = adventure['payload']['peopleGoing'];
         var result;
 
@@ -37,8 +43,8 @@ module.exports = class ChatService {
         }
         else {
             return {
-                code: adventure.code,
-                message: adventure.message
+                code: 400,
+                message: "User is not participant of adventure"
             }
         }
     }
