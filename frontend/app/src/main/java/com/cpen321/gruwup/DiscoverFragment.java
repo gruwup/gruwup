@@ -92,6 +92,9 @@ public class DiscoverFragment extends Fragment {
     Bitmap imageBMP = null;
     private TextView imageAlert;
     private TextView titleAlert;
+    private TextView descriptionAlert;
+    private TextView timeAlert;
+    private TextView locationAlert;
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper());
@@ -211,6 +214,9 @@ public class DiscoverFragment extends Fragment {
         titleAlert = (TextView) dialog.findViewById(R.id.setTitleAlert);
         imageAlert = (TextView) dialog.findViewById(R.id.setImageAlert);
         imageAlert.setText("Image not uploaded yet");
+        descriptionAlert = (TextView) dialog.findViewById(R.id.setDescriptionAlert);
+        timeAlert = (TextView) dialog.findViewById(R.id.setTimeAlert);
+        locationAlert = (TextView) dialog.findViewById(R.id.setLocationAlert);
 
         location.setFocusable(false);
         location.setOnClickListener(new View.OnClickListener() {
@@ -238,16 +244,39 @@ public class DiscoverFragment extends Fragment {
             public void onClick(View v) {
                 if (title.getText().length() > 25) {
                     titleAlert.setText("Title should not be longer than 25 characters");
-                } else if (ProfileFragment.verifyUserInput(title) != "valid" ||
-                        ProfileFragment.verifyUserInput(description) != "valid" ||
-                        ProfileFragment.verifyUserInput(time) != "valid" ||
-                        ProfileFragment.verifyUserInput(location) != "valid") {
+                } else if (ProfileFragment.verifyUserInput(title) != "valid") {
                     titleAlert.setText("Make sure all fields are not empty and use alphanumeric characters!");
+                } else if (ProfileFragment.verifyUserInput(description) != "valid") {
+                    titleAlert.setText(null);
+                    descriptionAlert.setText("Make sure all fields are not empty and use alphanumeric characters!");
+                } else if (ProfileFragment.verifyUserInput(time) != "valid") {
+                    titleAlert.setText(null);
+                    descriptionAlert.setText(null);
+                    timeAlert.setText("Make sure all fields are not empty and use alphanumeric characters!");
+                } else if (ProfileFragment.verifyUserInput(location) != "valid") {
+                    titleAlert.setText(null);
+                    descriptionAlert.setText(null);
+                    timeAlert.setText(null);
+                    locationAlert.setText("Make sure all fields are not empty and use alphanumeric characters!");
                 } else if (imageBMP == null) {
+                    titleAlert.setText(null);
+                    descriptionAlert.setText(null);
+                    timeAlert.setText(null);
+                    locationAlert.setText(null);
                     imageAlert.setText("Please choose an image");
                 } else if (adapter.getSelectedCategoriesCount() < 1) {
+                    titleAlert.setText(null);
+                    descriptionAlert.setText(null);
+                    timeAlert.setText(null);
+                    locationAlert.setText(null);
+                    imageAlert.setText(null);
                     Toast.makeText(getActivity(), "Choose at least one activity tag!", Toast.LENGTH_SHORT).show();
                 } else if (adapter.getSelectedCategoriesCount() > 1) {
+                    titleAlert.setText(null);
+                    descriptionAlert.setText(null);
+                    timeAlert.setText(null);
+                    locationAlert.setText(null);
+                    imageAlert.setText(null);
                     Toast.makeText(getActivity(), "Only one activity tag allowed!", Toast.LENGTH_SHORT).show();
                 } else {
                     for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {

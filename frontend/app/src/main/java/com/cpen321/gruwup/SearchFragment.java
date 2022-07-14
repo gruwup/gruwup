@@ -311,7 +311,7 @@ public class SearchFragment extends Fragment{
                     return;
                 }
                 if(numPeople.getText().toString() == null || location.getText().toString() == null || timeSelection.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(getActivity(), "Fill in all fields!", Toast.LENGTH_SHORT).show();
+                    Toast.makeText(getActivity(), "Choose a time at least!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 JSONObject jsonObject = new JSONObject();
