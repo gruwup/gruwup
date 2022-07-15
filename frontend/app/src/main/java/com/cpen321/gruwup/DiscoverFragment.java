@@ -78,7 +78,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class DiscoverFragment extends Fragment {
-    private String address = "20.227.142.169";
+    private String address;
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
@@ -92,6 +92,9 @@ public class DiscoverFragment extends Fragment {
     Bitmap imageBMP = null;
     private TextView imageAlert;
     private TextView titleAlert;
+    private TextView descriptionAlert;
+    private TextView timeAlert;
+    private TextView locationAlert;
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     private ArrayList<String> mCategoryNames = new ArrayList<>();
     private Handler mHandler = new Handler(Looper.getMainLooper());
@@ -109,6 +112,7 @@ public class DiscoverFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        address = getActivity().getString(R.string.connection_address);
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
@@ -162,11 +166,8 @@ public class DiscoverFragment extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-
-        LottieAnimationView loading = view.findViewById(R.id.loading_animation);
-
+        LottieAnimationView loading = view.findViewById(R.id.loading_animation); //cool loading animation
         loading.setVisibility(View.VISIBLE);
-
         new CountDownTimer(2000, 1000) {
             @Override
             public void onTick(long millisUntilFinished) {
@@ -174,10 +175,10 @@ public class DiscoverFragment extends Fragment {
 
             @Override
             public void onFinish() {
-                loading.setVisibility(View.GONE);;
+                loading.setVisibility(View.GONE);
+                ;
             }
         }.start();
-
     }
 
     private void createAdventure(View v) {
@@ -203,7 +204,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        Places.initialize(getActivity().getApplicationContext(), "AIzaSyBTzzjkUX-5Snzfhc8JrGn1wA07jgKbluk");
+        Places.initialize(getActivity().getApplicationContext(), getString(R.string.googleAPIKey)); //set up Places API
 
         title = (EditText) dialog.findViewById(R.id.create_adventure_title_input);
         description = (EditText) dialog.findViewById(R.id.create_adventure_description_input);
@@ -213,6 +214,9 @@ public class DiscoverFragment extends Fragment {
         titleAlert = (TextView) dialog.findViewById(R.id.setTitleAlert);
         imageAlert = (TextView) dialog.findViewById(R.id.setImageAlert);
         imageAlert.setText("Image not uploaded yet");
+        descriptionAlert = (TextView) dialog.findViewById(R.id.setDescriptionAlert);
+        timeAlert = (TextView) dialog.findViewById(R.id.setTimeAlert);
+        locationAlert = (TextView) dialog.findViewById(R.id.setLocationAlert);
 
         location.setFocusable(false);
         location.setOnClickListener(new View.OnClickListener() {
@@ -238,25 +242,47 @@ public class DiscoverFragment extends Fragment {
         confirmCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                if (title.getText().length()>25){
-                    titleAlert.setText("Title cannot be longer than 25 characters");
-                }
-                else if (ProfileFragment.verifyUserInput(title) != "valid" ||
-                        ProfileFragment.verifyUserInput(description) != "valid" ||
-                        ProfileFragment.verifyUserInput(time) != "valid" ||
-                        ProfileFragment.verifyUserInput(location) != "valid") {
+                if (title.getText().length() > 25) {
+                    titleAlert.setText("Title should not be longer than 25 characters");
+                } else if (ProfileFragment.verifyUserInput(title) != "valid") {
                     titleAlert.setText("Make sure all fields are not empty and use alphanumeric characters!");
-//                    Toast.makeText(getActivity(), "Make sure all fields are not empty and use alphanumeric characters!", Toast.LENGTH_SHORT).show();
+                } else if (ProfileFragment.verifyUserInput(description) != "valid") {
+                    titleAlert.setText(null);
+                    descriptionAlert.setText("Make sure all fields are not empty and use alphanumeric characters!");
+                } else if (ProfileFragment.verifyUserInput(time) != "valid") {
+                    titleAlert.setText(null);
+                    descriptionAlert.setText(null);
+                    timeAlert.setText("Make sure all fields are not empty and use alphanumeric characters!");
+                } else if (ProfileFragment.verifyUserInput(location) != "valid") {
+                    titleAlert.setText(null);
+                    descriptionAlert.setText(null);
+                    timeAlert.setText(null);
+                    locationAlert.setText("Make sure all fields are not empty and use alphanumeric characters!");
                 } else if (imageBMP == null) {
+                    titleAlert.setText(null);
+                    descriptionAlert.setText(null);
+                    timeAlert.setText(null);
+                    locationAlert.setText(null);
                     imageAlert.setText("Please choose an image");
-//                    Toast.makeText(getActivity(), "Choose an image!", Toast.LENGTH_SHORT).show();
                 } else if (adapter.getSelectedCategoriesCount() < 1) {
+                    titleAlert.setText(null);
+                    descriptionAlert.setText(null);
+                    timeAlert.setText(null);
+                    locationAlert.setText(null);
+                    imageAlert.setText(null);
                     Toast.makeText(getActivity(), "Choose at least one activity tag!", Toast.LENGTH_SHORT).show();
+                } else if (adapter.getSelectedCategoriesCount() > 1) {
+                    titleAlert.setText(null);
+                    descriptionAlert.setText(null);
+                    timeAlert.setText(null);
+                    locationAlert.setText(null);
+                    imageAlert.setText(null);
+                    Toast.makeText(getActivity(), "Only one activity tag allowed!", Toast.LENGTH_SHORT).show();
                 } else {
                     for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
                         mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
                     }
-                    System.out.println(title.getText().toString().trim() + " " //put the POST here
+                    System.out.println(title.getText().toString().trim() + " "
                             + description.getText().toString().trim() + " "
                             + time.getText().toString().trim() + " "
                             + location.getText().toString().trim() + " " + mSelectedCategoryNames);
@@ -276,18 +302,17 @@ public class DiscoverFragment extends Fragment {
                         System.out.println("JSON EXCEPTION!!!");
                     }
 
-
                     SupportRequests.postWithCookie("http://" + address + ":8081/user/adventure/create", jsonObject.toString(), SupportSharedPreferences.getCookie(v.getContext()), new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
-                            System.out.println("failure on post");
+                            System.out.println("Failure on post from create adventure");
                         }
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
                             if (response.isSuccessful()) {
                             } else {
-                                System.out.println("failure on response " + response.code() + " " + response.message() + " " + response.body().string() + " ");
+                                System.out.println("Failure on response from create adventure: " + response.code() + " " + response.message() + " " + response.body().string() + " ");
                             }
                         }
                     });
@@ -303,12 +328,10 @@ public class DiscoverFragment extends Fragment {
         mAdventureList = new ArrayList<Map<String, String>>();
         JSONArray jsonArray = new JSONArray(HTTPRESULT);
         int arrlen = jsonArray.length();
-        if(noAdventures != null) {
+        if (noAdventures != null) {
             if (arrlen > 0) {
-                System.out.println("invis");
                 noAdventures.setVisibility(View.INVISIBLE);
             } else {
-                System.out.println("vis");
                 noAdventures.setVisibility(View.VISIBLE);
             }
         }
@@ -338,20 +361,16 @@ public class DiscoverFragment extends Fragment {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), selectedImage);
                 imageBMP = bitmap;
                 if (imageBMP != null) {
-                    imageAlert.setTextColor(Color.rgb(0,204,0));
+                    imageAlert.setTextColor(Color.rgb(0, 204, 0));
                     imageAlert.setText("Image uploaded successfully");
                 }
 
-
             } catch (FileNotFoundException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             } catch (IOException e) {
-                // TODO Auto-generated catch block
                 e.printStackTrace();
             }
-        }
-        else if(requestCode == 100 && resultCode == Activity.RESULT_OK) {
+        } else if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
             Place place = Autocomplete.getPlaceFromIntent(data);
             location.setText(place.getAddress());
         }
