@@ -46,6 +46,9 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
     private String address;
 
     public DiscAdvViewAdapter(Context mContext, ArrayList<Map<String, String>> mAdvNames) {
+        if (mContext==null){
+            return;
+        }
         address = mContext.getResources().getString(R.string.connection_address);
         viewAdventureDialog = new Dialog(mContext);
         this.mAdvNames = mAdvNames;
