@@ -337,7 +337,7 @@ paths:
             application/json:
               schema: 
                 allOf:
-                  - $ref: '#/components/schemas/Account'
+                  - $ref: '#/components/schemas/AccountGet'
         "400":
           description: Could be any other error code
           content:
@@ -884,12 +884,38 @@ components:
           type: string
           example: "I am a 20 year old living in Vancouver"
         categories:
-          type: string
+          type: array
+          items:
+            type: string
           example: ["MOVIE", "MUSIC"]
           enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
         image:
           type: string
           example: "imagegivenbygoogle.com"
+    AccountGet:
+      type: object
+      properties:
+        userId:
+          type: string
+        name:
+          type: string
+          example: "Bob John"
+        biography:
+          type: string
+          example: "I am a 20 year old living in Vancouver"
+        categories:
+          type: array
+          items:
+            type: string
+          example: ["MOVIE", "MUSIC"]
+          enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
+        image:
+          type: string
+          example: "imagegivenbygoogle.com"
+        adventuresCreated:
+          type: array
+          items:
+            type: object
     code:
       type: object
       properties:
