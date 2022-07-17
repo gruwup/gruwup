@@ -89,7 +89,7 @@ public class ProfileFragment extends Fragment {
         }
 
         try {
-            getProfileRequest();
+            getProfileRequest(view);
         } catch (IOException e) {
             e.printStackTrace();
             Log.d(TAG, e.toString());
@@ -159,7 +159,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 //Note: can change this to display from cache  (previous selected categories)
                 try {
-                    getProfileRequest();
+                    getProfileRequest(view);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -234,7 +234,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private void getProfileRequest() throws IOException{
+    private void getProfileRequest(View view) throws IOException{
         // To do: replace this with server url
         String cookie = SupportSharedPreferences.getCookie(this.getActivity());
         Log.d(TAG, "User Id is "+ UserID);
@@ -270,12 +270,15 @@ public class ProfileFragment extends Fragment {
                         Log.d(TAG, "List: "+ preferences_list);
                         // Display preferences in profile
                         mSelectedCategoryNames = preferences_list;
+                        if(getActivity() == null)
+                            return;
+
                         getActivity().runOnUiThread(new Runnable() {
 
                             @Override
                             public void run() {
                                 // Stuff that updates the UI
-                                TextView userBio = (TextView) getView().findViewById(R.id.userBio);
+                                TextView userBio = (TextView) view.findViewById(R.id.userBio);
                                 userBio.setText(bio);
                                 RecyclerView.LayoutManager mLayoutManafer = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
                                 selectedCategories.setLayoutManager(mLayoutManafer);

@@ -120,6 +120,9 @@ public class ChatFragment extends Fragment {
                     Log.d(TAG, "get request successful");
                     String jsonData = response.body().string();
 
+                    if(getActivity() == null)
+                        return;
+
                     try {
                         getActivity().runOnUiThread(new Runnable() {
                             @Override

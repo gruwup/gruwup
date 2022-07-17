@@ -256,6 +256,9 @@ public class SearchFragment extends Fragment{
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
 
+        if(getActivity() == null)
+            return;
+
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
