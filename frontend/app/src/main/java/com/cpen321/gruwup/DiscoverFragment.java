@@ -176,7 +176,6 @@ public class DiscoverFragment extends Fragment {
             @Override
             public void onFinish() {
                 loading.setVisibility(View.GONE);
-                ;
             }
         }.start();
     }
@@ -234,7 +233,6 @@ public class DiscoverFragment extends Fragment {
             public void onClick(View v) {
                 Intent intent = new Intent(Intent.ACTION_PICK, MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
                 startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
-
             }
         });
 
@@ -355,6 +353,7 @@ public class DiscoverFragment extends Fragment {
         //Detects request codes
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
+
 
             Bitmap bitmap = null;
             try {

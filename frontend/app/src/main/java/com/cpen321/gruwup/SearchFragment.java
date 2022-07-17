@@ -2,6 +2,8 @@ package com.cpen321.gruwup;
 
 import static com.airbnb.lottie.network.FileExtension.JSON;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -28,6 +30,8 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
@@ -136,6 +140,9 @@ public class SearchFragment extends Fragment{
 
         noAdventures = view.findViewById(R.id.noSearchAdventures);
         filterButton = (Button) view.findViewById(R.id.filter_button);
+        filterButton.setAlpha(0f);
+        filterButton.setTranslationY(50);
+        filterButton.animate().alpha(1f).translationYBy(-50).setDuration(1500);
         filterButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

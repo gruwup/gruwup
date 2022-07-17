@@ -14,6 +14,8 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -75,6 +77,14 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
                 showPopUp(view, position);
             }
         });
+        setAnimation(holder.itemView, position);
+    }
+
+    private void setAnimation(View itemView, int i) {
+        if (i >= 0) {
+            Animation animation = AnimationUtils.loadAnimation(itemView.getContext(), android.R.anim.slide_in_left);
+            itemView.startAnimation(animation);
+        }
     }
 
     private void showPopUp(View view, int position) {

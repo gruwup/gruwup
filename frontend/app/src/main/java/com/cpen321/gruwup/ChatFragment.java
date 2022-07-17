@@ -69,8 +69,6 @@ public class ChatFragment extends Fragment {
                         new IntentFilter("broadcastMsg"));
     }
 
-
-
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
@@ -104,7 +102,6 @@ public class ChatFragment extends Fragment {
         }
 
     };
-
 
     public void getAllChats() {
 
