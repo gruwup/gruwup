@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -80,14 +81,21 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
                             LatLng test = getLocationFromAddress(getActivity(), jsonObject.getString("location"));
                             googleMap.addMarker(new MarkerOptions().position(test).title(jsonObject.getString("title"))).setTag(jsonObject.getString("_id"));
                         }
+                        if(jsonArray.length() > 0) {
+                            JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(0);
+                            LatLng test = getLocationFromAddress(getActivity(), jsonObject.getString("location"));
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(test, 10));
+                        }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
                 }
                 else {
                     System.out.println("normal mode");
-                    LatLng test = getLocationFromAddress(getActivity(), address);
-                    googleMap.addMarker(new MarkerOptions().position(test).title("Event title"));
+                    LatLng eventLocation = getLocationFromAddress(getActivity(), address);
+                    googleMap.addMarker(new MarkerOptions().position(eventLocation).title("Event title"));
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(eventLocation, 12);
+                    googleMap.animateCamera(cameraUpdate);
                 }
                 //Zoom or center to a marker
             }
