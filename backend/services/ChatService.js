@@ -72,6 +72,10 @@ module.exports = class ChatService {
                     messages.push({ adventureId: adventureIds[i], adventureTitle: adventure.payload.title, ...emptyMessage });
                 }
             }
+            messages.sort((messageA, messageB) => {
+                return messageB.dateTime - messageA.dateTime;
+            });
+
             return {
                 code: 200,
                 messages: "Successfully obtained recent messages",
