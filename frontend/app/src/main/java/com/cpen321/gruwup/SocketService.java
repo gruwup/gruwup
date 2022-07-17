@@ -36,8 +36,10 @@ public class SocketService extends Service {
     private String UserID;
     private String cookie;
     private static String TAG = "SocketService";
+
     private String address;
     private String serverUrl;
+
 
     // socket implementation
     private Socket mSocket;

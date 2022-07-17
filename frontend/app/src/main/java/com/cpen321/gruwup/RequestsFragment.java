@@ -28,6 +28,7 @@ import okhttp3.Response;
 public class RequestsFragment extends Fragment {
     ArrayList<Request> requests = new ArrayList<>();
     static final String TAG = "RequestsFragment";
+
     private String address;
     private RequestViewAdapter adapter;
     private TextView requestList;

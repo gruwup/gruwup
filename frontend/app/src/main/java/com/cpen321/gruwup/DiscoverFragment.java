@@ -78,6 +78,7 @@ import okhttp3.RequestBody;
 import okhttp3.Response;
 
 public class DiscoverFragment extends Fragment {
+
     private String address;
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";

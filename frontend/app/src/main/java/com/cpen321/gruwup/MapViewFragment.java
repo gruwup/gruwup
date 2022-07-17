@@ -43,6 +43,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
     MapView mMapView;
     private GoogleMap googleMap;
     JSONArray HTTP_RESPONSE_ARRAY;
+
     String address;
 
     @Override

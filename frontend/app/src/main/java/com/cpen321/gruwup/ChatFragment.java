@@ -41,6 +41,7 @@ public class ChatFragment extends Fragment {
     ArrayList <Adventure> adventures = new ArrayList<>();
     private static String TAG = "ChatFragment";
 
+
     private String address;
     private String cookie;
     private ChatViewAdapter adapter;
@@ -116,6 +117,9 @@ public class ChatFragment extends Fragment {
                 if(response.isSuccessful()){
                     Log.d(TAG, "get request successful");
                     String jsonData = response.body().string();
+
+                    if(getActivity() == null)
+                        return;
 
                     try {
                         getActivity().runOnUiThread(new Runnable() {

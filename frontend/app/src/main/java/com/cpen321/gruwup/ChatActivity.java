@@ -60,6 +60,7 @@ public class ChatActivity extends AppCompatActivity {
     private String time;
 
     private String address;
+
     private String cookie;
     private String serverUrl;
 

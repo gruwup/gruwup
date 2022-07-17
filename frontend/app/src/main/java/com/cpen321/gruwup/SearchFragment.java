@@ -86,6 +86,7 @@ import okhttp3.Response;
 
 public class SearchFragment extends Fragment{
     RecyclerView recyclerView;
+
     private String address;
     static ArrayList<Map<String, String>> mAdventureList;
     DiscAdvViewAdapter AdventureAdapter; 
@@ -262,6 +263,9 @@ public class SearchFragment extends Fragment{
             mAdventureList.get(i).put("description", jsonObject.getString("description"));
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
+
+        if(getActivity() == null)
+            return;
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
