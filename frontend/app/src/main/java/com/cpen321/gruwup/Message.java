@@ -51,5 +51,4 @@ public class Message {
     public void setDateTime(String dateTime) {
         this.dateTime = dateTime;
     }
-
 }

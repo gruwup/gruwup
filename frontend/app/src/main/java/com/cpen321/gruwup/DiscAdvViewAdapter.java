@@ -1,5 +1,6 @@
 package com.cpen321.gruwup;
 
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -42,9 +43,10 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
     Dialog viewAdventureDialog;
     private ArrayList<Map<String, String>> mAdvNames = new ArrayList<>();
     private Context mContext;
-//    private String address = "20.227.142.169";
-    private String address = "20.227.142.169";
+    private String address;
+
     public DiscAdvViewAdapter(Context mContext, ArrayList<Map<String, String>> mAdvNames) {
+        address = mContext.getResources().getString(R.string.connection_address);
         viewAdventureDialog = new Dialog(mContext);
         this.mAdvNames = mAdvNames;
         this.mContext = mContext;
@@ -66,7 +68,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         holder.adventureCount.setText("Person count: " + mAdvNames.get(position).get("count"));
         holder.adventureDescription.setText("Description: " + mAdvNames.get(position).get("description"));
         holder.adventureImage.setImageBitmap(DiscoverFragment.B64ToBmp(mAdvNames.get(position).get("image")));
-        holder.adventureCard.setOnClickListener(new View.OnClickListener(){
+        holder.adventureCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Clicked Adventure Card");
@@ -105,7 +107,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
             }
         });
         id = mAdvNames.get(position).get("id");
-        //set the contents of the popup
+        // Set the contents of the popup
 
         title.setText(mAdvNames.get(position).get("title"));
         eventType.setText(mAdvNames.get(position).get("event"));
@@ -168,7 +170,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         return mAdvNames == null ? 0 : mAdvNames.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         ImageView image;
         TextView adventureName;
         TextView adventureTime;
@@ -178,6 +180,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         TextView adventureDescription;
         CardView adventureCard;
         ImageView adventureImage;
+
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
             adventureName = itemView.findViewById(R.id.disc_adventure_name);
@@ -195,7 +198,6 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         while (!(context instanceof Activity) && context instanceof ContextWrapper) {
             context = ((ContextWrapper) context).getBaseContext();
         }
-
         return (Activity) context;
     }
 
