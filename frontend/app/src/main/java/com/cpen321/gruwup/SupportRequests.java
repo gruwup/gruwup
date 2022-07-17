@@ -17,7 +17,6 @@ public class SupportRequests {
             static MediaType JSON = MediaType.parse("application/json");
     static String TAG = "SupportRequests";
 
-
     public static Call get(String url , Callback callback){
         OkHttpClient client = new OkHttpClient();
         Log.d(TAG, "Get request from "+url);
@@ -31,7 +30,6 @@ public class SupportRequests {
         return call;
 
     }
-
 
     public static Call getWithCookie(String url , String cookie, Callback callback){
 
@@ -54,7 +52,6 @@ public class SupportRequests {
         Call call = client.newCall(request);
         call.enqueue(callback);
         return call;
-
     }
 
     public static Call post(String url , String json , Callback callback){
@@ -67,7 +64,6 @@ public class SupportRequests {
         Call call = client.newCall(request);
         call.enqueue(callback);
         return call;
-
     }
 
     public static Call postWithCookie(String url , String json , String cookie, Callback callback){
@@ -89,7 +85,6 @@ public class SupportRequests {
         Call call = client.newCall(request);
         call.enqueue(callback);
         return call;
-
     }
 
     public static Call put(String url , String json , Callback callback){
@@ -102,11 +97,9 @@ public class SupportRequests {
         Call call = client.newCall(request);
         call.enqueue(callback);
         return call;
-
     }
 
     public static Call putWithCookie(String url , String json , String cookie, Callback callback){
-
         RequestBody body = RequestBody.create(JSON, json);
 
         String[] cookieList  =  cookie.split("=",2);
@@ -126,5 +119,4 @@ public class SupportRequests {
         call.enqueue(callback);
         return call;
     }
-
 }

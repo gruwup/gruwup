@@ -1,11 +1,15 @@
 package com.cpen321.gruwup;
 
+import android.animation.AnimatorSet;
+import android.animation.ObjectAnimator;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -74,7 +78,14 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
                 context.startActivity(intent);
             }
         });
+        setAnimation(holder.itemView, position);
+    }
 
+    private void setAnimation(View itemView, int i) {
+        if (i >= 0) {
+            Animation animation = AnimationUtils.loadAnimation(context, android.R.anim.slide_in_left);
+            itemView.startAnimation(animation);
+        }
     }
 
     @Override

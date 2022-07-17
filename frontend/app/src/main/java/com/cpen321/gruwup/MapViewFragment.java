@@ -16,6 +16,7 @@ import android.widget.Toast;
 
 import androidx.fragment.app.Fragment;
 
+import com.google.android.gms.maps.CameraUpdate;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapView;
@@ -43,10 +44,12 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
     MapView mMapView;
     private GoogleMap googleMap;
     JSONArray HTTP_RESPONSE_ARRAY;
-    String address = "20.227.142.169";
+
+    String address;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        address = getActivity().getString(R.string.connection_address);
         View rootView = inflater.inflate(R.layout.location_fragment, container, false);
         Bundle locationArgs = getArguments();
         String address = locationArgs.getString("address", "");
@@ -63,7 +66,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
         }
 
         mMapView.getMapAsync(new OnMapReadyCallback() {
-            @SuppressLint("MissingPermission")
+            @SuppressLint("MissingPermission") //should already have all permissions
             @Override
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
@@ -73,11 +76,15 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
                     try {
                         JSONArray jsonArray = new JSONArray(location_address);
                         HTTP_RESPONSE_ARRAY = jsonArray;
-                        //System.out.println("Map response" + response.body().string());
                         for(int i = 0; i < jsonArray.length(); i++) {
                             JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
                             LatLng test = getLocationFromAddress(getActivity(), jsonObject.getString("location"));
                             googleMap.addMarker(new MarkerOptions().position(test).title(jsonObject.getString("title"))).setTag(jsonObject.getString("_id"));
+                        }
+                        if(jsonArray.length() > 0) {
+                            JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(0);
+                            LatLng test = getLocationFromAddress(getActivity(), jsonObject.getString("location"));
+                            googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(test, 10));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -85,14 +92,14 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
                 }
                 else {
                     System.out.println("normal mode");
-                    LatLng test = getLocationFromAddress(getActivity(), address);
-                    googleMap.addMarker(new MarkerOptions().position(test).title("Event title"));
+                    LatLng eventLocation = getLocationFromAddress(getActivity(), address);
+                    googleMap.addMarker(new MarkerOptions().position(eventLocation).title("Event title"));
+                    CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(eventLocation, 12);
+                    googleMap.animateCamera(cameraUpdate);
                 }
-//                CameraPosition cameraPosition = new CameraPosition.Builder().target(test).zoom(12).build();
-//                googleMap.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+                //Zoom or center to a marker
             }
         });
-
         return rootView;
     }
 
@@ -102,17 +109,13 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
         LatLng p1 = null;
 
         try {
-            // May throw an IOException
             address = coder.getFromLocationName(strAddress, 5);
             if (address == null) {
                 return null;
             }
-
             Address location = address.get(0);
             p1 = new LatLng(location.getLatitude(), location.getLongitude() );
-
         } catch (IOException ex) {
-
             ex.printStackTrace();
         }
 
@@ -184,7 +187,6 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
             try {
                 jsonObject = (JSONObject) HTTP_RESPONSE_ARRAY.getJSONObject(i);
                 if(jsonObject.getString("_id").equals(marker.getTag())) {
-                    System.out.println("found!!!");
                     break;
                 }
 

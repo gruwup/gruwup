@@ -41,15 +41,16 @@ public class ChatFragment extends Fragment {
     ArrayList <Adventure> adventures = new ArrayList<>();
     private static String TAG = "ChatFragment";
 
-    private String address = "20.227.142.169";
+
+    private String address;
     private String cookie;
     private ChatViewAdapter adapter;
     private TextView noMessages;
 
-
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        address = getActivity().getString(R.string.connection_address);
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         noMessages = view.findViewById(R.id.noMessages);
         adapter = new ChatViewAdapter(getActivity(),adventures);
@@ -68,8 +69,6 @@ public class ChatFragment extends Fragment {
                 .registerReceiver(mMessageReceiver,
                         new IntentFilter("broadcastMsg"));
     }
-
-
 
     private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
@@ -105,7 +104,6 @@ public class ChatFragment extends Fragment {
 
     };
 
-
     public void getAllChats() {
 
         String UserID = SupportSharedPreferences.getUserId(this.getActivity());
@@ -119,6 +117,9 @@ public class ChatFragment extends Fragment {
                 if(response.isSuccessful()){
                     Log.d(TAG, "get request successful");
                     String jsonData = response.body().string();
+
+                    if(getActivity() == null)
+                        return;
 
                     try {
                         getActivity().runOnUiThread(new Runnable() {
