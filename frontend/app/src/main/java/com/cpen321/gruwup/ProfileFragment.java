@@ -92,7 +92,7 @@ public class ProfileFragment extends Fragment {
         }
 
         try {
-            getProfileRequest();
+            getProfileRequest(view);
         } catch (IOException e) {
             e.printStackTrace();
             Log.d(TAG, e.toString());
@@ -145,7 +145,7 @@ public class ProfileFragment extends Fragment {
         bioValidation = (TextView) profileDialog.findViewById(R.id.biographyAlert);
         categoryValidation = (TextView) profileDialog.findViewById(R.id.categoryAlert);
         userBio = (TextView) getView().findViewById(R.id.userBio);
-        getProfileRequest();
+        getProfileRequest(v);
         bioInput.setText(bio);
         // for categories
         initCategories();
@@ -166,7 +166,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 //Note: can change this to display from cache  (previous selected categories)
                 try {
-                    getProfileRequest();
+                    getProfileRequest(view);
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -249,7 +249,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private void getProfileRequest() throws IOException{
+    private void getProfileRequest(View view) throws IOException{
         // To do: replace this with server url
         String cookie = SupportSharedPreferences.getCookie(this.getActivity());
         Log.d(TAG, "User Id is "+ UserID);
@@ -280,12 +280,16 @@ public class ProfileFragment extends Fragment {
                         }
 
                         mSelectedCategoryNames = preferences_list;
+                        if(getActivity() == null)
+                            return;
+
                         getActivity().runOnUiThread(new Runnable() {
 
                             @Override
                             public void run() {
                                 // Stuff that updates the UI
                                 userBio = (TextView) getView().findViewById(R.id.userBio);
+
                                 userBio.setText(bio);
                                 RecyclerView.LayoutManager mLayoutManafer = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
                                 selectedCategories.setLayoutManager(mLayoutManafer);
