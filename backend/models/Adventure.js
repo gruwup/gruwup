@@ -33,6 +33,11 @@ const schema = mongoose.Schema({
     },
     location: {
         type: String,
+        validate: {
+            validator: function (value) {
+                return value.split(",").length >= 2;
+            }
+        },
         required: true
     },
     status: {

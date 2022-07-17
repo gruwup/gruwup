@@ -42,16 +42,15 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
     Dialog requestDialog;
     ArrayList<Request> requests;
 
-    // local : "10.0.2.2" , remote: "20.227.142.169"
-    private String address = "10.0.2.2";
-//    private String address = "20.227.142.169";
+    private String address;
     static final String TAG = "RequestViewAdapter";
 
     public RequestViewAdapter(Context context, ArrayList<Request> requests){
         this.context = context;
         this.requests = requests;
-
+        address = context.getString(R.string.connection_address);
     }
+
     @NonNull
     @Override
     public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
@@ -99,7 +98,6 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
                     e.printStackTrace();
                 }
             }
-
         });
 
     }
@@ -113,15 +111,12 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         TextView name = (TextView) requestDialog.findViewById(R.id.requesterProfileName);
         name.setText(requesterName);
 
-
         closeProfile.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 requestDialog.dismiss();
             }
         });
-
-
     }
 
     private void showPopUp(View view, String action, int position) {
@@ -174,7 +169,6 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
 
             }
         }.start();
-
     }
 
     @Override
@@ -186,7 +180,6 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
 
         String cookie = SupportSharedPreferences.getCookie(this.context);
         SupportRequests.getWithCookie("http://"+address+":8081/user/profile/" + userId + "/get", cookie, new Callback() {
-
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -245,9 +238,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
                     Log.d(TAG, response.body().string());
                 }
             }
-
         });
-
     }
 
 
@@ -262,11 +253,8 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         TextView requesterBio;
         TextView closeProfile;
 
-
-
         public ViewHolder(@NonNull View itemView) {
             super(itemView);
-
             requesterName = itemView.findViewById(R.id.requesterName);
             adventureName = itemView.findViewById(R.id.requestAdventureName);
             adventureTitle = itemView.findViewById(R.id.adventureName);
@@ -275,7 +263,6 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             requesterProfileName = itemView.findViewById(R.id.requesterProfileName);
             requesterBio = itemView.findViewById(R.id.requesterBio);
             closeProfile = itemView.findViewById(R.id.close);
-
             requesterName.setPaintFlags(requesterName.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
         }
     }

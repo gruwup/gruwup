@@ -40,6 +40,7 @@ import okhttp3.Response;
 
 public class ChatActivity extends AppCompatActivity {
 
+    static final String TAG = "ChatActivity";
     private static final String SENT_MESSAGE = "sent";
     private static final String RECEIVED_MESSAGE = "received";
     private RecyclerView messageRecyclerView;
@@ -58,15 +59,10 @@ public class ChatActivity extends AppCompatActivity {
     private String prevPagination = "null";
     private String time;
 
-
-    static final String TAG = "ChatActivity";
-
-    private String address = "10.0.2.2";
-//    private String address = "20.227.142.169";
-
+    private String address;
 
     private String cookie;
-    private String serverUrl = "http://"+address+":8000";
+    private String serverUrl;
 
     private JSONArray peopleGoing;
     private String adventureOwner;
@@ -76,18 +72,18 @@ public class ChatActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        address = getString(R.string.connection_address);
+        serverUrl = "http://" + address + ":8000";
         setContentView(R.layout.activity_chat);
         getSupportActionBar().hide();
 
-        Intent intent= getIntent();
+        Intent intent = getIntent();
         adventureTitle = intent.getStringExtra("name");
         adventureId = intent.getStringExtra("adventureId");
-//        pagination = intent.getStringExtra("dateTime");
 
         UserName = SupportSharedPreferences.getUserName(getApplicationContext());
         cookie = SupportSharedPreferences.getCookie(getApplicationContext());
         UserID = SupportSharedPreferences.getUserId(getApplicationContext());
-
 
         TextView adventureName = (TextView) findViewById(R.id.advTitle);
         adventureName.setText(adventureTitle);
@@ -104,14 +100,6 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-//        adventureEdit.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View view) {
-//
-//
-//                showEditPopUp(view);
-//            }
-//        });
         adventureEdit.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -123,7 +111,7 @@ public class ChatActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
                             Log.d(TAG, "get profile successful");
                             String jsonData = response.body().string();
 
@@ -131,14 +119,11 @@ public class ChatActivity extends AppCompatActivity {
                                 JSONObject jsonObj = new JSONObject(jsonData);
                                 adventureOwner = jsonObj.getString("owner");
 
-
-                                Log.d(TAG, "FOR EDIT UID"+ UserID );
-                                Log.d(TAG, "FOR EDIT AVID"+ adventureOwner);
-                                if (UserID.equals(adventureOwner)){
+                                Log.d(TAG, "FOR EDIT UID" + UserID);
+                                Log.d(TAG, "FOR EDIT AVID" + adventureOwner);
+                                if (UserID.equals(adventureOwner)) {
                                     showEditPopUp(view);
-                                }
-
-                                else{
+                                } else {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
@@ -150,8 +135,7 @@ public class ChatActivity extends AppCompatActivity {
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                        }
-                        else{
+                        } else {
                             Log.d(TAG, "Failed to get adventure owner");
                         }
                     }
@@ -164,7 +148,6 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 adventureDialog.setContentView(R.layout.adventure_detail_pop_up);
-//                getAdventureDetails();
                 String cookie = SupportSharedPreferences.getCookie(getApplicationContext());
                 SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
                     @Override
@@ -174,28 +157,23 @@ public class ChatActivity extends AppCompatActivity {
 
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
                             Log.d(TAG, "get profile successful");
                             String jsonData = response.body().string();
-
                             try {
                                 JSONObject jsonObj = new JSONObject(jsonData);
                                 adventureOwner = jsonObj.getString("owner");
-
-
-                                Log.d(TAG, "FOR DELETE UID"+ UserID );
-                                Log.d(TAG, "FOR DELETE AVID"+ adventureOwner);
-                                if (UserID.equals(adventureOwner)){
+                                Log.d(TAG, "FOR DELETE UID" + UserID);
+                                Log.d(TAG, "FOR DELETE AVID" + adventureOwner);
+                                if (UserID.equals(adventureOwner)) {
                                     JSONObject jsonObject = new JSONObject();
                                     Log.d(TAG, "Delete Adventure");
-
-                                    SupportRequests.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/cancel", jsonObject.toString(),cookie, new Callback() {
+                                    SupportRequests.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/cancel", jsonObject.toString(), cookie, new Callback() {
                                         @Override
                                         public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                                            if(response.isSuccessful()) {
+                                            if (response.isSuccessful()) {
                                                 Log.d(TAG, "Quit adventure succesful");
-                                            }
-                                            else{
+                                            } else {
                                                 Log.d(TAG, "Quit adventure failed" + response);
                                             }
                                         }
@@ -205,12 +183,9 @@ public class ChatActivity extends AppCompatActivity {
                                             Log.d(TAG, "Quit adventure failed" + e);
                                         }
                                     });
-
                                     adventureDialog.dismiss();
                                     finish();
-                                }
-
-                                else{
+                                } else {
                                     adventureDialog.dismiss();
                                     runOnUiThread(new Runnable() {
                                         @Override
@@ -219,13 +194,10 @@ public class ChatActivity extends AppCompatActivity {
                                         }
                                     });
                                 }
-
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
-                        }
-                        else{
+                        } else {
                             Log.d(TAG, "Failed to get adventure owner");
                         }
                     }
@@ -255,19 +227,17 @@ public class ChatActivity extends AppCompatActivity {
             mSocket = IO.socket(serverUrl);
             mSocket.emit("userInfo", cookie, UserID);
 
-        } catch (URISyntaxException e) {}
+        } catch (URISyntaxException e) {
+        }
 
         mSocket.on("connected", isConnected);
         mSocket.connect();
-
-//        Intent serviceIntent = new Intent(this, SocketService.class);
-//        startService(serviceIntent);
 
         messageRecyclerView = findViewById(R.id.messageRecyclerView);
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(this);
         messageRecyclerView.setLayoutManager(linearLayoutManager);
 
-        adapter = new MessageViewAdapter(this,messages);
+        adapter = new MessageViewAdapter(this, messages);
         messageRecyclerView.setAdapter(adapter);
 
         pagination = intent.getStringExtra("dateTime");
@@ -279,10 +249,9 @@ public class ChatActivity extends AppCompatActivity {
         loadOldMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if (!(("null").equals(prevPagination))){
+                if (!(("null").equals(prevPagination))) {
                     getOldMessages(prevPagination);
-                }
-                else {
+                } else {
                     loadOldMessage.setText("This is start of your conversations");
                 }
 
@@ -297,33 +266,28 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 String message = editMessageBar.getText().toString().trim();
-                if (message!=null && !message.isEmpty()){
-
+                if (message != null && !message.isEmpty()) {
                     // check datetime format
-                    long currentTimestamp = System.currentTimeMillis()/1000;
+                    long currentTimestamp = System.currentTimeMillis() / 1000;
                     editMessageBar.setText("");
                     sendChat(message);
                 }
-
-
             }
         });
-
     }
 
-    private void getOldMessages(String pagination){
+    private void getOldMessages(String pagination) {
         cookie = SupportSharedPreferences.getCookie(getApplicationContext());
         SupportRequests.getWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/messages/" + pagination, cookie, new Callback() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
 
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             Log.d(TAG, "message history received successfully");
-
                             try {
                                 String jsonData = response.body().string();
                                 JSONObject jsonObj = new JSONObject(jsonData);
@@ -331,10 +295,8 @@ public class ChatActivity extends AppCompatActivity {
                                 prevPagination = jsonObj.getString("prevPagination");
                                 JSONObject messageObj = new JSONObject();
 
-
-                                if (messageArray !=null ){
-                                    for (int i = messageArray.length()-1;i>=0; i--) {
-
+                                if (messageArray != null) {
+                                    for (int i = messageArray.length() - 1; i >= 0; i--) {
                                         messageObj = messageArray.getJSONObject(i);
                                         String name = messageObj.getString("name");
                                         String userId = messageObj.getString("userId");
@@ -342,39 +304,30 @@ public class ChatActivity extends AppCompatActivity {
                                         String dateTime = messageObj.getString("dateTime");
                                         Message oldMessage;
 
-                                        if(UserID.equals(userId)){
+                                        if (UserID.equals(userId)) {
                                             oldMessage = new Message(userId, name, message, dateTime, SENT_MESSAGE);
-                                        }
-                                        else{
+                                        } else {
                                             oldMessage = new Message(userId, name, message, dateTime, RECEIVED_MESSAGE);
                                         }
 
-                                        Log.d(TAG, ":: "+ oldMessage.getMessage());
+                                        Log.d(TAG, ":: " + oldMessage.getMessage());
 
-
-                                        messages.add(0,oldMessage);
+                                        messages.add(0, oldMessage);
                                         adapter.notifyItemInserted(0);
+                                    }
+                                }
 
-//                                        if (adapter!=null){
-//                                            messageRecyclerView.scrollToPosition(0);
-//                                        }
-
-                                    }}
-
-                            }catch (Exception e){
+                            } catch (Exception e) {
                                 e.printStackTrace();
                             }
                         }
                     });
 
-
-                    for (int i = 0; i <messages.size();i++){
-                        Log.d(TAG, "> "+ messages.get(i).getMessage());
+                    for (int i = 0; i < messages.size(); i++) {
+                        Log.d(TAG, "> " + messages.get(i).getMessage());
                     }
 
-
-                }
-                else{
+                } else {
                     Log.d(TAG, "message history failed to load" + response.toString());
                     runOnUiThread(new Runnable() {
                         @Override
@@ -392,9 +345,9 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    public void sendChat(String message){
-        long currentTimestamp = System.currentTimeMillis()/1000;
-        Message sendMessage = new Message(UserID,UserName,message,Long.toString(currentTimestamp),SENT_MESSAGE);
+    public void sendChat(String message) {
+        long currentTimestamp = System.currentTimeMillis() / 1000;
+        Message sendMessage = new Message(UserID, UserName, message, Long.toString(currentTimestamp), SENT_MESSAGE);
 
         JSONObject jsonObject = new JSONObject();
         try {
@@ -407,7 +360,7 @@ public class ChatActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        SupportRequests.postWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/send",  jsonObject.toString(), cookie, new Callback() {
+        SupportRequests.postWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/send", jsonObject.toString(), cookie, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.d(TAG, "Could not send message");
@@ -415,32 +368,29 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
                             messages.add(sendMessage);
                             adapter.notifyItemInserted(messages.size() - 1);
-//                            messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
-                            NestedScrollView scrollView = (NestedScrollView)findViewById(R.id.nest);
+                            NestedScrollView scrollView = (NestedScrollView) findViewById(R.id.nest);
 
                             scrollView.smoothScrollTo(0, scrollView.getChildAt(0).getHeight());
-                            if (adapter!=null){
+                            if (adapter != null) {
                                 messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
-//                                adapter.notifyDataSetChanged();
                             }
                             Log.d(TAG, "message sent successfully");
                         }
                     });
-                }
-                else{
+                } else {
                     Log.d(TAG, "message failed to send" + response.toString());
                 }
             }
         });
     }
 
-    private void showEditPopUp(View view){
+    private void showEditPopUp(View view) {
         adventureDialog.setContentView(R.layout.adventure_edit_pop_up);
 
         getAdventureDetails();
@@ -473,28 +423,24 @@ public class ChatActivity extends AppCompatActivity {
                     jsonObject.put("dateTime", time);
                     jsonObject.put("peopleGoing", peopleGoing);
                     jsonObject.put("status", "OPEN");
-
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d(TAG, "EDIT ADV"+ jsonObject.toString());
-                SupportRequests.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/update", jsonObject.toString(),cookie, new Callback() {
+                Log.d(TAG, "EDIT ADV" + jsonObject.toString());
+                SupportRequests.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/update", jsonObject.toString(), cookie, new Callback() {
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                        if(response.isSuccessful()) {
+                        if (response.isSuccessful()) {
                             Log.d(TAG, "Edit adventure succesful");
-                        }
-                        else{
+                        } else {
                             Log.d(TAG, "Edit adventure failed" + response);
                         }
                     }
-
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
                         Log.d(TAG, "Edit adventure failed" + e);
                     }
                 });
-
                 adventureDialog.dismiss();
             }
         });
@@ -507,7 +453,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    private void showDetailPopUp(View view){
+    private void showDetailPopUp(View view) {
         adventureDialog.setContentView(R.layout.adventure_detail_pop_up);
         getAdventureDetails();
         adventureDialog.show();
@@ -532,13 +478,12 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
-                if(response.isSuccessful()) {
+                if (response.isSuccessful()) {
                     Log.d(TAG, "get profile successful");
                     String jsonData = response.body().string();
 
                     try {
                         JSONObject jsonObj = new JSONObject(jsonData);
-//                        Log.d(TAG, "json Obj "+ jsonObj.toString());
                         String title = jsonObj.getString("title");
                         String description = jsonObj.getString("description");
                         String eventType = jsonObj.getString("category");
@@ -557,12 +502,12 @@ public class ChatActivity extends AppCompatActivity {
                                 TextView typeView = adventureDialog.findViewById(R.id.view_adventure_event_type);
                                 typeView.setText(eventType);
 
-                                TextView countView = adventureDialog.findViewById(R.id.view_adventure_member_count) ;
+                                TextView countView = adventureDialog.findViewById(R.id.view_adventure_member_count);
                                 countView.setText(memberCount.toString());
 
                                 TextView timeView = adventureDialog.findViewById(R.id.view_adventure_time);
                                 // assuming time is obtained in seconds epoch time
-                                Date date = new Date(Long.parseLong(time, 10)*1000);
+                                Date date = new Date(Long.parseLong(time, 10) * 1000);
                                 DateFormat format = new SimpleDateFormat("dd/MM/yyyy HH:mm:ss");
                                 String formatted = format.format(date);
                                 formatted = format.format(date);
@@ -573,15 +518,13 @@ public class ChatActivity extends AppCompatActivity {
 
                                 TextView descriptionView = adventureDialog.findViewById(R.id.adventure_description);
                                 descriptionView.setText(description);
-
                             }
                         });
 
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
-                else{
+                } else {
                     Log.d(TAG, "Failed to get adventure details");
                 }
             }
@@ -594,13 +537,12 @@ public class ChatActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    if(args[0].toString().equals("true")){
+                    if (args[0].toString().equals("true")) {
                         Log.d(TAG, "===>connected to socket");
-                        mSocket.on("message",onNewMessage);
-                    }
-                    else{
+                        mSocket.on("message", onNewMessage);
+                    } else {
                         Log.d(TAG, "===>cannot connect to socket");
-                        Log.d(TAG , args[0].toString());
+                        Log.d(TAG, args[0].toString());
                     }
                 }
             });
@@ -614,8 +556,8 @@ public class ChatActivity extends AppCompatActivity {
             runOnUiThread(new Runnable() {
                 @Override
                 public void run() {
-                    Log.d(TAG, "adventure ID=====>"+ args[0].toString());
-                    Log.d(TAG, "message=====>"+ args[1].toString());
+                    Log.d(TAG, "adventure ID=====>" + args[0].toString());
+                    Log.d(TAG, "message=====>" + args[1].toString());
                     JSONObject data = (JSONObject) args[1];
 
                     String userName;
@@ -624,21 +566,20 @@ public class ChatActivity extends AppCompatActivity {
                     String dateTime;
                     String messageStatus;
 
-                    Log.d(TAG, "THIS ADVENTURE ID:"+adventureId);
-                    if (adventureId.equals(args[0].toString())){
+                    Log.d(TAG, "THIS ADVENTURE ID:" + adventureId);
+                    if (adventureId.equals(args[0].toString())) {
                         try {
                             userName = data.getString("name");
                             userId = data.getString("userId");
                             message = data.getString("message");
                             dateTime = data.getString("dateTime");
                             messageStatus = RECEIVED_MESSAGE;
-                            Message newMessage = new Message(userId,userName,message,dateTime,messageStatus);
+                            Message newMessage = new Message(userId, userName, message, dateTime, messageStatus);
                             messages.add(newMessage);
 
-                            NestedScrollView scrollView = (NestedScrollView)findViewById(R.id.nest);
+                            NestedScrollView scrollView = (NestedScrollView) findViewById(R.id.nest);
                             scrollView.smoothScrollTo(0, scrollView.getChildAt(0).getHeight());
-                            if (adapter!=null){
-//                                adapter.notifyDataSetChanged();
+                            if (adapter != null) {
                                 adapter.notifyItemInserted(messages.size() - 1);
                             }
 
@@ -651,13 +592,5 @@ public class ChatActivity extends AppCompatActivity {
             });
         }
     };
-
-//    @Override
-//    public void onDestroy() {
-//        super.onDestroy();
-//        mSocket.disconnect();
-//        mSocket.off("message",onNewMessage);
-//    }
-
 
 }

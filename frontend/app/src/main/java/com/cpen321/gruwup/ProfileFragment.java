@@ -49,8 +49,7 @@ public class ProfileFragment extends Fragment {
     Button editButton;
     final static String TAG = "ProfileFragment";
 
-//    private String address = "20.227.142.169";
-    private String address = "10.0.2.2";
+    private String address;
 
     String UserID;
     String cookie;
@@ -75,6 +74,7 @@ public class ProfileFragment extends Fragment {
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
+        address = getActivity().getString(R.string.connection_address);
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Note: get stored UserID this way for fragment

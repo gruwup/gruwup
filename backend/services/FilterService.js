@@ -3,6 +3,13 @@ const UserStore = require("../store/UserStore");
 
 module.exports = class FilterService {
     static getNearbyAdventures = async (cityName) => {
+        if (typeof cityName !== String) {
+            return {
+                code: 400,
+                message: "Invalid input"
+            }
+        }
+
         const nearbyFilter = {city: cityName};
         try {
             const adventures = await AdventureStore.findAdventuresByFilter(nearbyFilter);
@@ -12,20 +19,6 @@ module.exports = class FilterService {
                     message: adventures.message
                 }
             }
-            // var adventureThumbnails = adventures.payload.map(adventure => {
-            //     return {
-            //         adventureId: adventure._id,
-            //         title: adventure.title,
-            //         category: adventure.category,
-            //         image: adventure.image,
-            //         location: adventure.location
-            //     };
-            // });
-            // return {
-            //     code: 200,
-            //     message: "Nearby adventures found",
-            //     payload: adventureThumbnails
-            // };
             return {
                 code: 200,
                 message: "Nearby adventures found",
@@ -35,7 +28,7 @@ module.exports = class FilterService {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
@@ -65,7 +58,7 @@ module.exports = class FilterService {
         catch {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
@@ -107,7 +100,7 @@ module.exports = class FilterService {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     }

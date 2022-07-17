@@ -1,5 +1,6 @@
 const Request = require("../models/Request");
 const Adventure = require("../models/Adventure");
+var ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = class RequestStore {
     static sendRequest = async (request) => {
@@ -16,7 +17,7 @@ module.exports = class RequestStore {
         catch (err) {
             return {
                 code: 400,
-                message: err
+                message: err._message
             };
         }
     };
@@ -34,67 +35,64 @@ module.exports = class RequestStore {
             result.sort((a, b) => {
                 return b.dateTime - a.dateTime;
             });
-            if (result) {
-                return {
-                    code: 200,
-                    message: "Requests found",
-                    payload: result
-                };
-            }
-            else {
-                return {
-                    code: 404,
-                    message: "Requests not found"
-                };
-            }
+            return {
+                code: 200,
+                message: "Requests found",
+                payload: result
+            };
         }
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
 
     static acceptRequest = async (requestId) => {
         try {
+            if (!ObjectId.isValid(requestId)) {
+                return {
+                    code: 400,
+                    message: "Invalid request id"
+                };
+            }
             var request = await Request.findByIdAndUpdate(requestId, { status: "ACCEPTED" });
-            if (!request) {
-                return {
-                    code: 404,
-                    message: "Request not found"
-                }
-            }
-            var result = await Adventure.findOneAndUpdate(
-                                    { _id: request.adventureId },
-                                    { $push: { peopleGoing: request.requesterId } },
-                                    { new: true }
-                                );
-            if (result) {
-                return {
-                    code: 200,
-                    message: "Request accepted",
-                    payload: result
-                }
-            }
-            else {
+            if (!ObjectId.isValid(request.adventureId)) {
                 return {
                     code: 404,
                     message: "Adventure not found"
-                }
+                };
+            }
+            await Adventure.findOneAndUpdate(
+                        { _id: request.adventureId },
+                        { $push: { peopleGoing: request.requesterId } },
+                        { new: true }
+                    );
+                    
+            return {
+                code: 200,
+                message: "Request accepted",
+                payload: request
             }
 
         }
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
 
     static rejectRequest = async (requestId) => {
         try {
+            if (!ObjectId.isValid(requestId)) {
+                return {
+                    code: 400,
+                    message: "Invalid request id"
+                };
+            }
             await Request.findByIdAndUpdate(requestId, { status: "REJECTED" });
             return {
                 code: 200,
@@ -104,7 +102,7 @@ module.exports = class RequestStore {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };
@@ -134,7 +132,7 @@ module.exports = class RequestStore {
         catch (err) {
             return {
                 code: 500,
-                message: err
+                message: err._message
             };
         }
     };

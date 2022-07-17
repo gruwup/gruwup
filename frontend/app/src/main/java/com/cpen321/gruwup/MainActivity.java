@@ -46,8 +46,6 @@ public class MainActivity extends AppCompatActivity {
         BottomNavigationView bottomNav = findViewById(R.id.bottom_navigation);
         bottomNav.setOnNavigationItemSelectedListener(navListener);
 
-
-//        getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new ProfileFragment()).commit();
         bottomNav.getMenu().getItem(2).setChecked(true);
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DiscoverFragment()).commit();
 
@@ -55,7 +53,6 @@ public class MainActivity extends AppCompatActivity {
           Intent serviceIntent = new Intent(this, SocketService.class);
           startService(serviceIntent);
     }
-
 
     @Override
     public void onResume() {
