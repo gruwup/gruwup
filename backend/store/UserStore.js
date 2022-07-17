@@ -1,22 +1,32 @@
+const Adventure = require("../models/Adventure");
 const Profile = require("../models/Profile");
 
 module.exports = class User {
     static getUserProfile = async (userId) => {
         try {
-            var result = await Profile.findOne({ userId: userId });
-    
-            if (result) {
-                return {
-                    code: 200,
-                    message: "User Profile found",
-                    payload: result
-                }
-            }
-            else {
+            var profileResult = await Profile.findOne({ userId: userId });
+            if (!profileResult) {
                 return {
                     code: 404,
                     message: "User Profile not found"
                 }
+            }
+
+            var adventuresResult = await Adventure.find({ owner: userId });
+            var adventures = [];
+            adventuresResult.forEach(adventure => adventures.push(adventure));
+            var result = { 
+                userId: profileResult.userId,
+                name: profileResult.name,
+                biography: profileResult.biography,
+                categories: profileResult.categories,
+                image: profileResult.image,
+                adventuresCreated: adventures };
+
+            return {
+                code: 200,
+                message: "User Profile found",
+                payload: result
             }
         }
         catch (err) {
