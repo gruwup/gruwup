@@ -34,12 +34,21 @@ public class ProfileTest {
             new ActivityScenarioRule<>(MainActivity.class);
 
     @Test
-    public void manageProfile() { //checks that Search Fragment can be opened from navbar
+    public void manageProfile() {
         onView(withText("Choose and Create Adventures!")).check(matches(isDisplayed()));
+        // click on profile nav bar
         onView((withId(R.id.nav_profile))).check(matches(isDisplayed())).perform(click());
         //default userName and biography without google sign in
         onView(withText("User name")).check(matches(isDisplayed()));
         onView(withText("Biography")).check(matches(isDisplayed()));
+        // click on edit profile
+        onView((withId(R.id.edit_profile_button))).check(matches(isDisplayed())).perform(click());
+        // go back
+        onView((withId(R.id.goBack))).check(matches(isDisplayed())).perform(click());
+        onView(withText("User name")).check(matches(isDisplayed()));
+        // to do :check why bio changes here
+        // click on edit again
+        onView((withId(R.id.edit_profile_button))).check(matches(isDisplayed())).perform(click());
 
     }
 }
