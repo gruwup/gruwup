@@ -83,20 +83,38 @@ public class ProfileFragment extends Fragment {
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
         displayName = (TextView) view.findViewById(R.id.userName);
-        displayName.setText(this.getArguments().getString("Display_Name"));
+        userBio = (TextView) view.findViewById(R.id.userBio);
+        if (this.getArguments()!=null){
+            displayName.setText(this.getArguments().getString("Display_Name"));
+            //set profile picture using the link from the bundle using Picasso
+            profilePic = (ImageView) view.findViewById(R.id.userImage);
+            if(this.getArguments().getString("Photo_URL") != null && !this.getArguments().getString("Photo_URL").equals("")) {
+                Picasso.get().load(this.getArguments().getString("Photo_URL")).into(profilePic);
+            }
 
-        //set profile picture using the link from the bundle using Picasso
-        profilePic = (ImageView) view.findViewById(R.id.userImage);
-        if(this.getArguments().getString("Photo_URL") != null && !this.getArguments().getString("Photo_URL").equals("")) {
-            Picasso.get().load(this.getArguments().getString("Photo_URL")).into(profilePic);
+            try {
+                getProfileRequest(view);
+            } catch (IOException e) {
+                e.printStackTrace();
+                Log.d(TAG, e.toString());
+            }
+
+            signOutButton = (Button) view.findViewById(R.id.sign_out_button);
+            signOutButton.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    Log.d("ProfileFragment", "Signing out");
+                    mGoogleSignInClient.signOut();
+                    signOutRequest();
+                }
+            });
+            Log.d(TAG, "Selected Categories "+mSelectedCategoryNames);
+        }
+        else {
+            displayName.setText("User name");
+            userBio.setText("Biography");
         }
 
-        try {
-            getProfileRequest(view);
-        } catch (IOException e) {
-            e.printStackTrace();
-            Log.d(TAG, e.toString());
-        }
         categoryView = (RecyclerView) view.findViewById(R.id.categoryRecyclerView);
         selectedCategories = (RecyclerView) view.findViewById(R.id.selectedCategories);
 
@@ -115,16 +133,7 @@ public class ProfileFragment extends Fragment {
             }
         });
 
-        signOutButton = (Button) view.findViewById(R.id.sign_out_button);
-        signOutButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                Log.d("ProfileFragment", "Signing out");
-                mGoogleSignInClient.signOut();
-                signOutRequest();
-            }
-        });
-        Log.d(TAG, "Selected Categories "+mSelectedCategoryNames);
+
         return view;
     }
 
@@ -194,6 +203,9 @@ public class ProfileFragment extends Fragment {
                     categoryValidation.setText("Please select at least 3 categories.");
                 }
                 else{
+                    mSelectedCategoryNames.clear();
+                    Log.d(TAG, "Selected categories names before are: "+ mSelectedCategoryNames);
+
                     userBio.setText(bioInput.getText().toString());
                     for (int i = 0 ; i < adapter.getSelectedCategoriesCount(); i++){
                         mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
@@ -326,7 +338,12 @@ public class ProfileFragment extends Fragment {
             jsonObject.put("name", displayName.toString());
             jsonObject.put("biography", biography);
             jsonObject.put("categories", preferences);
-            jsonObject.put("image", this.getArguments().getString("Photo_URL"));
+            if (this.getArguments()!=null){
+                jsonObject.put("image", this.getArguments().getString("Photo_URL"));
+            }
+            else{
+                jsonObject.put("image", "");
+            }
         } catch (JSONException e) {
             e.printStackTrace();
         }
