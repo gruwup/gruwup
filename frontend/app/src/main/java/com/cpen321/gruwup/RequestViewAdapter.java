@@ -116,7 +116,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
 
     private void showPopUp( String action, int position) {
         String cookie = SupportSharedPreferences.getCookie(this.context);
-        if (action=="accept"){
+        if (action.equals("accept")){
             String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/accept";
             String json = "";
             SupportRequests.putWithCookie(url,json, cookie, new Callback() {
@@ -134,7 +134,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             requestDialog.setContentView(R.layout.accept_request_pop_up);
             requestDialog.show();
         }
-        else if (action=="deny"){
+        else if (action.equals("deny")){
             String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/reject";
             String json = "";
             SupportRequests.putWithCookie(url,json, cookie,new Callback() {
@@ -219,7 +219,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
 
 
                                 ImageView requesterImg = (ImageView) requestDialog.findViewById(R.id.requesterImage);
-                                Picasso.get().load(image).into(requesterImg);;
+                                Picasso.get().load(image).into(requesterImg);
                             }
                         });
 
