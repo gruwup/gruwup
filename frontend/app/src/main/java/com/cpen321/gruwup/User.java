@@ -1,6 +1,5 @@
 package com.cpen321.gruwup;
 
-import java.util.ArrayList;
 
 public class User {
 
