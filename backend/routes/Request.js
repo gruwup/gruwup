@@ -16,7 +16,7 @@ router.post("/:adventureId/send-request", async (req, res) => {
 				return res.status(400).send("You cannot request to join your own adventure");
 			}
 			var checkRequestDuplicate = await RequestStore.checkIfRequestExists(req.params.adventureId, req.body.userId);
-			if (checkRequestDuplicate.code == 200) {
+			if (checkRequestDuplicate.code === 200) {
 				return res.status(400).send("You have already sent a request to this adventure");
 			}
 			var request = {
@@ -26,7 +26,8 @@ router.post("/:adventureId/send-request", async (req, res) => {
 				requester: req.body.userName,
 				requesterId: req.body.userId,
 				status: "PENDING",
-				dateTime: req.body.dateTime
+				dateTime: req.body.dateTime,
+				adventureExpireAt: adventure.payload.dateTime
 			};
 			var result = await RequestStore.sendRequest(request);
 			if (result.code === 200) {

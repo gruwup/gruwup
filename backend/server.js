@@ -52,7 +52,19 @@ async function run() {
                     console.log("Chat listening at http://%s:%s", host, port);
                     ChatSocket.runChat(socketServer);
                 }) 
-            })
+            });
+
+        setInterval(() => {
+            const currentTime = new Date().getTime();
+            const currentUnixTime = Math.floor(currentTime / 1000);
+            mongoose.connection.db.collection("adventures").deleteMany({
+                "dateTime": { $lt: currentUnixTime }
+            });
+            mongoose.connection.db.collection("requests").deleteMany({
+                "adventureExpireAt": { $lt: currentUnixTime }
+            });
+
+        }, 1000*60);
     }
     catch (err) {
         console.log(err.stack);

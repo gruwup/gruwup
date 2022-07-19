@@ -20,12 +20,12 @@ const schema = mongoose.Schema({
     },
     peopleGoing: [String],
     dateTime: {
-        type: String,
+        type: Number,
         validate: {
             validator: function (value) {
                 var val = new Date(Number(value)*1000);
                 var now = new Date();
-                return 1000*val > now;
+                return val.getTime() > now.getTime();
             },
             message: '{VALUE} dateTime cannot be in the past'
         },
