@@ -17,11 +17,11 @@ module.exports = class ChatService {
         var result;
 
         if (participants.includes(message.userId)) {
-            if (!messageCount[adventureId] || messageCount[adventureId] == 10) messageCount[adventureId] = 0;
+            if (!messageCount[adventureId] || messageCount[adventureId] === 10) messageCount[adventureId] = 0;
             messageCount[adventureId]++;
             ChatSocket.sendMessage(message.userId, adventureId, message);
 
-            if (messageCount[adventureId] == 1) {
+            if (messageCount[adventureId] === 1) {
                 result = await ChatStore.storeNewMessageGroup(adventureId, message, message.dateTime);
             } else {
                 result = await ChatStore.storeExistingMessageGroup(adventureId, message, message.dateTime);
