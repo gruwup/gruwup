@@ -34,7 +34,7 @@ module.exports = class User {
             }
         }
         catch (err) {
-            return {
+            result = {
                 code: 500,
                 message: err
             };
