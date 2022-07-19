@@ -73,7 +73,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
             @Override
             public void onClick(View view) {
                 Log.d(TAG, "Clicked Adventure Card");
-                showPopUp(view, position);
+                showPopUp(position);
             }
         });
         setAnimation(holder.itemView, position);
@@ -86,7 +86,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
         }
     }
 
-    private void showPopUp(View view, int position) {
+    private void showPopUp(int position) {
         Button requestToJoin;
         TextView cancel;
         TextView title;
@@ -155,6 +155,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
                 SupportRequests.postWithCookie("http://" + address + ":8081/user/request/" + id + "/send-request", jsonObject.toString(), cookie, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
+                        System.out.println("DiscAdapter: Failed to send request");
                     }
 
                     @Override
