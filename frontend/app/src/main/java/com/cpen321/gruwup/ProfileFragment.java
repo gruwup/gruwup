@@ -93,7 +93,7 @@ public class ProfileFragment extends Fragment {
             }
 
             try {
-                getProfileRequest(view);
+                getProfileRequest();
             } catch (IOException e) {
                 e.printStackTrace();
                 Log.d(TAG, e.toString());
@@ -154,7 +154,7 @@ public class ProfileFragment extends Fragment {
         bioValidation = (TextView) profileDialog.findViewById(R.id.biographyAlert);
         categoryValidation = (TextView) profileDialog.findViewById(R.id.categoryAlert);
         userBio = (TextView) getView().findViewById(R.id.userBio);
-        getProfileRequest(v);
+        getProfileRequest();
         bioInput.setText(bio);
         // for categories
         initCategories();
@@ -175,7 +175,7 @@ public class ProfileFragment extends Fragment {
             public void onClick(View view) {
                 //Note: can change this to display from cache  (previous selected categories)
                 try {
-                    getProfileRequest(view);
+                    getProfileRequest();
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -261,7 +261,7 @@ public class ProfileFragment extends Fragment {
 
     }
 
-    private void getProfileRequest(View view) throws IOException{
+    private void getProfileRequest() throws IOException{
         // To do: replace this with server url
         String cookie = SupportSharedPreferences.getCookie(this.getActivity());
         Log.d(TAG, "User Id is "+ UserID);

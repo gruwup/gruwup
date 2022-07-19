@@ -95,7 +95,7 @@ public class ChatActivity extends AppCompatActivity {
         adventureInfo.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                showDetailPopUp(view);
+                showDetailPopUp();
             }
         });
 
@@ -121,7 +121,7 @@ public class ChatActivity extends AppCompatActivity {
                                 Log.d(TAG, "FOR EDIT UID" + UserID);
                                 Log.d(TAG, "FOR EDIT AVID" + adventureOwner);
                                 if (UserID.equals(adventureOwner)) {
-                                    showEditPopUp(view);
+                                    showEditPopUp();
                                 } else {
                                     runOnUiThread(new Runnable() {
                                         @Override
@@ -266,7 +266,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String message = editMessageBar.getText().toString().trim();
                 if (message != null && !message.isEmpty()) {
-                    
+
                     editMessageBar.setText("");
                     sendChat(message);
                 }
@@ -388,7 +388,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    private void showEditPopUp(View view) {
+    private void showEditPopUp() {
         adventureDialog.setContentView(R.layout.adventure_edit_pop_up);
 
         getAdventureDetails();
@@ -451,7 +451,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    private void showDetailPopUp(View view) {
+    private void showDetailPopUp() {
         adventureDialog.setContentView(R.layout.adventure_detail_pop_up);
         getAdventureDetails();
         adventureDialog.show();

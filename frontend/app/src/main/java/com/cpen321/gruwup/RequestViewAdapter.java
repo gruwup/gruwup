@@ -88,7 +88,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
                 Log.d(TAG, "clicked on requester name");
                 String requesterId = requests.get(position).getRequesterId();
                 try {
-                    showProfile(view, requesterId, request.getRequesterName());
+                    showProfile(requesterId, request.getRequesterName());
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
@@ -97,7 +97,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
 
     }
 
-    private void showProfile(View view, String userId, String requesterName) throws IOException {
+    private void showProfile(String userId, String requesterName) throws IOException {
         requestDialog.setContentView(R.layout.requester_profile_pop_up);
         this.getProfileRequest(userId);
         requestDialog.show();
