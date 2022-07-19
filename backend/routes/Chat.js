@@ -17,13 +17,9 @@ router.post("/:adventureId/send", async (req, res) => {
         if (result.code === 200) {
             res.status(200).send({ messages: result.payload });
         }
-        else {
-            res.status(result.code).send({ message: result.message.toString() });
-        }
+        res.status(result.code).send({ message: result.message.toString() });
     }
-    else {
-        res.status(403).send({ message: Session.invalid_msg });
-    }
+    res.status(403).send({ message: Session.invalid_msg });
 });
 
 
@@ -33,13 +29,9 @@ router.get("/:userId/recent-list", async (req, res) => {
         if (result.code === 200) {
             res.status(200).send({ messages: result.payload });
         }
-        else {
-            res.status(result.code).send({ message: result.message.toString() });
-        }
+        res.status(result.code).send({ message: result.message.toString() });
     }
-    else {
-        res.status(403).send({ message: Session.invalid_msg });
-    }
+    res.status(403).send({ message: Session.invalid_msg });
 });
 
 // allows front-end to obtain the pagination for the most recent chat for an adventure
@@ -49,13 +41,9 @@ router.get("/:adventureId/recent-pagination", async (req, res) => {
         if (result.code === 200) {
             res.status(200).send({ pagination: result.payload });
         }
-        else {
-            res.status(result.code).send({ message: result.message.toString() });
-        }
+        res.status(result.code).send({ message: result.message.toString() });
     }
-    else {
-        res.status(403).send({ message: Session.invalid_msg });
-    }
+    res.status(403).send({ message: Session.invalid_msg });
 });
 
 // getting a message list
@@ -65,13 +53,9 @@ router.get("/:adventureId/messages/:pagination", async (req, res) => {
         if (result.code === 200) {
             res.status(200).send(result.payload);
         }
-        else {
-            res.status(result.code).send({ message: result.message.toString() });
-        }
+        res.status(result.code).send({ message: result.message.toString() });
     }
-    else {
-        res.status(403).send({ message: Session.invalid_msg });
-    }
+    res.status(403).send({ message: Session.invalid_msg });
 });
 
 router.delete("/:adventureId/delete-chat", async (req, res) => {
@@ -80,13 +64,9 @@ router.delete("/:adventureId/delete-chat", async (req, res) => {
         if (result.code === 200) {
             res.sendStatus(200);
         }
-        else {
-            res.status(result.code).send({ message: result.message.toString() });
-        }
+        res.status(result.code).send({ message: result.message.toString() });
     }
-    else {
-        res.status(403).send({ message: Session.invalid_msg });
-    }
+    res.status(403).send({ message: Session.invalid_msg });
 });
 
 module.exports = router;
