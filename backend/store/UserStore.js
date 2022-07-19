@@ -4,7 +4,7 @@ const Profile = require("../models/Profile");
 module.exports = class User {
     static getUserProfile = async (userId) => {
         try {
-            var profileResult = await Profile.findOne({ userId: userId });
+            var profileResult = await Profile.findOne({ userId });
             if (!profileResult) {
                 return {
                     code: 404,
@@ -70,7 +70,7 @@ module.exports = class User {
     static updateUser = async (userId, profile) => {
         try {
             var result = await Profile.findOneAndUpdate(
-                { userId: userId },
+                { userId },
                 { $set: profile },
                 {new: true});
     

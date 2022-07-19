@@ -1,5 +1,3 @@
-const { ObjectId } = require("mongodb");
-
 module.exports = class MockTestData {
     static testAdventure1 = {
         _id: "1",
