@@ -2,123 +2,174 @@ const Message = require("../models/Message");
 
 module.exports = class User {
     static storeNewMessageGroup = async (adventureId, messages, dateTime) => {
-        try {
-            var paginationResult = await this.getPrevPagination(adventureId, dateTime);
-            var messageGroup = { 
-                adventureId, 
-                pagination: dateTime, 
-                prevPagination: paginationResult.payload ? paginationResult.payload : null,
-                messages: [messages]
-            }
-            messageGroup = new Message(messageGroup);
-            var result = await messageGroup.save();
-
-            return {
+        var result = {
+            code: 500,
+            message: "Server error"
+        }
+        
+        var paginationResult = await this.getPrevPagination(adventureId, dateTime);
+        var messageGroup = { 
+            adventureId, 
+            pagination: dateTime, 
+            prevPagination: paginationResult.payload ? paginationResult.payload : null,
+            messages: [messages]
+        }
+        messageGroup = new Message(messageGroup);
+        var messageResult = await messageGroup.save();
+        if (messageResult) {
+            result = {
                 code: 200,
                 message: "Group created successfully",
-                payload: result
+                payload: messageResult
+            };
+            
+        }
+        else {
+            result = {
+                code: 400,
+                message: "Group creation unsuccessful"
             };
         }
-        catch (err) {
-            return {
-                code: 500,
-                message: err
-            };
-        }
+        
+        return result;
     };
 
     static storeExistingMessageGroup = async (adventureId, message, dateTime) => {
+        var result = {
+            code: 500,
+            message: "Server error"
+        }
+
         var paginationResult = await this.getPrevPagination(adventureId, dateTime);
-        var result = await Message.findOneAndUpdate( // update pagination and add message to object array
-                                { adventureId, pagination: paginationResult.payload },
-                                { $set: { pagination: dateTime },  $push: { messages: message } },
-                                { new: true }
-                            );
-        return {
-            code: 200,
-            message: "Group updated successfully",
-            payload: result
-        };
+        var paginationObj = { pagination: dateTime };
+        var messagesObj = { messages: message };
+        var messageResult = await Message.findOneAndUpdate( // update pagination and add message to object array
+                            { adventureId, pagination: paginationResult.payload },
+                            { $set: paginationObj,  $push: messagesObj },
+                            { new: true }
+                        );
+        if (messageResult) {
+            result = {
+                code: 200,
+                message: "Group updated successfully",
+                payload: messageResult
+            }
+        }
+        else {
+            result = {
+                code: 404,
+                message: "Group not found"
+            };
+        }
+        
+        return result;
     };
 
     // get most recent message time before dateTime
     static getPrevPagination = async (adventureId, pagination) => {
-        var result = await Message.find({ adventureId });
-        var prevPagination = null;
-        if (result.length) {
-            prevPagination = result.map(chat => chat.pagination).reduce((prev, curr) => {
-                if (prev > pagination && curr > pagination) return null;
-                else if (prev > pagination) return curr;
-                else if (curr > pagination) return prev;
-                else return (Math.abs(curr - pagination) < Math.abs(prev - pagination) ? curr : prev);
-            });
-            return {
-                code: 200,
-                message: "Previous pagination found",
-                payload: prevPagination
-            };
+        var result = {
+            code: 500,
+            message: "Server error"
         }
-        
-        return {
-            code: 404,
-            message: "No previous pagination found",
-            payload: prevPagination
-        };
-    };
 
-    static getMessages = async (adventureId, pagination) => {
-        var result = await Message.findOne({ adventureId, pagination });
-        
-        if (result) {
-            return {
-                code: 200,
-                message: "Messages found",
-                payload: result
+        var messageResult = await Message.find({ adventureId });
+        if (messageResult) {
+            var prevPagination = null;
+            if (messageResult.length) {
+                prevPagination = messageResult.map(chat => chat.pagination).reduce((prev, curr) => {
+                    if (prev > pagination && curr > pagination) return null;
+                    else if (prev > pagination) return curr;
+                    else if (curr > pagination) return prev;
+                    else return (Math.abs(curr - pagination) < Math.abs(prev - pagination) ? curr : prev);
+                });
+                result = {
+                    code: 200,
+                    message: "Previous pagination found",
+                    payload: prevPagination
+                };
             }
         }
         else {
-            return {
+            result = {
+                code: 404,
+                message: "No previous messages found",
+            }
+        }
+
+        return result;
+    };
+
+    static getMessages = async (adventureId, pagination) => {
+        var result = {
+            code: 500,
+            message: "Server error"
+        }
+
+        var messageResult = await Message.findOne({ adventureId, pagination });
+        if (messageResult) {
+            result = {
+                code: 200,
+                message: "Messages found",
+                payload: messageResult
+            }
+        }
+        else {
+            result = {
                 code: 404,
                 message: "Messages not found"
             }
         }
+        return result;
     };
 
     static getMostRecentMessage = async (adventureId, dateTime) => {
+        var result = {
+            code: 500,
+            message: "Server error"
+        }
+
         var paginationResult = await this.getPrevPagination(adventureId, dateTime);
-        var result = await Message.findOne({ adventureId, pagination: paginationResult.payload });
-        if (result) {
-            var message = result.messages[result.messages.length - 1];
-            if (result) {
-                return {
+        var messageResult = await Message.findOne({ adventureId, pagination: paginationResult.payload });
+        if (messageResult) {
+            var message = messageResult.messages[messageResult.messages.length - 1];
+            if (messageResult) {
+                result = {
                     code: 200,
                     message: "Messages found",
                     payload: message
                 }
             }
         }
-        
         else {
-            return {
+            result = {
                 code: 404,
                 message: "Messages not found"
             }
         }
+        
+        return result;
     };
 
     static deleteChat = async (adventureId) => {
-        var result = await Message.deleteMany({ adventureId });
-        if (result) {
-            return {
+        var result = {
+            code: 500,
+            message: "Server error"
+        }
+
+        var messageResult = await Message.deleteMany({ adventureId });
+        if (messageResult) {
+            result = {
                 code: 200,
                 message: "Adventure chat deleted"
             }
         }
         else {
-            return {
+            result = {
                 code: 404,
                 message: "Adventure not found"
             }
         }
+        
+        return result;
     };
 };

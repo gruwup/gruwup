@@ -15,11 +15,11 @@ router.post("/:adventureId/send", async (req, res) => {
         };
         var result = await ChatService.sendMessage(req.params.adventureId, message);
         if (result.code === 200) {
-            res.status(200).send({ messages: result.payload });
+            return res.sendStatus(200);
         }
-        res.status(result.code).send({ message: result.message.toString() });
+        return res.status(result.code).send({ message: result.message.toString() });
     }
-    res.status(403).send({ message: Session.invalid_msg });
+    return res.status(403).send({ message: Session.invalid_msg });
 });
 
 
@@ -27,11 +27,11 @@ router.get("/:userId/recent-list", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
         var result = await ChatService.getRecentMessages(req.params.userId);
         if (result.code === 200) {
-            res.status(200).send({ messages: result.payload });
+            return res.status(200).send({ messages: result.payload });
         }
-        res.status(result.code).send({ message: result.message.toString() });
+        return res.status(result.code).send({ message: result.message.toString() });
     }
-    res.status(403).send({ message: Session.invalid_msg });
+    return res.status(403).send({ message: Session.invalid_msg });
 });
 
 // allows front-end to obtain the pagination for the most recent chat for an adventure
@@ -39,11 +39,11 @@ router.get("/:adventureId/recent-pagination", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
         var result = await ChatStore.getPrevPagination(req.params.adventureId, Date.now());
         if (result.code === 200) {
-            res.status(200).send({ pagination: result.payload });
+            return res.status(200).send({ pagination: result.payload });
         }
-        res.status(result.code).send({ message: result.message.toString() });
+        return res.status(result.code).send({ message: result.message.toString() });
     }
-    res.status(403).send({ message: Session.invalid_msg });
+    return res.status(403).send({ message: Session.invalid_msg });
 });
 
 // getting a message list
@@ -51,11 +51,11 @@ router.get("/:adventureId/messages/:pagination", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
         var result = await ChatStore.getMessages(req.params.adventureId, req.params.pagination);
         if (result.code === 200) {
-            res.status(200).send(result.payload);
+            return res.status(200).send(result.payload);
         }
-        res.status(result.code).send({ message: result.message.toString() });
+        return res.status(result.code).send({ message: result.message.toString() });
     }
-    res.status(403).send({ message: Session.invalid_msg });
+    return res.status(403).send({ message: Session.invalid_msg });
 });
 
 router.delete("/:adventureId/delete-chat", async (req, res) => {
@@ -64,9 +64,9 @@ router.delete("/:adventureId/delete-chat", async (req, res) => {
         if (result.code === 200) {
             res.sendStatus(200);
         }
-        res.status(result.code).send({ message: result.message.toString() });
+        return res.status(result.code).send({ message: result.message.toString() });
     }
-    res.status(403).send({ message: Session.invalid_msg });
+    return res.status(403).send({ message: Session.invalid_msg });
 });
 
 module.exports = router;

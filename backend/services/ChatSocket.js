@@ -36,9 +36,5 @@ module.exports = class ChatSocket {
                 }
             }
         })
-        return {
-            code: 200,
-            message: "Message successfully send to participants"
-        }
     }
 };
