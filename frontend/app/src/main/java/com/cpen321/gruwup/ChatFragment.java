@@ -36,7 +36,6 @@ public class ChatFragment extends Fragment {
 
 
     private String address;
-    private String cookie;
     private ChatViewAdapter adapter;
     private TextView noMessages;
 
@@ -101,6 +100,7 @@ public class ChatFragment extends Fragment {
 
         String UserID = SupportSharedPreferences.getUserId(this.getActivity());
         Log.d(TAG, "User Id is "+ UserID);
+        String cookie;
         cookie = SupportSharedPreferences.getCookie(this.getActivity());
         Log.d(TAG, "Cookie is "+cookie);
 

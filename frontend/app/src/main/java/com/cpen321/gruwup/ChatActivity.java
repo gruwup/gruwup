@@ -45,23 +45,20 @@ public class ChatActivity extends AppCompatActivity {
     private RecyclerView messageRecyclerView;
     private MessageViewAdapter adapter;
     private ArrayList<Message> messages = new ArrayList<>();
-    private Button sendButton;
+
     private EditText editMessageBar;
     private TextView loadOldMessage;
-
     private String UserID;
     private String UserName;
-    private String adventureTitle;
     private String adventureId;
     private Dialog adventureDialog;
-    private String pagination;
     private String prevPagination = "null";
     private String time;
 
     private String address;
 
     private String cookie;
-    private String serverUrl;
+//    private String serverUrl;
 
     private JSONArray peopleGoing;
     private String adventureOwner;
@@ -72,11 +69,14 @@ public class ChatActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         address = getString(R.string.connection_address);
+        String serverUrl;
         serverUrl = "http://" + address + ":8000";
         setContentView(R.layout.activity_chat);
         getSupportActionBar().hide();
 
         Intent intent = getIntent();
+        String adventureTitle;
+
         adventureTitle = intent.getStringExtra("name");
         adventureId = intent.getStringExtra("adventureId");
 
@@ -202,6 +202,7 @@ public class ChatActivity extends AppCompatActivity {
         adapter = new MessageViewAdapter(this, messages);
         messageRecyclerView.setAdapter(adapter);
 
+        String pagination;
         pagination = intent.getStringExtra("dateTime");
 
         prevPagination = pagination;
@@ -223,6 +224,8 @@ public class ChatActivity extends AppCompatActivity {
         UserID = SupportSharedPreferences.getUserId(getApplicationContext());
         UserName = SupportSharedPreferences.getUserName(getApplicationContext());
         editMessageBar = findViewById(R.id.editMesssage);
+
+        Button sendButton;
         sendButton = findViewById(R.id.sendMessage);
         sendButton.setOnClickListener(new View.OnClickListener() {
             @Override

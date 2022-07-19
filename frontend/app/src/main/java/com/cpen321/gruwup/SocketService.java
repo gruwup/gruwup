@@ -19,23 +19,21 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 public class SocketService extends Service {
-    private static final String RECEIVED_MESSAGE = "received";
-    private String UserID;
-    private String cookie;
     private static String TAG = "SocketService";
-
-    private String address;
-    private String serverUrl;
-
 
     // socket implementation
     private Socket mSocket;
 
     @Override
     public int onStartCommand(Intent intent, int flags, int startId) {
+        String address;
+        String serverUrl;
+
         address = getApplicationContext().getString(R.string.connection_address);
         serverUrl = "http://" + address + ":8000";
         System.out.println("Service!!!");
+        String UserID;
+        String cookie;
         try {
             cookie = SupportSharedPreferences.getCookie(getApplicationContext());
             UserID = SupportSharedPreferences.getUserId(getApplicationContext());
