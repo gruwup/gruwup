@@ -19,7 +19,6 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 public class SocketService extends Service {
-    private static final String SENT_MESSAGE = "sent";
     private static final String RECEIVED_MESSAGE = "received";
     private String UserID;
     private String cookie;
@@ -79,15 +78,12 @@ public class SocketService extends Service {
     private Emitter.Listener onNewNotification = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
-            Log.d(TAG, "adventure ID=====>" + args[0].toString());
-            Log.d(TAG, "message=====>" + args[1].toString());
             JSONObject data = (JSONObject) args[1];
 
             String userName;
             String userId;
             String message;
             String dateTime;
-            // To do: need adventureId?
             String adventureId;
             String messageStatus;
 
@@ -98,7 +94,6 @@ public class SocketService extends Service {
                 message = data.getString("message");
                 dateTime = data.getString("dateTime");
                 messageStatus = RECEIVED_MESSAGE;
-                Message newMessage = new Message(userId, userName, message, dateTime, messageStatus);
                 sendMessage(userName, message, dateTime, adventureId);
             } catch (JSONException e) {
                 return;

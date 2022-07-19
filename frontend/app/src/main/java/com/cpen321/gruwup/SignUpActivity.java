@@ -36,7 +36,6 @@ public class SignUpActivity extends AppCompatActivity {
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     RecyclerView categoryView ;
     static final String TAG = "SignUpActivity";
-    private Integer age;
     private GoogleSignInClient mGoogleSignInClient;
 
     private String address;
@@ -76,7 +75,6 @@ public class SignUpActivity extends AppCompatActivity {
 
         EditText ageInput = (EditText) findViewById(R.id.setAge);
         TextView ageValidation  = (TextView) findViewById(R.id.setAgeAlert);
-        age = 0;
 
         setProfileBtn.setOnClickListener(new View.OnClickListener() {
             @Override

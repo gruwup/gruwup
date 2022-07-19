@@ -15,7 +15,6 @@ public class MessageViewAdapter extends RecyclerView.Adapter<MessageViewAdapter.
 
     Context context;
     ArrayList<Message> messages;
-    private static final String TAG = "ChatViewAdapter";
     private static final String SENT_MESSAGE = "sent";
     private static final String RECEIVED_MESSAGE = "received";
 
