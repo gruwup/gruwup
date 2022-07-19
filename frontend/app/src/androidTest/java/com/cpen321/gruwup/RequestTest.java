@@ -9,9 +9,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 
 //import androidx.test.espresso.contrib.RecyclerViewActions; //doesn't work for some reason
 
-import static org.hamcrest.CoreMatchers.not;
 import static org.hamcrest.Matchers.allOf;
-import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
 
 import android.view.View;
