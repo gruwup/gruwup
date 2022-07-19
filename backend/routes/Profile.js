@@ -17,11 +17,11 @@ router.post("/create", async (req, res) => {
     
         var result = await UserStore.createUser(profile);
         if (result.code === 200) {
-            res.sendStatus(200);
+            return res.sendStatus(200);
         }
-        res.status(result.code).send(result.message);
+        return res.status(result.code).send(result.message);
     }
-    res.status(403).send({ message: Session.invalid_msg });
+    return res.status(403).send({ message: Session.invalid_msg });
 });
 
 router.get("/:userId/get", async (req, res) => {
@@ -29,11 +29,11 @@ router.get("/:userId/get", async (req, res) => {
         var result = await UserStore.getUserProfile(req.params.userId);
         
         if (result.code === 200) {
-            res.status(200).send(result.payload);
+            return res.status(200).send(result.payload);
         }
-        res.status(result.code).send(result.message);
+        return res.status(result.code).send(result.message);
     }
-    res.status(403).send({ message: Session.invalid_msg });
+    return res.status(403).send({ message: Session.invalid_msg });
 });
 
 router.put("/:userId/edit", async (req, res) => {
@@ -47,11 +47,11 @@ router.put("/:userId/edit", async (req, res) => {
 
         var result = await UserStore.updateUser(req.params.userId, profile);
         if (result.code === 200) {
-            res.sendStatus(200);
+            return res.sendStatus(200);
         }
-        res.status(result.code).send(result.message);
+        return res.status(result.code).send(result.message);
     }
-    res.status(403).send({ message: Session.invalid_msg });
+    return res.status(403).send({ message: Session.invalid_msg });
 });
 
 module.exports = router;
