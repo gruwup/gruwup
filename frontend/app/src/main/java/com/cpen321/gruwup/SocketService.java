@@ -81,19 +81,15 @@ public class SocketService extends Service {
             JSONObject data = (JSONObject) args[1];
 
             String userName;
-            String userId;
             String message;
             String dateTime;
             String adventureId;
-            String messageStatus;
 
             try {
                 adventureId = args[0].toString();
                 userName = data.getString("name");
-                userId = data.getString("userId");
                 message = data.getString("message");
                 dateTime = data.getString("dateTime");
-                messageStatus = RECEIVED_MESSAGE;
                 sendMessage(userName, message, dateTime, adventureId);
             } catch (JSONException e) {
                 return;

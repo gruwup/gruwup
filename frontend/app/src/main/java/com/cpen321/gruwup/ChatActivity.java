@@ -266,8 +266,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String message = editMessageBar.getText().toString().trim();
                 if (message != null && !message.isEmpty()) {
-                    // check datetime format
-                    long currentTimestamp = System.currentTimeMillis() / 1000;
+                    
                     editMessageBar.setText("");
                     sendChat(message);
                 }
