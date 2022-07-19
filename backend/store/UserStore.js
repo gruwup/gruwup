@@ -3,31 +3,34 @@ const Profile = require("../models/Profile");
 
 module.exports = class User {
     static getUserProfile = async (userId) => {
+        var result;
+
         try {
             var profileResult = await Profile.findOne({ userId });
             if (!profileResult) {
-                return {
+                result = {
                     code: 404,
                     message: "User Profile not found"
                 }
             }
+            else {
+                var adventuresResult = await Adventure.find({ owner: userId });
+                var adventures = [];
+                adventuresResult.forEach(adventure => adventures.push(adventure));
+                var profile = { 
+                    userId: profileResult.userId,
+                    name: profileResult.name,
+                    biography: profileResult.biography,
+                    categories: profileResult.categories,
+                    image: profileResult.image,
+                    adventuresCreated: adventures 
+                };
 
-            var adventuresResult = await Adventure.find({ owner: userId });
-            var adventures = [];
-            adventuresResult.forEach(adventure => adventures.push(adventure));
-            var result = { 
-                userId: profileResult.userId,
-                name: profileResult.name,
-                biography: profileResult.biography,
-                categories: profileResult.categories,
-                image: profileResult.image,
-                adventuresCreated: adventures 
-            };
-
-            return {
-                code: 200,
-                message: "User Profile found",
-                payload: result
+                result = {
+                    code: 200,
+                    message: "User Profile found",
+                    payload: profile
+                }
             }
         }
         catch (err) {
@@ -36,63 +39,73 @@ module.exports = class User {
                 message: err
             };
         }
+
+        return result;
     };
     
     static createUser = async (profile) => {
+        var result;
         var user = new Profile(profile);
         var exists = await Profile.findOne({ userId: profile.userId });
         if (!exists) {
             try {
-                var result = await user.save();
+                var profileResult = await user.save();
 
-                return {
+                result = {
                     code: 200,
                     message: "Profile created successfully",
-                    payload: result
+                    payload: profileResult
                 };
             }
             catch (err) {
-                return {
+                result = {
                     code: 400,
                     message: err._message
                 };
             }
         }
         else {
-            return {
+            result = {
                 code: 400,
                 message: "Profile exists for userId",
                 payload: result
             };
         }
+
+        return result;
     };
     
     static updateUser = async (userId, profile) => {
+        var result;
+
         try {
-            var result = await Profile.findOneAndUpdate(
-                { userId },
-                { $set: profile },
-                {new: true});
+            var profileResult = await Profile.findOneAndUpdate(
+                                { userId },
+                                { $set: profile },
+                                {new: true}
+                            );
     
-            if (result) {
-                return {
+            if (profileResult) {
+                result = {
                     code: 200,
                     message: "User Profile updated successfully",
-                    payload: result
+                    payload: profileResult
                 }
             }
             else {
-                return {
+                result = {
                     code: 404,
                     message: "User Profile not found"
                 }
             }
         }
         catch (err) {
-            return {
+            result = {
                 code: 500,
                 message: err
             };
         }
+
+        return result;
     };
 };
