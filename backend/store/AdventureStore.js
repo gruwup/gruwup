@@ -140,6 +140,9 @@ module.exports = class AdventureStore {
                     { status: "OPEN" },
                     { title: { $regex: title, $options: "i" }}
                 ] });
+            result.sort((a, b) => {
+                return b.dateTime - a.dateTime;
+            });
             return {
                 code: 200,
                 message: "Adventures found",
@@ -168,6 +171,9 @@ module.exports = class AdventureStore {
                         status: "OPEN"
                     }
                 ]
+            });
+            result.sort((a, b) => {
+                return b.dateTime - a.dateTime;
             });
             return {
                 code: 200,
@@ -247,6 +253,9 @@ module.exports = class AdventureStore {
                     filter
                 ] }
             );
+            result.sort((a, b) => {
+                return b.dateTime - a.dateTime;
+            });
             return {
                 code: 200,
                 message: "Adventures found",

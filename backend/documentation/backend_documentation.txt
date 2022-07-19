@@ -806,8 +806,8 @@ components:
           type: string
           example: "2110 Burrard St, Vancouver, BC V6J 3H6"
         dateTime:
-          type: string
-          example: "2312746523"
+          type: number
+          example: 2312746523
         image:
           type: string
     AdventureWithId:
@@ -830,8 +830,8 @@ components:
           type: string
           example: "2110 Burrard St, Vancouver, BC V6J 3H6"
         dateTime:
-          type: string
-          example: "2312746523"
+          type: number
+          example: 2312746523
         peopleGoing:
           type: array
           items:
@@ -844,20 +844,18 @@ components:
     Search:
       type: object
       properties:
-        title:
+        city:
           type: string
         category:
           type: string
           enum: ["MOVIE", "MUSIC", "SPORTS", "FOOD", "TRAVEL", "DANCE", "ART"]
           example: "MOVIE"
-        date:
-          type: string
-          enum: [this week, this month, this year, all date]
-          example: "this week"
-        time:
-          type: string
-          enum: [morning, afternoon, night, all time]
-          example: "morning"
+        maxTimeStamp:
+          type: number
+          example: 23868956
+        maxPeopleGoing:
+          type: number
+          example: 2
     Message:
       type: object
       properties:
@@ -919,8 +917,8 @@ components:
           enum: ["ACCEPTED", "PENDING", "REJECTED", "EXPIRED"]
           example: "PENDING"
         dateTime:
-          type: string
-          example: "13131238"
+          type: number
+          example: 13131238
     AdventureThumbnail:
       type: object
       properties:
