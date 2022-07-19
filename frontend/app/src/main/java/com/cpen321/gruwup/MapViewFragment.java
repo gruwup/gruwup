@@ -42,7 +42,6 @@ import okhttp3.Response;
 public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClickListener {
 
     MapView mMapView;
-    private GoogleMap googleMap;
     JSONArray HTTP_RESPONSE_ARRAY;
 
     String address;
@@ -69,6 +68,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
             @SuppressLint("MissingPermission") //should already have all permissions
             @Override
             public void onMapReady(GoogleMap mMap) {
+                GoogleMap googleMap;
                 googleMap = mMap;
                 googleMap.setOnMarkerClickListener(MapViewFragment.this);
                 if(location_address != "") {
@@ -222,13 +222,12 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
                 SupportRequests.postWithCookie("http://" + address + ":8081/user/request/" + id + "/send-request", toPostObject.toString(), SupportSharedPreferences.getCookie(getActivity()), new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
+                        System.out.println("HTTP req failed inside map fragment");
                     }
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
-                        if (response.isSuccessful()) {
-                            String responseData = response.body().string();
-                        } else {
+                        if (!response.isSuccessful()) {
                             System.out.println("HTTP req failed inside map fragment" + response.body().string());
                         }
                     }

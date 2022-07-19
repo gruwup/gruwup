@@ -124,12 +124,13 @@ public class DiscoverFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 System.out.println("Create adventure button clicked");
-                createAdventure(v);
+                createAdventure();
             }
         });
         SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + SupportSharedPreferences.getUserId(this.getActivity()) + "/discover", SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                System.out.println("Failure on get from Discover");
             }
 
             @Override
@@ -181,7 +182,7 @@ public class DiscoverFragment extends Fragment {
         }.start();
     }
 
-    private void createAdventure(View v) {
+    private void createAdventure() {
         EditText title;
         EditText description;
         EditText time;
@@ -309,8 +310,7 @@ public class DiscoverFragment extends Fragment {
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
-                            if (response.isSuccessful()) {
-                            } else {
+                            if (!response.isSuccessful()) {
                                 System.out.println("Failure on response from create adventure: " + response.code() + " " + response.message() + " " + response.body().string() + " ");
                             }
                         }

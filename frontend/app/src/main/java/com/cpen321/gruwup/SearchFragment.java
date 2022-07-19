@@ -123,15 +123,12 @@ public class SearchFragment extends Fragment{
         address = getActivity().getString(R.string.connection_address);
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
+                //do nothing
             }
         };
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (location != null) {
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-        }
         String city = getCurrentCity(location);
         System.out.println("city " + city);
 
@@ -148,7 +145,7 @@ public class SearchFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 System.out.println("Filter button clicked");
-                filterAdventure(v);
+                filterAdventure();
                 System.out.println("Update recycler view");
                 AdventureAdapter.notifyDataSetChanged();
                 if(mAdventureList != null) {
@@ -165,11 +162,8 @@ public class SearchFragment extends Fragment{
         searchText = (EditText) view.findViewById(R.id.search_events);
         searchText.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) { //responds per alphabetical key press
-                if (true) {
-                    searchAdventure(view);
-                    return true;
-                }
-                return false;
+                searchAdventure(view);
+                return true;
             }
         });
 
@@ -211,6 +205,7 @@ public class SearchFragment extends Fragment{
         SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city="+city, SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                System.out.println("Failed to get adventures in default Search");
             }
 
             @Override
@@ -280,7 +275,7 @@ public class SearchFragment extends Fragment{
 
     }
 
-    private void filterAdventure(View view) {
+    private void filterAdventure() {
         System.out.println("Filter adventure");
         Button applyFilters;
         EditText location;
@@ -377,7 +372,6 @@ public class SearchFragment extends Fragment{
                     }
                 }
                 dialog.dismiss();
-                return;
             }
         });
     }

@@ -140,6 +140,9 @@ public class MainActivity extends AppCompatActivity {
                         case R.id.nav_requests:
                             selectedFragment = new RequestsFragment();
                             break;
+                        default:
+                            selectedFragment = new DiscoverFragment(); //should never happen
+                            break;
                     }
                     getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, selectedFragment).commit();
                     return true;
