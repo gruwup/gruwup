@@ -1,9 +1,14 @@
 package com.cpen321.gruwup;
 
 public class Message {
-    String userId, name, message, dateTime, prevTime, messageStatus;
 
-    // "sent" or "received"
+    String userId;
+    String name;
+    String message;
+    String dateTime;
+    String messageStatus;
+
+    // messageStatus can be "sent" or "received"
     public String getMessageStatus() {
         return messageStatus;
     }

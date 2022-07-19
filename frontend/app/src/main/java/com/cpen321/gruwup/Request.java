@@ -1,7 +1,13 @@
 package com.cpen321.gruwup;
 
 public class Request {
-    private String requesterName, requesterId, requestId, adventureName, status;
+
+    private String requesterName;
+    private String requesterId;
+    private String requestId;
+    private String adventureName;
+    private String status;
+
 
     public Request(String adventureName, String requesterName, String requesterId, String requestId, String status) {
         this.adventureName = adventureName;

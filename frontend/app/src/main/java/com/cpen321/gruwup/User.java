@@ -2,8 +2,11 @@ package com.cpen321.gruwup;
 
 
 public class User {
-
-    private String userId , name , profilePic , biography;
+    
+    private String userId;
+    private String name;
+    private String profilePic;
+    private String biography;
     private String categories;
 
     public User() {
