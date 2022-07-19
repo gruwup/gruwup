@@ -15,18 +15,11 @@ router.post("/create", async (req, res) => {
             image: req.body.image ? req.body.image : null
         };
     
-        try {
-            var result = await UserStore.createUser(profile);
-            if (result.code === 200) {
-                res.sendStatus(200);
-            }
-            else {
-                res.status(result.code).send(result.message);
-            }
+        var result = await UserStore.createUser(profile);
+        if (result.code === 200) {
+            res.sendStatus(200);
         }
-        catch (err) {
-            res.status(500).send({ message: err.toString() });
-        }
+        res.status(result.code).send(result.message);
     }
     else {
         res.status(403).send({ message: Session.invalid_msg });
@@ -35,19 +28,12 @@ router.post("/create", async (req, res) => {
 
 router.get("/:userId/get", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
-        try {
-            var result = await UserStore.getUserProfile(req.params.userId);
-            
-            if (result.code === 200) {
-                res.status(200).send(result.payload);
-            }
-            else {
-                res.status(result.code).send(result.message);
-            }
+        var result = await UserStore.getUserProfile(req.params.userId);
+        
+        if (result.code === 200) {
+            res.status(200).send(result.payload);
         }
-        catch (err) {
-            res.status(500).send({ message: err.toString() });
-        }
+        res.status(result.code).send(result.message);
     }
     else {
         res.status(403).send({ message: Session.invalid_msg });
@@ -63,18 +49,11 @@ router.put("/:userId/edit", async (req, res) => {
             image: req.body.image ? req.body.image : null
         };
 
-        try {
-            var result = await UserStore.updateUser(req.params.userId, profile);
-            if (result.code === 200) {
-                res.sendStatus(200);
-            }
-            else {
-                res.status(result.code).send(result.message);
-            }
+        var result = await UserStore.updateUser(req.params.userId, profile);
+        if (result.code === 200) {
+            res.sendStatus(200);
         }
-        catch (err) {
-            res.status(500).send({ message: err.toString() });
-        }
+        res.status(result.code).send(result.message);
     }
     else {
         res.status(403).send({ message: Session.invalid_msg });

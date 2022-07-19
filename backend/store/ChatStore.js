@@ -5,12 +5,12 @@ module.exports = class User {
         try {
             var paginationResult = await this.getPrevPagination(adventureId, dateTime);
             var messageGroup = { 
-                adventureId: adventureId, 
+                adventureId, 
                 pagination: dateTime, 
                 prevPagination: paginationResult.payload ? paginationResult.payload : null,
                 messages: [messages]
             }
-            var messageGroup = new Message(messageGroup);
+            messageGroup = new Message(messageGroup);
             var result = await messageGroup.save();
 
             return {
@@ -31,7 +31,7 @@ module.exports = class User {
         try {
             var paginationResult = await this.getPrevPagination(adventureId, dateTime);
             var result = await Message.findOneAndUpdate( // update pagination and add message to object array
-                                    { adventureId: adventureId, pagination: paginationResult.payload },
+                                    { adventureId, pagination: paginationResult.payload },
                                     { $set: { pagination: dateTime },  $push: { messages: message } },
                                     { new: true }
                                 );
@@ -52,7 +52,7 @@ module.exports = class User {
     // get most recent message time before dateTime
     static getPrevPagination = async (adventureId, pagination) => {
         try {
-            var result = await Message.find({ adventureId: adventureId });
+            var result = await Message.find({ adventureId });
             var prevPagination = null;
             if (result.length) {
                 prevPagination = result.map(chat => chat.pagination).reduce((prev, curr) => {
@@ -81,7 +81,7 @@ module.exports = class User {
 
     static getMessages = async (adventureId, pagination) => {
         try {
-            var result = await Message.findOne({ adventureId: adventureId, pagination: pagination });
+            var result = await Message.findOne({ adventureId, pagination });
             
             if (result) {
                 return {
