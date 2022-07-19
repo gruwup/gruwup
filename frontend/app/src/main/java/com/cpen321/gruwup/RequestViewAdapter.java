@@ -219,7 +219,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
 
 
                                 ImageView requesterImg = (ImageView) requestDialog.findViewById(R.id.requesterImage);
-                                Picasso.get().load(image).into(requesterImg);;
+                                Picasso.get().load(image).into(requesterImg);
                             }
                         });
 
