@@ -56,20 +56,28 @@ module.exports = class ChatService {
             var message;
             var adventure;
             var timestamp = Date.now();
-            var emptyMessage = {
-                userId: "",
-                name: "",
-                message: "",
-                dateTime: ""
-            }
             var adventureIds = adventureList.payload.map(adventure => adventure.toString());
             for (var i = 0; i < adventureIds.length; i++) {
                 message = await ChatStore.getMostRecentMessage(adventureIds[i], timestamp);
                 adventure = await AdventureStore.getAdventureDetail(adventureIds[i]);
                 if (message.code === 200) {
-                    messages.push({ adventureId: adventureIds[i], adventureTitle: adventure.payload.title, ...message.payload });
+                    messages.push({ 
+                        adventureId: adventureIds[i], 
+                        adventureTitle: adventure.payload.title,
+                        userId: message.payload.userId,
+                        name: message.payload.name,
+                        message: message.payload.message,
+                        dateTime: message.payload.dateTime
+                    });
                 } else {
-                    messages.push({ adventureId: adventureIds[i], adventureTitle: adventure.payload.title, ...emptyMessage });
+                    messages.push({ 
+                        adventureId: adventureIds[i], 
+                        adventureTitle: adventure.payload.title, 
+                        userId: "",
+                        name: "",
+                        message: "",
+                        dateTime: "" 
+                    });
                 }
             }
             messages.sort((messageA, messageB) => {
