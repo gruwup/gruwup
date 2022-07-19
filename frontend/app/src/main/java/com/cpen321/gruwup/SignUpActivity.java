@@ -90,6 +90,7 @@ public class SignUpActivity extends AppCompatActivity {
                     new CountDownTimer(2000, 1000) {
                         @Override
                         public void onTick(long millisUntilFinished) {
+                            // Callback fired on regular interval
                         }
 
                         @Override
