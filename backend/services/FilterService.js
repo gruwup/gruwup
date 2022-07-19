@@ -65,7 +65,7 @@ module.exports = class FilterService {
             }
             
         }
-        catch {
+        catch (err) {
             result = {
                 code: 500,
                 message: err._message
