@@ -6,49 +6,63 @@ var messageCount = {}
 
 module.exports = class ChatService {
     static sendMessage = async (adventureId, message) => {
+        var result = {
+            code: 500,
+            message: "Server error"
+        }
+        
         var adventure = await AdventureStore.getAdventureDetail(adventureId);
         if (adventure.code !== 200) {
-            return {
+            result = {
                 code: adventure.code,
                 message: adventure.message
             }
         }
-        var participants = adventure['payload']['peopleGoing'];
-        var result;
+        else {
+            var participants = adventure['payload']['peopleGoing'];
+            var messageResult;
 
-        if (participants.includes(message.userId)) {
-            if (!messageCount[adventureId] || messageCount[adventureId] === 10) messageCount[adventureId] = 0;
-            messageCount[adventureId]++;
-            ChatSocket.sendMessage(message.userId, adventureId, message);
+            if (participants.includes(message.userId)) {
+                if (!messageCount[adventureId] || messageCount[adventureId] === 10) messageCount[adventureId] = 0;
+                messageCount[adventureId]++;
+                ChatSocket.sendMessage(message.userId, adventureId, message);
 
-            if (messageCount[adventureId] === 1) {
-                result = await ChatStore.storeNewMessageGroup(adventureId, message, message.dateTime);
-            } else {
-                result = await ChatStore.storeExistingMessageGroup(adventureId, message, message.dateTime);
-            }
-            if (result.code === 200) {
-                return {
-                    code: result.code,
-                    message: "Successfully sent message",
-                    payload: result.payload
+                if (messageCount[adventureId] === 1) {
+                    messageResult = await ChatStore.storeNewMessageGroup(adventureId, message, message.dateTime);
+                } else {
+                    messageResult = await ChatStore.storeExistingMessageGroup(adventureId, message, message.dateTime);
+                }
+                if (messageResult.code === 200) {
+                    result = {
+                        code: messageResult.code,
+                        message: "Successfully sent message",
+                        payload: messageResult.payload
+                    }
+                }
+                else {
+                    result = {
+                        code: messageResult.code,
+                        message: messageResult.message
+                    }
                 }
             }
             else {
-                return {
-                    code: result.code,
-                    message: result.message
+                result = {
+                    code: 400,
+                    message: "User is not participant of adventure"
                 }
             }
         }
-        else {
-            return {
-                code: 400,
-                message: "User is not participant of adventure"
-            }
-        }
+
+        return result;
     }
 
     static getRecentMessages = async (userId) => {
+        var result = {
+            code: 500,
+            message: "Server error"
+        }
+
         var adventureList = await AdventureStore.getUsersAdventures(userId);
         if (adventureList.code === 200) {
             var messages = [];
@@ -83,18 +97,20 @@ module.exports = class ChatService {
                 return messageB.dateTime - messageA.dateTime;
             });
 
-            return {
+            result = {
                 code: 200,
                 messages: "Successfully obtained recent messages",
                 payload: messages
             }
         }
         else {
-            return {
+            result = {
                 code: adventureList.code,
                 messages: adventureList.message
             }
         }
+
+        return result
     };
 }
 

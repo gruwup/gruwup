@@ -44,7 +44,7 @@ module.exports = class User {
         var paginationObj = { pagination: dateTime };
         var messagesObj = { messages: message };
         var messageResult = await Message.findOneAndUpdate( // update pagination and add message to object array
-                            { adventureId: adventureId, pagination: paginationResult.payload },
+                            { adventureId, pagination: paginationResult.payload },
                             { $set: paginationObj,  $push: messagesObj },
                             { new: true }
                         );
