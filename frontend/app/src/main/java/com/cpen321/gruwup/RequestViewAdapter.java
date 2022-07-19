@@ -66,7 +66,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             @Override
             public void onClick(View view) {
                 // To do: make backend request , do below if backend request is successful
-                showPopUp(view, "accept",position);
+                showPopUp( "accept",position);
                 requests.remove(position);
                 notifyItemRemoved(position);
             }
@@ -76,7 +76,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             @Override
             public void onClick(View view) {
                 // To do: make backend request , do below if backend request is successful
-                showPopUp(view, "deny",position);
+                showPopUp("deny",position);
                 requests.remove(position);
                 notifyItemRemoved(position);
             }
@@ -114,7 +114,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         });
     }
 
-    private void showPopUp(View view, String action, int position) {
+    private void showPopUp( String action, int position) {
         String cookie = SupportSharedPreferences.getCookie(this.context);
         if (action=="accept"){
             String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/accept";
