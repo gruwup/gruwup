@@ -8,32 +8,27 @@ module.exports = class User {
         }
         
         var paginationResult = await this.getPrevPagination(adventureId, dateTime);
-        if (paginationResult.code !== 200) {
-            result = paginationResult;
+        var messageGroup = { 
+            adventureId, 
+            pagination: dateTime, 
+            prevPagination: paginationResult.payload ? paginationResult.payload : null,
+            messages: [messages]
+        }
+        messageGroup = new Message(messageGroup);
+        var messageResult = await messageGroup.save();
+        if (messageResult) {
+            result = {
+                code: 200,
+                message: "Group created successfully",
+                payload: messageResult
+            };
+            
         }
         else {
-            var messageGroup = { 
-                adventureId, 
-                pagination: dateTime, 
-                prevPagination: paginationResult.payload ? paginationResult.payload : null,
-                messages: [messages]
-            }
-            messageGroup = new Message(messageGroup);
-            var messageResult = await messageGroup.save();
-            if (messageResult) {
-                result = {
-                    code: 200,
-                    message: "Group created successfully",
-                    payload: messageResult
-                };
-                
-            }
-            else {
-                result = {
-                    code: 400,
-                    message: "Group creation unsuccessful"
-                };
-            }
+            result = {
+                code: 400,
+                message: "Group creation unsuccessful"
+            };
         }
         
         return result;
@@ -46,30 +41,25 @@ module.exports = class User {
         }
 
         var paginationResult = await this.getPrevPagination(adventureId, dateTime);
-        if (paginationResult.code !== 200) {
-            result = paginationResult;
+        var paginationObj = { pagination: dateTime };
+        var messagesObj = { messages: message };
+        var messageResult = await Message.findOneAndUpdate( // update pagination and add message to object array
+                            { adventureId: adventureId, pagination: paginationResult.payload },
+                            { $set: paginationObj,  $push: messagesObj },
+                            { new: true }
+                        );
+        if (messageResult) {
+            result = {
+                code: 200,
+                message: "Group updated successfully",
+                payload: messageResult
+            }
         }
         else {
-            var pagination = { pagination: dateTime };
-            var message = { message };
-            var messageResult = await Message.findOneAndUpdate( // update pagination and add message to object array
-                                { adventureId, pagination: paginationResult.payload },
-                                { $set: pagination,  $push: message },
-                                { new: true }
-                            );
-            if (messageResult.code !== 200) {
-                result = {
-                    code: messageResult.code,
-                    message: messageResult.message
-                }
-            }
-            else {
-                result = {
-                    code: 200,
-                    message: "Group updated successfully",
-                    payload: messageResult
-                };
-            }
+            result = {
+                code: 404,
+                message: "Group not found"
+            };
         }
         
         return result;

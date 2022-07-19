@@ -26,7 +26,6 @@ module.exports = class ChatService {
             } else {
                 result = await ChatStore.storeExistingMessageGroup(adventureId, message, message.dateTime);
             }
-                
             if (result.code === 200) {
                 return {
                     code: result.code,

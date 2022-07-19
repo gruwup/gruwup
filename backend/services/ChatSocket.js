@@ -25,10 +25,6 @@ module.exports = class ChatSocket {
 
     // sends messages to all users participating in an adventure (except sender)
     static sendMessage = async (userId, adventureId, message) => {
-        var result = {
-            code: 404,
-            message: "No participants in chat"
-        }
         var sockets = io.sockets.sockets;
 
         sockets.forEach(async (socket, key) => {
@@ -39,11 +35,6 @@ module.exports = class ChatSocket {
                     socket.emit('message', adventureId, message);
                 }
             }
-            result = {
-                code: 200,
-                message: "Message successfully send to participants"
-            }
         })
-        return result;
     }
 };
