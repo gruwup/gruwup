@@ -430,6 +430,7 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void getEditAdventureDetails(){
+
         SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -449,7 +450,13 @@ public class ChatActivity extends AppCompatActivity {
                         Log.d(TAG, "FOR EDIT UID" + UserID);
                         Log.d(TAG, "FOR EDIT AVID" + adventureOwner);
                         if (UserID.equals(adventureOwner)) {
-                            showEditPopUp();
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    showEditPopUp();
+                                }
+                            });
+
                         } else {
                             runOnUiThread(new Runnable() {
                                 @Override
