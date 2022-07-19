@@ -26,7 +26,8 @@ router.post("/:adventureId/send-request", async (req, res) => {
 				requester: req.body.userName,
 				requesterId: req.body.userId,
 				status: "PENDING",
-				dateTime: req.body.dateTime
+				dateTime: req.body.dateTime,
+				adventureExpireAt: adventure.payload.dateTime
 			};
 			var result = await RequestStore.sendRequest(request);
 			if (result.code === 200) {

@@ -69,24 +69,19 @@ module.exports = class FilterService {
             {
                 $and: [
                     { category: { $in: filter.categories } },
+                    { dateTime: { $lte: filter.maxTimeStamp } },
                     { city: filter.city }
                 ]
             } : {
                 $and: [
-                    { category: { $in: filter.categories } }
+                    { category: { $in: filter.categories } },
+                    { dateTime: { $lte: filter.maxTimeStamp } }
                 ]
             };
             var searchResult = await AdventureStore.findAdventuresByFilter(adventureFilter);
             var arr = searchResult.payload.reduce((acc, adventure) => {
-                if (filter.maxPeopleGoing && adventure.peopleGoing.length <= filter.maxPeopleGoing) {
-                    if ( filter.maxTimeStamp ) {
-                        if (adventure.dateTime <= filter.maxTimeStamp) {
-                            acc.push(adventure);
-                        }
-                    }
-                    else {
-                        acc.push(adventure);
-                    }
+                if (adventure.peopleGoing.length <= filter.maxPeopleGoing) {
+                    acc.push(adventure);
                 }
                 return acc;
             }
