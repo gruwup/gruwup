@@ -60,13 +60,15 @@ module.exports = class AdventureStoreMocks {
                 MockTestData.testAdventure2
             ]
         }
+        return result;
     });
 
     static removeAdventureParticipant = jest.fn((adventureId, userId) => {
         var result =  {
             code: 200,
             message: "Adventure participant removed successfully"
-        };  
+        };
+        return result;  
     });
 
     static findAdventuresByFilter = jest.fn((filter) => {
@@ -78,5 +80,6 @@ module.exports = class AdventureStoreMocks {
                 MockTestData.testAdventure2
             ]
         }
+        return result;
     });
 };
