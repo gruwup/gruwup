@@ -6,44 +6,20 @@ const TestMode = require("../TestMode");
 const Session = require("../services/Session");
 
 router.post("/:adventureId/send-request", async (req, res) => {
-	if (Session.validSession(req.headers.cookie) || TestMode.on) {
-		try {
-			var adventure = await AdventureStore.getAdventureDetail(req.params.adventureId);
-			if (adventure.payload.status != "OPEN") {
-				return res.status(400).send("Adventure is not open");
-			}
-			if (adventure.payload.owner == req.body.userId) {
-				return res.status(400).send("You cannot request to join your own adventure");
-			}
-			var checkRequestDuplicate = await RequestStore.checkIfRequestExists(req.params.adventureId, req.body.userId);
-			if (checkRequestDuplicate.code === 200) {
-				return res.status(400).send("You have already sent a request to this adventure");
-			}
-			var request = {
-				adventureId: req.params.adventureId,
-				adventureOwner: adventure.payload.owner,
-				adventureTitle: adventure.payload.title,
-				requester: req.body.userName,
-				requesterId: req.body.userId,
-				status: "PENDING",
-				dateTime: req.body.dateTime,
-				adventureExpireAt: adventure.payload.dateTime
-			};
-			var result = await RequestStore.sendRequest(request);
-			if (result.code === 200) {
-				res.status(200).send(result.payload);
-			}
-			else {
-				res.status(result.code).send(result.message);
-			}
-		}
-		catch (err) {
-			res.status(500).send(err);
-		}
+	if (!(Session.validSession(req.headers.cookie) || TestMode.on)) {
+		return res.status(403).send({ message: Session.invalid_msg });
     }
-    else {
-        res.status(403).send({ message: Session.invalid_msg });
-    }
+
+    await RequestStore.sendRequest(req.params.adventureId, req.body).then(result => {
+		if (result.code === 200) {
+			return res.status(200).send(result.message);
+		}
+
+		return res.status(result.code).send(result.message);
+	}
+	, err => {
+		return res.status(500).send(err._message);
+	});
 });
 
 router.get("/:userId/get-requests", async (req, res) => {

@@ -3,28 +3,62 @@ const Adventure = require("../models/Adventure");
 var ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = class RequestStore {
-    static sendRequest = async (request) => {
+    static sendRequest = async (adventureId, request) => {
         var result = {
             code: 500,
             message: "Server error"
         };
 
-        var newRequest = new Request(request);
-        try {
-            var saveResult = await newRequest.save();
-            saveResult.requestId = saveResult._id;
+        await Adventure.findById(adventureId).then(async adventure => {
             result = {
-                code: 200,
-                message: "Request sent successfully",
-                payload: saveResult
+                code: 404,
+                message: "Adventure not found"
             };
-        }
-        catch (err) {
+
+            if (adventure) {
+                await this.checkIfRequestExists(adventureId, request.userId).then(async requestExistResult => {
+                    result = {
+                        code: 400,
+                        message: "You have already sent a request to this adventure"
+                    };
+                    if (requestExistResult.code == 404) {
+                        var requestObj = new Request({
+                            requester: request.userName,
+                            adventureId: adventureId,
+                            adventureOwner: adventure.owner,
+                            adventureTitle: adventure.title,
+                            requesterId: request.userId,
+                            status: "PENDING",
+                            dateTime: request.dateTime,
+                            adventureExpireAt: adventure.dateTime
+                        });
+                        await requestObj.save().then(requestResult => {
+                            result = {
+                                code: 200,
+                                message: "Request sent",
+                                payload: requestResult
+                            };
+                        }
+                        , err => {
+                            result = {
+                                code: 500,
+                                message: err.message
+                            };
+                        });
+                    }
+                }, err => {
+                    result = {
+                        code: 500,
+                        message: err._message
+                    };
+                });
+            }
+        }, err => {
             result = {
-                code: 400,
-                message: err._message
+                code: 500,
+                message: err.message
             };
-        }
+        });
         return result;
     };
 
