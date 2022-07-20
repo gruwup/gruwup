@@ -3,67 +3,84 @@ const UserStore = require("../store/UserStore");
 
 module.exports = class FilterService {
     static getNearbyAdventures = async (cityName) => {
-        if (typeof cityName !== String) {
-            return {
-                code: 400,
-                message: "Invalid input"
-            }
-        }
+        var result = {
+            code: 500,
+            message: "Server error"
+        };
 
-        const nearbyFilter = {city: cityName};
-        try {
-            const adventures = await AdventureStore.findAdventuresByFilter(nearbyFilter);
-            if (adventures.code !== 200) {
-                return {
-                    code: adventures.code,
-                    message: adventures.message
-                }
-            }
-            return {
-                code: 200,
-                message: "Nearby adventures found",
-                payload: adventures.payload
+        if (!cityName) {
+            result = {
+                code: 400,
+                message: "City name is required"
             }
         }
-        catch (err) {
-            return {
-                code: 500,
-                message: err._message
-            };
+        else {
+            const nearbyFilter = {city: cityName};
+            try {
+                const adventuresResult = await AdventureStore.findAdventuresByFilter(nearbyFilter);
+                result = (adventures.code !== 200) ? adventuresResult : {
+                    code: 200,
+                    message: "Nearby adventures found",
+                    payload: adventures.payload
+                };
+            }
+            catch (err) {
+                result = {
+                    code: 500,
+                    message: err._message
+                };
+            }
         }
+        return result;
     };
 
     static getRecommendationFeed = async (userId) => {
+        var result = {
+            code: 500,
+            message: "Server error"
+        };
+
         try {
             var userProfile = await UserStore.getUserProfile(userId);
             if (userProfile.code !== 200) {
-                return {
+                result = {
                     code: userProfile.code,
                     message: userProfile.message
                 };
             }
-            var recommendationFilter = { $and: [
-                { status: "OPEN" },
-                { category: { $in: userProfile.payload.categories } },
-                { owner: { $ne: userId } },
-                { peopleGoing: { $nin: userId } },
-            ]};
-            var searchResult = await AdventureStore.findAdventuresByFilter(recommendationFilter);
-            return {
-                code: searchResult.code,
-                message: "Recommendation feed generated",
-                payload: searchResult.payload
-            };
+            else {
+                const statusOpen = {status: "OPEN"};
+                var recommendationFilter = { $and: [
+                    statusOpen,
+                    { category: { $in: userProfile.payload.categories } },
+                    { owner: { $ne: userId } },
+                    { peopleGoing: { $nin: userId } },
+                ]};
+                var searchResult = await AdventureStore.findAdventuresByFilter(recommendationFilter);
+                result = (searchResult.code !== 200) ?
+                searchResult : {
+                    code: searchResult.code,
+                    message: "Recommendation feed generated",
+                    payload: searchResult.payload
+                };
+            }
+            
         }
-        catch {
-            return {
+        catch (err) {
+            result = {
                 code: 500,
                 message: err._message
             };
         }
+        return result;
     };
 
     static findAdventuresByFilter = async (filter) => {
+        var result = {
+            code: 500,
+            message: "Server error"
+        };
+
         try {
             var adventureFilter = filter.city ? 
             {
@@ -79,24 +96,35 @@ module.exports = class FilterService {
                 ]
             };
             var searchResult = await AdventureStore.findAdventuresByFilter(adventureFilter);
-            var arr = searchResult.payload.reduce((acc, adventure) => {
-                if (adventure.peopleGoing.length <= filter.maxPeopleGoing) {
-                    acc.push(adventure);
-                }
-                return acc;
+            if (searchResult.code !== 200) {
+                result = searchResult;
             }
-            , []);
-            return {
-                code: searchResult.code,
-                message: "Adventure found",
-                payload: arr
-            };
+            else {
+                if (filter.maxPeopleGoing) {
+                    var arr = searchResult.payload.reduce((acc, adventure) => {
+                        if (adventure.peopleGoing.length <= filter.maxPeopleGoing) {
+                            acc.push(adventure);
+                        }
+                        return acc;
+                    }
+                    , []);
+                    result = {
+                        code: searchResult.code,
+                        message: "Adventure found",
+                        payload: arr
+                    };
+                }
+                else {
+                    result = searchResult;
+                }
+            }
         }
         catch (err) {
-            return {
+            result = {
                 code: 500,
                 message: err._message
             };
         }
+        return result;
     }
 };
