@@ -66,7 +66,7 @@ public class SearchFragment extends Fragment{
 
     private String address;
     static ArrayList<Map<String, String>> mAdventureList;
-    DiscAdvViewAdapter AdventureAdapter; 
+    DiscAdvViewAdapter AdventureAdapter;
     String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
     RecyclerView categoryView;
@@ -100,15 +100,12 @@ public class SearchFragment extends Fragment{
         address = getActivity().getString(R.string.connection_address);
         LocationListener locationListener = new LocationListener() {
             public void onLocationChanged(Location location) {
+                //do nothing
             }
         };
         locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
-        if (location != null) {
-            double latitude = location.getLatitude();
-            double longitude = location.getLongitude();
-        }
         String city = getCurrentCity(location);
         System.out.println("city " + city);
 
@@ -125,16 +122,10 @@ public class SearchFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 System.out.println("Filter button clicked");
-                filterAdventure(v);
+                filterAdventure();
                 System.out.println("Update recycler view");
                 AdventureAdapter.notifyDataSetChanged();
-                if(mAdventureList != null) {
-                    if (mAdventureList.size() > 0) {
-                        noAdventures.setVisibility(View.INVISIBLE);
-                    } else {
-                        noAdventures.setVisibility(View.VISIBLE);
-                    }
-                }
+                updateNoAdventures();
                 recyclerView.invalidate();
             }
         });
@@ -142,11 +133,8 @@ public class SearchFragment extends Fragment{
         searchText = (EditText) view.findViewById(R.id.search_events);
         searchText.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) { //responds per alphabetical key press
-                if (true) {
-                    searchAdventure(view);
-                    return true;
-                }
-                return false;
+                searchAdventure(view);
+                return true;
             }
         });
 
@@ -188,6 +176,7 @@ public class SearchFragment extends Fragment{
         SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city="+city, SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
+                System.out.println("Failed to get adventures in default Search");
             }
 
             @Override
@@ -247,17 +236,13 @@ public class SearchFragment extends Fragment{
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(mAdventureList.size() > 0) {
-                    noAdventures.setVisibility(View.INVISIBLE);
-                } else {
-                    noAdventures.setVisibility(View.VISIBLE);
-                }
+                updateNoAdventures();
             }
         });
 
     }
 
-    private void filterAdventure(View view) {
+    private void filterAdventure() {
         System.out.println("Filter adventure");
         Button applyFilters;
         EditText location;
@@ -288,77 +273,77 @@ public class SearchFragment extends Fragment{
         applyFilters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Apply filters button clicked");
-                JSONArray jsonArray = new JSONArray();
-                for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
-                    mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
-                    jsonArray.put(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
-                }
-                if(adapter.getSelectedCategoriesCount() < 1) {
-                    Toast.makeText(getActivity(), "Choose at least one activity tag!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(numPeople.getText().toString() == null || location.getText().toString() == null || timeSelection.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(getActivity(), "Choose a time at least!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("categories", jsonArray);
-                    jsonObject.put("maxPeopleGoing",  numPeople.getText().toString());
-                    jsonObject.put("maxTimeStamp", buttonToEpoch(timeSelection.getCheckedRadioButtonId()));
-                    jsonObject.put("city", location.getText().toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    System.out.println("JSON EXCEPTION!!!");
-                }
-                String cookie = SupportSharedPreferences.getCookie(getActivity());
-                String[] cookieList  =  cookie.split("=",2);
-                OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
-                cookieHelper.setCookie("http://" + address + ":8081/user/adventure/search-by-filter", cookieList[0], cookieList[1]);
-                System.out.println(jsonObject.toString());
-                RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
-                Request request = new Request.Builder()
-                        .url("http://" + address + ":8081/user/adventure/search-by-filter")
-                        .post(requestBody)
-                        .build();
-                OkHttpClient client = new OkHttpClient.Builder()
-                        .cookieJar(cookieHelper.cookieJar())
-                        .build();
-                Call call = client.newCall(request);
-                try {
-                    Response response = call.execute();
-                    HTTPRESULT = response.body().string();
-                    System.out.println("HTTP result = " + HTTPRESULT);
-                    initAdventures();
-                    AdventureAdapter.notifyDataSetChanged();
-                    recyclerView.setAdapter(new DiscAdvViewAdapter(getActivity(), mAdventureList));
-                    recyclerView.invalidate();
-                    if(mAdventureList != null) {
-                        if (mAdventureList.size() > 0) {
-                            noAdventures.setVisibility(View.INVISIBLE);
-                        } else {
-                            noAdventures.setVisibility(View.VISIBLE);
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                AdventureAdapter.notifyDataSetChanged();
-                recyclerView.invalidate();
-                if(mAdventureList != null) {
-                    if (mAdventureList.size() > 0) {
-                        noAdventures.setVisibility(View.INVISIBLE);
-                    } else {
-                        noAdventures.setVisibility(View.VISIBLE);
-                    }
-                }
-                dialog.dismiss();
-                return;
+                filterOperation(adapter, numPeople, location, timeSelection, dialog);
             }
         });
     }
 
+    private void filterOperation(CategoryViewAdapter adapter, EditText numPeople, EditText location, RadioGroup timeSelection, Dialog dialog) {
+        System.out.println("Apply filters button clicked");
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
+            mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
+            jsonArray.put(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
+        }
+        if(adapter.getSelectedCategoriesCount() < 1) {
+            Toast.makeText(getActivity(), "Choose at least one activity tag!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(numPeople.getText().toString() == null || location.getText().toString() == null || timeSelection.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(getActivity(), "Choose a time at least!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("categories", jsonArray);
+            if(numPeople.getText().toString() != null) jsonObject.put("maxPeopleGoing",  numPeople.getText().toString());
+            jsonObject.put("maxTimeStamp", buttonToEpoch(timeSelection.getCheckedRadioButtonId()));
+            if(location.getText().toString() != null) jsonObject.put("city", location.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.out.println("JSON EXCEPTION!!!");
+        }
+        String cookie = SupportSharedPreferences.getCookie(getActivity());
+        String[] cookieList  =  cookie.split("=",2);
+        OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
+        cookieHelper.setCookie("http://" + address + ":8081/user/adventure/search-by-filter", cookieList[0], cookieList[1]);
+        System.out.println(jsonObject.toString());
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+        Request request = new Request.Builder()
+                .url("http://" + address + ":8081/user/adventure/search-by-filter")
+                .post(requestBody)
+                .build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(cookieHelper.cookieJar())
+                .build();
+        Call call = client.newCall(request);
+        try {
+            Response response = call.execute();
+            HTTPRESULT = response.body().string();
+            System.out.println("HTTP result = " + HTTPRESULT);
+            initAdventures();
+            AdventureAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(new DiscAdvViewAdapter(getActivity(), mAdventureList));
+            recyclerView.invalidate();
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        AdventureAdapter.notifyDataSetChanged();
+        recyclerView.invalidate();
+        updateNoAdventures();
+        dialog.dismiss();
+    }
+
+    private void updateNoAdventures() {
+        if(mAdventureList != null) {
+            if (mAdventureList.size() > 0) {
+                noAdventures.setVisibility(View.INVISIBLE);
+            } else {
+                noAdventures.setVisibility(View.VISIBLE);
+            }
+        }
+    }
     private void searchAdventure(View view) {
         System.out.println("searching...");
         String search = searchText.getText().toString();
