@@ -2,7 +2,7 @@ const MockTestData = require('./MockTestData');
 
 module.exports = class FilterServiceMocks {
     static getNearbyAdventures = jest.fn((cityName) => {
-        result = {
+        var result =  {
             code: 200,
             message: "Nearby adventures found",
             payload: [
@@ -14,7 +14,7 @@ module.exports = class FilterServiceMocks {
     });
     
     static getRecommendationFeed = jest.fn((userId) => {
-        result = {
+        var result =  {
             code: 200,
             message: "Recommendation feed generated",
             payload: [
@@ -26,7 +26,7 @@ module.exports = class FilterServiceMocks {
     });
 
     static findAdventuresByFilter = jest.fn((filter) => {
-        result = {
+        var result =  {
             code: 200,
             message: "Adventures found",
             payload: [
