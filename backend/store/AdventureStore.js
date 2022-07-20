@@ -102,7 +102,7 @@ module.exports = class AdventureStore {
             };
         }
         else {
-            await Adventure.findByIdAndUpdate(adventureId, adventure, { new: true }).then(adventure => {
+            await Adventure.findByIdAndUpdate(adventureId, adventure, { new: true, runValidators: true }).then(adventure => {
                 if (!adventure) {
                     result = {
                         code: 404,
@@ -142,7 +142,7 @@ module.exports = class AdventureStore {
         }
         else {
             const cancelledObj = { status: "CANCELLED" }
-            await Adventure.findByIdAndUpdate(adventureId, cancelledObj, { new: true }).then(adventure => {
+            await Adventure.findByIdAndUpdate(adventureId, cancelledObj, { new: true, runValidators: true }).then(adventure => {
                 if (!adventure) {
                     result = {
                         code: 404,
@@ -274,6 +274,7 @@ module.exports = class AdventureStore {
                             await Adventure.findOneAndUpdate(
                                 { _id: adventureId },
                                 { $set: { owner: participants[0] }, $pull: { peopleGoing: userId } },
+                                { new: true, runValidators: true }
                             ).then(adventure => {
                                 result = {
                                     code: 200,
@@ -291,6 +292,7 @@ module.exports = class AdventureStore {
                             await Adventure.findOneAndUpdate(
                                 { _id: adventureId },
                                 { $pull: { peopleGoing: userId } },
+                                { new: true, runValidators: true }
                             ).then(adventure => {
                                 result = {
                                     code: 200,
