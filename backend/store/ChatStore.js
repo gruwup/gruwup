@@ -11,6 +11,7 @@ module.exports = class User {
             messages: [messages]
         }
         messageGroup = new Message(messageGroup);
+
         await messageGroup.save().then(messageResult => {
             result = {
                 code: 200,
@@ -131,6 +132,7 @@ module.exports = class User {
 
     static getMostRecentMessage = async (adventureId, dateTime) => {
         var result;
+        
         await this.getPrevPagination(adventureId, dateTime).then(async paginationResult => {
             result = {
                 code: 404,
