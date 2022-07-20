@@ -74,7 +74,6 @@ public class SearchFragment extends Fragment{
     Button filterButton;
     Button nearbyButton;
     EditText searchText;
-    private LocationManager locationManager;
 
     TextView cancel;
     TextView noAdventures;
@@ -103,7 +102,7 @@ public class SearchFragment extends Fragment{
                 //do nothing
             }
         };
-        locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
+        LocationManager locationManager = (LocationManager) getActivity().getSystemService(Context.LOCATION_SERVICE);
         locationManager.requestLocationUpdates(LocationManager.GPS_PROVIDER, 2000, 10, locationListener);
         Location location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
         String city = getCurrentCity(location);

@@ -68,7 +68,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
                 GoogleMap googleMap;
                 googleMap = mMap;
                 googleMap.setOnMarkerClickListener(MapViewFragment.this);
-                if(location_address != "") {
+                if(!location_address.equals("")) {
                     System.out.println("special mode");
                     try {
                         JSONArray jsonArray = new JSONArray(location_address);
