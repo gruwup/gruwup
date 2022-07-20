@@ -29,13 +29,11 @@ module.exports = class User {
         var result = {};
 
         await this.getPrevPagination(adventureId, dateTime).then(async paginationResult => {
-            if (!paginationResult) {
-                result = {
-                    code: 404,
-                    message: "Pagination not found"
-                };
-            }
-            else {
+            result = {
+                code: 404,
+                message: "Pagination not found"
+            };
+            if (paginationResult) {
                 var paginationObj = { pagination: dateTime };
                 var messagesObj = { messages: message };
                 await Message.findOneAndUpdate( // update pagination and add message to object array
@@ -76,13 +74,11 @@ module.exports = class User {
         var result;
 
         await Message.find({ adventureId }).then(messageResult => {
-            if (!messageResult) {
-                result = {
-                    code: 404,
-                    message: "No previous messages found",
-                }
+            result = {
+                code: 404,
+                message: "No previous messages found",
             }
-            else {
+            if (messageResult) {
                 var prevPagination = null;
                 if (messageResult.length) {
                     prevPagination = messageResult.map(chat => chat.pagination).reduce((prev, curr) => {
@@ -112,17 +108,15 @@ module.exports = class User {
         var result;
 
         await Message.findOne({ adventureId, pagination }).then(messageResult => {
+            result = {
+                code: 200,
+                message: "Messages found",
+                payload: messageResult
+            }
             if (!messageResult) {
                 result = {
                     code: 404,
                     message: "Messages not found"
-                }
-            }
-            else {
-                result = {
-                    code: 200,
-                    message: "Messages found",
-                    payload: messageResult
                 }
             }
         }, err => {
@@ -138,8 +132,16 @@ module.exports = class User {
     static getMostRecentMessage = async (adventureId, dateTime) => {
         var result;
         await this.getPrevPagination(adventureId, dateTime).then(async paginationResult => {
+            result = {
+                code: 404,
+                message: "Messages not found"
+            }
             if (paginationResult) {
                 await Message.findOne({ adventureId, pagination: paginationResult.payload }).then(messageResult => {
+                    result = {
+                        code: 404,
+                        message: "Messages not found"
+                    }
                     if (messageResult) {
                         var message = messageResult.messages[messageResult.messages.length - 1];
                         if (messageResult) {
@@ -150,24 +152,12 @@ module.exports = class User {
                             }
                         }
                     }
-                    else {
-                        result = {
-                            code: 404,
-                            message: "Messages not found"
-                        }
-                    }
                 }, err => {
                     result = {
                         code: 500,
                         message: err
                     };
                 }) 
-            }
-            else {
-                result = {
-                    code: 404,
-                    message: "Messages not found"
-                }
             }
         }, err => {
             result = {
@@ -183,16 +173,14 @@ module.exports = class User {
         var result;
 
         await Message.deleteMany({ adventureId }).then(messageResult => {
+            result = {
+                code: 200,
+                message: "Adventure chat deleted"
+            }
             if (!messageResult.deletedCount) {
                 result = {
                     code: 404,
                     message: "Adventure not found"
-                }
-            }
-            else {
-                result = {
-                    code: 200,
-                    message: "Adventure chat deleted"
                 }
             }
         }, err => {
