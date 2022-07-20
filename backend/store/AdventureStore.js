@@ -8,38 +8,58 @@ module.exports = class AdventureStore {
             message: "Server error"
         };
 
-        var adventureData = {
-            owner: adventure.owner,
-            title: adventure.title,
-            description: adventure.description,
-            peopleGoing: [adventure.owner],
-            dateTime: adventure.dateTime,
-            location: adventure.location,
-            category: adventure.category,
-            status: "OPEN",
-            image: adventure.image,
-            city: adventure.location.split(", ")[1] ?? "unknown"
-        };
-        var newAdventure = new Adventure(adventureData);
+        var duplicationQuery = { 
+            $and: [
+            { adventureOwner: adventure.adventureOwner },
+            { title: adventure.title },
+            { description: adventure.description },
+            { category: adventure.category },
+            { location: adventure.location },
+            { dateTime: adventure.dateTime }
+        ]};
+        
+        await Adventure.find(duplicationQuery).then(async adventures => {
+            result = {
+                code: 400,
+                message: "Adventure already exists"
+            };
 
-        await newAdventure.save().then(adventure => {
-            result = {
-                code: 200,
-                message: "Adventure created successfully",
-                payload: adventure
-            };
-        }, err => {
-            result = {
-                code: 500,
-                message: err._message
-            };
-            if (err.name === "ValidationError") {
-                result = {
-                    code: 400,
-                    message: err.message
+            if (adventures.length === 0) {
+                var adventureData = {
+                    owner: adventure.owner,
+                    title: adventure.title,
+                    description: adventure.description,
+                    peopleGoing: [adventure.owner],
+                    dateTime: adventure.dateTime,
+                    location: adventure.location,
+                    category: adventure.category,
+                    status: "OPEN",
+                    image: adventure.image,
+                    city: adventure.location.split(", ")[1] ?? "unknown"
                 };
+                var newAdventure = new Adventure(adventureData);
+        
+                await newAdventure.save().then(adventure => {
+                    result = {
+                        code: 200,
+                        message: "Adventure created successfully",
+                        payload: adventure
+                    };
+                }, err => {
+                    result = {
+                        code: 500,
+                        message: err._message
+                    };
+                    if (err.name === "ValidationError") {
+                        result = {
+                            code: 400,
+                            message: err.message
+                        };
+                    }
+                });
             }
         });
+
         return result;
     };
 
