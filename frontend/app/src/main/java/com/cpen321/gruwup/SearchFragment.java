@@ -283,74 +283,78 @@ public class SearchFragment extends Fragment{
         applyFilters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Apply filters button clicked");
-                JSONArray jsonArray = new JSONArray();
-                for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
-                    mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
-                    jsonArray.put(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
-                }
-                if(adapter.getSelectedCategoriesCount() < 1) {
-                    Toast.makeText(getActivity(), "Choose at least one activity tag!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                if(numPeople.getText().toString() == null || location.getText().toString() == null || timeSelection.getCheckedRadioButtonId() == -1) {
-                    Toast.makeText(getActivity(), "Choose a time at least!", Toast.LENGTH_SHORT).show();
-                    return;
-                }
-                JSONObject jsonObject = new JSONObject();
-                try {
-                    jsonObject.put("categories", jsonArray);
-                    jsonObject.put("maxPeopleGoing",  numPeople.getText().toString());
-                    jsonObject.put("maxTimeStamp", buttonToEpoch(timeSelection.getCheckedRadioButtonId()));
-                    jsonObject.put("city", location.getText().toString());
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                    System.out.println("JSON EXCEPTION!!!");
-                }
-                String cookie = SupportSharedPreferences.getCookie(getActivity());
-                String[] cookieList  =  cookie.split("=",2);
-                OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
-                cookieHelper.setCookie("http://" + address + ":8081/user/adventure/search-by-filter", cookieList[0], cookieList[1]);
-                System.out.println(jsonObject.toString());
-                RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
-                Request request = new Request.Builder()
-                        .url("http://" + address + ":8081/user/adventure/search-by-filter")
-                        .post(requestBody)
-                        .build();
-                OkHttpClient client = new OkHttpClient.Builder()
-                        .cookieJar(cookieHelper.cookieJar())
-                        .build();
-                Call call = client.newCall(request);
-                try {
-                    Response response = call.execute();
-                    HTTPRESULT = response.body().string();
-                    System.out.println("HTTP result = " + HTTPRESULT);
-                    initAdventures();
-                    AdventureAdapter.notifyDataSetChanged();
-                    recyclerView.setAdapter(new DiscAdvViewAdapter(getActivity(), mAdventureList));
-                    recyclerView.invalidate();
-                    if(mAdventureList != null) {
-                        if (mAdventureList.size() > 0) {
-                            noAdventures.setVisibility(View.INVISIBLE);
-                        } else {
-                            noAdventures.setVisibility(View.VISIBLE);
-                        }
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-                AdventureAdapter.notifyDataSetChanged();
-                recyclerView.invalidate();
-                if(mAdventureList != null) {
-                    if (mAdventureList.size() > 0) {
-                        noAdventures.setVisibility(View.INVISIBLE);
-                    } else {
-                        noAdventures.setVisibility(View.VISIBLE);
-                    }
-                }
-                dialog.dismiss();
+                filterOperation(adapter, numPeople, location, timeSelection, dialog);
             }
         });
+    }
+
+    private void filterOperation(CategoryViewAdapter adapter, EditText numPeople, EditText location, RadioGroup timeSelection, Dialog dialog) {
+        System.out.println("Apply filters button clicked");
+        JSONArray jsonArray = new JSONArray();
+        for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
+            mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
+            jsonArray.put(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
+        }
+        if(adapter.getSelectedCategoriesCount() < 1) {
+            Toast.makeText(getActivity(), "Choose at least one activity tag!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if(numPeople.getText().toString() == null || location.getText().toString() == null || timeSelection.getCheckedRadioButtonId() == -1) {
+            Toast.makeText(getActivity(), "Choose a time at least!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        JSONObject jsonObject = new JSONObject();
+        try {
+            jsonObject.put("categories", jsonArray);
+            jsonObject.put("maxPeopleGoing",  numPeople.getText().toString());
+            jsonObject.put("maxTimeStamp", buttonToEpoch(timeSelection.getCheckedRadioButtonId()));
+            jsonObject.put("city", location.getText().toString());
+        } catch (JSONException e) {
+            e.printStackTrace();
+            System.out.println("JSON EXCEPTION!!!");
+        }
+        String cookie = SupportSharedPreferences.getCookie(getActivity());
+        String[] cookieList  =  cookie.split("=",2);
+        OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
+        cookieHelper.setCookie("http://" + address + ":8081/user/adventure/search-by-filter", cookieList[0], cookieList[1]);
+        System.out.println(jsonObject.toString());
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
+        Request request = new Request.Builder()
+                .url("http://" + address + ":8081/user/adventure/search-by-filter")
+                .post(requestBody)
+                .build();
+        OkHttpClient client = new OkHttpClient.Builder()
+                .cookieJar(cookieHelper.cookieJar())
+                .build();
+        Call call = client.newCall(request);
+        try {
+            Response response = call.execute();
+            HTTPRESULT = response.body().string();
+            System.out.println("HTTP result = " + HTTPRESULT);
+            initAdventures();
+            AdventureAdapter.notifyDataSetChanged();
+            recyclerView.setAdapter(new DiscAdvViewAdapter(getActivity(), mAdventureList));
+            recyclerView.invalidate();
+            if(mAdventureList != null) {
+                if (mAdventureList.size() > 0) {
+                    noAdventures.setVisibility(View.INVISIBLE);
+                } else {
+                    noAdventures.setVisibility(View.VISIBLE);
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        AdventureAdapter.notifyDataSetChanged();
+        recyclerView.invalidate();
+        if(mAdventureList != null) {
+            if (mAdventureList.size() > 0) {
+                noAdventures.setVisibility(View.INVISIBLE);
+            } else {
+                noAdventures.setVisibility(View.VISIBLE);
+            }
+        }
+        dialog.dismiss();
     }
 
     private void searchAdventure(View view) {
