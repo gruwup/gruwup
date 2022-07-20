@@ -14,34 +14,28 @@ router.post("/create", async (req, res) => {
             categories: req.body.categories,
             image: req.body.image ? req.body.image : null
         };
-    
-        try {
-            var result = await UserStore.createUser(profile);
+        return await UserStore.createUser(profile).then(result => {
             if (result.code === 200) {
                 return res.sendStatus(200);
             }
             return res.status(result.code).send(result.message);
-        }
-        catch (err) {
+        }, err => {
             return res.status(500).send({ message: err.toString() });
-        }
+        });
     }
     return res.status(403).send({ message: Session.invalid_msg });
 });
 
 router.get("/:userId/get", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
-        try {
-            var result = await UserStore.getUserProfile(req.params.userId);
-        
+        return await UserStore.getUserProfile(req.params.userId).then(result => {
             if (result.code === 200) {
                 return res.status(200).send(result.payload);
             }
             return res.status(result.code).send(result.message);
-        }
-        catch (err) {
+        }, err => {
             return res.status(500).send({ message: err.toString() });
-        }
+        });
     }
     return res.status(403).send({ message: Session.invalid_msg });
 });
@@ -54,17 +48,14 @@ router.put("/:userId/edit", async (req, res) => {
             categories: req.body.categories,
             image: req.body.image ? req.body.image : null
         };
-
-        try {
-            var result = await UserStore.updateUser(req.params.userId, profile);
+        return await UserStore.updateUser(req.params.userId, profile).then(result => {
             if (result.code === 200) {
                 return res.sendStatus(200);
             }
             return res.status(result.code).send(result.message);
-        }
-        catch (err) {
+        }, err => {
             return res.status(500).send({ message: err.toString() });
-        }
+        });
     }
     return res.status(403).send({ message: Session.invalid_msg });
 });
