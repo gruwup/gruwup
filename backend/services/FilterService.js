@@ -16,20 +16,26 @@ module.exports = class FilterService {
         }
         else {
             const nearbyFilter = {city: cityName};
-            try {
-                const adventuresResult = await AdventureStore.findAdventuresByFilter(nearbyFilter);
-                result = (adventures.code !== 200) ? adventuresResult : {
-                    code: 200,
-                    message: "Nearby adventures found",
-                    payload: adventures.payload
-                };
-            }
-            catch (err) {
+            await AdventureStore.findAdventuresByFilter(nearbyFilter).then(adventures => {
+                if (adventures.code === 200) {
+                    result = {
+                        code: 200,
+                        message: "Nearby adventures found",
+                        payload: adventures.payload
+                    };
+                }
+                else {
+                    result = {
+                        code: adventures.code,
+                        message: adventures.message
+                    };
+                }
+            }, err => {
                 result = {
                     code: 500,
                     message: err._message
-                };
-            }
+                    };
+            });
         }
         return result;
     };
@@ -40,38 +46,48 @@ module.exports = class FilterService {
             message: "Server error"
         };
 
-        try {
-            var userProfile = await UserStore.getUserProfile(userId);
-            if (userProfile.code !== 200) {
-                result = {
-                    code: userProfile.code,
-                    message: userProfile.message
-                };
-            }
-            else {
+        var userProfile = {};
+        await UserStore.getUserProfile(userId).then(async profile => {
+            result = {
+                code: profile.code,
+                message: profile.message
+            };
+            if (profile.code === 200) {
+                userProfile = profile.payload;
                 const statusOpen = {status: "OPEN"};
                 var recommendationFilter = { $and: [
                     statusOpen,
-                    { category: { $in: userProfile.payload.categories } },
+                    { category: { $in: userProfile.categories } },
                     { owner: { $ne: userId } },
                     { peopleGoing: { $nin: userId } },
                 ]};
-                var searchResult = await AdventureStore.findAdventuresByFilter(recommendationFilter);
-                result = (searchResult.code !== 200) ?
-                searchResult : {
-                    code: searchResult.code,
-                    message: "Recommendation feed generated",
-                    payload: searchResult.payload
-                };
+                await AdventureStore.findAdventuresByFilter(recommendationFilter).then(adventures => {
+                    result = {
+                        code: adventures.code,
+                        message: adventures.message
+                    };
+                    if (adventures.code === 200) {
+                        result = {
+                            code: 200,
+                            message: "Recommendation feed found",
+                            payload: adventures.payload
+                        };
+                    }
+                }, err => {
+                    result = {
+                        code: 500,
+                        message: err._message
+                        };
+                });
             }
-            
         }
-        catch (err) {
+        , err => {
             result = {
                 code: 500,
                 message: err._message
             };
-        }
+        }); 
+
         return result;
     };
 
@@ -81,50 +97,48 @@ module.exports = class FilterService {
             message: "Server error"
         };
 
-        try {
-            var adventureFilter = filter.city ? 
-            {
-                $and: [
-                    { category: { $in: filter.categories } },
-                    { dateTime: { $lte: filter.maxTimeStamp } },
-                    { city: filter.city }
-                ]
-            } : {
-                $and: [
-                    { category: { $in: filter.categories } },
-                    { dateTime: { $lte: filter.maxTimeStamp } }
-                ]
+        var adventureFilter = filter.city ? 
+        {
+            $and: [
+                { category: { $in: filter.categories } },
+                { dateTime: { $lte: filter.maxTimeStamp } },
+                { city: filter.city }
+            ]
+        } 
+        : {
+            $and: [
+                { category: { $in: filter.categories } },
+                { dateTime: { $lte: filter.maxTimeStamp } }
+            ]
+        };
+        await AdventureStore.findAdventuresByFilter(adventureFilter).then(adventures => {
+            result = {
+                code: adventures.code,
+                message: adventures.message
             };
-            var searchResult = await AdventureStore.findAdventuresByFilter(adventureFilter);
-            if (searchResult.code !== 200) {
-                result = searchResult;
-            }
-            else {
+            if (adventures.code === 200) {
+                var arr = adventures.payload;
                 if (filter.maxPeopleGoing) {
-                    var arr = searchResult.payload.reduce((acc, adventure) => {
+                    arr = searchResult.payload.reduce((acc, adventure) => {
                         if (adventure.peopleGoing.length <= filter.maxPeopleGoing) {
                             acc.push(adventure);
                         }
                         return acc;
                     }
                     , []);
-                    result = {
-                        code: searchResult.code,
-                        message: "Adventure found",
-                        payload: arr
-                    };
                 }
-                else {
-                    result = searchResult;
-                }
+                result = {
+                    code: 200,
+                    message: "Adventures found",
+                    payload: arr
+                };
             }
-        }
-        catch (err) {
+        }, err => {
             result = {
                 code: 500,
                 message: err._message
-            };
-        }
+                };
+        });
         return result;
     }
 };
