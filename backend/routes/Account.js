@@ -16,7 +16,7 @@ router.post("/sign-in", async (req, res) => {
             else if (result.code === 404) {
                 return res.status(404).send({ userId, userExists: false });
             }
-            return res.status(500).send({ message: err.toString() });
+            return res.status(500).send({ message: result.message });
         }, err => {
             return res.status(500).send({ message: err.toString() });
         });

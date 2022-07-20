@@ -48,13 +48,13 @@ module.exports = class User {
     static createUser = async (profile) => {
         var result = {};
 
-        await Profile.findOne({ userId: profile.userId }).then(async profile => {
+        await Profile.findOne({ userId: profile.userId }).then(async found => {
             result = {
                 code: 400,
                 message: "Profile exists for userId",
                 payload: result
             };
-            if (!profile) {
+            if (!found) {
                 var user = new Profile(profile);
                 await user.save().then(profileResult => {
                     result = {
