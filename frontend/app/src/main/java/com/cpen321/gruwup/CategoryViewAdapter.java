@@ -1,4 +1,3 @@
-
 package com.cpen321.gruwup;
 
 import android.annotation.SuppressLint;
@@ -18,15 +17,15 @@ import androidx.recyclerview.widget.RecyclerView;
 import java.util.ArrayList;
 
 public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapter.ViewHolder> {
-//
+
     private static final String TAG = "CategoryViewAdapter";
 
     private ArrayList<String> mCategoryNames = new ArrayList<>();
-    private Context mContext;
+    private final Context mContext;
     boolean isSelectMode = false;
-    private ArrayList<Integer> mSelectedCategories = new ArrayList<>();
+    private final ArrayList<Integer> mSelectedCategories = new ArrayList<>();
 
-    public CategoryViewAdapter(Context mContext ,ArrayList<String> mCategoryNames) {
+    public CategoryViewAdapter(Context mContext, ArrayList<String> mCategoryNames) {
         this.mCategoryNames = mCategoryNames;
         this.mContext = mContext;
     }
@@ -43,27 +42,26 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
 
         holder.categoryName.setText(mCategoryNames.get(position));
         holder.categoryName.setTextColor(Color.parseColor("#766867"));
-        holder.categoryName.setOnClickListener(new View.OnClickListener(){
+        holder.categoryName.setOnClickListener(new View.OnClickListener() {
 
             @Override
             public void onClick(View view) {
-                Log.d(TAG, "onClick: clicked on an item: "+ mCategoryNames.get(position));
-                Toast.makeText(mContext, mCategoryNames.get(position),Toast.LENGTH_SHORT).show();
+                Log.d(TAG, "onClick: clicked on an item: " + mCategoryNames.get(position));
+                Toast.makeText(mContext, mCategoryNames.get(position), Toast.LENGTH_SHORT).show();
 
                 isSelectMode = true;
-                if (mSelectedCategories.contains(position)){
+                if (mSelectedCategories.contains(position)) {
                     holder.categoryName.setTextColor(Color.parseColor("#766867"));
                     mSelectedCategories.remove(Integer.valueOf(position));
                     Log.d(TAG, "Selected items after remove are " + mSelectedCategories);
-                }
-                else {
+                } else {
                     holder.categoryName.setTextColor(Color.parseColor("#ffffff"));
                     mSelectedCategories.add(position);
 
                     Log.d(TAG, "Selected items after add are " + mSelectedCategories);
                 }
 
-                if (mSelectedCategories.size() == 0){
+                if (mSelectedCategories.size() == 0) {
                     isSelectMode = false;
                 }
 
@@ -76,15 +74,15 @@ public class CategoryViewAdapter extends RecyclerView.Adapter<CategoryViewAdapte
         return mCategoryNames.size();
     }
 
-    public int getSelectedCategoriesCount(){
+    public int getSelectedCategoriesCount() {
         return mSelectedCategories.size();
     }
 
-    public ArrayList<Integer> getSelectedCategories(){
+    public ArrayList<Integer> getSelectedCategories() {
         return mSelectedCategories;
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView categoryName;
 
         public ViewHolder(@NonNull View itemView) {

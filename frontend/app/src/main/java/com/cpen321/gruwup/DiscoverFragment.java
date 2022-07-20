@@ -73,9 +73,9 @@ public class DiscoverFragment extends Fragment {
     private TextView descriptionAlert;
     private TextView timeAlert;
     private TextView locationAlert;
-    private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
-    private ArrayList<String> mCategoryNames = new ArrayList<>();
-    private Handler mHandler = new Handler(Looper.getMainLooper());
+    private final ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
+    private final ArrayList<String> mCategoryNames = new ArrayList<>();
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
 
     private void initCategories() {
         mCategoryNames.add("MOVIE");
@@ -94,9 +94,9 @@ public class DiscoverFragment extends Fragment {
         StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
         StrictMode.setThreadPolicy(policy);
         View view = inflater.inflate(R.layout.fragment_discover, container, false);
-        noAdventures = (TextView) view.findViewById(R.id.noDiscAdventures);
+        noAdventures = view.findViewById(R.id.noDiscAdventures);
         noAdventures.setVisibility(View.INVISIBLE);
-        createButton = (TextView) view.findViewById(R.id.create_adventure);
+        createButton = view.findViewById(R.id.create_adventure);
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -135,7 +135,7 @@ public class DiscoverFragment extends Fragment {
 
     private void displayAdventures(View view) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-        RecyclerView adventureListView = (RecyclerView) view.findViewById(R.id.discoveredAdventures);
+        RecyclerView adventureListView = view.findViewById(R.id.discoveredAdventures);
         adventureListView.setLayoutManager(layoutManager);
         DiscAdvViewAdapter adapter = new DiscAdvViewAdapter(getActivity(), mAdventureList);
         adventureListView.setAdapter(adapter);
@@ -169,11 +169,11 @@ public class DiscoverFragment extends Fragment {
         initCategories();
 
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        categoryView = (RecyclerView) dialog.findViewById(R.id.create_adventure_recycler_view);
+        categoryView = dialog.findViewById(R.id.create_adventure_recycler_view);
         categoryView.setLayoutManager(layoutManager);
         CategoryViewAdapter adapter = new CategoryViewAdapter(getActivity(), mCategoryNames);
         categoryView.setAdapter(adapter);
-        cancelCreate = (TextView) dialog.findViewById(R.id.create_adventure_go_back);
+        cancelCreate = dialog.findViewById(R.id.create_adventure_go_back);
         cancelCreate.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -183,17 +183,17 @@ public class DiscoverFragment extends Fragment {
 
         Places.initialize(getActivity().getApplicationContext(), getString(R.string.googleAPIKey)); //set up Places API
 
-        title = (EditText) dialog.findViewById(R.id.create_adventure_title_input);
-        description = (EditText) dialog.findViewById(R.id.create_adventure_description_input);
-        time = (EditText) dialog.findViewById(R.id.create_adventure_time_input);
-        location = (EditText) dialog.findViewById(R.id.create_adventure_location_input);
+        title = dialog.findViewById(R.id.create_adventure_title_input);
+        description = dialog.findViewById(R.id.create_adventure_description_input);
+        time = dialog.findViewById(R.id.create_adventure_time_input);
+        location = dialog.findViewById(R.id.create_adventure_location_input);
 
-        titleAlert = (TextView) dialog.findViewById(R.id.setTitleAlert);
-        imageAlert = (TextView) dialog.findViewById(R.id.setImageAlert);
+        titleAlert = dialog.findViewById(R.id.setTitleAlert);
+        imageAlert = dialog.findViewById(R.id.setImageAlert);
         imageAlert.setText("Image not uploaded yet");
-        descriptionAlert = (TextView) dialog.findViewById(R.id.setDescriptionAlert);
-        timeAlert = (TextView) dialog.findViewById(R.id.setTimeAlert);
-        locationAlert = (TextView) dialog.findViewById(R.id.setLocationAlert);
+        descriptionAlert = dialog.findViewById(R.id.setDescriptionAlert);
+        timeAlert = dialog.findViewById(R.id.setTimeAlert);
+        locationAlert = dialog.findViewById(R.id.setLocationAlert);
 
         location.setFocusable(false);
         location.setOnClickListener(new View.OnClickListener() {
@@ -205,7 +205,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        uploadImage = (Button) dialog.findViewById(R.id.create_adventure_upload_image_button);
+        uploadImage = dialog.findViewById(R.id.create_adventure_upload_image_button);
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -214,7 +214,7 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
-        confirmCreateButton = (TextView) dialog.findViewById(R.id.confirmButton);
+        confirmCreateButton = dialog.findViewById(R.id.confirmButton);
         confirmCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -312,7 +312,7 @@ public class DiscoverFragment extends Fragment {
             }
         }
         for (int i = 0; i < arrlen; i++) {
-            JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());
             mAdventureList.get(i).put("title", jsonObject.getString("title"));
             mAdventureList.get(i).put("event", jsonObject.getString("category"));

@@ -42,8 +42,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_container, new DiscoverFragment()).commit();
 
         // For socket:
-          Intent serviceIntent = new Intent(this, SocketService.class);
-          startService(serviceIntent);
+        Intent serviceIntent = new Intent(this, SocketService.class);
+        startService(serviceIntent);
     }
 
     @Override
@@ -56,24 +56,24 @@ public class MainActivity extends AppCompatActivity {
     }
 
     // Handling the received Intents for the "my-integer" event
-    private BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
+    private final BroadcastReceiver mMessageReceiver = new BroadcastReceiver() {
         @Override
         public void onReceive(Context context, Intent intent) {
-            if(intent.getBooleanExtra("showalert",false))
-            {
+            if (intent.getBooleanExtra("showalert", false)) {
                 showMsg(intent.getStringExtra("name"), intent.getStringExtra("message"));
             }
         }
 
 
     };
-    public void showMsg(String name, String message){
+
+    public void showMsg(String name, String message) {
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
-                        .setMessage("New Message by "+ name + ": " + message)
+                        .setMessage("New Message by " + name + ": " + message)
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
@@ -90,8 +90,8 @@ public class MainActivity extends AppCompatActivity {
                 wlp.copyFrom(alertDialog.getWindow().getAttributes());
                 wlp.width = 1000;
                 wlp.height = 400;
-                wlp.x=-170;
-                wlp.y=100;
+                wlp.x = -170;
+                wlp.y = 100;
                 alertDialog.getWindow().setAttributes(wlp);
                 new CountDownTimer(2000, 1000) {
                     @Override
@@ -109,12 +109,12 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
-    private BottomNavigationView.OnNavigationItemSelectedListener navListener =
+    private final BottomNavigationView.OnNavigationItemSelectedListener navListener =
             new BottomNavigationView.OnNavigationItemSelectedListener() {
                 @Override
                 public boolean onNavigationItemSelected(@NonNull MenuItem item) {
                     Fragment selectedFragment = null;
-                    switch(item.getItemId()) {
+                    switch (item.getItemId()) {
                         case R.id.nav_profile:
 
                             Bundle extras = getIntent().getExtras();
@@ -141,13 +141,12 @@ public class MainActivity extends AppCompatActivity {
             };
 
     private void checkLocationPermissions() {
-        if(ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.INTERNET) == PackageManager.PERMISSION_GRANTED
                 && ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_WIFI_STATE) == PackageManager.PERMISSION_GRANTED) {
             return;
-        }
-        else {
+        } else {
             if (ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_COARSE_LOCATION)
                     || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.ACCESS_FINE_LOCATION)
                     || ActivityCompat.shouldShowRequestPermissionRationale(this, Manifest.permission.INTERNET)
@@ -165,14 +164,13 @@ public class MainActivity extends AppCompatActivity {
                         .setPositiveButton("OK", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {
-                                ActivityCompat.requestPermissions(MainActivity.this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET, Manifest.permission.ACCESS_WIFI_STATE}, 1);
+                                ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET, Manifest.permission.ACCESS_WIFI_STATE}, 1);
                             }
                         })
                         .create()
                         .show();
-            }
-            else {
-                ActivityCompat.requestPermissions(this, new String[] {Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION,  Manifest.permission.INTERNET, Manifest.permission.ACCESS_WIFI_STATE}, 1);
+            } else {
+                ActivityCompat.requestPermissions(this, new String[]{Manifest.permission.ACCESS_COARSE_LOCATION, Manifest.permission.ACCESS_FINE_LOCATION, Manifest.permission.INTERNET, Manifest.permission.ACCESS_WIFI_STATE}, 1);
             }
         }
     }

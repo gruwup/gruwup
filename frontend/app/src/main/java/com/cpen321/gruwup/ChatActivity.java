@@ -44,7 +44,7 @@ public class ChatActivity extends AppCompatActivity {
     private static final String RECEIVED_MESSAGE = "received";
     private RecyclerView messageRecyclerView;
     private MessageViewAdapter adapter;
-    private ArrayList<Message> messages = new ArrayList<>();
+    private final ArrayList<Message> messages = new ArrayList<>();
 
     private EditText editMessageBar;
     private TextView loadOldMessage;
@@ -58,7 +58,6 @@ public class ChatActivity extends AppCompatActivity {
     private String address;
 
     private String cookie;
-//    private String serverUrl;
 
     private JSONArray peopleGoing;
     private String adventureOwner;
@@ -84,13 +83,13 @@ public class ChatActivity extends AppCompatActivity {
         cookie = SupportSharedPreferences.getCookie(getApplicationContext());
         UserID = SupportSharedPreferences.getUserId(getApplicationContext());
 
-        TextView adventureName = (TextView) findViewById(R.id.advTitle);
+        TextView adventureName = findViewById(R.id.advTitle);
         adventureName.setText(adventureTitle);
 
         adventureDialog = new Dialog(this);
-        ImageView adventureInfo = (ImageView) findViewById(R.id.adventureInfo);
-        ImageView adventureEdit = (ImageView) findViewById(R.id.adventureEdit);
-        ImageView adventureDelete = (ImageView) findViewById(R.id.adventureDelete);
+        ImageView adventureInfo = findViewById(R.id.adventureInfo);
+        ImageView adventureEdit = findViewById(R.id.adventureEdit);
+        ImageView adventureDelete = findViewById(R.id.adventureDelete);
 
         adventureInfo.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -208,7 +207,7 @@ public class ChatActivity extends AppCompatActivity {
         prevPagination = pagination;
         getOldMessages(prevPagination);
 
-        loadOldMessage = (TextView) findViewById(R.id.loadMessage);
+        loadOldMessage = findViewById(R.id.loadMessage);
         loadOldMessage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -292,7 +291,7 @@ public class ChatActivity extends AppCompatActivity {
                     }
 
                 } else {
-                    Log.d(TAG, "message history failed to load" + response.toString());
+                    Log.d(TAG, "message history failed to load" + response);
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
@@ -338,7 +337,7 @@ public class ChatActivity extends AppCompatActivity {
                         public void run() {
                             messages.add(sendMessage);
                             adapter.notifyItemInserted(messages.size() - 1);
-                            NestedScrollView scrollView = (NestedScrollView) findViewById(R.id.nest);
+                            NestedScrollView scrollView = findViewById(R.id.nest);
 
                             scrollView.smoothScrollTo(0, scrollView.getChildAt(0).getHeight());
                             if (adapter != null) {
@@ -348,7 +347,7 @@ public class ChatActivity extends AppCompatActivity {
                         }
                     });
                 } else {
-                    Log.d(TAG, "message failed to send" + response.toString());
+                    Log.d(TAG, "message failed to send" + response);
                 }
             }
         });
@@ -370,7 +369,7 @@ public class ChatActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         EditText adventureDetail = adventureDialog.findViewById(R.id.adventure_description);
-        Button confirmEdit = (Button) adventureDialog.findViewById(R.id.confirm_edit_adv);
+        Button confirmEdit = adventureDialog.findViewById(R.id.confirm_edit_adv);
 
         confirmEdit.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -390,7 +389,7 @@ public class ChatActivity extends AppCompatActivity {
                 } catch (JSONException e) {
                     e.printStackTrace();
                 }
-                Log.d(TAG, "EDIT ADV" + jsonObject.toString());
+                Log.d(TAG, "EDIT ADV" + jsonObject);
                 SupportRequests.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/update", jsonObject.toString(), cookie, new Callback() {
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
@@ -400,6 +399,7 @@ public class ChatActivity extends AppCompatActivity {
                             Log.d(TAG, "Edit adventure failed" + response);
                         }
                     }
+
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
                         Log.d(TAG, "Edit adventure failed" + e);
@@ -432,7 +432,7 @@ public class ChatActivity extends AppCompatActivity {
 
     }
 
-    private void getEditAdventureDetails(){
+    private void getEditAdventureDetails() {
 
         SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
             @Override
@@ -543,7 +543,7 @@ public class ChatActivity extends AppCompatActivity {
         });
     }
 
-    private Emitter.Listener isConnected = new Emitter.Listener() {
+    private final Emitter.Listener isConnected = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
             runOnUiThread(new Runnable() {
@@ -562,7 +562,7 @@ public class ChatActivity extends AppCompatActivity {
     };
 
 
-    private Emitter.Listener onNewMessage = new Emitter.Listener() {
+    private final Emitter.Listener onNewMessage = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
             runOnUiThread(new Runnable() {
@@ -589,7 +589,7 @@ public class ChatActivity extends AppCompatActivity {
                             Message newMessage = new Message(userId, userName, message, dateTime, messageStatus);
                             messages.add(newMessage);
 
-                            NestedScrollView scrollView = (NestedScrollView) findViewById(R.id.nest);
+                            NestedScrollView scrollView = findViewById(R.id.nest);
                             scrollView.smoothScrollTo(0, scrollView.getChildAt(0).getHeight());
                             if (adapter != null) {
                                 adapter.notifyItemInserted(messages.size() - 1);

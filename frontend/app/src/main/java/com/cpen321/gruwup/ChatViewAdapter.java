@@ -19,13 +19,13 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHolder>{
+public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHolder> {
 
     Context context;
-    ArrayList <Adventure> adventures;
+    ArrayList<Adventure> adventures;
     static final String TAG = "ChatViewAdapter";
 
-    public ChatViewAdapter(Context context, ArrayList <Adventure> adventures){
+    public ChatViewAdapter(Context context, ArrayList<Adventure> adventures) {
         this.context = context;
         this.adventures = adventures;
 
@@ -43,14 +43,13 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
         Adventure adventure = adventures.get(position);
         holder.adventureName.setText(adventure.getAdventureName());
 
-        if (adventure.getLastMessage().equals("")){
+        if (adventure.getLastMessage().equals("")) {
             holder.lastMessage.setText("no messages in this group yet");
             holder.messageTime.setText(adventure.getLastMessageTime());
-        }
-        else {
-            holder.lastMessage.setText(adventure.getLastMessageSender() + ": " +adventure.getLastMessage());
+        } else {
+            holder.lastMessage.setText(adventure.getLastMessageSender() + ": " + adventure.getLastMessage());
             String time = adventure.getLastMessageTime();
-            Date date = new Date(Long.parseLong(time, 10)*1000);
+            Date date = new Date(Long.parseLong(time, 10) * 1000);
             DateFormat format = new SimpleDateFormat(" HH:mm");
             String formatted = format.format(date);
             System.out.println(formatted);
@@ -90,7 +89,7 @@ public class ChatViewAdapter extends RecyclerView.Adapter<ChatViewAdapter.ViewHo
         return adventures.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView adventureName;
         TextView lastMessage;
         TextView messageTime;

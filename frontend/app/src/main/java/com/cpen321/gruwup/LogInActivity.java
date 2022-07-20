@@ -2,6 +2,7 @@ package com.cpen321.gruwup;
 
 
 import androidx.appcompat.app.AppCompatActivity;
+
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
@@ -26,7 +27,7 @@ import okhttp3.Response;
 
 public class LogInActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
-    private int RC_SIGN_IN = 1;
+    private final int RC_SIGN_IN = 1;
     final static String TAG = "LogInActivity";
 
     private String address;
@@ -100,22 +101,21 @@ public class LogInActivity extends AppCompatActivity {
     }
 
     private void updateUI(GoogleSignInAccount account) {
-        if (account == null){
+        if (account == null) {
             Log.d(TAG, "There is no user signed in");
-        }
-        else{
+        } else {
 
             Log.d(TAG, "Display Name: " + account.getDisplayName());
             Log.d(TAG, "Email: " + account.getEmail());
-            Log.d(TAG, "Given Name: "+ account.getGivenName());
-            Log.d(TAG, "Family Name: "+ account.getFamilyName());
-            Log.d(TAG, "Photo URL: "+ account.getPhotoUrl());
+            Log.d(TAG, "Given Name: " + account.getGivenName());
+            Log.d(TAG, "Family Name: " + account.getFamilyName());
+            Log.d(TAG, "Photo URL: " + account.getPhotoUrl());
             Log.d(TAG, "Token: " + account.getIdToken());
 
 
             String imageUrl = "";
 
-            if (account.getPhotoUrl() != null){
+            if (account.getPhotoUrl() != null) {
                 imageUrl = account.getPhotoUrl().toString();
             }
 
@@ -128,70 +128,69 @@ public class LogInActivity extends AppCompatActivity {
 
             //TO DO: change this to remote server url
             String finalImageUrl = imageUrl;
-            SupportRequests.post("http://"+address+":8081/account/sign-in", jsonObject.toString(), new Callback(){
-                        @Override
-                        public void onFailure(Call call, IOException e) {
-                            Log.d(TAG, "login unsucessful");
-                            System.out.println(e.getMessage());
-                        }
+            SupportRequests.post("http://" + address + ":8081/account/sign-in", jsonObject.toString(), new Callback() {
+                @Override
+                public void onFailure(Call call, IOException e) {
+                    Log.d(TAG, "login unsucessful");
+                    System.out.println(e.getMessage());
+                }
 
-                        @Override
-                        public void onResponse(Call call, Response response) throws IOException {
-                            Log.d(TAG, "login successful");
+                @Override
+                public void onResponse(Call call, Response response) throws IOException {
+                    Log.d(TAG, "login successful");
 
-                            String jsonData = response.body().string();
-                            String cookie = response.headers().get("Set-Cookie");
+                    String jsonData = response.body().string();
+                    String cookie = response.headers().get("Set-Cookie");
 
-                            try {
-                                Log.d(TAG, "response body is "+ jsonData);
-                                Log.d(TAG, "cookie is "+ cookie);
-                                JSONObject jsonObj = new JSONObject(jsonData);
-                                Log.d(TAG, "json Obj "+ jsonObj.toString());
-                                boolean userExists = jsonObj.getBoolean("userExists");
-                                String userId = jsonObj.getString("userId");
-                                Log.d(TAG, "User exits: "+ userExists);
-                                Log.d(TAG, "User id"+ userId);
+                    try {
+                        Log.d(TAG, "response body is " + jsonData);
+                        Log.d(TAG, "cookie is " + cookie);
+                        JSONObject jsonObj = new JSONObject(jsonData);
+                        Log.d(TAG, "json Obj " + jsonObj);
+                        boolean userExists = jsonObj.getBoolean("userExists");
+                        String userId = jsonObj.getString("userId");
+                        Log.d(TAG, "User exits: " + userExists);
+                        Log.d(TAG, "User id" + userId);
 
-                                // Note: For storing userId locally used SharedPreferences
-                                final String PREF_NAME = "LogIn";
-                                final String DATA_TAG = "UserId";
-                                final String USER_NAME = "UserName";
-                                final String COOKIE_TAG = "Cookie";
-                                SharedPreferences settings = getApplicationContext().getSharedPreferences(PREF_NAME,0);
-                                SharedPreferences.Editor editor = settings.edit();
+                        // Note: For storing userId locally used SharedPreferences
+                        final String PREF_NAME = "LogIn";
+                        final String DATA_TAG = "UserId";
+                        final String USER_NAME = "UserName";
+                        final String COOKIE_TAG = "Cookie";
+                        SharedPreferences settings = getApplicationContext().getSharedPreferences(PREF_NAME, 0);
+                        SharedPreferences.Editor editor = settings.edit();
 
-                                // store userId
-                                editor.putString(USER_NAME, account.getGivenName());
-                                editor.putString(DATA_TAG, userId);
-                                editor.putString(COOKIE_TAG, cookie);
-                                editor.commit();
+                        // store userId
+                        editor.putString(USER_NAME, account.getGivenName());
+                        editor.putString(DATA_TAG, userId);
+                        editor.putString(COOKIE_TAG, cookie);
+                        editor.commit();
 
 //                                editor.putString(COOKIE_TAG, cookie);
 //                                editor.commit();
 
-                                if (!userExists){
-                                    Log.d(TAG, "New User!");
-                                    Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
-                                    Bundle extras = new Bundle();
-                                    extras.putString("Display_Name", account.getDisplayName() );
-                                    extras.putString("Photo_URL", finalImageUrl);
-                                    intent.putExtras(extras);
-                                    startActivity(intent);
+                        if (!userExists) {
+                            Log.d(TAG, "New User!");
+                            Intent intent = new Intent(LogInActivity.this, SignUpActivity.class);
+                            Bundle extras = new Bundle();
+                            extras.putString("Display_Name", account.getDisplayName());
+                            extras.putString("Photo_URL", finalImageUrl);
+                            intent.putExtras(extras);
+                            startActivity(intent);
 
-                                }
-                                else{
-                                    Intent intent = new Intent(LogInActivity.this, MainActivity.class);
-                                    Bundle extras = new Bundle();
-                                    extras.putString("Display_Name", account.getDisplayName() );
-                                    extras.putString("Photo_URL", finalImageUrl);
-                                    intent.putExtras(extras);
-                                    startActivity(intent);
-                                }
-
-                            } catch (JSONException e) {
-                                e.printStackTrace();
-                            }
+                        } else {
+                            Intent intent = new Intent(LogInActivity.this, MainActivity.class);
+                            Bundle extras = new Bundle();
+                            extras.putString("Display_Name", account.getDisplayName());
+                            extras.putString("Photo_URL", finalImageUrl);
+                            intent.putExtras(extras);
+                            startActivity(intent);
                         }
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
             });
 
 

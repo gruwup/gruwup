@@ -11,14 +11,14 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import java.util.ArrayList;
 
-public class MessageViewAdapter extends RecyclerView.Adapter<MessageViewAdapter.ViewHolder>{
+public class MessageViewAdapter extends RecyclerView.Adapter<MessageViewAdapter.ViewHolder> {
 
     Context context;
     ArrayList<Message> messages;
     private static final String SENT_MESSAGE = "sent";
     private static final String RECEIVED_MESSAGE = "received";
 
-    public MessageViewAdapter(Context context, ArrayList<Message> messages){
+    public MessageViewAdapter(Context context, ArrayList<Message> messages) {
         this.context = context;
         this.messages = messages;
     }
@@ -33,11 +33,10 @@ public class MessageViewAdapter extends RecyclerView.Adapter<MessageViewAdapter.
     @Override
     public void onBindViewHolder(@NonNull MessageViewAdapter.ViewHolder holder, int position) {
         Message message = messages.get(holder.getAdapterPosition());
-        if (messages.get(holder.getAdapterPosition()).getMessageStatus().equals(SENT_MESSAGE)){
+        if (messages.get(holder.getAdapterPosition()).getMessageStatus().equals(SENT_MESSAGE)) {
             holder.sentMessage.setText(message.getMessage());
             holder.sentMessage.setVisibility(View.VISIBLE);
-        }
-        else if (messages.get(holder.getAdapterPosition()).getMessageStatus().equals(RECEIVED_MESSAGE)){
+        } else if (messages.get(holder.getAdapterPosition()).getMessageStatus().equals(RECEIVED_MESSAGE)) {
             holder.receiverName.setText(message.getName());
             holder.receiverName.setVisibility(View.VISIBLE);
             holder.receivedMessage.setText(message.getMessage());
@@ -50,7 +49,7 @@ public class MessageViewAdapter extends RecyclerView.Adapter<MessageViewAdapter.
         return messages.size();
     }
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView sentMessage;
         TextView receivedMessage;
         TextView senderName;

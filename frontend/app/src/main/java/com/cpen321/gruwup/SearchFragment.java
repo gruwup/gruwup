@@ -61,12 +61,12 @@ import okhttp3.Request;
 import okhttp3.RequestBody;
 import okhttp3.Response;
 
-public class SearchFragment extends Fragment{
+public class SearchFragment extends Fragment {
     RecyclerView recyclerView;
 
     private String address;
     static ArrayList<Map<String, String>> mAdventureList;
-    DiscAdvViewAdapter AdventureAdapter; 
+    DiscAdvViewAdapter AdventureAdapter;
     String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
     RecyclerView categoryView;
@@ -79,9 +79,9 @@ public class SearchFragment extends Fragment{
     TextView cancel;
     TextView noAdventures;
     Bitmap imageBMP = null;
-    private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
-    private ArrayList<String> mCategoryNames = new ArrayList<>();
-    private Handler mHandler = new Handler(Looper.getMainLooper());
+    private final ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
+    private final ArrayList<String> mCategoryNames = new ArrayList<>();
+    private final Handler mHandler = new Handler(Looper.getMainLooper());
 
     private void initCategories() {
         mCategoryNames.add("MOVIE");
@@ -117,7 +117,7 @@ public class SearchFragment extends Fragment{
         View view = inflater.inflate(R.layout.fragment_search, container, false);
 
         noAdventures = view.findViewById(R.id.noSearchAdventures);
-        filterButton = (Button) view.findViewById(R.id.filter_button);
+        filterButton = view.findViewById(R.id.filter_button);
         filterButton.setAlpha(0f);
         filterButton.setTranslationY(50);
         filterButton.animate().alpha(1f).translationYBy(-50).setDuration(1500);
@@ -128,7 +128,7 @@ public class SearchFragment extends Fragment{
                 filterAdventure(v);
                 System.out.println("Update recycler view");
                 AdventureAdapter.notifyDataSetChanged();
-                if(mAdventureList != null) {
+                if (mAdventureList != null) {
                     if (mAdventureList.size() > 0) {
                         noAdventures.setVisibility(View.INVISIBLE);
                     } else {
@@ -139,7 +139,7 @@ public class SearchFragment extends Fragment{
             }
         });
 
-        searchText = (EditText) view.findViewById(R.id.search_events);
+        searchText = view.findViewById(R.id.search_events);
         searchText.setOnKeyListener(new View.OnKeyListener() {
             public boolean onKey(View v, int keyCode, KeyEvent event) { //responds per alphabetical key press
                 if (true) {
@@ -150,16 +150,16 @@ public class SearchFragment extends Fragment{
             }
         });
 
-        nearbyButton = (Button) view.findViewById(R.id.nearby_button);
+        nearbyButton = view.findViewById(R.id.nearby_button);
         nearbyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 String cookie = SupportSharedPreferences.getCookie(getActivity());
-                String[] cookieList  =  cookie.split("=",2);
+                String[] cookieList = cookie.split("=", 2);
                 OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
                 cookieHelper.setCookie("http://" + address + ":8081/user/adventure/nearby?city=" + city, cookieList[0], cookieList[1]);
                 Request request = new Request.Builder()
-                        .url("http://" + address + ":8081/user/adventure/nearby?city="+city)
+                        .url("http://" + address + ":8081/user/adventure/nearby?city=" + city)
                         .build();
                 OkHttpClient client = new OkHttpClient.Builder()
                         .cookieJar(cookieHelper.cookieJar())
@@ -185,7 +185,7 @@ public class SearchFragment extends Fragment{
             }
         });
 
-        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city="+city, SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
+        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city=" + city, SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
             }
@@ -217,7 +217,7 @@ public class SearchFragment extends Fragment{
 
     private void displayAdventures(View view) {
         LinearLayoutManager layoutManager = new LinearLayoutManager(view.getContext());
-        RecyclerView adventureListView = (RecyclerView) view.findViewById(R.id.searchedAdventures);
+        RecyclerView adventureListView = view.findViewById(R.id.searchedAdventures);
         recyclerView = adventureListView;
         adventureListView.setLayoutManager(layoutManager);
         AdventureAdapter = new DiscAdvViewAdapter(getActivity(), mAdventureList);
@@ -229,7 +229,7 @@ public class SearchFragment extends Fragment{
         JSONArray jsonArray = new JSONArray(HTTPRESULT);
         int arrlen = jsonArray.length();
         for (int i = 0; i < arrlen; i++) {
-            JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
+            JSONObject jsonObject = jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());
             mAdventureList.get(i).put("title", jsonObject.getString("title"));
             mAdventureList.get(i).put("id", jsonObject.getString("_id"));
@@ -241,13 +241,13 @@ public class SearchFragment extends Fragment{
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
 
-        if(getActivity() == null)
+        if (getActivity() == null)
             return;
 
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(mAdventureList.size() > 0) {
+                if (mAdventureList.size() > 0) {
                     noAdventures.setVisibility(View.INVISIBLE);
                 } else {
                     noAdventures.setVisibility(View.VISIBLE);
@@ -269,7 +269,7 @@ public class SearchFragment extends Fragment{
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         dialog.show();
         initCategories();
-        cancel = (TextView) dialog.findViewById(R.id.filter_adventure_go_back);
+        cancel = dialog.findViewById(R.id.filter_adventure_go_back);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -277,14 +277,14 @@ public class SearchFragment extends Fragment{
             }
         });
         LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
-        categoryView = (RecyclerView) dialog.findViewById(R.id.filterAdventureRecycler);
+        categoryView = dialog.findViewById(R.id.filterAdventureRecycler);
         categoryView.setLayoutManager(layoutManager);
         CategoryViewAdapter adapter = new CategoryViewAdapter(getActivity(), mCategoryNames);
         categoryView.setAdapter(adapter);
-        location = (EditText) dialog.findViewById(R.id.searchAdventureCity);
-        numPeople = (EditText) dialog.findViewById(R.id.searchPeopleCount);
-        timeSelection = (RadioGroup) dialog.findViewById(R.id.filter_adventure_time_radio_group);
-        applyFilters = (Button) dialog.findViewById(R.id.applyFilterButton);
+        location = dialog.findViewById(R.id.searchAdventureCity);
+        numPeople = dialog.findViewById(R.id.searchPeopleCount);
+        timeSelection = dialog.findViewById(R.id.filter_adventure_time_radio_group);
+        applyFilters = dialog.findViewById(R.id.applyFilterButton);
         applyFilters.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -294,18 +294,18 @@ public class SearchFragment extends Fragment{
                     mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
                     jsonArray.put(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
                 }
-                if(adapter.getSelectedCategoriesCount() < 1) {
+                if (adapter.getSelectedCategoriesCount() < 1) {
                     Toast.makeText(getActivity(), "Choose at least one activity tag!", Toast.LENGTH_SHORT).show();
                     return;
                 }
-                if(numPeople.getText().toString() == null || location.getText().toString() == null || timeSelection.getCheckedRadioButtonId() == -1) {
+                if (numPeople.getText().toString() == null || location.getText().toString() == null || timeSelection.getCheckedRadioButtonId() == -1) {
                     Toast.makeText(getActivity(), "Choose a time at least!", Toast.LENGTH_SHORT).show();
                     return;
                 }
                 JSONObject jsonObject = new JSONObject();
                 try {
                     jsonObject.put("categories", jsonArray);
-                    jsonObject.put("maxPeopleGoing",  numPeople.getText().toString());
+                    jsonObject.put("maxPeopleGoing", numPeople.getText().toString());
                     jsonObject.put("maxTimeStamp", buttonToEpoch(timeSelection.getCheckedRadioButtonId()));
                     jsonObject.put("city", location.getText().toString());
                 } catch (JSONException e) {
@@ -313,10 +313,10 @@ public class SearchFragment extends Fragment{
                     System.out.println("JSON EXCEPTION!!!");
                 }
                 String cookie = SupportSharedPreferences.getCookie(getActivity());
-                String[] cookieList  =  cookie.split("=",2);
+                String[] cookieList = cookie.split("=", 2);
                 OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
                 cookieHelper.setCookie("http://" + address + ":8081/user/adventure/search-by-filter", cookieList[0], cookieList[1]);
-                System.out.println(jsonObject.toString());
+                System.out.println(jsonObject);
                 RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), jsonObject.toString());
                 Request request = new Request.Builder()
                         .url("http://" + address + ":8081/user/adventure/search-by-filter")
@@ -334,7 +334,7 @@ public class SearchFragment extends Fragment{
                     AdventureAdapter.notifyDataSetChanged();
                     recyclerView.setAdapter(new DiscAdvViewAdapter(getActivity(), mAdventureList));
                     recyclerView.invalidate();
-                    if(mAdventureList != null) {
+                    if (mAdventureList != null) {
                         if (mAdventureList.size() > 0) {
                             noAdventures.setVisibility(View.INVISIBLE);
                         } else {
@@ -346,7 +346,7 @@ public class SearchFragment extends Fragment{
                 }
                 AdventureAdapter.notifyDataSetChanged();
                 recyclerView.invalidate();
-                if(mAdventureList != null) {
+                if (mAdventureList != null) {
                     if (mAdventureList.size() > 0) {
                         noAdventures.setVisibility(View.INVISIBLE);
                     } else {

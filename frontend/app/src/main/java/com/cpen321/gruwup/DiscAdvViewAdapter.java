@@ -44,7 +44,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
     private String address;
 
     public DiscAdvViewAdapter(Context mContext, ArrayList<Map<String, String>> mAdvNames) {
-        if (mContext==null){
+        if (mContext == null) {
             return;
         }
         address = mContext.getResources().getString(R.string.connection_address);
@@ -100,15 +100,15 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
 
         viewAdventureDialog.setContentView(R.layout.view_adventure_pop_up);
         viewAdventureDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
-        cancel = (TextView) viewAdventureDialog.findViewById(R.id.cancel_view_adventure);
-        title = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_event_title);
-        eventType = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_event_type);
-        memberCount = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_member_count);
-        time = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_time);
-        location = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_location);
-        description = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_description);
-        requestToJoin = (Button) viewAdventureDialog.findViewById(R.id.request_join_adventure);
-        viewInMap = (Button) viewAdventureDialog.findViewById(R.id.adventure_open_in_maps);
+        cancel = viewAdventureDialog.findViewById(R.id.cancel_view_adventure);
+        title = viewAdventureDialog.findViewById(R.id.view_adventure_event_title);
+        eventType = viewAdventureDialog.findViewById(R.id.view_adventure_event_type);
+        memberCount = viewAdventureDialog.findViewById(R.id.view_adventure_member_count);
+        time = viewAdventureDialog.findViewById(R.id.view_adventure_time);
+        location = viewAdventureDialog.findViewById(R.id.view_adventure_location);
+        description = viewAdventureDialog.findViewById(R.id.view_adventure_description);
+        requestToJoin = viewAdventureDialog.findViewById(R.id.request_join_adventure);
+        viewInMap = viewAdventureDialog.findViewById(R.id.adventure_open_in_maps);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {

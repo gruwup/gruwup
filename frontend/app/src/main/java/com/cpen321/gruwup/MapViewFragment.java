@@ -51,7 +51,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
         Bundle locationArgs = getArguments();
         String address = locationArgs.getString("address", "");
         String location_address = locationArgs.getString("adventures", "");
-        mMapView = (MapView) rootView.findViewById(R.id.mapView);
+        mMapView = rootView.findViewById(R.id.mapView);
         mMapView.onCreate(savedInstanceState);
 
         mMapView.onResume(); // needed to get the map to display immediately
@@ -68,26 +68,25 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
             public void onMapReady(GoogleMap mMap) {
                 googleMap = mMap;
                 googleMap.setOnMarkerClickListener(MapViewFragment.this);
-                if(location_address != "") {
+                if (location_address != "") {
                     System.out.println("special mode");
                     try {
                         JSONArray jsonArray = new JSONArray(location_address);
                         HTTP_RESPONSE_ARRAY = jsonArray;
-                        for(int i = 0; i < jsonArray.length(); i++) {
-                            JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
+                        for (int i = 0; i < jsonArray.length(); i++) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(i);
                             LatLng test = getLocationFromAddress(getActivity(), jsonObject.getString("location"));
                             googleMap.addMarker(new MarkerOptions().position(test).title(jsonObject.getString("title"))).setTag(jsonObject.getString("_id"));
                         }
-                        if(jsonArray.length() > 0) {
-                            JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(0);
+                        if (jsonArray.length() > 0) {
+                            JSONObject jsonObject = jsonArray.getJSONObject(0);
                             LatLng test = getLocationFromAddress(getActivity(), jsonObject.getString("location"));
                             googleMap.moveCamera(CameraUpdateFactory.newLatLngZoom(test, 10));
                         }
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
-                }
-                else {
+                } else {
                     System.out.println("normal mode");
                     LatLng eventLocation = getLocationFromAddress(getActivity(), address);
                     googleMap.addMarker(new MarkerOptions().position(eventLocation).title("Event title"));
@@ -111,7 +110,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
                 return null;
             }
             Address location = address.get(0);
-            p1 = new LatLng(location.getLatitude(), location.getLongitude() );
+            p1 = new LatLng(location.getLatitude(), location.getLongitude());
         } catch (IOException ex) {
             ex.printStackTrace();
         }
@@ -146,7 +145,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
     @Override
     public boolean onMarkerClick(Marker marker) {
         System.out.println("Marker clicked!");
-        if(HTTP_RESPONSE_ARRAY == null) return true;
+        if (HTTP_RESPONSE_ARRAY == null) return true;
         final Dialog dialog = new Dialog(getActivity());
         Button requestToJoin;
         Button viewOnGoogleMaps;
@@ -171,7 +170,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
         requestToJoin = dialog.findViewById(R.id.request_join_adventure);
         viewOnGoogleMaps = dialog.findViewById(R.id.adventure_open_in_maps);
         viewOnGoogleMaps.setVisibility(View.GONE);
-        cancel = (TextView) dialog.findViewById(R.id.cancel_view_adventure);
+        cancel = dialog.findViewById(R.id.cancel_view_adventure);
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -180,10 +179,10 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
         });
         String id;
         JSONObject jsonObject = null;
-        for(int i = 0; i < HTTP_RESPONSE_ARRAY.length(); i++) {
+        for (int i = 0; i < HTTP_RESPONSE_ARRAY.length(); i++) {
             try {
-                jsonObject = (JSONObject) HTTP_RESPONSE_ARRAY.getJSONObject(i);
-                if(jsonObject.getString("_id").equals(marker.getTag())) {
+                jsonObject = HTTP_RESPONSE_ARRAY.getJSONObject(i);
+                if (jsonObject.getString("_id").equals(marker.getTag())) {
                     break;
                 }
 

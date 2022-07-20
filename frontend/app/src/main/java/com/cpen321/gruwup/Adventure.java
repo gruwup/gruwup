@@ -2,7 +2,7 @@ package com.cpen321.gruwup;
 
 public class Adventure {
 
-    String image, adventureName, adventureId , lastMessage, lastMessageTime, lastMessageSender;
+    String image, adventureName, adventureId, lastMessage, lastMessageTime, lastMessageSender;
 
     public String getLastMessageSender() {
         return lastMessageSender;

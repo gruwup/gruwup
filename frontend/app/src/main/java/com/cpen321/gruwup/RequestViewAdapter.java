@@ -37,10 +37,10 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
     Dialog requestDialog;
     ArrayList<Request> requests;
 
-    private String address;
+    private final String address;
     static final String TAG = "RequestViewAdapter";
 
-    public RequestViewAdapter(Context context, ArrayList<Request> requests){
+    public RequestViewAdapter(Context context, ArrayList<Request> requests) {
         this.context = context;
         this.requests = requests;
         address = context.getString(R.string.connection_address);
@@ -66,7 +66,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             @Override
             public void onClick(View view) {
                 // To do: make backend request , do below if backend request is successful
-                showPopUp( "accept",position);
+                showPopUp("accept", position);
                 requests.remove(position);
                 notifyItemRemoved(position);
             }
@@ -76,7 +76,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             @Override
             public void onClick(View view) {
                 // To do: make backend request , do below if backend request is successful
-                showPopUp("deny",position);
+                showPopUp("deny", position);
                 requests.remove(position);
                 notifyItemRemoved(position);
             }
@@ -102,8 +102,8 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         this.getProfileRequest(userId);
         requestDialog.show();
 
-        TextView closeProfile  = (TextView) requestDialog.findViewById(R.id.close);
-        TextView name = (TextView) requestDialog.findViewById(R.id.requesterProfileName);
+        TextView closeProfile = requestDialog.findViewById(R.id.close);
+        TextView name = requestDialog.findViewById(R.id.requesterProfileName);
         name.setText(requesterName);
 
         closeProfile.setOnClickListener(new View.OnClickListener() {
@@ -114,12 +114,12 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         });
     }
 
-    private void showPopUp( String action, int position) {
+    private void showPopUp(String action, int position) {
         String cookie = SupportSharedPreferences.getCookie(this.context);
-        if (action.equals("accept")){
-            String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/accept";
+        if (action.equals("accept")) {
+            String url = "http://" + address + ":8081/user/request/" + requests.get(position).getRequestId() + "/accept";
             String json = "";
-            SupportRequests.putWithCookie(url,json, cookie, new Callback() {
+            SupportRequests.putWithCookie(url, json, cookie, new Callback() {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String jsonData = response.body().string();
@@ -133,11 +133,10 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             });
             requestDialog.setContentView(R.layout.accept_request_pop_up);
             requestDialog.show();
-        }
-        else if (action.equals("deny")){
-            String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/reject";
+        } else if (action.equals("deny")) {
+            String url = "http://" + address + ":8081/user/request/" + requests.get(position).getRequestId() + "/reject";
             String json = "";
-            SupportRequests.putWithCookie(url,json, cookie,new Callback() {
+            SupportRequests.putWithCookie(url, json, cookie, new Callback() {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String jsonData = response.body().string();
@@ -175,7 +174,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
     private void getProfileRequest(String userId) throws IOException {
 
         String cookie = SupportSharedPreferences.getCookie(this.context);
-        SupportRequests.getWithCookie("http://"+address+":8081/user/profile/" + userId + "/get", cookie, new Callback() {
+        SupportRequests.getWithCookie("http://" + address + ":8081/user/profile/" + userId + "/get", cookie, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -185,31 +184,31 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Log.d(TAG, "get requester profile successful");
                     String jsonData = response.body().string();
 
                     try {
                         JSONObject jsonObj = new JSONObject(jsonData);
-                        Log.d(TAG, "json Obj for requester profile "+ jsonObj.toString());
+                        Log.d(TAG, "json Obj for requester profile " + jsonObj);
                         String bio = jsonObj.getString("biography");
                         String image = jsonObj.getString("image");
                         JSONArray pref = jsonObj.getJSONArray("categories");
                         ArrayList<String> preferences_list = new ArrayList<String>();
-                        if (pref !=null){
-                            for (int i=0; i<pref.length(); i++){
+                        if (pref != null) {
+                            for (int i = 0; i < pref.length(); i++) {
                                 preferences_list.add(pref.getString(i));
                             }
                         }
 
-                        Log.d(TAG, "Requester Preferences List: "+ preferences_list);
+                        Log.d(TAG, "Requester Preferences List: " + preferences_list);
 
                         Handler uiHandler = new Handler(Looper.getMainLooper());
-                        uiHandler.post(new Runnable(){
+                        uiHandler.post(new Runnable() {
                             @Override
                             public void run() {
-                                TextView requesterBio = (TextView) requestDialog.findViewById(R.id.requesterBio);
-                                RecyclerView requesterPref = (RecyclerView) requestDialog.findViewById(R.id.requesterPreferences);
+                                TextView requesterBio = requestDialog.findViewById(R.id.requesterBio);
+                                RecyclerView requesterPref = requestDialog.findViewById(R.id.requesterPreferences);
                                 requesterBio.setText(bio);
 
                                 RecyclerView.LayoutManager mLayoutManafer = new LinearLayoutManager(requestDialog.getContext(), LinearLayoutManager.HORIZONTAL, false);
@@ -218,7 +217,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
                                 requesterPref.setAdapter(adapter);
 
 
-                                ImageView requesterImg = (ImageView) requestDialog.findViewById(R.id.requesterImage);
+                                ImageView requesterImg = requestDialog.findViewById(R.id.requesterImage);
                                 Picasso.get().load(image).into(requesterImg);
                             }
                         });
@@ -228,8 +227,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
                         e.printStackTrace();
                     }
 
-                }
-                else {
+                } else {
                     Log.d(TAG, "get requester profile is unsuccessful");
                     Log.d(TAG, response.body().string());
                 }
@@ -238,7 +236,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
     }
 
 
-    public class ViewHolder extends RecyclerView.ViewHolder{
+    public class ViewHolder extends RecyclerView.ViewHolder {
         TextView requesterName;
         TextView adventureName;
         TextView adventureTitle;
@@ -259,7 +257,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
             requesterProfileName = itemView.findViewById(R.id.requesterProfileName);
             requesterBio = itemView.findViewById(R.id.requesterBio);
             closeProfile = itemView.findViewById(R.id.close);
-            requesterName.setPaintFlags(requesterName.getPaintFlags() |   Paint.UNDERLINE_TEXT_FLAG);
+            requesterName.setPaintFlags(requesterName.getPaintFlags() | Paint.UNDERLINE_TEXT_FLAG);
         }
     }
 }

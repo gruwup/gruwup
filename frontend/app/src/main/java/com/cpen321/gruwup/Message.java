@@ -17,7 +17,7 @@ public class Message {
         this.messageStatus = messageStatus;
     }
 
-    public Message(String userId, String name, String message, String dateTime,  String messageStatus) {
+    public Message(String userId, String name, String message, String dateTime, String messageStatus) {
         this.userId = userId;
         this.name = name;
         this.message = message;

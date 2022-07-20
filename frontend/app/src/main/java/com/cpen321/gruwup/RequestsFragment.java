@@ -42,8 +42,8 @@ public class RequestsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_requests, container, false);
         try {
             initRequestData();
-            adapter = new RequestViewAdapter(getActivity(),requests);
-            RecyclerView requestView = (RecyclerView) view.findViewById(R.id.getRequestView);
+            adapter = new RequestViewAdapter(getActivity(), requests);
+            RecyclerView requestView = view.findViewById(R.id.getRequestView);
             requestView.setLayoutManager(new LinearLayoutManager(getActivity()));
             requestView.setAdapter(adapter);
             requestList = view.findViewById(R.id.requestList);
@@ -61,8 +61,8 @@ public class RequestsFragment extends Fragment {
     private void getAllRequests() throws IOException {
         String UserID = SupportSharedPreferences.getUserId(this.getActivity());
         String cookie = SupportSharedPreferences.getCookie(this.getActivity());
-        Log.d(TAG, "User Id is "+ UserID);
-        SupportRequests.getWithCookie("http://"+address+":8081/user/request/" + UserID + "/get-requests", cookie, new Callback() {
+        Log.d(TAG, "User Id is " + UserID);
+        SupportRequests.getWithCookie("http://" + address + ":8081/user/request/" + UserID + "/get-requests", cookie, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -72,7 +72,7 @@ public class RequestsFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
-                if(response.isSuccessful()){
+                if (response.isSuccessful()) {
                     Log.d(TAG, "GET request successful");
                     String jsonData = response.body().string();
 
@@ -81,8 +81,8 @@ public class RequestsFragment extends Fragment {
                         JSONArray requestArray = jsonObj.getJSONArray("requests");
                         JSONObject requestObj = new JSONObject();
 
-                        if (requestArray !=null){
-                            for (int i=0; i<requestArray.length(); i++){
+                        if (requestArray != null) {
+                            for (int i = 0; i < requestArray.length(); i++) {
                                 requestObj = requestArray.getJSONObject(i);
                                 Log.d(TAG, requestObj.toString());
                                 String adventureName = requestObj.getString("adventureTitle");
@@ -95,19 +95,17 @@ public class RequestsFragment extends Fragment {
                                 getActivity().runOnUiThread(new Runnable() {
                                     @Override
                                     public void run() {
-                                        Request request = new Request(adventureName,requesterName,requesterId, requestId, status);
-                                        if (request.getStatus().equals("PENDING") && UserID.equals(adventureOwner)){
+                                        Request request = new Request(adventureName, requesterName, requesterId, requestId, status);
+                                        if (request.getStatus().equals("PENDING") && UserID.equals(adventureOwner)) {
                                             requests.add(request);
                                             adapter.notifyDataSetChanged();
-                                            if (adapter.getItemCount()==0){
+                                            if (adapter.getItemCount() == 0) {
                                                 requestList.setVisibility(View.VISIBLE);
-                                            }
-                                            else {
+                                            } else {
                                                 requestList.setVisibility(View.GONE);
                                             }
-                                        }
-                                        else {
-                                            if (adapter.getItemCount()==0){
+                                        } else {
+                                            if (adapter.getItemCount() == 0) {
                                                 requestList.setVisibility(View.VISIBLE);
                                             }
                                         }
@@ -115,8 +113,8 @@ public class RequestsFragment extends Fragment {
                                 });
 
                             }
-                        } else{
-                            if (adapter.getItemCount()==0){
+                        } else {
+                            if (adapter.getItemCount() == 0) {
                                 requestList.setVisibility(View.VISIBLE);
                             }
                         }
@@ -125,12 +123,10 @@ public class RequestsFragment extends Fragment {
                         e.printStackTrace();
                     }
 
-                }
-                else {
-                    if (adapter.getItemCount()==0){
+                } else {
+                    if (adapter.getItemCount() == 0) {
                         requestList.setVisibility(View.VISIBLE);
-                    }
-                    else {
+                    } else {
                         requestList.setVisibility(View.GONE);
                     }
                     Log.d(TAG, "GET profile is unsuccessful");

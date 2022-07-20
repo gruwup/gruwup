@@ -19,7 +19,7 @@ import io.socket.client.Socket;
 import io.socket.emitter.Emitter;
 
 public class SocketService extends Service {
-    private static String TAG = "SocketService";
+    private static final String TAG = "SocketService";
 
     // socket implementation
     private Socket mSocket;
@@ -48,7 +48,7 @@ public class SocketService extends Service {
         return super.onStartCommand(intent, flags, startId);
     }
 
-    private Emitter.Listener isConnected = new Emitter.Listener() {
+    private final Emitter.Listener isConnected = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
             Log.d("SocketService", args[0].toString());
@@ -73,7 +73,7 @@ public class SocketService extends Service {
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
-    private Emitter.Listener onNewNotification = new Emitter.Listener() {
+    private final Emitter.Listener onNewNotification = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
             JSONObject data = (JSONObject) args[1];
