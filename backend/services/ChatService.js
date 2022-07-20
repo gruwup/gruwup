@@ -91,9 +91,7 @@ module.exports = class ChatService {
                         };
                     });
 
-                    if (result && result.code === 500) return result;
-
-                    if (message.code === 200 && message.code === 200) {
+                    if (message.code === 200) {
                         messages.push({ 
                             adventureId: adventureIds[i], 
                             adventureTitle: adventure.payload.title,
@@ -102,7 +100,7 @@ module.exports = class ChatService {
                             message: message.payload.message,
                             dateTime: message.payload.dateTime
                         });
-                    } else {
+                    } else if (adventure.code === 200) {
                         messages.push({ 
                             adventureId: adventureIds[i], 
                             adventureTitle: adventure.payload.title, 
