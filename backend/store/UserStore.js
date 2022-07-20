@@ -82,7 +82,7 @@ module.exports = class User {
             var profileResult = await Profile.findOneAndUpdate(
                                 { userId },
                                 { $set: profile },
-                                {new: true}
+                                {new: true, runValidators: true }
                             );
     
             if (profileResult) {

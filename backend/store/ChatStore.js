@@ -11,57 +11,84 @@ module.exports = class User {
             messages: [messages]
         }
         messageGroup = new Message(messageGroup);
-
-        try {
-            var messageResult = await messageGroup.save();
+        await messageGroup.save().then(messageResult => {
             result = {
                 code: 200,
                 message: "Group created successfully",
                 payload: messageResult
             };
-        } catch (err) {
-            result = {
-                code: 400,
-                message: err._message
-            };
-        }
+        }, err => {
+            if (err.name === "ValidationError") {
+                result = {
+                    code: 400,
+                    message: err._message
+                };
+            }
+            else {
+                result = {
+                    code: 500,
+                    message: err._message
+                }
+            }
+        });
         
         return result;
     };
 
     static storeExistingMessageGroup = async (adventureId, message, dateTime) => {
         var result;
-        var paginationResult = await this.getPrevPagination(adventureId, dateTime);
-        var paginationObj = { pagination: dateTime };
-        var messagesObj = { messages: message };
 
-        try {
-            var messageResult = await Message.findOneAndUpdate( // update pagination and add message to object array
-                            { adventureId, pagination: paginationResult.payload },
-                            { $set: paginationObj,  $push: messagesObj },
-                            { new: true }
-                        );
-            if (messageResult) {
-                result = {
-                    code: 200,
-                    message: "Group updated successfully",
-                    payload: messageResult
-                }
-            }
-            else {
+        await this.getPrevPagination(adventureId, dateTime).then(async paginationResult => {
+            if (!paginationResult) {
                 result = {
                     code: 404,
-                    message: "Group not found"
+                    message: "Pagination not found"
                 };
             }
-        }
-        catch (err) {
+            else {
+                var paginationObj = { pagination: dateTime };
+                var messagesObj = { messages: message };
+                await Message.findOneAndUpdate( // update pagination and add message to object array
+                                { adventureId, pagination: paginationResult.payload },
+                                { $set: paginationObj,  $push: messagesObj },
+                                { new: true, runValidators: true }
+                ).then(messageResult => {
+                    if (!messageResult) {
+                        result = {
+                            code: 404,
+                            message: "Group not found"
+                        };
+                    }
+                    else {
+                        result = {
+                            code: 200,
+                            message: "Group created successfully",
+                            payload: messageResult
+                        };
+                    }
+                }, err => {
+                    if (err.name === "ValidationError") {
+                        result = {
+                            code: 400,
+                            message: err._message
+                        };
+                    }
+                    else {
+                        result = {
+                            code: 500,
+                            message: err._message
+                        }
+                    }
+                });
+            }
+        }, err => {
             result = {
                 code: 500,
                 message: err._message
-            };
-        }
+            }
+        });
         
+
         return result;
     };
 
@@ -69,9 +96,14 @@ module.exports = class User {
     static getPrevPagination = async (adventureId, pagination) => {
         var result;
 
-        try {
-            var messageResult = await Message.find({ adventureId });
-            if (messageResult) {
+        await Message.find({ adventureId }).then(messageResult => {
+            if (!messageResult) {
+                result = {
+                    code: 404,
+                    message: "No previous messages found",
+                }
+            }
+            else {
                 var prevPagination = null;
                 if (messageResult.length) {
                     prevPagination = messageResult.map(chat => chat.pagination).reduce((prev, curr) => {
@@ -87,19 +119,12 @@ module.exports = class User {
                     };
                 }
             }
-            else {
-                result = {
-                    code: 404,
-                    message: "No previous messages found",
-                }
-            }
-        }
-        catch (err) {
+        }, err => {
             result = {
                 code: 500,
                 message: err
-            };
-        }
+            }
+        })
 
         return result;
     };
@@ -107,28 +132,26 @@ module.exports = class User {
     static getMessages = async (adventureId, pagination) => {
         var result;
 
-        try {
-            var messageResult = await Message.findOne({ adventureId, pagination });
-            if (messageResult) {
+        await Message.findOne({ adventureId, pagination }).then(messageResult => {
+            if (!messageResult) {
+                result = {
+                    code: 404,
+                    message: "Messages not found"
+                }
+            }
+            else {
                 result = {
                     code: 200,
                     message: "Messages found",
                     payload: messageResult
                 }
             }
-            else {
-                result = {
-                    code: 404,
-                    message: "Messages not found"
-                }
-            }
-        }
-        catch (err) {
+        }, err => {
             result = {
                 code: 500,
                 message: err
             }
-        }
+        });
         
         return result;
     };
@@ -136,32 +159,36 @@ module.exports = class User {
     static getMostRecentMessage = async (adventureId, dateTime) => {
         var result;
 
-        try {
-            var paginationResult = await this.getPrevPagination(adventureId, dateTime);
-            var messageResult = await Message.findOne({ adventureId, pagination: paginationResult.payload });
-            if (messageResult) {
-                var message = messageResult.messages[messageResult.messages.length - 1];
+        var paginationResult = await this.getPrevPagination(adventureId, dateTime).then(async pagination => {
+            await Message.findOne({ adventureId, pagination: paginationResult.payload }).then(messageResult => {
                 if (messageResult) {
-                    result = {
-                        code: 200,
-                        message: "Messages found",
-                        payload: message
+                    var message = messageResult.messages[messageResult.messages.length - 1];
+                    if (messageResult) {
+                        result = {
+                            code: 200,
+                            message: "Messages found",
+                            payload: message
+                        }
                     }
                 }
-            }
-            else {
-                result = {
-                    code: 404,
-                    message: "Messages not found"
+                else {
+                    result = {
+                        code: 404,
+                        message: "Messages not found"
+                    }
                 }
-            }
-        }
-        catch (err) {
+            }, err => {
+                result = {
+                    code: 500,
+                    message: err
+                };
+            }) 
+        }, err => {
             result = {
                 code: 500,
                 message: err
             };
-        }
+        });
         
         return result;
     };
@@ -169,28 +196,25 @@ module.exports = class User {
     static deleteChat = async (adventureId) => {
         var result;
 
-        try {
-            var messageResult = await Message.deleteMany({ adventureId });
-            if (messageResult) {
-                result = {
-                    code: 200,
-                    message: "Adventure chat deleted"
-                }
-            }
-            else {
+        await Message.deleteMany({ adventureId }).then(messageResult => {
+            if (!messageResult) {
                 result = {
                     code: 404,
                     message: "Adventure not found"
                 }
             }
-        }
-        catch (err) {
+            else {
+                result = {
+                    code: 200,
+                    message: "Adventure chat deleted"
+                }
+            }
+        }, err => {
             result = {
                 code: 500,
                 message: err
             };
-        }
-        
+        });
         
         return result;
     };
