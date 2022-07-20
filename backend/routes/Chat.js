@@ -83,7 +83,7 @@ router.delete("/:adventureId/delete-chat", async (req, res) => {
         try {
             var result = await ChatStore.deleteChat(req.params.adventureId);
             if (result.code === 200) {
-                res.sendStatus(200);
+                return res.sendStatus(200);
             }
             return res.status(result.code).send({ message: result.message.toString() });
         }
