@@ -66,7 +66,7 @@ public class SearchFragment extends Fragment{
 
     private String address;
     static ArrayList<Map<String, String>> mAdventureList;
-    DiscAdvViewAdapter AdventureAdapter; 
+    DiscAdvViewAdapter AdventureAdapter;
     String HTTPRESULT = "";
     static int GET_FROM_GALLERY = 69;
     RecyclerView categoryView;
@@ -125,13 +125,7 @@ public class SearchFragment extends Fragment{
                 filterAdventure();
                 System.out.println("Update recycler view");
                 AdventureAdapter.notifyDataSetChanged();
-                if(mAdventureList != null) {
-                    if (mAdventureList.size() > 0) {
-                        noAdventures.setVisibility(View.INVISIBLE);
-                    } else {
-                        noAdventures.setVisibility(View.VISIBLE);
-                    }
-                }
+                updateNoAdventures();
                 recyclerView.invalidate();
             }
         });
@@ -242,11 +236,7 @@ public class SearchFragment extends Fragment{
         getActivity().runOnUiThread(new Runnable() {
             @Override
             public void run() {
-                if(mAdventureList.size() > 0) {
-                    noAdventures.setVisibility(View.INVISIBLE);
-                } else {
-                    noAdventures.setVisibility(View.VISIBLE);
-                }
+                updateNoAdventures();
             }
         });
 
@@ -306,9 +296,9 @@ public class SearchFragment extends Fragment{
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("categories", jsonArray);
-            jsonObject.put("maxPeopleGoing",  numPeople.getText().toString());
+            if(numPeople.getText().toString() != null) jsonObject.put("maxPeopleGoing",  numPeople.getText().toString());
             jsonObject.put("maxTimeStamp", buttonToEpoch(timeSelection.getCheckedRadioButtonId()));
-            jsonObject.put("city", location.getText().toString());
+            if(location.getText().toString() != null) jsonObject.put("city", location.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
             System.out.println("JSON EXCEPTION!!!");
@@ -335,18 +325,17 @@ public class SearchFragment extends Fragment{
             AdventureAdapter.notifyDataSetChanged();
             recyclerView.setAdapter(new DiscAdvViewAdapter(getActivity(), mAdventureList));
             recyclerView.invalidate();
-            if(mAdventureList != null) {
-                if (mAdventureList.size() > 0) {
-                    noAdventures.setVisibility(View.INVISIBLE);
-                } else {
-                    noAdventures.setVisibility(View.VISIBLE);
-                }
-            }
+
         } catch (Exception e) {
             e.printStackTrace();
         }
         AdventureAdapter.notifyDataSetChanged();
         recyclerView.invalidate();
+        updateNoAdventures();
+        dialog.dismiss();
+    }
+
+    private void updateNoAdventures() {
         if(mAdventureList != null) {
             if (mAdventureList.size() > 0) {
                 noAdventures.setVisibility(View.INVISIBLE);
@@ -354,9 +343,7 @@ public class SearchFragment extends Fragment{
                 noAdventures.setVisibility(View.VISIBLE);
             }
         }
-        dialog.dismiss();
     }
-
     private void searchAdventure(View view) {
         System.out.println("searching...");
         String search = searchText.getText().toString();
