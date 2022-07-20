@@ -57,7 +57,8 @@ module.exports = class FilterService {
                     { peopleGoing: { $nin: userId } },
                 ]};
                 var searchResult = await AdventureStore.findAdventuresByFilter(recommendationFilter);
-                result = (searchResult.code !== 200) ? searchResult : {
+                result = (searchResult.code !== 200) ?
+                searchResult : {
                     code: searchResult.code,
                     message: "Recommendation feed generated",
                     payload: searchResult.payload

@@ -20,15 +20,15 @@ module.exports = class AdventureStore {
             image: adventure.image,
             city: adventure.location.split(", ")[1] ?? "unknown"
         };
-        var adventure = new Adventure(adventure);
+        var newAdventure = new Adventure(adventure);
         
         try {
-            var result = await adventure.save();
-            result.adventureId = result._id;
+            var saveResult = await newAdventure.save();
+            saveResult.adventureId = saveResult._id;
             result = {
                 code: 200,
                 message: "Adventure created successfully",
-                payload: result
+                payload: saveResult
             };
         }
         catch (err) {
