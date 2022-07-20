@@ -5,23 +5,24 @@ const Session = require("../services/Session");
 const router = express.Router();
 
 router.post("/sign-in", async (req, res) => {
-    try {
-        var response = await GoogleAuth.validateToken(req.body.authentication_code);
+    return await GoogleAuth.validateToken(req.body.authentication_code).then(response => {
         var userId = response.payload['sub'];
         var token = Session.createSession(userId);
-        var result = await UserStore.getUserProfile(userId);
-        
-        res.cookie(Session.name, token);
-        if (result.code === 200) {
-            return res.status(200).send({ userId, userExists: true });
-        }
-        else if (result.code === 404) {
-            return res.status(404).send({ userId, userExists: false });
-        }
-    }
-    catch (err) {
-        res.status(400).send({ message: err.toString() });
-    }    
+        return await UserStore.getUserProfile(userId).then(result => {
+            res.cookie(Session.name, token);
+            if (result.code === 200) {
+                return res.status(200).send({ userId, userExists: true });
+            }
+            else if (result.code === 404) {
+                return res.status(404).send({ userId, userExists: false });
+            }
+            return res.status(500).send({ message: err.toString() });
+        }, err => {
+            return res.status(500).send({ message: err.toString() });
+        });
+    }, err => {
+        return res.status(400).send({ message: err.toString() });
+    });
 });
 
 router.post("/sign-out", (req, res) => {
