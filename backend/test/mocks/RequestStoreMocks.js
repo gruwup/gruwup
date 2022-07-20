@@ -2,15 +2,16 @@ const MockTestData = require('./MockTestData');
 
 module.exports = class RequestStoreMocks {
     static sendRequest = jest.fn((request) => {
-        return {
+        result = {
             code: 200,
             message: "Request sent successfully",
             payload: MockTestData.testRequest1
         }
+        return result;
     });
 
     static getRequests = jest.fn((userId) => {
-        return {
+        result = {
             code: 200,
             message: "Requests found",
             payload: [
@@ -18,33 +19,37 @@ module.exports = class RequestStoreMocks {
                 MockTestData.testRequest2
             ]
         }
+        return result;
     });
 
     static acceptRequest = jest.fn((requestId) => {
         var acceptedRequest = MockTestData.testRequest1;
         acceptedRequest.status = "ACCEPTED";
-        return {
+        result = {
             code: 200,
             message: "Request accepted successfully",
             payload: acceptedRequest
         }
+        return result;
     });
 
     static rejectRequest = jest.fn((requestId) => {
         var rejectedRequest = MockTestData.testRequest1;
         rejectedRequest.status = "REJECTED";
-        return {
+        result = {
             code: 200,
             message: "Request rejected successfully",
             payload: rejectedRequest
         }
+        return result;
     });
 
     static checkIfRequestExists = jest.fn((userId, adventureId) => {
-        return {
+        result = {
             code: 200,
             message: "Request found",
             payload: MockTestData.testRequest1
         }
+        return result;
     });
 }
