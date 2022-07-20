@@ -1,4 +1,5 @@
 const Adventure = require("../models/Adventure");
+const { rejectRequest } = require("./RequestStore");
 var ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = class AdventureStore {
@@ -21,23 +22,28 @@ module.exports = class AdventureStore {
             city: adventure.location.split(", ")[1] ?? "unknown"
         };
         var newAdventure = new Adventure(adventure);
-        
-        try {
-            var saveResult = await newAdventure.save();
-            saveResult.adventureId = saveResult._id;
+
+        await newAdventure.save().then(adventure => {
             result = {
                 code: 200,
                 message: "Adventure created successfully",
-                payload: saveResult
+                payload: adventure
             };
-        }
-        catch (err) {
-            result = {
-                code: 400,
-                message: err._message
-            };
-        }
-
+        }, err => {
+            if (err.name === "ValidationError") {
+                console.log("result 400");
+                result = {
+                    code: 400,
+                    message: err.message
+                };
+            }
+            else {
+                result = {
+                    code: 500,
+                    message: err._message
+                };
+            }
+        });
         return result;
     };
 
@@ -54,28 +60,27 @@ module.exports = class AdventureStore {
             };
         }
         else {
-            try {
-                var findResult = await Adventure.findById(adventureId);
-                if (findResult) {
-                    result = {
-                        code: 200,
-                        message: "Adventure found",
-                        payload: findResult
-                    };
-                }
-                else {
+            await Adventure.findById(adventureId).then(adventure => {
+                if (!adventure) {
                     result = {
                         code: 404,
                         message: "Adventure not found"
                     };
                 }
+                else {
+                    result = {
+                        code: 200,
+                        message: "Adventure found",
+                        payload: adventure
+                    };
+                }
             }
-            catch (err) {
+            , err => {
                 result = {
                     code: 500,
                     message: err._message
                 };
-            };
+            });
         }
         return result;
     };
@@ -97,28 +102,27 @@ module.exports = class AdventureStore {
             };
         }
         else {
-            try {
-                var findResult = await Adventure.findByIdAndUpdate(adventureId, adventure, {new: true});
-                if (findResult) {
-                    result = {
-                        code: 200,
-                        message: "Adventure updated successfully",
-                        payload: findResult
-                    };
-                }
-                else {
+            await Adventure.findByIdAndUpdate(adventureId, adventure, { new: true }).then(adventure => {
+                if (!adventure) {
                     result = {
                         code: 404,
                         message: "Adventure not found"
                     };
                 }
+                else {
+                    result = {
+                        code: 200,
+                        message: "Adventure updated successfully",
+                        payload: adventure
+                    };
+                }
             }
-            catch (err) {
+            , err => {
                 result = {
                     code: 500,
                     message: err._message
                 };
-            }
+            });
         }
         
         return result;
@@ -138,33 +142,28 @@ module.exports = class AdventureStore {
         }
         else {
             const cancelledObj = { status: "CANCELLED" }
-            try {
-                var findResult = await Adventure.findOneAndUpdate(
-                    { _id: adventureId },
-                    { $set: cancelledObj},
-                    {new: true});
-                if (findResult) {
-                    result = {
-                        code: 200,
-                        message: "Adventure cancelled successfully",
-                        payload: findResult
-                    };
-                }
-                else {
+            await Adventure.findByIdAndUpdate(adventureId, cancelledObj, { new: true }).then(adventure => {
+                if (!adventure) {
                     result = {
                         code: 404,
                         message: "Adventure not found"
                     };
                 }
+                else {
+                    result = {
+                        code: 200,
+                        message: "Adventure cancelled successfully",
+                        payload: adventure
+                    };
+                }
             }
-            catch (err) {
+            , err => {
                 result = {
                     code: 500,
-                    message: err
+                    message: err._message
                 };
-            }
+            });
         }
-        
         return result;
     };
 
@@ -174,29 +173,25 @@ module.exports = class AdventureStore {
             message: "Server error"
         };
 
-        try {
-            const openStatus = { status: "OPEN" };
-            const regexObj = { title: { $regex: title, $options: "i" }};
-            var findResult = await Adventure.find(
-                { $and: [
-                    openStatus,
-                    regexObj
-                ] });
-            findResult.sort((a, b) => {
+        const openStatus = { status: "OPEN" };
+        const regexObj = { title: { $regex: title, $options: "i" }};
+        await Adventure.find({ $and: [openStatus, regexObj] }).then(adventures => {
+            adventures.sort((a, b) => {
                 return b.dateTime - a.dateTime;
             });
             result = {
                 code: 200,
                 message: "Adventures found",
-                payload: findResult
+                payload: adventures
             };
         }
-        catch (err) {
-            result = {
-                code: 500,
-                message: err
-            };
-        }
+        , err => {
+                result = {
+                    code: 500,
+                    message: err._message
+                };
+            }
+        );
         
         return result;
     };
@@ -206,36 +201,33 @@ module.exports = class AdventureStore {
             code: 500,
             message: "Server error"
         };
-
-        try {
-            var findResult = await Adventure.find({
-                $and: [
-                    { 
-                        $or: [
-                            { owner: userId },
-                            { peopleGoing: { $in: userId} },
-                        ]
-                    },
-                    {
-                        status: "OPEN"
-                    }
-                ]
-            });
-            findResult.sort((a, b) => {
+        const openStatus = { status: "OPEN" };
+        await Adventure.find({
+            $and: [
+                { 
+                    $or: [
+                        { owner: userId },
+                        { peopleGoing: { $in: userId } },
+                    ]
+                },
+                openStatus
+            ]
+        }).then(adventures => {
+            adventures.sort((a, b) => {
                 return b.dateTime - a.dateTime;
             });
             result = {
                 code: 200,
                 message: "Adventures found",
-                payload: findResult.map(adventure => adventure._id)
+                payload: adventures
             };
         }
-        catch (err) {
+        , err => {
             result = {
                 code: 500,
-                message: err
+                message: err._message
             };
-        }
+        });
 
         return result;
     };
@@ -253,8 +245,7 @@ module.exports = class AdventureStore {
             };
         }
         else {
-            try {
-                var adventure = await Adventure.findById(adventureId);
+            await Adventure.findById(adventureId).then(async adventure => {
                 if (!adventure) {
                     result = {
                         code: 404,
@@ -263,11 +254,19 @@ module.exports = class AdventureStore {
                 }
                 else {
                     if (adventure.peopleGoing.length === 1 && adventure.owner === userId) {
-                        await Adventure.findByIdAndRemove(adventureId);
-                        result = {
-                            code: 200,
-                            message: "Adventure removed due to no participants attending anymore"
-                        };
+                        await Adventure.findByIdAndRemove(adventureId).then(adventure => {
+                            result = {
+                                code: 200,
+                                message: "Adventure deleted successfully"
+                            };
+                        }
+                        , err => {
+                            result = {
+                                code: 500,
+                                message: err._message
+                            };
+                        }
+                        );
                     }
                     else {
                         if (adventure.owner === userId) {
@@ -275,28 +274,45 @@ module.exports = class AdventureStore {
                             await Adventure.findOneAndUpdate(
                                 { _id: adventureId },
                                 { $set: { owner: participants[0] }, $pull: { peopleGoing: userId } },
-                            );
+                            ).then(adventure => {
+                                result = {
+                                    code: 200,
+                                    message: "Remoced owner successfully, new owner is " + participants[0],
+                                    payload: adventure
+                                };
+                            }, err => {
+                                result = {
+                                    code: 500,
+                                    message: err._message
+                                };
+                            });
                         }
                         else {
                             await Adventure.findOneAndUpdate(
-                            { _id: adventureId },
-                            { $pull: { peopleGoing: userId } },
-                            { new: true }
-                        );}
-                        
-                        result = {
-                            code: 200,
-                            message: "Adventure participant removed successfully"
-                        };
+                                { _id: adventureId },
+                                { $pull: { peopleGoing: userId } },
+                            ).then(adventure => {
+                                result = {
+                                    code: 200,
+                                    message: "Removed participant successfully",
+                                    payload: adventure
+                                };
+                            }, err => {
+                                result = {
+                                    code: 500,
+                                    message: err._message
+                                };
+                            });
+                        }
                     }
                 }
             }
-            catch (err) {
+            , err => {
                 result = {
                     code: 500,
-                    message: err
+                    message: err._message
                 };
-            }
+            });
         }
         return result;
     };
@@ -307,29 +323,29 @@ module.exports = class AdventureStore {
             message: "Server error"
         };
 
-        try {
-            const openStatus = { status: "OPEN" };
-            var result = await Adventure.find(
-                { $and: [
-                    openStatus,
-                    filter
-                ] }
-            );
-            result.sort((a, b) => {
+
+        const openStatus = { status: "OPEN" };
+        await Adventure.find(
+            { $and: [
+                openStatus,
+                filter
+            ] }
+        ).then(adventures => {
+            adventures.sort((a, b) => {
                 return b.dateTime - a.dateTime;
-            });
+                });
             result = {
                 code: 200,
                 message: "Adventures found",
-                payload: result
+                payload: adventures
             };
         }
-        catch (err) {
+        , err => {
             result = {
                 code: 500,
-                message: err
+                message: err._message
             };
-        }
+        });
         return result;
     };
 };
