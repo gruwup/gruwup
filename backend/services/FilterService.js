@@ -118,7 +118,7 @@ module.exports = class FilterService {
             };
             if (adventures.code === 200) {
                 var arr = adventures.payload;
-                if (filter.maxPeopleGoing) {
+                if (filter.maxPeopleGoing && arr.length > 0) {
                     arr = adventures.payload.reduce((acc, adventure) => {
                         if (adventure.peopleGoing.length <= filter.maxPeopleGoing) {
                             acc.push(adventure);

@@ -29,8 +29,11 @@ router.post("/create", async (req, res) => {
 
 // search adventures by filter
 router.post("/search-by-filter", async (req, res) => {
-    if (Session.validSession(req.headers.cookie) || TestMode.on) {
-        await FilterService.findAdventuresByFilter(req.body).then(result => {
+    if (!(Session.validSession(req.headers.cookie) || TestMode.on)) {
+        return res.status(403).send({ message: Session.invalid_msg });
+    }
+
+    await FilterService.findAdventuresByFilter(req.body).then(result => {
             if (result.code === 200) {
                 return res.status(200).send(result.payload);
             }
@@ -39,9 +42,6 @@ router.post("/search-by-filter", async (req, res) => {
         }, err => {
             return res.status(500).send(err._message);
         });
-    }
-
-    return res.status(403).send({ message: Session.invalid_msg });
 });
 
 // discover adventure by user favorite categories
