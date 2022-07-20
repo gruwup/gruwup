@@ -10,10 +10,18 @@ const schema = mongoose.Schema({
         required: true
     },
     prevPagination: {
-        type: String
+        type: String,
+        required: true
     },
     messages: {
-        type: Array,
+        type: [
+            {
+                userId: { type: String, required: true },
+                name: { type: String, required: true },
+                message: { type: String, required: true },
+                dateTime: { type: String, required: true }
+            }
+        ],
         required: true
     }
 });
