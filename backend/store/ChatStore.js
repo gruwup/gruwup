@@ -2,7 +2,7 @@ const Message = require("../models/Message");
 
 module.exports = class User {
     static storeNewMessageGroup = async (adventureId, messages, dateTime) => {
-        var result;
+        var result = {};
         var paginationResult = await this.getPrevPagination(adventureId, dateTime);
         var messageGroup = { 
             adventureId, 
@@ -18,25 +18,15 @@ module.exports = class User {
                 payload: messageResult
             };
         }, err => {
-            if (err.name === "ValidationError") {
-                result = {
-                    code: 400,
-                    message: err._message
-                };
-            }
-            else {
-                result = {
-                    code: 500,
-                    message: err._message
-                }
-            }
+            result.code = (err.name === "ValidationError") ? 400 : 500
+            result.message = err._message;
         });
         
         return result;
     };
 
     static storeExistingMessageGroup = async (adventureId, message, dateTime) => {
-        var result;
+        var result = {};
 
         await this.getPrevPagination(adventureId, dateTime).then(async paginationResult => {
             if (!paginationResult) {
@@ -67,18 +57,8 @@ module.exports = class User {
                         };
                     }
                 }, err => {
-                    if (err.name === "ValidationError") {
-                        result = {
-                            code: 400,
-                            message: err._message
-                        };
-                    }
-                    else {
-                        result = {
-                            code: 500,
-                            message: err._message
-                        }
-                    }
+                    result.code = (err.name === "ValidationError") ? 400 : 500
+                    result.message = err._message;
                 });
             }
         }, err => {
