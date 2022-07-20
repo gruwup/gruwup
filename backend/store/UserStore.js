@@ -5,86 +5,86 @@ module.exports = class User {
     static getUserProfile = async (userId) => {
         var result;
 
-        try {
-            var profileResult = await Profile.findOne({ userId });
-            if (!profileResult) {
-                result = {
-                    code: 404,
-                    message: "User Profile not found"
-                }
+        await Profile.findOne({ userId }).then(async profileResult => {
+            result = {
+                code: 404,
+                message: "User Profile not found"
             }
-            else {
-                var adventuresResult = await Adventure.find({ owner: userId });
-                var adventures = [];
-                adventuresResult.forEach(adventure => adventures.push(adventure));
-                var profile = { 
-                    userId: profileResult.userId,
-                    name: profileResult.name,
-                    biography: profileResult.biography,
-                    categories: profileResult.categories,
-                    image: profileResult.image,
-                    adventuresCreated: adventures 
-                };
-
-                result = {
-                    code: 200,
-                    message: "User Profile found",
-                    payload: profile
-                }
+            if (profileResult) {
+                await Adventure.find({ owner: userId }).then(adventuresResult => {
+                    var adventures = [];
+                    adventuresResult.forEach(adventure => adventures.push(adventure));
+                    var profile = { 
+                        userId: profileResult.userId,
+                        name: profileResult.name,
+                        biography: profileResult.biography,
+                        categories: profileResult.categories,
+                        image: profileResult.image,
+                        adventuresCreated: adventures 
+                    };
+                    
+                    result = {
+                        code: 200,
+                        message: "User Profile found",
+                        payload: profile
+                    }
+                }, err => {
+                    result = {
+                        code: 500,
+                        message: err._message
+                    };
+                });
             }
-        }
-        catch (err) {
+        }, err => {
             result = {
                 code: 500,
-                message: err
+                message: err._message
             };
-        }
+        });
 
         return result;
     };
     
     static createUser = async (profile) => {
-        var result;
-        var user = new Profile(profile);
-        var exists = await Profile.findOne({ userId: profile.userId });
-        if (!exists) {
-            try {
-                var profileResult = await user.save();
+        var result = {};
 
-                result = {
-                    code: 200,
-                    message: "Profile created successfully",
-                    payload: profileResult
-                };
-            }
-            catch (err) {
-                result = {
-                    code: 400,
-                    message: err._message
-                };
-            }
-        }
-        else {
+        await Profile.findOne({ userId: profile.userId }).then(async profile => {
             result = {
                 code: 400,
                 message: "Profile exists for userId",
                 payload: result
             };
-        }
+            if (!profile) {
+                var user = new Profile(profile);
+                await user.save().then(profileResult => {
+                    result = {
+                        code: 200,
+                        message: "Profile created successfully",
+                        payload: profileResult
+                    };
+                }, err => {
+                    result.code = (err.name === "ValidationError") ? 400 : 500
+                    result.message = err._message;
+                });
+            }
+        }, err => {
+            result = {
+                code: 400,
+                message: err
+            };
+        });
 
         return result;
     };
     
     static updateUser = async (userId, profile) => {
         var result;
-
-        try {
-            var profileResult = await Profile.findOneAndUpdate(
-                                { userId },
-                                { $set: profile },
-                                {new: true, runValidators: true }
-                            );
-    
+        
+        await Profile.findOneAndUpdate({ userId }, { $set: profile }, {new: true, runValidators: true }).then(profileResult => {
+            result = {
+                code: 404,
+                message: "User Profile not found"
+            }
             if (profileResult) {
                 result = {
                     code: 200,
@@ -92,19 +92,12 @@ module.exports = class User {
                     payload: profileResult
                 }
             }
-            else {
-                result = {
-                    code: 404,
-                    message: "User Profile not found"
-                }
-            }
-        }
-        catch (err) {
+        }, err => {
             result = {
                 code: 500,
                 message: err
             };
-        }
+        });
 
         return result;
     };
