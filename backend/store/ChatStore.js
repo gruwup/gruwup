@@ -88,7 +88,6 @@ module.exports = class User {
             }
         });
         
-
         return result;
     };
 
@@ -158,31 +157,38 @@ module.exports = class User {
 
     static getMostRecentMessage = async (adventureId, dateTime) => {
         var result;
-
-        var paginationResult = await this.getPrevPagination(adventureId, dateTime).then(async pagination => {
-            await Message.findOne({ adventureId, pagination: paginationResult.payload }).then(messageResult => {
-                if (messageResult) {
-                    var message = messageResult.messages[messageResult.messages.length - 1];
+        await this.getPrevPagination(adventureId, dateTime).then(async paginationResult => {
+            if (paginationResult) {
+                await Message.findOne({ adventureId, pagination: paginationResult.payload }).then(messageResult => {
                     if (messageResult) {
-                        result = {
-                            code: 200,
-                            message: "Messages found",
-                            payload: message
+                        var message = messageResult.messages[messageResult.messages.length - 1];
+                        if (messageResult) {
+                            result = {
+                                code: 200,
+                                message: "Messages found",
+                                payload: message
+                            }
                         }
                     }
-                }
-                else {
-                    result = {
-                        code: 404,
-                        message: "Messages not found"
+                    else {
+                        result = {
+                            code: 404,
+                            message: "Messages not found"
+                        }
                     }
-                }
-            }, err => {
+                }, err => {
+                    result = {
+                        code: 500,
+                        message: err
+                    };
+                }) 
+            }
+            else {
                 result = {
-                    code: 500,
-                    message: err
-                };
-            }) 
+                    code: 404,
+                    message: "Messages not found"
+                }
+            }
         }, err => {
             result = {
                 code: 500,
@@ -197,7 +203,7 @@ module.exports = class User {
         var result;
 
         await Message.deleteMany({ adventureId }).then(messageResult => {
-            if (!messageResult) {
+            if (!messageResult.deletedCount) {
                 result = {
                     code: 404,
                     message: "Adventure not found"
