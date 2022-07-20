@@ -2,7 +2,7 @@ const MockTestData = require('./MockTestData');
 
 module.exports = class AdventureStoreMocks {
     static createAdventure = jest.fn((adventure) => {
-        result = {
+        var result =  {
             code: 200,
             message: "Adventure created successfully",
             payload: MockTestData.testAdventure1
@@ -11,7 +11,7 @@ module.exports = class AdventureStoreMocks {
     }); 
 
     static getAdventureDetail = jest.fn((adventureId) => {
-        result = {
+        var result =  {
             code: 200,
             message: "Adventure found",
             payload: MockTestData.testAdventure1
@@ -20,7 +20,7 @@ module.exports = class AdventureStoreMocks {
     });
 
     static updateAdventure = jest.fn((adventureId, adventure) => {
-        result = {
+        var result =  {
             code: 200,
             message: "Adventure updated successfully",
             payload: MockTestData.testAdventure1
@@ -31,7 +31,7 @@ module.exports = class AdventureStoreMocks {
     static cancelAdventure = jest.fn((adventureId) => {
         var cancelledAdventure = MockTestData.testAdventure1;
         cancelledAdventure.status = "CANCELLED";
-        result = {
+        var result =  {
             code: 200,
             message: "Adventure cancelled successfully",
             payload: cancelledAdventure
@@ -40,7 +40,7 @@ module.exports = class AdventureStoreMocks {
     });
 
     static searchAdventuresByTitle = jest.fn((title) => {
-        result = {
+        var result =  {
             code: 200,
             message: "Adventures found",
             payload: [
@@ -52,7 +52,7 @@ module.exports = class AdventureStoreMocks {
     });
 
     static getUsersAdventures = jest.fn((userId) => {
-        result = {
+        var result =  {
             code: 200,
             message: "Adventures found",
             payload: [
@@ -63,14 +63,14 @@ module.exports = class AdventureStoreMocks {
     });
 
     static removeAdventureParticipant = jest.fn((adventureId, userId) => {
-        result = {
+        var result =  {
             code: 200,
             message: "Adventure participant removed successfully"
         };  
     });
 
     static findAdventuresByFilter = jest.fn((filter) => {
-        result = {
+        var result =  {
             code: 200,
             message: "Adventures found",
             payload: [
