@@ -1,5 +1,4 @@
 const Adventure = require("../models/Adventure");
-const { rejectRequest } = require("./RequestStore");
 var ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = class AdventureStore {
@@ -9,7 +8,7 @@ module.exports = class AdventureStore {
             message: "Server error"
         };
 
-        var adventure = {
+        var adventureData = {
             owner: adventure.owner,
             title: adventure.title,
             description: adventure.description,
@@ -21,7 +20,7 @@ module.exports = class AdventureStore {
             image: adventure.image,
             city: adventure.location.split(", ")[1] ?? "unknown"
         };
-        var newAdventure = new Adventure(adventure);
+        var newAdventure = new Adventure(adventureData);
 
         await newAdventure.save().then(adventure => {
             result = {
@@ -30,17 +29,14 @@ module.exports = class AdventureStore {
                 payload: adventure
             };
         }, err => {
+            result = {
+                code: 500,
+                message: err._message
+            };
             if (err.name === "ValidationError") {
-                console.log("result 400");
                 result = {
                     code: 400,
                     message: err.message
-                };
-            }
-            else {
-                result = {
-                    code: 500,
-                    message: err._message
                 };
             }
         });
@@ -271,9 +267,10 @@ module.exports = class AdventureStore {
                     else {
                         if (adventure.owner === userId) {
                             var participants = adventure.peopleGoing.filter(participant => participant !== userId);
+                            const removeParticipantQuery = { $set: { owner: participants[0] }, $pull: { peopleGoing: userId } };
                             await Adventure.findOneAndUpdate(
                                 { _id: adventureId },
-                                { $set: { owner: participants[0] }, $pull: { peopleGoing: userId } },
+                                removeParticipantQuery,
                                 { new: true, runValidators: true }
                             ).then(adventure => {
                                 result = {
@@ -289,9 +286,10 @@ module.exports = class AdventureStore {
                             });
                         }
                         else {
+                            const removeParticipantQuery = { $pull: { peopleGoing: userId } };
                             await Adventure.findOneAndUpdate(
                                 { _id: adventureId },
-                                { $pull: { peopleGoing: userId } },
+                                removeParticipantQuery,
                                 { new: true, runValidators: true }
                             ).then(adventure => {
                                 result = {
