@@ -13,7 +13,7 @@ module.exports = class ChatService {
                 code: adventure.code,
                 message: adventure.message
             }
-            if (result.code === 200) {
+            if (adventure.code === 200) {
                 var participants = adventure['payload']['peopleGoing'];
                 result = {
                     code: 400,
@@ -27,6 +27,7 @@ module.exports = class ChatService {
                     if (messageCount[adventureId] === 1) {
                         await ChatStore.storeNewMessageGroup(adventureId, message, message.dateTime).then(messageResult => {
                             result.code = messageResult.code
+                            if (messageResult.code !== 200) messageCount[adventureId]--;
                             result.message = (messageResult.code === 200) ? "Successfully sent message" : messageResult.message;
                             result.payload = (messageResult.code === 200) ? messageResult.payload : null;
                         }, err => {
@@ -34,10 +35,12 @@ module.exports = class ChatService {
                                 code: 500,
                                 message: err
                             };
+                            messageCount[adventureId]--;
                         });
                     } else {
                         await ChatStore.storeExistingMessageGroup(adventureId, message, message.dateTime).then(messageResult => {
                             result.code = messageResult.code
+                            if (messageResult.code !== 200) messageCount[adventureId]--;
                             result.message = (messageResult.code === 200) ? "Successfully sent message" : messageResult.message;
                             result.payload = (messageResult.code === 200) ? messageResult.payload : null;
                         }, err => {
@@ -45,6 +48,7 @@ module.exports = class ChatService {
                                 code: 500,
                                 message: err
                             };
+                            messageCount[adventureId]--;
                         });
                     }
                 }

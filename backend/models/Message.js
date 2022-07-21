@@ -10,8 +10,7 @@ const schema = mongoose.Schema({
         required: true
     },
     prevPagination: {
-        type: String,
-        required: true
+        type: String
     },
     messages: {
         type: [
