@@ -21,10 +21,10 @@ module.exports = class RequestStore {
                         code: 400,
                         message: "You have already sent a request to this adventure"
                     };
-                    if (requestExistResult.code == 404) {
+                    if (requestExistResult.code === 404) {
                         var requestObj = new Request({
                             requester: request.userName,
-                            adventureId: adventureId,
+                            adventureId,
                             adventureOwner: adventure.owner,
                             adventureTitle: adventure.title,
                             requesterId: request.userId,

@@ -1,6 +1,5 @@
 const express = require("express");
 const router = express.Router();
-const AdventureStore = require("../store/AdventureStore");
 const RequestStore = require("../store/RequestStore");
 const TestMode = require("../TestMode");
 const Session = require("../services/Session");
@@ -65,9 +64,7 @@ router.put("/:requestId/reject", async (req, res) => {
 			return res.status(500).send(err._message);
 		});
     }
-    else {
-        return res.status(403).send({ message: Session.invalid_msg });
-    }
+    return res.status(403).send({ message: Session.invalid_msg });
 });
 
 module.exports = router;

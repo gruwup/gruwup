@@ -283,48 +283,46 @@ module.exports = class AdventureStore {
                             };
                         }
                         );
+                        return result;
                     }
-                    else {
-                        if (adventure.owner === userId) {
-                            var participants = adventure.peopleGoing.filter(participant => participant !== userId);
-                            const removeParticipantQuery = { $set: { owner: participants[0] }, $pull: { peopleGoing: userId } };
-                            await Adventure.findOneAndUpdate(
-                                { _id: adventureId },
-                                removeParticipantQuery,
-                                { new: true, runValidators: true }
-                            ).then(adventure => {
-                                result = {
-                                    code: 200,
-                                    message: "Remoced owner successfully, new owner is " + participants[0],
-                                    payload: adventure
-                                };
-                            }, err => {
-                                result = {
-                                    code: 500,
-                                    message: err._message
-                                };
-                            });
-                        }
-                        else {
-                            const removeParticipantQuery = { $pull: { peopleGoing: userId } };
-                            await Adventure.findOneAndUpdate(
-                                { _id: adventureId },
-                                removeParticipantQuery,
-                                { new: true, runValidators: true }
-                            ).then(adventure => {
-                                result = {
-                                    code: 200,
-                                    message: "Removed participant successfully",
-                                    payload: adventure
-                                };
-                            }, err => {
-                                result = {
-                                    code: 500,
-                                    message: err._message
-                                };
-                            });
-                        }
+                    if (adventure.owner === userId) {
+                        var participants = adventure.peopleGoing.filter(participant => participant !== userId);
+                        const removeParticipantQuery = { $set: { owner: participants[0] }, $pull: { peopleGoing: userId } };
+                        await Adventure.findOneAndUpdate(
+                            { _id: adventureId },
+                            removeParticipantQuery,
+                            { new: true, runValidators: true }
+                        ).then(adventure => {
+                            result = {
+                                code: 200,
+                                message: "Remoced owner successfully, new owner is " + participants[0],
+                                payload: adventure
+                            };
+                        }, err => {
+                            result = {
+                                code: 500,
+                                message: err._message
+                            };
+                        });
+                        return result;
                     }
+                    const removeParticipantQuery = { $pull: { peopleGoing: userId } };
+                    await Adventure.findOneAndUpdate(
+                        { _id: adventureId },
+                        removeParticipantQuery,
+                        { new: true, runValidators: true }
+                    ).then(adventure => {
+                        result = {
+                            code: 200,
+                            message: "Removed participant successfully",
+                            payload: adventure
+                        };
+                    }, err => {
+                        result = {
+                            code: 500,
+                            message: err._message
+                        };
+                    });
                 }
             }
             , err => {
