@@ -152,7 +152,18 @@ public class LogInActivity extends AppCompatActivity {
                             try {
                                 Log.d(TAG, "response body is "+ jsonData);
                                 Log.d(TAG, "cookie is "+ cookie);
+
                                 JSONObject jsonObj = new JSONObject(jsonData);
+
+                                if (cookie==null && jsonObj.getString("message").contains("FetchError: Failed to retrieve verification certificates")){
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(LogInActivity.this, "Cannot login in, Failed to retrieve verification certificates from google, contact developers", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+
                                 Log.d(TAG, "json Obj "+ jsonObj.toString());
                                 boolean userExists = jsonObj.getBoolean("userExists");
                                 String userId = jsonObj.getString("userId");
@@ -194,6 +205,7 @@ public class LogInActivity extends AppCompatActivity {
                                     intent.putExtras(extras);
                                     startActivity(intent);
                                 }
+
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
