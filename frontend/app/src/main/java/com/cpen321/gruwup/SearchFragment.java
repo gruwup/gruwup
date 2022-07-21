@@ -350,6 +350,7 @@ public class SearchFragment extends Fragment{
             SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/search-by-title?title=" + search, SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
+                    System.out.println("Failure in search, by title");
                 }
 
                 @Override
