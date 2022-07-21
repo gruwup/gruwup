@@ -78,8 +78,8 @@ public class ProfileFragment extends Fragment {
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
 
         // Note: get stored UserID this way for fragment
-        UserID = SupportSharedPreferences.getUserId(this.getActivity());
-        cookie = SupportSharedPreferences.getCookie(this.getActivity());
+        UserID = SharedPreferencesUtil.getUserId(this.getActivity());
+        cookie = SharedPreferencesUtil.getCookie(this.getActivity());
 
         mGoogleSignInClient = GoogleSignIn.getClient(getActivity(), GoogleSignInOptions.DEFAULT_SIGN_IN);
         displayName = (TextView) view.findViewById(R.id.userName);
@@ -238,7 +238,7 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        SupportRequests.postWithCookie("http://"+address+":8081/account/sign-out", jsonObject.toString(), cookie, new Callback(){
+        RequestsUtil.postWithCookie("http://"+address+":8081/account/sign-out", jsonObject.toString(), cookie, new Callback(){
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
@@ -269,9 +269,9 @@ public class ProfileFragment extends Fragment {
 
     private void getProfileRequest() throws IOException{
         // To do: replace this with server url
-        String cookie = SupportSharedPreferences.getCookie(this.getActivity());
+        String cookie = SharedPreferencesUtil.getCookie(this.getActivity());
         Log.d(TAG, "User Id is "+ UserID);
-        SupportRequests.getWithCookie("http://"+address+":8081/user/profile/" + UserID + "/get", cookie, new Callback() {
+        RequestsUtil.getWithCookie("http://"+address+":8081/user/profile/" + UserID + "/get", cookie, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {
@@ -333,7 +333,7 @@ public class ProfileFragment extends Fragment {
 
     private void editProfileRequest(String biography, ArrayList<String> categoryNames) throws IOException {
         bio = biography;
-        String cookie = SupportSharedPreferences.getCookie(this.getActivity());
+        String cookie = SharedPreferencesUtil.getCookie(this.getActivity());
         Log.d(TAG, "bio is "+ biography);
 
         JSONObject jsonObject = new JSONObject();
@@ -355,7 +355,7 @@ public class ProfileFragment extends Fragment {
         }
 
         // To do: change this later with server url
-        SupportRequests.putWithCookie("http://"+address+":8081/user/profile/" + UserID + "/edit", jsonObject.toString(), cookie, new Callback() {
+        RequestsUtil.putWithCookie("http://"+address+":8081/user/profile/" + UserID + "/edit", jsonObject.toString(), cookie, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "could not edit the user profile");

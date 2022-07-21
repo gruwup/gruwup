@@ -11,7 +11,7 @@ import okhttp3.OkHttpClient;
 import okhttp3.Request;
 import okhttp3.RequestBody;
 
-public class SupportRequests {
+public class RequestsUtil {
 
     static OkHttpClient client = new OkHttpClient();
             static MediaType JSON = MediaType.parse("application/json");

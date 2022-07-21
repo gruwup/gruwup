@@ -55,7 +55,7 @@ public class SignUpActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         address = getString(R.string.connection_address);
         // Note: get stores UserID this way for activity
-        String UserID = SupportSharedPreferences.getUserId(getApplicationContext());
+        String UserID = SharedPreferencesUtil.getUserId(getApplicationContext());
 
         setContentView(R.layout.activity_sign_up);
         getSupportActionBar().hide();
@@ -158,9 +158,9 @@ public class SignUpActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        String cookie = SupportSharedPreferences.getCookie(getApplicationContext());
+        String cookie = SharedPreferencesUtil.getCookie(getApplicationContext());
 
-        SupportRequests.postWithCookie("http://"+address+":8081/user/profile/create", jsonObject.toString(), cookie,new Callback() {
+        RequestsUtil.postWithCookie("http://"+address+":8081/user/profile/create", jsonObject.toString(), cookie,new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 Log.d(TAG, "could not create the user profile");

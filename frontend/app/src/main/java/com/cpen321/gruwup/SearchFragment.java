@@ -141,7 +141,7 @@ public class SearchFragment extends Fragment{
         nearbyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String cookie = SupportSharedPreferences.getCookie(getActivity());
+                String cookie = SharedPreferencesUtil.getCookie(getActivity());
                 String[] cookieList  =  cookie.split("=",2);
                 OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
                 cookieHelper.setCookie("http://" + address + ":8081/user/adventure/nearby?city=" + city, cookieList[0], cookieList[1]);
@@ -172,7 +172,7 @@ public class SearchFragment extends Fragment{
             }
         });
 
-        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city="+city, SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
+        RequestsUtil.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city="+city, SharedPreferencesUtil.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 System.out.println("Failed to get adventures in default Search");
@@ -302,7 +302,7 @@ public class SearchFragment extends Fragment{
             e.printStackTrace();
             System.out.println("JSON EXCEPTION!!!");
         }
-        String cookie = SupportSharedPreferences.getCookie(getActivity());
+        String cookie = SharedPreferencesUtil.getCookie(getActivity());
         String[] cookieList  =  cookie.split("=",2);
         OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
         cookieHelper.setCookie("http://" + address + ":8081/user/adventure/search-by-filter", cookieList[0], cookieList[1]);
@@ -347,7 +347,7 @@ public class SearchFragment extends Fragment{
         System.out.println("searching...");
         String search = searchText.getText().toString();
         if (search.length() > 0) {
-            SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/search-by-title?title=" + search, SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
+            RequestsUtil.getWithCookie("http://" + address + ":8081/user/adventure/search-by-title?title=" + search, SharedPreferencesUtil.getCookie(this.getActivity()), new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     System.out.println("Failure in search, by title");

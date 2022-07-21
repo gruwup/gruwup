@@ -80,9 +80,9 @@ public class ChatActivity extends AppCompatActivity {
         adventureTitle = intent.getStringExtra("name");
         adventureId = intent.getStringExtra("adventureId");
 
-        UserName = SupportSharedPreferences.getUserName(getApplicationContext());
-        cookie = SupportSharedPreferences.getCookie(getApplicationContext());
-        UserID = SupportSharedPreferences.getUserId(getApplicationContext());
+        UserName = SharedPreferencesUtil.getUserName(getApplicationContext());
+        cookie = SharedPreferencesUtil.getCookie(getApplicationContext());
+        UserID = SharedPreferencesUtil.getUserId(getApplicationContext());
 
         TextView adventureName = (TextView) findViewById(R.id.advTitle);
         adventureName.setText(adventureTitle);
@@ -110,8 +110,8 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onClick(View view) {
                 adventureDialog.setContentView(R.layout.adventure_detail_pop_up);
-                String cookie = SupportSharedPreferences.getCookie(getApplicationContext());
-                SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
+                String cookie = SharedPreferencesUtil.getCookie(getApplicationContext());
+                RequestsUtil.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
                     @Override
                     public void onFailure(@NonNull Call call, @NonNull IOException e) {
                         Log.d(TAG, "Failed to get adventure details");
@@ -130,7 +130,7 @@ public class ChatActivity extends AppCompatActivity {
                                 if (UserID.equals(adventureOwner)) {
                                     JSONObject jsonObject = new JSONObject();
                                     Log.d(TAG, "Delete Adventure");
-                                    SupportRequests.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/cancel", jsonObject.toString(), cookie, new Callback() {
+                                    RequestsUtil.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/cancel", jsonObject.toString(), cookie, new Callback() {
                                         @Override
                                         public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                                             if (response.isSuccessful()) {
@@ -183,9 +183,9 @@ public class ChatActivity extends AppCompatActivity {
         });
 
         try {
-            cookie = SupportSharedPreferences.getCookie(getApplicationContext());
+            cookie = SharedPreferencesUtil.getCookie(getApplicationContext());
             Log.d("CHAT ", cookie);
-            UserID = SupportSharedPreferences.getUserId(getApplicationContext());
+            UserID = SharedPreferencesUtil.getUserId(getApplicationContext());
             mSocket = IO.socket(serverUrl);
             mSocket.emit("userInfo", cookie, UserID);
 
@@ -221,8 +221,8 @@ public class ChatActivity extends AppCompatActivity {
             }
         });
 
-        UserID = SupportSharedPreferences.getUserId(getApplicationContext());
-        UserName = SupportSharedPreferences.getUserName(getApplicationContext());
+        UserID = SharedPreferencesUtil.getUserId(getApplicationContext());
+        UserName = SharedPreferencesUtil.getUserName(getApplicationContext());
         editMessageBar = findViewById(R.id.editMesssage);
 
         Button sendButton;
@@ -241,8 +241,8 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void getOldMessages(String pagination) {
-        cookie = SupportSharedPreferences.getCookie(getApplicationContext());
-        SupportRequests.getWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/messages/" + pagination, cookie, new Callback() {
+        cookie = SharedPreferencesUtil.getCookie(getApplicationContext());
+        RequestsUtil.getWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/messages/" + pagination, cookie, new Callback() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
 
@@ -324,7 +324,7 @@ public class ChatActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
-        SupportRequests.postWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/send", jsonObject.toString(), cookie, new Callback() {
+        RequestsUtil.postWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/send", jsonObject.toString(), cookie, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.d(TAG, "Could not send message");
@@ -391,7 +391,7 @@ public class ChatActivity extends AppCompatActivity {
                     e.printStackTrace();
                 }
                 Log.d(TAG, "EDIT ADV" + jsonObject.toString());
-                SupportRequests.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/update", jsonObject.toString(), cookie, new Callback() {
+                RequestsUtil.putWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/update", jsonObject.toString(), cookie, new Callback() {
                     @Override
                     public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                         if (response.isSuccessful()) {
@@ -434,7 +434,7 @@ public class ChatActivity extends AppCompatActivity {
 
     private void getEditAdventureDetails(){
 
-        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
+        RequestsUtil.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.d(TAG, "Failed to get adventure details");
@@ -481,8 +481,8 @@ public class ChatActivity extends AppCompatActivity {
     }
 
     private void getAdventureDetails() {
-        String cookie = SupportSharedPreferences.getCookie(getApplicationContext());
-        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
+        String cookie = SharedPreferencesUtil.getCookie(getApplicationContext());
+        RequestsUtil.getWithCookie("http://" + address + ":8081/user/adventure/" + adventureId + "/detail", cookie, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
                 Log.d(TAG, "Failed to get adventure details");

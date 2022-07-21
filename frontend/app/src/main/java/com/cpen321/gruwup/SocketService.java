@@ -35,8 +35,8 @@ public class SocketService extends Service {
         String UserID;
         String cookie;
         try {
-            cookie = SupportSharedPreferences.getCookie(getApplicationContext());
-            UserID = SupportSharedPreferences.getUserId(getApplicationContext());
+            cookie = SharedPreferencesUtil.getCookie(getApplicationContext());
+            UserID = SharedPreferencesUtil.getUserId(getApplicationContext());
             mSocket = IO.socket(serverUrl);
             mSocket.emit("userInfo", cookie, UserID);
         } catch (URISyntaxException e) {

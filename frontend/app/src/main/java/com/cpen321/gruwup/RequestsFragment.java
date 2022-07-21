@@ -59,10 +59,10 @@ public class RequestsFragment extends Fragment {
 
 
     private void getAllRequests() throws IOException {
-        String UserID = SupportSharedPreferences.getUserId(this.getActivity());
-        String cookie = SupportSharedPreferences.getCookie(this.getActivity());
+        String UserID = SharedPreferencesUtil.getUserId(this.getActivity());
+        String cookie = SharedPreferencesUtil.getCookie(this.getActivity());
         Log.d(TAG, "User Id is "+ UserID);
-        SupportRequests.getWithCookie("http://"+address+":8081/user/request/" + UserID + "/get-requests", cookie, new Callback() {
+        RequestsUtil.getWithCookie("http://"+address+":8081/user/request/" + UserID + "/get-requests", cookie, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {

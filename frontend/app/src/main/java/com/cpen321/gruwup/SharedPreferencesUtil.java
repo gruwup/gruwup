@@ -3,7 +3,7 @@ package com.cpen321.gruwup;
 import android.content.Context;
 import android.content.SharedPreferences;
 
-public class SupportSharedPreferences {
+public class SharedPreferencesUtil {
 
     static final String TAG = "SharedPreferences";
 

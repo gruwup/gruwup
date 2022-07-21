@@ -104,7 +104,7 @@ public class DiscoverFragment extends Fragment {
                 createAdventure();
             }
         });
-        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/" + SupportSharedPreferences.getUserId(this.getActivity()) + "/discover", SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
+        RequestsUtil.getWithCookie("http://" + address + ":8081/user/adventure/" + SharedPreferencesUtil.getUserId(this.getActivity()) + "/discover", SharedPreferencesUtil.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 System.out.println("Failure on get from Discover");
@@ -266,7 +266,7 @@ public class DiscoverFragment extends Fragment {
 
                     JSONObject jsonObject = new JSONObject();
                     try {
-                        jsonObject.put("owner", SupportSharedPreferences.getUserId(v.getContext().getApplicationContext()));
+                        jsonObject.put("owner", SharedPreferencesUtil.getUserId(v.getContext().getApplicationContext()));
                         jsonObject.put("title", title.getText().toString().trim());
                         jsonObject.put("description", description.getText().toString().trim());
                         jsonObject.put("dateTime", Integer.valueOf(dateToEpoch(time.getText().toString().trim())));
@@ -279,7 +279,7 @@ public class DiscoverFragment extends Fragment {
                         System.out.println("JSON EXCEPTION!!!");
                     }
 
-                    SupportRequests.postWithCookie("http://" + address + ":8081/user/adventure/create", jsonObject.toString(), SupportSharedPreferences.getCookie(v.getContext()), new Callback() {
+                    RequestsUtil.postWithCookie("http://" + address + ":8081/user/adventure/create", jsonObject.toString(), SharedPreferencesUtil.getCookie(v.getContext()), new Callback() {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             System.out.println("Failure on post from create adventure");
