@@ -96,48 +96,47 @@ module.exports = class RequestStore {
     };
 
     static acceptRequest = async (requestId) => {
-        var result = {
-            code: 500,
-            message: "Server error"
-        };
-        try {
-            if (!ObjectId.isValid(requestId)) {
-                result ={
-                    code: 400,
-                    message: "Invalid request id"
-                };
-            }
-            else {
-                var findRequest = await Request.findByIdAndUpdate(requestId, { status: "ACCEPTED" });
-                if (!ObjectId.isValid(request.adventureId)) {
-                    result ={
-                        code: 404,
-                        message: "Adventure not found"
-                    };
+        var result = {};
+
+        if (!ObjectId.isValid(requestId)) {
+            result ={
+                code: 404,
+                message: "Adventure not found"
+            };
+            return result;
+        }
+        await Request.findByIdAndUpdate(requestId, { status: "ACCEPTED" }).then(async requestResult => {
+            const pushQuery = { peopleGoing: requestResult.requesterId }
+            await Adventure.findOneAndUpdate({ _id: requestResult.adventureId }, { $push: pushQuery}, { new: true, runValidators: true }).then(adventureResult => {
+                result = {
+                    code: 404,
+                    message: "Adventure not found"
                 }
-                else {
-                    const pushQuery = { peopleGoing: request.requesterId }
-                    await Adventure.findOneAndUpdate(
-                                { _id: request.adventureId },
-                                { $push: pushQuery},
-                                { new: true }
-                            );
-                            
+                if (adventureResult.code === 200) {
                     result ={
                         code: 200,
                         message: "Request accepted",
-                        payload: request
+                        payload: adventureResult
                     }
                 }
-                
+            }, err => {
+                result.code = (err.name === "ValidationError") ? 400 : 500;
+                result.message = err._message;
+            });
+
+            if (!ObjectId.isValid(adventureId)) {
+                result ={
+                    code: 404,
+                    message: "Adventure not found"
+                };
             }
-        }
-        catch (err) {
+        }, err => {
             result = {
                 code: 500,
                 message: err._message
             };
-        }
+        });
+                
         return result;
     };
 
