@@ -346,19 +346,24 @@ module.exports = class AdventureStore {
 
         const openStatus = { status: "OPEN" };
         await Adventure.find(
-            { $and: [
-                openStatus,
-                filter
-            ] }
+            { $and: [openStatus, filter] }
         ).then(adventures => {
-            adventures.sort((a, b) => {
-                return b.dateTime - a.dateTime;
-                });
             result = {
                 code: 200,
-                message: "Adventures found",
-                payload: adventures
+                message: "No adventures found",
+                payload: []
             };
+            if (adventures.length > 0) {
+                adventures.sort((a, b) => {
+                    return b.dateTime - a.dateTime;
+                    });
+                result = {
+                    code: 200,
+                    message: "Adventures found",
+                    payload: adventures
+                };
+            }
+            
         }
         , err => {
             result = {

@@ -29,7 +29,7 @@ router.post("/create", async (req, res) => {
 
 // search adventures by filter
 router.post("/search-by-filter", async (req, res) => {
-    if (Session.validSession(req.headers.cookie) || TestMode.on) {
+    if (!(Session.validSession(req.headers.cookie) || TestMode.on)) {
         return await FilterService.findAdventuresByFilter(req.body).then(result => {
             if (result.code === 200) {
                 return res.status(200).send(result.payload);
@@ -38,7 +38,7 @@ router.post("/search-by-filter", async (req, res) => {
             return res.status(result.code).send(result.message);
         }, err => {
             return res.status(500).send(err._message);
-        });
+        });    
     }
 
     return res.status(403).send({ message: Session.invalid_msg });
