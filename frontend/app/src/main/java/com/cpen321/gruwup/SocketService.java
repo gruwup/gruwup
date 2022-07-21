@@ -87,7 +87,7 @@ public class SocketService extends Service {
                 adventureId = args[0].toString();
                 userName = data.getString("name");
                 message = data.getString("message");
-                dateTime = data.getString("dateTime");
+                dateTime = String.valueOf(data.getString("dateTime"));
                 sendMessage(userName, message, dateTime, adventureId);
             } catch (JSONException e) {
                 return;
