@@ -68,30 +68,41 @@ module.exports = class RequestStore {
             message: "Server error"
         };
 
-        try {
-            var asRequester = await Request.find({ requesterId: userId });
-            var asCreator = await Request.find({
-                $and: [
-                    { adventureOwner: userId },
-                    { status: "PENDING" }
-                ]}
-            );
-            var findResult = asRequester.concat(asCreator);
-            findResult.sort((a, b) => {
-                return b.dateTime - a.dateTime;
-            });
-            result = {
-                code: 200,
-                message: "Requests found",
-                payload: findResult
-            };
+        const asRequesterQuery = {
+            $and : [
+                { requesterId: userId },
+                { status: "PENDING" }
+            ]
+        };
+
+        const asAdventureOwnerQuery = {
+            $and : [
+                { adventureOwner: userId },
+                { status: "PENDING" }
+            ]
         }
-        catch (err) {
+
+        await Request.find(asRequesterQuery).then(async asRequester => {
+            await Request.find(asAdventureOwnerQuery).then(asAdventureOwner => {
+                result = {
+                    code: 200,
+                    message: "Requests found",
+                    payload: asRequester.concat(asAdventureOwner).sort((a, b) => {
+                        return b.dateTime - a.dateTime;
+                    })
+                };
+            }, err => {
+                result = {
+                    code: 500,
+                    message: err.message
+                };
+            });
+        }, err => {
             result = {
                 code: 500,
-                message: err._message
+                message: err.message
             };
-        }
+        });
         return result;
     };
 
@@ -111,19 +122,17 @@ module.exports = class RequestStore {
                 result = {
                     code: 404,
                     message: "Adventure not found"
-                }
-                if (adventureResult.code === 200) {
+                };
+                if (adventureResult) {
                     result ={
                         code: 200,
-                        message: "Request accepted",
-                        payload: adventureResult
+                        message: "Request accepted"
                     }
                 }
             }, err => {
                 result.code = (err.name === "ValidationError") ? 400 : 500;
                 result.message = err._message;
             });
-
             if (!ObjectId.isValid(requestResult.adventureId)) {
                 result ={
                     code: 404,
@@ -136,7 +145,6 @@ module.exports = class RequestStore {
                 message: err._message
             };
         });
-                
         return result;
     };
 
@@ -145,28 +153,28 @@ module.exports = class RequestStore {
             code: 500,
             message: "Server error"
         };
-        try {
-            if (!ObjectId.isValid(requestId)) {
-                result = {
-                    code: 400,
-                    message: "Invalid request id"
-                };
-            }
-            else {
-                await Request.findByIdAndUpdate(requestId, { status: "REJECTED" });
-                result = {
-                    code: 200,
-                    message: "Request rejected"
-                };
-            }
-            
+
+        if (!ObjectId.isValid(requestId)) {
+            result = {
+                code: 400,
+                message: "Invalid request id"
+            };
+            return result;
         }
-        catch (err) {
+
+        await Request.findByIdAndUpdate(requestId, { status: "REJECTED" }).then(async requestResult => {
+            result = {
+                code: 200,
+                message: "Request rejected"
+            };
+        }
+        , err => {
             result = {
                 code: 500,
                 message: err._message
             };
-        }
+        });
+
         return result;
     };
 
@@ -175,33 +183,32 @@ module.exports = class RequestStore {
             code: 500,
             message: "Server error"
         };
-        try {
-            var findResult = await Request.findOne({
-                $and: [
-                    { adventureId },
-                    { requesterId: userId }
-                ]
-            });
-            if (findResult) {
+
+        const findQuery = {
+            $and: [
+                { adventureId },
+                { requesterId: userId }
+            ]
+        };
+
+        await Request.findOne(findQuery).then(async requestResult => {
+            result = {
+                code: 404,
+                message: "Request not found"
+            };
+
+            if (requestResult) {
                 result = {
                     code: 200,
-                    message: "Request exists",
-                    payload: findResult
+                    message: "Request found"
                 };
             }
-            else {
-                result = {
-                    code: 404,
-                    message: "Request not found"
-                };
-            }
-        }
-        catch (err) {
+        }, err => {
             result = {
                 code: 500,
                 message: err._message
             };
-        }
+        });
         return result;
     };
 };
