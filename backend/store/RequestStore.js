@@ -124,7 +124,7 @@ module.exports = class RequestStore {
                 result.message = err._message;
             });
 
-            if (!ObjectId.isValid(adventureId)) {
+            if (!ObjectId.isValid(requestResult.adventureId)) {
                 result ={
                     code: 404,
                     message: "Adventure not found"
