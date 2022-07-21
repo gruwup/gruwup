@@ -98,13 +98,13 @@ public class ChatFragment extends Fragment {
 
     public void getAllChats() {
 
-        String UserID = SupportSharedPreferences.getUserId(this.getActivity());
+        String UserID = SharedPreferencesUtil.getUserId(this.getActivity());
         Log.d(TAG, "User Id is "+ UserID);
         String cookie;
-        cookie = SupportSharedPreferences.getCookie(this.getActivity());
+        cookie = SharedPreferencesUtil.getCookie(this.getActivity());
         Log.d(TAG, "Cookie is "+cookie);
 
-        SupportRequests.getWithCookie("http://"+address+":8000/user/chat/" + UserID + "/recent-list", cookie, new Callback() {
+        RequestsUtil.getWithCookie("http://"+address+":8000/user/chat/" + UserID + "/recent-list", cookie, new Callback() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                 if(response.isSuccessful()){
@@ -142,7 +142,7 @@ public class ChatFragment extends Fragment {
                                 String image = "";
                                 String adventureId = messageObj.getString("adventureId");
                                 String lastMessage = messageObj.getString("message");
-                                String lastMessageTime = messageObj.getString("dateTime");
+                                String lastMessageTime = String.valueOf(messageObj.getString("dateTime"));
                                 String lastMessageSender = messageObj.getString("name");
 
 

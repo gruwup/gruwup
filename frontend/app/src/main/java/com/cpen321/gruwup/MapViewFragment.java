@@ -197,7 +197,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
             eventDescription.setText(jsonObject.getString("description"));
             eventLocation.setText(jsonObject.getString("location"));
             eventMemberCount.setText(String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
-            eventTime.setText(DiscoverFragment.epochToDate(jsonObject.getString("dateTime")));
+            eventTime.setText(DiscoverFragment.epochToDate(String.valueOf(jsonObject.getString("dateTime"))));
             id = jsonObject.getString("_id");
         } catch (JSONException e) {
             e.printStackTrace();
@@ -206,8 +206,8 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
 
         JSONObject toPostObject = new JSONObject();
         try {
-            toPostObject.put("userName", SupportSharedPreferences.getUserName(getContext()));
-            toPostObject.put("userId", SupportSharedPreferences.getUserId(getContext()));
+            toPostObject.put("userName", SharedPreferencesUtil.getUserName(getContext()));
+            toPostObject.put("userId", SharedPreferencesUtil.getUserId(getContext()));
             toPostObject.put("dateTime", Long.valueOf(System.currentTimeMillis()));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -216,7 +216,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
         requestToJoin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SupportRequests.postWithCookie("http://" + address + ":8081/user/request/" + id + "/send-request", toPostObject.toString(), SupportSharedPreferences.getCookie(getActivity()), new Callback() {
+                RequestsUtil.postWithCookie("http://" + address + ":8081/user/request/" + id + "/send-request", toPostObject.toString(), SharedPreferencesUtil.getCookie(getActivity()), new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         System.out.println("HTTP req failed inside map fragment");

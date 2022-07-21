@@ -35,8 +35,8 @@ public class SocketService extends Service {
         String UserID;
         String cookie;
         try {
-            cookie = SupportSharedPreferences.getCookie(getApplicationContext());
-            UserID = SupportSharedPreferences.getUserId(getApplicationContext());
+            cookie = SharedPreferencesUtil.getCookie(getApplicationContext());
+            UserID = SharedPreferencesUtil.getUserId(getApplicationContext());
             mSocket = IO.socket(serverUrl);
             mSocket.emit("userInfo", cookie, UserID);
         } catch (URISyntaxException e) {
@@ -87,7 +87,7 @@ public class SocketService extends Service {
                 adventureId = args[0].toString();
                 userName = data.getString("name");
                 message = data.getString("message");
-                dateTime = data.getString("dateTime");
+                dateTime = String.valueOf(data.getString("dateTime"));
                 sendMessage(userName, message, dateTime, adventureId);
             } catch (JSONException e) {
                 return;

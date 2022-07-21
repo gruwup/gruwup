@@ -140,8 +140,8 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
 
         JSONObject jsonObject = new JSONObject();
         try {
-            jsonObject.put("userName", SupportSharedPreferences.getUserName(mContext));
-            jsonObject.put("userId", SupportSharedPreferences.getUserId(mContext));
+            jsonObject.put("userName", SharedPreferencesUtil.getUserName(mContext));
+            jsonObject.put("userId", SharedPreferencesUtil.getUserId(mContext));
             jsonObject.put("dateTime", Long.valueOf(System.currentTimeMillis()));
         } catch (JSONException e) {
             e.printStackTrace();
@@ -151,8 +151,8 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
             @Override
             public void onClick(View view) {
                 Toast.makeText(mContext, "Request sent!", Toast.LENGTH_SHORT).show();
-                String cookie = SupportSharedPreferences.getCookie(mContext);
-                SupportRequests.postWithCookie("http://" + address + ":8081/user/request/" + id + "/send-request", jsonObject.toString(), cookie, new Callback() {
+                String cookie = SharedPreferencesUtil.getCookie(mContext);
+                RequestsUtil.postWithCookie("http://" + address + ":8081/user/request/" + id + "/send-request", jsonObject.toString(), cookie, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
                         System.out.println("DiscAdapter: Failed to send request");

@@ -129,7 +129,7 @@ public class LogInActivity extends AppCompatActivity {
 
             //TO DO: change this to remote server url
             String finalImageUrl = imageUrl;
-            SupportRequests.post("http://"+address+":8081/account/sign-in", jsonObject.toString(), new Callback(){
+            RequestsUtil.post("http://"+address+":8081/account/sign-in", jsonObject.toString(), new Callback(){
                         @Override
                         public void onFailure(Call call, IOException e) {
                             Log.d(TAG, "login unsucessful");
@@ -159,7 +159,8 @@ public class LogInActivity extends AppCompatActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(LogInActivity.this, "Cannot login in, Failed to retrieve verification certificates from google, contact developers", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(LogInActivity.this, "Cannot login in, Failed to retrieve " +
+                                                    "verification certificates from google, contact developers", Toast.LENGTH_LONG).show();
                                         }
                                     });
                                 }

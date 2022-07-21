@@ -115,11 +115,11 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
     }
 
     private void showPopUp( String action, int position) {
-        String cookie = SupportSharedPreferences.getCookie(this.context);
+        String cookie = SharedPreferencesUtil.getCookie(this.context);
         if (action.equals("accept")){
             String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/accept";
             String json = "";
-            SupportRequests.putWithCookie(url,json, cookie, new Callback() {
+            RequestsUtil.putWithCookie(url,json, cookie, new Callback() {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String jsonData = response.body().string();
@@ -137,7 +137,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         else if (action.equals("deny")){
             String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/reject";
             String json = "";
-            SupportRequests.putWithCookie(url,json, cookie,new Callback() {
+            RequestsUtil.putWithCookie(url,json, cookie,new Callback() {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
                     String jsonData = response.body().string();
@@ -174,8 +174,8 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
 
     private void getProfileRequest(String userId) throws IOException {
 
-        String cookie = SupportSharedPreferences.getCookie(this.context);
-        SupportRequests.getWithCookie("http://"+address+":8081/user/profile/" + userId + "/get", cookie, new Callback() {
+        String cookie = SharedPreferencesUtil.getCookie(this.context);
+        RequestsUtil.getWithCookie("http://"+address+":8081/user/profile/" + userId + "/get", cookie, new Callback() {
 
             @Override
             public void onFailure(Call call, IOException e) {

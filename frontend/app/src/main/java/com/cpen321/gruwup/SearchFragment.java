@@ -141,7 +141,7 @@ public class SearchFragment extends Fragment{
         nearbyButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                String cookie = SupportSharedPreferences.getCookie(getActivity());
+                String cookie = SharedPreferencesUtil.getCookie(getActivity());
                 String[] cookieList  =  cookie.split("=",2);
                 OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
                 cookieHelper.setCookie("http://" + address + ":8081/user/adventure/nearby?city=" + city, cookieList[0], cookieList[1]);
@@ -172,7 +172,7 @@ public class SearchFragment extends Fragment{
             }
         });
 
-        SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city="+city, SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
+        RequestsUtil.getWithCookie("http://" + address + ":8081/user/adventure/nearby?city="+city, SharedPreferencesUtil.getCookie(this.getActivity()), new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
                 System.out.println("Failed to get adventures in default Search");
@@ -222,7 +222,7 @@ public class SearchFragment extends Fragment{
             mAdventureList.get(i).put("title", jsonObject.getString("title"));
             mAdventureList.get(i).put("id", jsonObject.getString("_id"));
             mAdventureList.get(i).put("event", jsonObject.getString("category"));
-            mAdventureList.get(i).put("time", DiscoverFragment.epochToDate(jsonObject.getString("dateTime")));
+            mAdventureList.get(i).put("time", DiscoverFragment.epochToDate(String.valueOf(jsonObject.getString("dateTime"))));
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
             mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
             mAdventureList.get(i).put("description", jsonObject.getString("description"));
@@ -295,14 +295,14 @@ public class SearchFragment extends Fragment{
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("categories", jsonArray);
-            if(numPeople.getText().toString() != null) jsonObject.put("maxPeopleGoing",  numPeople.getText().toString());
-            jsonObject.put("maxTimeStamp", buttonToEpoch(timeSelection.getCheckedRadioButtonId()));
+            if(numPeople.getText().toString() != null) jsonObject.put("maxPeopleGoing",  Integer.valueOf(numPeople.getText().toString()));
+            jsonObject.put("maxTimeStamp", Integer.valueOf(buttonToEpoch(timeSelection.getCheckedRadioButtonId())));
             if(location.getText().toString() != null) jsonObject.put("city", location.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
             System.out.println("JSON EXCEPTION!!!");
         }
-        String cookie = SupportSharedPreferences.getCookie(getActivity());
+        String cookie = SharedPreferencesUtil.getCookie(getActivity());
         String[] cookieList  =  cookie.split("=",2);
         OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
         cookieHelper.setCookie("http://" + address + ":8081/user/adventure/search-by-filter", cookieList[0], cookieList[1]);
@@ -347,7 +347,7 @@ public class SearchFragment extends Fragment{
         System.out.println("searching...");
         String search = searchText.getText().toString();
         if (search.length() > 0) {
-            SupportRequests.getWithCookie("http://" + address + ":8081/user/adventure/search-by-title?title=" + search, SupportSharedPreferences.getCookie(this.getActivity()), new Callback() {
+            RequestsUtil.getWithCookie("http://" + address + ":8081/user/adventure/search-by-title?title=" + search, SharedPreferencesUtil.getCookie(this.getActivity()), new Callback() {
                 @Override
                 public void onFailure(Call call, IOException e) {
                     System.out.println("Failure in search, by title");
