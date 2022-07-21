@@ -82,7 +82,6 @@ module.exports = class ChatService {
                             message: err
                         };
                     });
-                    console.log(message);
                     await AdventureStore.getAdventureDetail(adventureIds[i]).then(adventureResult => {
                         adventure = adventureResult;
                     }, err => {
