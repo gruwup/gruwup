@@ -142,7 +142,7 @@ public class ChatFragment extends Fragment {
                                 String image = "";
                                 String adventureId = messageObj.getString("adventureId");
                                 String lastMessage = messageObj.getString("message");
-                                String lastMessageTime = messageObj.getString("dateTime");
+                                String lastMessageTime = String.valueOf(messageObj.getString("dateTime"));
                                 String lastMessageSender = messageObj.getString("name");
 
 
