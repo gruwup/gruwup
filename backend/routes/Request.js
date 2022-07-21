@@ -24,24 +24,19 @@ router.post("/:adventureId/send-request", async (req, res) => {
 
 router.get("/:userId/get-requests", async (req, res) => {
 	if (Session.validSession(req.headers.cookie) || TestMode.on) {
-		try {
-			var result = await RequestStore.getRequests(req.params.userId);
+		await RequestStore.getRequests(req.params.userId).then(result => {
 			if (result.code === 200) {
-				res.status(200).send({
+				return res.status(200).send({
 					requests: result.payload
 				});
 			}
-			else {
-				res.status(result.code).send(result.message);
-			}
-		}
-		catch (err) {
-			res.status(500).send(err);
-		}
+			return res.status(result.code).send(result.message);
+		}, err => {
+			return res.status(500).send(err._message);
+		});
     }
-    else {
-        res.status(403).send({ message: Session.invalid_msg });
-    }
+
+    res.status(403).send({ message: Session.invalid_msg });
 });
 
 router.put("/:requestId/accept", async (req, res) => {
