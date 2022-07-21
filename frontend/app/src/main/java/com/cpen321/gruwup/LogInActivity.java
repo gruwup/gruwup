@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -132,6 +133,12 @@ public class LogInActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             Log.d(TAG, "login unsucessful");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(LogInActivity.this, "Cannot login in, Contact developers to run server", Toast.LENGTH_LONG).show();
+                                }
+                            });
                             System.out.println(e.getMessage());
                         }
 
@@ -187,7 +194,6 @@ public class LogInActivity extends AppCompatActivity {
                                     intent.putExtras(extras);
                                     startActivity(intent);
                                 }
-
                             } catch (JSONException e) {
                                 e.printStackTrace();
                             }
