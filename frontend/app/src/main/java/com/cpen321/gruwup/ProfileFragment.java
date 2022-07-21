@@ -249,6 +249,12 @@ public class ProfileFragment extends Fragment {
                 }
                 else{
                     Log.d(TAG, "sign out unsuccessful");
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "Failed to sign out, try again or contact developers.", Toast.LENGTH_LONG).show();
+                        }
+                    });
                     Log.d(TAG, response.body().string());
                 }
             }

@@ -159,7 +159,8 @@ public class LogInActivity extends AppCompatActivity {
                                     runOnUiThread(new Runnable() {
                                         @Override
                                         public void run() {
-                                            Toast.makeText(LogInActivity.this, "Cannot login in, Failed to retrieve verification certificates from google, contact developers", Toast.LENGTH_LONG).show();
+                                            Toast.makeText(LogInActivity.this, "Cannot login in, Failed to retrieve " +
+                                                    "verification certificates from google, contact developers", Toast.LENGTH_LONG).show();
                                         }
                                     });
                                 }
