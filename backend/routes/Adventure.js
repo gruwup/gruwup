@@ -29,7 +29,7 @@ router.post("/create", async (req, res) => {
 
 // search adventures by filter
 router.post("/search-by-filter", async (req, res) => {
-    if (!(Session.validSession(req.headers.cookie) || TestMode.on)) {
+    if (Session.validSession(req.headers.cookie) || TestMode.on) {
         return await FilterService.findAdventuresByFilter(req.body).then(result => {
             if (result.code === 200) {
                 return res.status(200).send(result.payload);
