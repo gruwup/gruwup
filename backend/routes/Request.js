@@ -36,7 +36,7 @@ router.get("/:userId/get-requests", async (req, res) => {
 		});
     }
 
-    res.status(403).send({ message: Session.invalid_msg });
+    return res.status(403).send({ message: Session.invalid_msg });
 });
 
 router.put("/:requestId/accept", async (req, res) => {
@@ -66,7 +66,7 @@ router.put("/:requestId/reject", async (req, res) => {
 		});
     }
     else {
-        res.status(403).send({ message: Session.invalid_msg });
+        return res.status(403).send({ message: Session.invalid_msg });
     }
 });
 
