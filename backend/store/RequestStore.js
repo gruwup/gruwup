@@ -153,28 +153,28 @@ module.exports = class RequestStore {
             code: 500,
             message: "Server error"
         };
-        try {
-            if (!ObjectId.isValid(requestId)) {
-                result = {
-                    code: 400,
-                    message: "Invalid request id"
-                };
-            }
-            else {
-                await Request.findByIdAndUpdate(requestId, { status: "REJECTED" });
-                result = {
-                    code: 200,
-                    message: "Request rejected"
-                };
-            }
-            
+
+        if (!ObjectId.isValid(requestId)) {
+            result = {
+                code: 400,
+                message: "Invalid request id"
+            };
+            return result;
         }
-        catch (err) {
+
+        await Request.findByIdAndUpdate(requestId, { status: "REJECTED" }).then(async requestResult => {
+            result = {
+                code: 200,
+                message: "Request rejected"
+            };
+        }
+        , err => {
             result = {
                 code: 500,
                 message: err._message
             };
-        }
+        });
+
         return result;
     };
 
@@ -183,33 +183,32 @@ module.exports = class RequestStore {
             code: 500,
             message: "Server error"
         };
-        try {
-            var findResult = await Request.findOne({
-                $and: [
-                    { adventureId },
-                    { requesterId: userId }
-                ]
-            });
-            if (findResult) {
+
+        const findQuery = {
+            $and: [
+                { adventureId },
+                { requesterId: userId }
+            ]
+        };
+
+        await Request.findOne(findQuery).then(async requestResult => {
+            result = {
+                code: 404,
+                message: "Request not found"
+            };
+
+            if (requestResult) {
                 result = {
                     code: 200,
-                    message: "Request exists",
-                    payload: findResult
+                    message: "Request found"
                 };
             }
-            else {
-                result = {
-                    code: 404,
-                    message: "Request not found"
-                };
-            }
-        }
-        catch (err) {
+        }, err => {
             result = {
                 code: 500,
                 message: err._message
             };
-        }
+        });
         return result;
     };
 };

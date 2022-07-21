@@ -481,7 +481,7 @@ paths:
                   - $ref: '#/components/schemas/Error'
   /user/request/{userId}/get-requests:
     get:
-      summary: Get all request user has not processed or is pending to be accepted
+      summary: Get all request user has not processed or is pending to be accepted that are still in pending state
       tags:
       - Request
       parameters:

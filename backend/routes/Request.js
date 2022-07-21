@@ -24,7 +24,7 @@ router.post("/:adventureId/send-request", async (req, res) => {
 
 router.get("/:userId/get-requests", async (req, res) => {
 	if (Session.validSession(req.headers.cookie) || TestMode.on) {
-		await RequestStore.getRequests(req.params.userId).then(result => {
+		return await RequestStore.getRequests(req.params.userId).then(result => {
 			if (result.code === 200) {
 				return res.status(200).send({
 					requests: result.payload
@@ -45,9 +45,7 @@ router.put("/:requestId/accept", async (req, res) => {
             if (result.code === 200) {
 				return res.status(200).send(result.message);
 			}
-			else {
-				return res.status(result.code).send(result.message);
-			}
+			return res.status(result.code).send(result.message);
         }, err => {
             return res.status(500).send(err);
         });
@@ -57,18 +55,15 @@ router.put("/:requestId/accept", async (req, res) => {
 
 router.put("/:requestId/reject", async (req, res) => {
 	if (Session.validSession(req.headers.cookie) || TestMode.on) {
-		try {
-			var result = await RequestStore.rejectRequest(req.params.requestId);
+		return await RequestStore.rejectRequest(req.params.requestId).then(result => {
 			if (result.code === 200) {
-				res.status(200).send(result.message);
+				return res.status(200).send(result.message);
 			}
-			else {
-				res.status(result.code).send(result.message);
-			}
+			return res.status(result.code).send(result.message);
 		}
-		catch (err) {
-			res.status(500).send(err);
-		}
+		, err => {
+			return res.status(500).send(err._message);
+		});
     }
     else {
         res.status(403).send({ message: Session.invalid_msg });
