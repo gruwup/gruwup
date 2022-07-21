@@ -7,6 +7,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Toast;
 
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
@@ -132,6 +133,12 @@ public class LogInActivity extends AppCompatActivity {
                         @Override
                         public void onFailure(Call call, IOException e) {
                             Log.d(TAG, "login unsucessful");
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    Toast.makeText(LogInActivity.this, "Cannot login in, Contact developers to run server", Toast.LENGTH_LONG).show();
+                                }
+                            });
                             System.out.println(e.getMessage());
                         }
 
@@ -145,7 +152,18 @@ public class LogInActivity extends AppCompatActivity {
                             try {
                                 Log.d(TAG, "response body is "+ jsonData);
                                 Log.d(TAG, "cookie is "+ cookie);
+
                                 JSONObject jsonObj = new JSONObject(jsonData);
+
+                                if (cookie==null && jsonObj.getString("message").contains("FetchError: Failed to retrieve verification certificates")){
+                                    runOnUiThread(new Runnable() {
+                                        @Override
+                                        public void run() {
+                                            Toast.makeText(LogInActivity.this, "Cannot login in, Failed to retrieve verification certificates from google, contact developers", Toast.LENGTH_LONG).show();
+                                        }
+                                    });
+                                }
+
                                 Log.d(TAG, "json Obj "+ jsonObj.toString());
                                 boolean userExists = jsonObj.getBoolean("userExists");
                                 String userId = jsonObj.getString("userId");
