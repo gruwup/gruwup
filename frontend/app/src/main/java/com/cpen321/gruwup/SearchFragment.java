@@ -222,7 +222,7 @@ public class SearchFragment extends Fragment{
             mAdventureList.get(i).put("title", jsonObject.getString("title"));
             mAdventureList.get(i).put("id", jsonObject.getString("_id"));
             mAdventureList.get(i).put("event", jsonObject.getString("category"));
-            mAdventureList.get(i).put("time", DiscoverFragment.epochToDate(jsonObject.getString("dateTime")));
+            mAdventureList.get(i).put("time", DiscoverFragment.epochToDate(String.valueOf(jsonObject.getString("dateTime"))));
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
             mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
             mAdventureList.get(i).put("description", jsonObject.getString("description"));
@@ -295,8 +295,8 @@ public class SearchFragment extends Fragment{
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("categories", jsonArray);
-            if(numPeople.getText().toString() != null) jsonObject.put("maxPeopleGoing",  numPeople.getText().toString());
-            jsonObject.put("maxTimeStamp", buttonToEpoch(timeSelection.getCheckedRadioButtonId()));
+            if(numPeople.getText().toString() != null) jsonObject.put("maxPeopleGoing",  Integer.valueOf(numPeople.getText().toString()));
+            jsonObject.put("maxTimeStamp", Integer.valueOf(buttonToEpoch(timeSelection.getCheckedRadioButtonId())));
             if(location.getText().toString() != null) jsonObject.put("city", location.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();

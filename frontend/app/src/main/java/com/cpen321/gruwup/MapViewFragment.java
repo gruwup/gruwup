@@ -197,7 +197,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
             eventDescription.setText(jsonObject.getString("description"));
             eventLocation.setText(jsonObject.getString("location"));
             eventMemberCount.setText(String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
-            eventTime.setText(DiscoverFragment.epochToDate(jsonObject.getString("dateTime")));
+            eventTime.setText(DiscoverFragment.epochToDate(String.valueOf(jsonObject.getString("dateTime"))));
             id = jsonObject.getString("_id");
         } catch (JSONException e) {
             e.printStackTrace();

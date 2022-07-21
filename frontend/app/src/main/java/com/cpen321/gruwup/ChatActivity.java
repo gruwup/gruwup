@@ -265,7 +265,7 @@ public class ChatActivity extends AppCompatActivity {
                                         String name = messageObj.getString("name");
                                         String userId = messageObj.getString("userId");
                                         String message = messageObj.getString("message");
-                                        String dateTime = messageObj.getString("dateTime");
+                                        String dateTime = String.valueOf(messageObj.getString("dateTime"));
                                         Message oldMessage;
 
                                         if (UserID.equals(userId)) {
@@ -500,7 +500,7 @@ public class ChatActivity extends AppCompatActivity {
                         String description = jsonObj.getString("description");
                         String eventType = jsonObj.getString("category");
                         Integer memberCount = jsonObj.getJSONArray("peopleGoing").length();
-                        String time = jsonObj.getString("dateTime");
+                        String time = String.valueOf(jsonObj.getString("dateTime"));
                         String location = jsonObj.getString("location");
                         peopleGoing = jsonObj.getJSONArray("peopleGoing");
                         adventureOwner = jsonObj.getString("owner");
@@ -584,7 +584,7 @@ public class ChatActivity extends AppCompatActivity {
                             userName = data.getString("name");
                             userId = data.getString("userId");
                             message = data.getString("message");
-                            dateTime = data.getString("dateTime");
+                            dateTime = String.valueOf(data.getString("dateTime"));
                             messageStatus = RECEIVED_MESSAGE;
                             Message newMessage = new Message(userId, userName, message, dateTime, messageStatus);
                             messages.add(newMessage);
