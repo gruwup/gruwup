@@ -72,7 +72,7 @@ module.exports = class ChatService {
                 var message;
                 var adventure;
                 var timestamp = Date.now();
-                var adventureIds = adventureList.payload.map(adventure => adventure.toString());
+                var adventureIds = adventureList.payload.map(adventure => adventure._id);
                 for (var i = 0; i < adventureIds.length; i++) {
                     await ChatStore.getMostRecentMessage(adventureIds[i], timestamp).then(messageResult => {
                         message = messageResult;
@@ -82,6 +82,7 @@ module.exports = class ChatService {
                             message: err
                         };
                     });
+                    console.log(message);
                     await AdventureStore.getAdventureDetail(adventureIds[i]).then(adventureResult => {
                         adventure = adventureResult;
                     }, err => {
