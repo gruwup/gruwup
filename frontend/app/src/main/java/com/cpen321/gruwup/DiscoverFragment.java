@@ -269,7 +269,7 @@ public class DiscoverFragment extends Fragment {
                         jsonObject.put("owner", SupportSharedPreferences.getUserId(v.getContext().getApplicationContext()));
                         jsonObject.put("title", title.getText().toString().trim());
                         jsonObject.put("description", description.getText().toString().trim());
-                        jsonObject.put("dateTime", dateToEpoch(time.getText().toString().trim()));
+                        jsonObject.put("dateTime", Integer.valueOf(dateToEpoch(time.getText().toString().trim())));
                         System.out.println(dateToEpoch(time.getText().toString().trim()));
                         jsonObject.put("location", location.getText().toString().trim());
                         jsonObject.put("category", mSelectedCategoryNames.get(0));
@@ -317,7 +317,7 @@ public class DiscoverFragment extends Fragment {
             mAdventureList.get(i).put("title", jsonObject.getString("title"));
             mAdventureList.get(i).put("event", jsonObject.getString("category"));
             mAdventureList.get(i).put("id", jsonObject.getString("_id"));
-            mAdventureList.get(i).put("time", epochToDate(jsonObject.getString("dateTime")));
+            mAdventureList.get(i).put("time", String.valueOf(epochToDate(String.valueOf(jsonObject.getString("dateTime")))));
             mAdventureList.get(i).put("location", jsonObject.getString("location"));
             mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
             mAdventureList.get(i).put("description", jsonObject.getString("description"));
