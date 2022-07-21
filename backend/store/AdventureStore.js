@@ -14,8 +14,7 @@ module.exports = class AdventureStore {
             { title: adventure.title },
             { description: adventure.description },
             { category: adventure.category },
-            { location: adventure.location },
-            { dateTime: adventure.dateTime }
+            { location: adventure.location }
         ]};
         
         await Adventure.find(duplicationQuery).then(async adventures => {
