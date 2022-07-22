@@ -343,6 +343,7 @@ public class SearchFragment extends Fragment{
             }
         }
     }
+
     private void searchAdventure(View view) {
         System.out.println("searching...");
         String search = searchText.getText().toString();
