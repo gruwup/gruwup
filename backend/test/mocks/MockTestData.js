@@ -50,4 +50,14 @@ module.exports = class MockTestData {
         dateTime: "1887602981",
         __v: 0
     }
+
+    static testProfile = {
+        _id: "62d8c985b530168dad13b8a8",
+        userId: "102725629585412345678",
+        name: "Bob John",
+        biography: "tis lit",
+        categories: ["MOVIE", "SPORTS", "FOOD"],
+        image: "randomlink",
+        __v: 0
+    }
 }
