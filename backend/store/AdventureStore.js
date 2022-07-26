@@ -188,6 +188,14 @@ module.exports = class AdventureStore {
             message: "Server error"
         };
 
+        if (!title) {
+            result = {
+                code: 400,
+                message: "Missing title query parameter"
+            };
+            return result;
+        }
+
         const openStatus = { status: "OPEN" };
         const regexObj = { title: { $regex: title, $options: "i" }};
         await Adventure.find({ $and: [openStatus, regexObj] }).then(adventures => {
@@ -216,6 +224,15 @@ module.exports = class AdventureStore {
             code: 500,
             message: "Server error"
         };
+
+        if (!userId) {
+            result = {
+                code: 400,
+                message: "Missing user id query parameter"
+            };
+            return result;
+        }
+
         const openStatus = { status: "OPEN" };
         await Adventure.find({
             $and: [

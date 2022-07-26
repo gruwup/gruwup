@@ -64,9 +64,6 @@ router.get("/:userId/discover", async (req, res) => {
 // search adventures by title
 router.get("/search-by-title", async (req, res) => {
     if (Session.validSession(req.headers.cookie) || TestMode.on) {
-        if (!req.query.title) {
-            return res.status(400).send({ message: "Missing title query parameter" });
-        }
         return await AdventureStore.searchAdventuresByTitle(req.query.title).then(result => {
             if (result.code === 200) {
                 return res.status(200).send(result.payload);

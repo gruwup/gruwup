@@ -97,6 +97,14 @@ module.exports = class FilterService {
             message: "Server error"
         };
 
+        if (!filter || !filter.categories || !filter.dateTime) {
+            result = {
+                code: 400,
+                message: "Mandatory filter field missing"
+            };
+            return result;
+        }
+
         var adventureFilter = filter.city ? 
         {
             $and: [
