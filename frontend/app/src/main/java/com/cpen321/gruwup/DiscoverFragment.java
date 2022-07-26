@@ -226,10 +226,10 @@ public class DiscoverFragment extends Fragment {
                 } else if (ProfileFragment.verifyUserInput(description) != "valid") {
                     titleAlert.setText(null);
                     descriptionAlert.setText("Make sure all fields are not empty and use alphanumeric characters!");
-                } else if (ProfileFragment.verifyUserInput(time) != "valid") {
+                } else if (ProfileFragment.verifyUserInput(time) != "valid" || dateToEpoch(time.getText().toString()).equals("D2E error!") || (Long.valueOf(dateToEpoch(time.getText().toString())) < System.currentTimeMillis()/1000L)) {
                     titleAlert.setText(null);
                     descriptionAlert.setText(null);
-                    timeAlert.setText("Make sure all fields are not empty and use alphanumeric characters!");
+                    timeAlert.setText("Make field contains a valid time (in proper format)!");
                 } else if (ProfileFragment.verifyUserInput(location) != "valid") {
                     titleAlert.setText(null);
                     descriptionAlert.setText(null);
