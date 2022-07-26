@@ -163,10 +163,32 @@ module.exports = class RequestStore {
         }
 
         await Request.findByIdAndUpdate(requestId, { status: "REJECTED" }).then(async requestResult => {
-            result = {
-                code: 200,
-                message: "Request rejected"
-            };
+            if (!ObjectId.isValid(requestResult.adventureId)) {
+                result = {
+                    code: 400,
+                    message: "Invalid adventure id"
+                };
+                return result;
+            }
+            await Adventure.findById(requestResult.adventureId).then(adventureResult => {
+                console.log(adventureResult);
+                result = {
+                    code: 404,
+                    message: "Adventure not found"
+                };
+                if (adventureResult) {
+                    result = {
+                        code: 200,
+                        message: "Request rejected"
+                    }
+                }
+            }, err => {
+                console.log(err);
+                result = {
+                    code: 500,
+                    message: err._message
+                };
+            });
         }
         , err => {
             result = {
