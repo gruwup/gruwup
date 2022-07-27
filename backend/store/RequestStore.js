@@ -9,6 +9,14 @@ module.exports = class RequestStore {
             message: "Server error"
         };
 
+        if (!ObjectId.isValid(adventureId)) {
+            result = {
+                code: 400,
+                message: "Invalid adventure id"
+            };
+            return result;
+        }
+
         await Adventure.findById(adventureId).then(async adventure => {
             result = {
                 code: 404,
@@ -41,7 +49,7 @@ module.exports = class RequestStore {
                         }
                         , err => {
                             result = {
-                                code: 500,
+                                code: (err.name === "ValidationError") ? 400 : 500,
                                 message: err.message
                             };
                         });
@@ -110,13 +118,20 @@ module.exports = class RequestStore {
         var result = {};
 
         if (!ObjectId.isValid(requestId)) {
-            result ={
-                code: 404,
-                message: "Adventure not found"
+            result = {
+                code: 400,
+                message: "Invalid request id"
             };
             return result;
         }
         await Request.findByIdAndUpdate(requestId, { status: "ACCEPTED" }).then(async requestResult => {
+            if (!requestResult) {
+                result = {
+                    code: 404,
+                    message: "Request not found"
+                };
+                return result;
+            }
             const pushQuery = { peopleGoing: requestResult.requesterId }
             await Adventure.findOneAndUpdate({ _id: requestResult.adventureId }, { $push: pushQuery}, { new: true, runValidators: true }).then(adventureResult => {
                 result = {
@@ -163,15 +178,14 @@ module.exports = class RequestStore {
         }
 
         await Request.findByIdAndUpdate(requestId, { status: "REJECTED" }).then(async requestResult => {
-            if (!ObjectId.isValid(requestResult.adventureId)) {
+            if (!requestResult) {
                 result = {
-                    code: 400,
-                    message: "Invalid adventure id"
+                    code: 404,
+                    message: "Request not found"
                 };
                 return result;
             }
             await Adventure.findById(requestResult.adventureId).then(adventureResult => {
-                console.log(adventureResult);
                 result = {
                     code: 404,
                     message: "Adventure not found"
@@ -183,12 +197,17 @@ module.exports = class RequestStore {
                     }
                 }
             }, err => {
-                console.log(err);
                 result = {
                     code: 500,
                     message: err._message
                 };
             });
+            if (!ObjectId.isValid(requestResult.adventureId)) {
+                result ={
+                    code: 404,
+                    message: "Adventure not found"
+                };
+            }
         }
         , err => {
             result = {

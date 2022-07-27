@@ -63,7 +63,7 @@ module.exports = class User {
                         payload: profileResult
                     };
                 }, err => {
-                    result.code = (err.name === "ValidationError") ? 400 : 500
+                    result.code = (err.name === "ValidationError") ? 400 : 500;
                     result.message = err._message;
                 });
             }
