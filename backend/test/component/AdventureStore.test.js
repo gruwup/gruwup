@@ -2,11 +2,8 @@ const AdventureStore = require("../../store/AdventureStore");
 const mongoose = require("mongoose");
 var ObjectId = require('mongoose').Types.ObjectId;
 
-const defaultMongoPort = "27017";
-const customMongoPort = "27384";
-
-var useDefaultMongoPort = false;
-var mongoDbUrl = "mongodb://localhost:" + (useDefaultMongoPort ? defaultMongoPort : customMongoPort);
+const testMongoPort = "27385";
+var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
 
 beforeAll(async () => {
     await mongoose.connect(mongoDbUrl, { useNewUrlParser: true }).then(() => console.log("Connected to MongoDB")).catch(err => console.log(err));
@@ -102,11 +99,62 @@ describe("createAdventure tests", () => {
 });
 
 describe("getAdventureDetail tests", () => {
+    test("no adventure id", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.getAdventureDetail()).toEqual({
+            code: 400,
+            message: "Adventure id is required"
+        });
+    });
 
+    test("invalid adventure id", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.getAdventureDetail("123")).toEqual({
+            code: 400,
+            message: "Invalid adventure id"
+        });
+    });
+
+    test("no adventure found", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.getAdventureDetail(ObjectId())).toEqual({
+            code: 404,
+            message: "Adventure not found"
+        });
+    });
+
+    test("success scenario", async () => {
+        expect.assertions(1);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventure = {
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            location: "Test location, Test city",
+            dateTime: futureTimeStamp
+        };
+        const adventureId = await AdventureStore.createAdventure(adventure);
+        expect(await AdventureStore.getAdventureDetail(adventureId.payload._id)).toEqual({
+            code: 200,
+            message: "Adventure found",
+            payload: expect.objectContaining({
+                owner: "Test User",
+                title: "Test Adventure",
+                description: "Test Adventure description",
+                category: "MOVIE",
+                peopleGoing: ["Test User"],
+                location: "Test location, Test city",
+                dateTime: futureTimeStamp,
+                city: "Test city",
+                status: "OPEN"
+            })
+        });
+    });
 });
 
 describe("updateAdventure tests", () => {
-
+    
 });
 
 describe("cancelAdventure tests", () => {
