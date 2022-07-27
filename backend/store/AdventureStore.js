@@ -8,21 +8,29 @@ module.exports = class AdventureStore {
             message: "Server error"
         };
 
+        if (!adventure) {
+            result = {
+                code: 400,
+                message: "Adventure is required"
+            };
+            return result;
+        }
+
         var duplicationQuery = { 
             $and: [
-            { adventureOwner: adventure.adventureOwner },
+            { adventureOwner: adventure.owner },
             { title: adventure.title },
             { description: adventure.description },
             { category: adventure.category },
             { location: adventure.location }
         ]};
-        
+
         await Adventure.find(duplicationQuery).then(async adventures => {
             result = {
                 code: 400,
                 message: "Adventure already exists"
             };
-
+            
             if (adventures.length === 0) {
                 var adventureData = {
                     owner: adventure.owner,
@@ -37,7 +45,7 @@ module.exports = class AdventureStore {
                     city: adventure.location.split(", ")[1] ?? "unknown"
                 };
                 var newAdventure = new Adventure(adventureData);
-        
+
                 await newAdventure.save().then(adventure => {
                     result = {
                         code: 200,
