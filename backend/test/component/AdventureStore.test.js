@@ -540,6 +540,148 @@ describe("getUsersAdventures tests", () => {
 });
 
 describe("removeAdventureParticipant tests", () => {
+    it("no user id", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.removeAdventureParticipant("123")).toEqual({
+            code: 400,
+            message: "User id is required"
+        });
+    });
+
+    it("invalid adventure id", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.removeAdventureParticipant("123", "123")).toEqual({
+            code: 400,
+            message: "Invalid adventure id"
+        });
+    });
+
+    it("no adventure found", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.removeAdventureParticipant(ObjectId(), "123")).toEqual({
+            code: 404,
+            message: "Adventure not found"
+        });
+    });
+
+    it("user to be deleted is the only participant and owner", async () => {
+        expect.assertions(3);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventureData = {
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User"],
+            dateTime: futureTimeStamp,
+            location: "Test location, Test city",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city"
+        };
+        var newAdventure = new Adventure(adventureData);
+        await newAdventure.save();
+        const result = await AdventureStore.removeAdventureParticipant(newAdventure._id, "Test User");
+        expect(result.code).toEqual(200);
+        expect(result.message).toEqual("Adventure deleted successfully");
+        var searchResult = await Adventure.find();
+        expect(searchResult.length).toEqual(0);
+    });
+
+    it("user to be deleted is not the owner of adventure and not the only participant", async () => {
+        expect.assertions(3);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventureData = {
+            owner: "Test User1",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User1", "Test User2"],
+            dateTime: futureTimeStamp,
+            location: "Test location, Test city",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city"
+        };
+        var newAdventure = new Adventure(adventureData);
+        await newAdventure.save();
+        const result = await AdventureStore.removeAdventureParticipant(newAdventure._id, "Test User2");
+        expect(result.code).toEqual(200);
+        expect(result.message).toEqual("Removed participant successfully");
+        expect(await Adventure.findById(newAdventure._id)).toEqual(expect.objectContaining({
+            owner: "Test User1",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User1"],
+            dateTime: futureTimeStamp,
+            location: "Test location, Test city",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city"
+        }));
+    });
+
+    it("user to be deleted is the owner of adventure but not the only participant", async () => {
+        expect.assertions(3);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventureData = {
+            owner: "Test User1",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User1", "Test User2"],
+            dateTime: futureTimeStamp,
+            location: "Test location, Test city",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city"
+        };
+        var newAdventure = new Adventure(adventureData);
+        await newAdventure.save();
+        const result = await AdventureStore.removeAdventureParticipant(newAdventure._id, "Test User1");
+        expect(result.code).toEqual(200);
+        expect(result.message).toEqual("Removed owner successfully, new owner is Test User2");
+        expect(await Adventure.findById(newAdventure._id)).toEqual(expect.objectContaining({
+            owner: "Test User2",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User2"],
+            dateTime: futureTimeStamp,
+            location: "Test location, Test city",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city"
+        }));
+    });
+
+    it("user to be deleted is not a participant", async () => {
+        expect.assertions(3);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventureData = {
+            owner: "Test User1",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User1"],
+            dateTime: futureTimeStamp,
+            location: "Test location, Test city",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city"
+        };
+        var newAdventure = new Adventure(adventureData);
+        await newAdventure.save();
+        const result = await AdventureStore.removeAdventureParticipant(newAdventure._id, "Test User2");
+        expect(result.code).toEqual(200);
+        expect(result.message).toEqual("Removed participant successfully");
+        expect(await Adventure.findById(newAdventure._id)).toEqual(expect.objectContaining({
+            owner: "Test User1",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User1"],
+            dateTime: futureTimeStamp,
+            location: "Test location, Test city",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city"
+        }));
+    });
 });
 
 describe("findAdventuresByFilter tests", () => {

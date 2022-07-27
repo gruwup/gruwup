@@ -308,6 +308,14 @@ module.exports = class AdventureStore {
             message: "Server error"
         };
 
+        if (!userId) {
+            result = {
+                code: 400,
+                message: "User id is required"
+            };
+            return result;
+        }
+
         if (!ObjectId.isValid(adventureId)) {
             result = {
                 code: 400,
@@ -349,7 +357,7 @@ module.exports = class AdventureStore {
                         ).then(adventure => {
                             result = {
                                 code: 200,
-                                message: "Remoced owner successfully, new owner is " + participants[0],
+                                message: "Removed owner successfully, new owner is " + participants[0],
                                 payload: adventure
                             };
                         }, err => {
