@@ -299,7 +299,69 @@ describe("updateAdventure tests", () => {
 });
 
 describe("cancelAdventure tests", () => {
-    
+    it("no adventure id", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.cancelAdventure()).toEqual({
+            code: 400,
+            message: "Adventure id is required"
+        });
+    });
+
+    it("invalid adventure id", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.cancelAdventure("123")).toEqual({
+            code: 400,
+            message: "Invalid adventure id"
+        });
+    });
+
+    it("no adventure found", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.cancelAdventure(ObjectId())).toEqual({
+            code: 404,
+            message: "Adventure not found"
+        });
+    });
+
+    it("success scenario", async () => {
+        expect.assertions(2);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventure = {
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            location: "Test location, Test city",
+            dateTime: futureTimeStamp
+        };
+        const adventureCreated = await AdventureStore.createAdventure(adventure);
+        expect(await AdventureStore.cancelAdventure(adventureCreated.payload._id)).toEqual({
+            code: 200,
+            message: "Adventure cancelled successfully",
+            payload: expect.objectContaining({
+                owner: "Test User",
+                title: "Test Adventure",
+                description: "Test Adventure description",
+                category: "MOVIE",
+                peopleGoing: ["Test User"],
+                location: "Test location, Test city",
+                dateTime: futureTimeStamp,
+                city: "Test city",
+                status: "CANCELLED"
+            })
+        });
+        expect(await Adventure.findById(adventureCreated.payload._id)).toEqual(expect.objectContaining({
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            peopleGoing: ["Test User"],
+            location: "Test location, Test city",
+            dateTime: futureTimeStamp,
+            city: "Test city",
+            status: "CANCELLED"
+        }));
+    });    
 });
 
 describe("searchAdventuresByTitle tests", () => {

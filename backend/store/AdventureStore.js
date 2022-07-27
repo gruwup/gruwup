@@ -179,6 +179,14 @@ module.exports = class AdventureStore {
             message: "Server error"
         };
 
+        if (!adventureId) {
+            result = {
+                code: 400,
+                message: "Adventure id is required"
+            };
+            return result;
+        }
+
         if (!ObjectId.isValid(adventureId)) {
             result = {
                 code: 400,
