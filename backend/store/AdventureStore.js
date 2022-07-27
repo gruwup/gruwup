@@ -229,7 +229,7 @@ module.exports = class AdventureStore {
         if (!title) {
             result = {
                 code: 400,
-                message: "Missing title query parameter"
+                message: "Title is required"
             };
             return result;
         }

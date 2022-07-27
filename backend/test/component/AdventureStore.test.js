@@ -365,6 +365,71 @@ describe("cancelAdventure tests", () => {
 });
 
 describe("searchAdventuresByTitle tests", () => {
+    it("no title input", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.searchAdventuresByTitle()).toEqual({
+            code: 400,
+            message: "Title is required"
+        });
+    });
+
+    it("empty result success scenario", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.searchAdventuresByTitle("Test")).toEqual({
+            code: 200,
+            message: "Adventures found",
+            payload: []
+        });
+    });
+
+    it("non-empty result success scenario", async () => {
+        expect.assertions(4);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventure1 = {
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            location: "Test location, Test city",
+            dateTime: futureTimeStamp
+        };
+        const adventure2 = {
+            owner: "Test User",
+            title: "test Adventure",
+            description: "Test Adventure description",
+            category: "MUSIC",
+            location: "Test location, Test city",
+            dateTime: futureTimeStamp
+        };
+        await AdventureStore.createAdventure(adventure1);
+        await AdventureStore.createAdventure(adventure2);
+        const result = await AdventureStore.searchAdventuresByTitle("Test");
+        expect(result.code).toEqual(200);
+        expect(result.message).toEqual("Adventures found");
+        expect(result.payload.length).toEqual(2);
+        expect(result.payload).toEqual(expect.arrayContaining([
+            expect.objectContaining({
+                owner: "Test User",
+                title: "Test Adventure",
+                description: "Test Adventure description",
+                category: "MOVIE",
+                location: "Test location, Test city",
+                dateTime: futureTimeStamp,
+                city: "Test city",
+                status: "OPEN"
+            }),
+            expect.objectContaining({
+                owner: "Test User",
+                title: "test Adventure",
+                description: "Test Adventure description",
+                category: "MUSIC",
+                location: "Test location, Test city",
+                dateTime: futureTimeStamp,
+                city: "Test city",
+                status: "OPEN"
+            })
+        ]));
+    });
 });
 
 describe("getUsersAdventures tests", () => {
