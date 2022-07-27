@@ -685,4 +685,77 @@ describe("removeAdventureParticipant tests", () => {
 });
 
 describe("findAdventuresByFilter tests", () => {
+    it("filter field does not belong to any of the maxTimestamp, maxPeopleGoing, city, or cagetories", async () => {
+        expect.assertions(5);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventureData1 = {
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User"],
+            dateTime: futureTimeStamp,
+            location: "Test location, Test city",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city"
+        };
+        const adventureData2 = {
+            owner: "Test User",
+            title: "Test Adventure2",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User"],
+            dateTime: futureTimeStamp,
+            location: "Test location, Test city",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city"
+        };
+        var newAdventure1 = new Adventure(adventureData1);
+        var newAdventure2 = new Adventure(adventureData2);
+        await newAdventure1.save();
+        await newAdventure2.save();
+        const result = await AdventureStore.findAdventuresByFilter({test: "123"});
+        expect(result.code).toEqual(200);
+        expect(result.message).toEqual("Adventures found");
+        expect(result.payload.length).toEqual(2);
+        expect(result.payload[0].status).toEqual("OPEN");
+        expect(result.payload[1].status).toEqual("OPEN");
+    });
+
+    it("valid filter on city", async () => {
+        expect.assertions(5);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventureData1 = {
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User"],
+            dateTime: futureTimeStamp,
+            location: "Test location, Test city",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city"
+        };
+        const adventureData2 = {
+            owner: "Test User",
+            title: "Test Adventure2",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User"],
+            dateTime: futureTimeStamp,
+            location: "Test location2, Test city2",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city2"
+        };
+        var newAdventure1 = new Adventure(adventureData1);
+        var newAdventure2 = new Adventure(adventureData2);
+        await newAdventure1.save();
+        await newAdventure2.save();
+        const result = await AdventureStore.findAdventuresByFilter({city: "Test city"});
+        expect(result.code).toEqual(200);
+        expect(result.message).toEqual("Adventures found");
+        expect(result.payload.length).toEqual(1);
+        expect(result.payload[0].status).toEqual("OPEN");
+        expect(result.payload[0].city).toEqual("Test city");
+    });
 });
