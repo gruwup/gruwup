@@ -11,7 +11,7 @@ android {
 
     defaultConfig {
         applicationId "com.cpen321.gruwup"
-        minSdk 16
+        minSdk 18
         targetSdk 32
         versionCode 1
         versionName "1.0"
@@ -79,4 +79,8 @@ dependencies {
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
     androidTestImplementation 'androidx.test:runner:1.4.0'
     androidTestImplementation 'androidx.test:rules:1.4.0'
+
+    // ui automator
+    androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+
 }
