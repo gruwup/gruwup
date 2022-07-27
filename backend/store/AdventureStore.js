@@ -266,7 +266,7 @@ module.exports = class AdventureStore {
         if (!userId) {
             result = {
                 code: 400,
-                message: "Missing user id query parameter"
+                message: "User id is required"
             };
             return result;
         }

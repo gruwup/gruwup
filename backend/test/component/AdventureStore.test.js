@@ -433,6 +433,110 @@ describe("searchAdventuresByTitle tests", () => {
 });
 
 describe("getUsersAdventures tests", () => {
+    it("no user id", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.getUsersAdventures()).toEqual({
+            code: 400,
+            message: "User id is required"
+        });
+    });
+
+    it("invalid user id", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.getUsersAdventures("123")).toEqual({
+            code: 200,
+            message: "Adventures found",
+            payload: []
+        });
+    });
+
+    it("user does not own or participate in any adventure", async () => {
+        expect.assertions(3);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventure = {
+            owner: "Test User1",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            location: "Test location, Test city",
+            dateTime: futureTimeStamp
+        };
+        await AdventureStore.createAdventure(adventure);
+        const result = await AdventureStore.getUsersAdventures("Test User2");
+        expect(result.code).toEqual(200);
+        expect(result.message).toEqual("Adventures found");
+        expect(result.payload.length).toEqual(0);
+    });
+
+    it("none empty result success scenario - user as owner", async () => {
+        expect.assertions(4);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventureData = {
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User"],
+            dateTime: futureTimeStamp,
+            location: "Test location, Test city",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city"
+        };
+        var newAdventure = new Adventure(adventureData);
+        await newAdventure.save();
+        const result = await AdventureStore.getUsersAdventures("Test User");
+        expect(result.code).toEqual(200);
+        expect(result.message).toEqual("Adventures found");
+        expect(result.payload.length).toEqual(1);
+        expect(result.payload).toEqual(expect.arrayContaining([
+            expect.objectContaining({
+                owner: "Test User",
+                title: "Test Adventure",
+                description: "Test Adventure description",
+                category: "MOVIE",
+                peopleGoing: ["Test User"],
+                location: "Test location, Test city",
+                dateTime: futureTimeStamp,
+                city: "Test city",
+                status: "OPEN"
+            })
+        ]));
+    });
+
+    it("none empty result success scenario - user as participant", async () => {
+        expect.assertions(4);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventureData = {
+            owner: "Test User1",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            peopleGoing: ["Test User1", "Test User2"],
+            dateTime: futureTimeStamp,
+            location: "Test location, Test city",
+            category: "MOVIE",
+            status: "OPEN",
+            city: "Test city"
+        };
+        var newAdventure = new Adventure(adventureData);
+        await newAdventure.save();
+        const result = await AdventureStore.getUsersAdventures("Test User2");
+        expect(result.code).toEqual(200);
+        expect(result.message).toEqual("Adventures found");
+        expect(result.payload.length).toEqual(1);
+        expect(result.payload).toEqual(expect.arrayContaining([
+            expect.objectContaining({
+                owner: "Test User1",
+                title: "Test Adventure",
+                description: "Test Adventure description",
+                category: "MOVIE",
+                peopleGoing: ["Test User1", "Test User2"],
+                location: "Test location, Test city",
+                dateTime: futureTimeStamp,
+                city: "Test city",
+                status: "OPEN"
+            })
+        ]));
+    });
 });
 
 describe("removeAdventureParticipant tests", () => {
