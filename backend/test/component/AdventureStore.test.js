@@ -11,11 +11,10 @@ beforeAll(async () => {
 });
 
 afterEach(async () => {
-    await mongoose.connection.db.dropDatabase();
+    await mongoose.connection.dropDatabase();
 });
 
 afterAll(async () => {
-    console.log("after all running");
     await mongoose.connection.close();
 });
 
