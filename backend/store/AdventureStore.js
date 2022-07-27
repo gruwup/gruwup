@@ -122,6 +122,14 @@ module.exports = class AdventureStore {
             message: "Server error"
         };
 
+        if (!adventureId) {
+            result = {
+                code: 400,
+                message: "Adventure id is required"
+            };
+            return result;
+        }
+
         if (adventure.location) {
             adventure.city = adventure.location.split(", ")[1] ?? "unknown";
         }
@@ -153,6 +161,12 @@ module.exports = class AdventureStore {
                     code: 500,
                     message: err._message
                 };
+                if (err.name === "ValidationError") {
+                    result = {
+                        code: 400,
+                        message: err.message
+                    };
+                }
             });
         }
         

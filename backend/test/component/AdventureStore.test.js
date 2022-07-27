@@ -1,4 +1,5 @@
 const AdventureStore = require("../../store/AdventureStore");
+const Adventure = require("../..//models/Adventure");
 const mongoose = require("mongoose");
 var ObjectId = require('mongoose').Types.ObjectId;
 
@@ -19,7 +20,7 @@ afterAll(async () => {
 });
 
 describe("createAdventure tests", () => {
-    test("missing input", async () => {
+    it("missing input", async () => {
         expect.assertions(1);
         expect(await AdventureStore.createAdventure()).toEqual({
             code: 400,
@@ -27,7 +28,7 @@ describe("createAdventure tests", () => {
         });
     });
 
-    test("input data missing required field", async () => {
+    it("input data missing required field", async () => {
         expect.assertions(1);
         const adventure = {
             owner: "Test User",
@@ -46,7 +47,7 @@ describe("createAdventure tests", () => {
         );
     });
 
-    test("input data is illegal", async () => {
+    it("input data is illegal", async () => {
         expect.assertions(1);
         const adventure = {
             owner: "Test User",
@@ -66,7 +67,7 @@ describe("createAdventure tests", () => {
         );
     });
 
-    test("success scenario", async () => {
+    it("success scenario", async () => {
         expect.assertions(4);
         const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
         const adventure = {
@@ -99,7 +100,7 @@ describe("createAdventure tests", () => {
 });
 
 describe("getAdventureDetail tests", () => {
-    test("no adventure id", async () => {
+    it("no adventure id", async () => {
         expect.assertions(1);
         expect(await AdventureStore.getAdventureDetail()).toEqual({
             code: 400,
@@ -107,7 +108,7 @@ describe("getAdventureDetail tests", () => {
         });
     });
 
-    test("invalid adventure id", async () => {
+    it("invalid adventure id", async () => {
         expect.assertions(1);
         expect(await AdventureStore.getAdventureDetail("123")).toEqual({
             code: 400,
@@ -115,7 +116,7 @@ describe("getAdventureDetail tests", () => {
         });
     });
 
-    test("no adventure found", async () => {
+    it("no adventure found", async () => {
         expect.assertions(1);
         expect(await AdventureStore.getAdventureDetail(ObjectId())).toEqual({
             code: 404,
@@ -123,7 +124,7 @@ describe("getAdventureDetail tests", () => {
         });
     });
 
-    test("success scenario", async () => {
+    it("success scenario", async () => {
         expect.assertions(1);
         const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
         const adventure = {
@@ -154,7 +155,147 @@ describe("getAdventureDetail tests", () => {
 });
 
 describe("updateAdventure tests", () => {
-    
+    it("no adventure id or adventure", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.updateAdventure()).toEqual({
+            code: 400,
+            message: "Adventure id is required"
+        });
+    });
+
+    it("invalid adventure id", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.updateAdventure("123", {})).toEqual({
+            code: 400,
+            message: "Invalid adventure id"
+        });
+    });
+
+    it("no adventure found", async () => {
+        expect.assertions(1);
+        expect(await AdventureStore.updateAdventure(ObjectId(), {})).toEqual({
+            code: 404,
+            message: "Adventure not found"
+        });
+    });
+
+    it("adventure data is illegal", async () => {
+        expect.assertions(2);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventure = {
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            location: "Test location, Test city",
+            dateTime: futureTimeStamp
+        };
+        const adventureId = await AdventureStore.createAdventure(adventure);
+        const newAdventureData = {
+            dateTime: 123
+        };
+        expect(await AdventureStore.updateAdventure(adventureId.payload._id, newAdventureData)).toEqual({
+            code: 400,
+            message: "Validation failed: dateTime: 123 dateTime cannot be in the past"
+        });
+        expect(await Adventure.findById(adventureId.payload._id)).toEqual(expect.objectContaining({
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            peopleGoing: ["Test User"],
+            location: "Test location, Test city",
+            dateTime: futureTimeStamp,
+            city: "Test city",
+            status: "OPEN"
+        }));
+    });
+
+    it("update title success scenario", async () => {
+        expect.assertions(2);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventure = {
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            location: "Test location, Test city",
+            dateTime: futureTimeStamp
+        };
+        const adventureCreated = await AdventureStore.createAdventure(adventure);
+        const newAdventureData = {
+            title: "New title"
+        };
+        expect(await AdventureStore.updateAdventure(adventureCreated.payload._id, newAdventureData)).toEqual({
+            code: 200,
+            message: "Adventure updated successfully",
+            payload: expect.objectContaining({
+                owner: "Test User",
+                title: "New title",
+                description: "Test Adventure description",
+                category: "MOVIE",
+                peopleGoing: ["Test User"],
+                location: "Test location, Test city",
+                dateTime: futureTimeStamp,
+                city: "Test city",
+                status: "OPEN"
+            })
+        });
+        expect(await Adventure.findById(adventureCreated.payload._id)).toEqual(expect.objectContaining({
+            owner: "Test User",
+            title: "New title",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            peopleGoing: ["Test User"],
+            location: "Test location, Test city",
+            dateTime: futureTimeStamp,
+            city: "Test city",
+            status: "OPEN"
+        }));
+    });
+
+    it("update location success scenario", async () => {
+        expect.assertions(2);
+        const futureTimeStamp = new Date(Date.now() + (1000 * 60 * 60 * 24 * 7)).getTime();
+        const adventure = {
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            location: "Test location, Test city",
+            dateTime: futureTimeStamp
+        };
+        const adventureCreated = await AdventureStore.createAdventure(adventure);
+        const newAdventureData = {
+            location: "New location, New city"
+        };
+        expect(await AdventureStore.updateAdventure(adventureCreated.payload._id, newAdventureData)).toEqual({
+            code: 200,
+            message: "Adventure updated successfully",
+            payload: expect.objectContaining({
+                owner: "Test User",
+                title: "Test Adventure",
+                description: "Test Adventure description",
+                category: "MOVIE",
+                peopleGoing: ["Test User"],
+                location: "New location, New city",
+                dateTime: futureTimeStamp,
+                city: "New city",
+                status: "OPEN"
+            })
+        });
+        expect(await Adventure.findById(adventureCreated.payload._id)).toEqual(expect.objectContaining({
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            peopleGoing: ["Test User"],
+            location: "New location, New city",
+            dateTime: futureTimeStamp,
+            city: "New city",
+            status: "OPEN"
+        }));
+    });
 });
 
 describe("cancelAdventure tests", () => {
