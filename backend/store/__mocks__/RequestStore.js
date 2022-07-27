@@ -1,4 +1,4 @@
-const MockTestData = require('./MockTestData');
+const MockTestData = require('../../test/mocks/MockTestData');
 
 module.exports = class RequestStoreMocks {
     static sendRequest = jest.fn((adventureId, request) => {
