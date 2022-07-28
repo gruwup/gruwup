@@ -59,7 +59,8 @@ public class DiscoverFragment extends Fragment {
     private String address;
     ArrayList<Map<String, String>> mAdventureList;
     static String HTTPRESULT = "";
-    static int GET_FROM_GALLERY = 69;
+    public static int GET_FROM_GALLERY = 69;
+    public static String TEST_IMAGE_KEY = "test_image_key";
     EditText location; //need google autocomplete, so made global
     TextView createButton;
     TextView confirmCreateButton;
@@ -211,7 +212,9 @@ public class DiscoverFragment extends Fragment {
         uploadImage.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                startActivityForResult(new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.INTERNAL_CONTENT_URI), GET_FROM_GALLERY);
+                Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                photoPickerIntent.setType("image/*");
+                startActivityForResult(photoPickerIntent, GET_FROM_GALLERY);
             }
         });
 
@@ -331,8 +334,6 @@ public class DiscoverFragment extends Fragment {
         //Detects request codes
         if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
             Uri selectedImage = data.getData();
-
-
             Bitmap bitmap = null;
             try {
                 bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), selectedImage);
@@ -340,12 +341,18 @@ public class DiscoverFragment extends Fragment {
                 if (imageBMP != null) {
                     imageAlert.setTextColor(Color.rgb(0, 204, 0));
                     imageAlert.setText("Image uploaded successfully");
+                    Toast.makeText(getActivity(), "Image uploaded successfully", Toast.LENGTH_SHORT).show();
                 }
-
             } catch (FileNotFoundException e) {
                 e.printStackTrace();
             } catch (IOException e) {
                 e.printStackTrace();
+            } catch (Exception e) { //for stubbing intents in tests
+                Bundle extras = data.getExtras();
+                if (extras == null || !extras.containsKey(TEST_IMAGE_KEY)) {
+                    return;
+                }
+                imageBMP = (Bitmap) extras.get(TEST_IMAGE_KEY);
             }
         } else if (requestCode == 100 && resultCode == Activity.RESULT_OK) {
             Place place = Autocomplete.getPlaceFromIntent(data);

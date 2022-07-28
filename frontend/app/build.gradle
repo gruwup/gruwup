@@ -79,9 +79,18 @@ dependencies {
 
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0-alpha07'
     androidTestImplementation 'androidx.test:runner:1.4.0'
+
     androidTestImplementation 'androidx.test:rules:1.4.1-alpha07'
 
     // ui automator
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+
+    androidTestImplementation 'androidx.test:rules:1.4.0'
+
+    androidTestImplementation 'com.android.support.test:rules:1.0.2'
+    androidTestImplementation 'com.android.support.test:runner:1.0.2'
+
+    androidTestImplementation 'androidx.test.espresso:espresso-intents:3.4.0'
+
 
 }
