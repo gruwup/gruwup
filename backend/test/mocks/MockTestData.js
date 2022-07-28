@@ -10,7 +10,7 @@ module.exports = class MockTestData {
         image: "Test image",
         location: "Adventure location, London",
         status: "OPEN",
-        city: "London"
+        city: "Vancouver"
     };
 
     static testAdventure2 = {
@@ -24,7 +24,7 @@ module.exports = class MockTestData {
         image: "Test image",
         location: "Adventure location, London",
         status: "OPEN",
-        city: "London"
+        city: "Vancouver"
     };
 
     static testRequest1 = {
@@ -51,12 +51,22 @@ module.exports = class MockTestData {
         __v: 0
     }
 
-    static testProfile = {
+    static testProfile1 = {
         _id: "62d8c985b530168dad13b8a8",
         userId: "102725629585412345678",
         name: "Bob John",
         biography: "tis lit",
-        categories: ["MOVIE", "SPORTS", "FOOD"],
+        categories: ["ART", "MOVIE", "SPORTS", "FOOD"],
+        image: "randomlink",
+        __v: 0
+    }
+
+    static testProfile2 = {
+        _id: "1",
+        userId: "1",
+        name: "HEHEXD",
+        biography: "I love this class",
+        categories: null,
         image: "randomlink",
         __v: 0
     }

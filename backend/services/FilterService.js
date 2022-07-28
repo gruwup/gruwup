@@ -8,10 +8,10 @@ module.exports = class FilterService {
             message: "Server error"
         };
 
-        if (!cityName) {
+        if (typeof cityName !== 'string') {
             result = {
                 code: 400,
-                message: "City name is required"
+                message: "Invalid city name"
             }
         }
         else {
@@ -77,7 +77,7 @@ module.exports = class FilterService {
                     result = {
                         code: 500,
                         message: err._message
-                        };
+                    };
                 });
             }
         }
