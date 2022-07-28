@@ -1,6 +1,7 @@
 const app = require("../../app");
 const mongoose = require("mongoose");
 const supertest = require("supertest");
+const Adventure = require("../../models/Adventure");
 
 const testMongoPort = "27385";
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
@@ -17,7 +18,7 @@ afterAll(async () => {
     await mongoose.connection.close();
 });
 
-describe("POST /adventure/create", () => {
+describe("POST /user/adventure/create", () => {
     it("create adventure with valid data", async () => {
         expect.assertions(1);
         const futureTimestamp = new Date().getTime() + 1000 * 60 * 60 * 24;
@@ -28,8 +29,7 @@ describe("POST /adventure/create", () => {
             category: "MOVIE",
             location: "Test location, Test city",
             dateTime: futureTimestamp,
-        }).then(res => {
-            console.log(res);
+        }).expect(200).then(res => {
             expect(res._body).toEqual(expect.objectContaining({
                 owner: "Test User",
                 title: "Test Adventure",
@@ -41,4 +41,52 @@ describe("POST /adventure/create", () => {
                 }));
         });
     });
+
+    it("create adventure with invalid dat", async () => {
+        expect.assertions(1);
+        await supertest(app).post("/user/adventure/create").send({
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            location: "Test location, Test city"
+        }).expect(400).then(res => {
+            expect(res.text).toEqual("Adventure validation failed: dateTime: Path `dateTime` is required.");
+        });
+    });
+
+    //todo: invalid cookie test
+});
+
+describe("POST /user/adventure/search-by-filter", () => {
+    it("search with valid filter and non-empty result", async () => {
+        expect.assertions(1);
+        const futureTimestamp = new Date().getTime() + 1000 * 60 * 60 * 24;
+        const searchTimestamp = futureTimestamp + 1000 * 60 * 60 * 24;
+        await Adventure.create({
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            location: "Test location, Test city",
+            dateTime: futureTimestamp,
+            city: "Test city",
+            status: "OPEN",
+            peopleGoing: ["Test User"]
+        });
+        await supertest(app).post("/user/adventure/search-by-filter").send({
+            categories: "MOVIE",
+            maxTimeStamp: searchTimestamp
+        }).expect(200).then(res => {
+            expect(res._body).toEqual(expect.arrayContaining([expect.objectContaining({
+                owner: "Test User",
+                title: "Test Adventure",
+                description: "Test Adventure description",
+                category: "MOVIE",
+                location: "Test location, Test city",
+                dateTime: futureTimestamp,
+                city: "Test city",
+                })]));
+        });
+    })
 });
