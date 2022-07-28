@@ -6,6 +6,7 @@ import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
 import static androidx.test.espresso.action.ViewActions.replaceText;
 import static androidx.test.espresso.action.ViewActions.scrollTo;
+import static androidx.test.espresso.assertion.ViewAssertions.matches;
 import static androidx.test.espresso.intent.Intents.intending;
 import static androidx.test.espresso.intent.matcher.IntentMatchers.hasAction;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
@@ -20,6 +21,7 @@ import android.app.Instrumentation;
 import android.content.Intent;
 import android.graphics.BitmapFactory;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -144,15 +146,8 @@ public class CreateAdventureTest {
         appCompatEditText3.perform(scrollTo(), replaceText("11-11-2023 11:11:11"), closeSoftKeyboard());
 
         ViewInteraction appCompatEditText4 = onView(
-                allOf(withId(R.id.create_adventure_location_input),
-                        childAtPosition(
-                                childAtPosition(
-                                        withClassName(is("android.widget.ScrollView")),
-                                        0),
-                                15)));
-        appCompatEditText4.perform(scrollTo(), click());
-
-
+                allOf(withId(R.id.create_adventure_location_input)));
+        appCompatEditText4.perform(scrollTo(), replaceText("2110 Burrard St, Vancouver, BC V6J 3H6"), closeSoftKeyboard());
 
         ViewInteraction materialButton2 = onView(
                 allOf(withId(R.id.confirmButton), withText("Create Adventure"),
@@ -162,6 +157,8 @@ public class CreateAdventureTest {
                                         0),
                                 17)));
         materialButton2.perform(scrollTo(), click());
+        SystemClock.sleep(3500);
+        onView(withText("Choose and Create Adventures!")).check(matches(isDisplayed()));
     }
 
     private static Matcher<View> childAtPosition(
