@@ -88,5 +88,26 @@ describe("POST /user/adventure/search-by-filter", () => {
                 city: "Test city",
                 })]));
         });
-    })
+    });
+
+    it("search with valid filter and empty result", async () => {
+        expect.assertions(1);
+        await supertest(app).post("/user/adventure/search-by-filter").send({
+            categories: "MOVIE",
+            maxTimeStamp: new Date().getTime()
+        }).expect(200).then(res => {
+            expect(res._body).toEqual([]);
+        });
+    });
+
+    it("search with invalid filter", async () => {
+        expect.assertions(1);
+        await supertest(app).post("/user/adventure/search-by-filter").send({
+            categories: "MOVIE"
+        }).expect(400).then(res => {
+            expect(res.text).toEqual("Mandatory filter field missing");
+        });
+    });
+
+    //todo: invalid cookie test
 });
