@@ -1,5 +1,3 @@
-const AdventureStoreMocks = require('../mocks/AdventureStoreMocks');
-const FilterServiceMocks = require('../mocks/FilterServiceMocks');
 const MockTestData = require('../mocks/MockTestData');
 const FilterService = require("../../services/FilterService");
 const Adventure = require("../../models/Adventure");
@@ -19,6 +17,9 @@ afterEach(async () => {
 afterAll(async () => {
     await mongoose.connection.close();
 });
+
+jest.mock("../../store/AdventureStore");
+jest.mock("../../store/UserStore");
 
 describe("getNearbyAdventures tests", () => {
     test("Success scenario", async () => {
@@ -48,48 +49,78 @@ describe("getNearbyAdventures tests", () => {
                 }));
 
         expect(result.payload).toEqual(
-            expect.objectContaining({
-                adventureExpireAt: time, 
-                // adventureId: adventureId,   //this breaks the test for some reason
-                adventureOwner: "userid",
-                adventureTitle: "title",
-                dateTime: time,
-                requester: "severus",
-                requesterId: "severus",
-                status: "PENDING",
-            }));
+            expect.objectContaining([
+                MockTestData.testAdventure1,
+                MockTestData.testAdventure2
+            ]));
+    });
+
+    test('No nearby adventures', async () => {
+        var result = await FilterService.getNearbyAdventures("Toronto")
+        expect(result).toEqual({
+            code: 200,
+            message: "Nearby adventures found",
+            payload: []
+        });
+    });
+
+    test('Invalid city name', async () => {
+        var result = await FilterService.getNearbyAdventures(null)
+        expect(result).toEqual({
+            code: 400,
+            message: "Invalid city name"
+        });
     });
 });
 
-// test('getNearbyAdventures', () => {
-//     expect(FilterServiceMocks.getNearbyAdventures("")).toEqual({
-//         code: 200,
-//         message: "Nearby adventures found",
-//         payload: [
-//             MockTestData.testAdventure1,
-//             MockTestData.testAdventure2
-//         ]
-//     });
-// });
+describe("getRecommndationFeed tests", () => {
+    test("Success scenario", async () => {
+        var result = await FilterService.getRecommendationFeed("3");
+        expect(result).toEqual(
+            expect.objectContaining({ 
+                code: 200, 
+                message: 'Recommendation feed found',
+            }));
 
-// test('getRecommendationFeed', () => {
-//     expect(FilterServiceMocks.getRecommendationFeed("")).toEqual({
-//         code: 200,
-//         message: "Recommendation feed generated",
-//         payload: [
-//             MockTestData.testAdventure1,
-//             MockTestData.testAdventure2
-//         ]
-//     });
-// });
+        expect(result.payload).toEqual(
+            expect.objectContaining([
+                MockTestData.testAdventure1,
+                MockTestData.testAdventure2
+            ]));
+    });
 
-// test('getAdventuresByFilter', () => {
-//     expect(FilterServiceMocks.findAdventuresByFilter({})).toEqual({
-//         code: 200,
-//         message: "Adventures found",
-//         payload: [
-//             MockTestData.testAdventure1,
-//             MockTestData.testAdventure2
-//         ]
+    test('No nearby adventures', async () => {
+        var result = await FilterService.getRecommendationFeed("2");
+        expect(result).toEqual({
+            code: 200,
+            message: "Recommendation feed found",
+            payload: []
+        });
+    });
+
+    test('Non-existent user', async () => {
+        var result = await FilterService.getRecommendationFeed("1");
+        expect(result).toEqual({
+            code: 404,
+            message: "User Profile not found"
+        });
+    });
+});
+
+// describe("getRecommendationFeed tests", () => {
+//     test("success scenario", async () => {
+//         filter = {}
+//         var result = await FilterService.findAdventuresByFilter("3");
+//         expect(result).toEqual(
+//             expect.objectContaining({ 
+//                 code: 200, 
+//                 message: 'Recommendation feed found',
+//             }));
+
+//         expect(result.payload).toEqual(
+//             expect.objectContaining([
+//                 MockTestData.testAdventure1,
+//                 MockTestData.testAdventure2
+//             ]));
 //     });
 // });
