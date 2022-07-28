@@ -3,6 +3,7 @@ var ObjectId = require('mongoose').Types.ObjectId;
 
 module.exports = class AdventureStore {
     static createAdventure = async (adventure) => {
+        console.log("Creating adventure");
         var result = {
             code: 500,
             message: "Server error"
@@ -66,7 +67,7 @@ module.exports = class AdventureStore {
                 });
             }
         });
-
+        console.log(result);
         return result;
     };
 
