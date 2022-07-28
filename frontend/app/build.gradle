@@ -47,9 +47,9 @@ dependencies {
     implementation 'com.google.android.libraries.places:places:2.4.0'
     //implementation 'androidx.test.espresso:espresso-contrib:3.4.0'
     testImplementation 'junit:junit:4.13.2'
-    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.4-alpha07'
     androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test:rules:1.4.0'
+    androidTestImplementation 'androidx.test:rules:1.4.1-alpha07'
 
     implementation 'com.google.android.gms:play-services-auth:20.2.0'
     implementation 'com.squareup.picasso:picasso:2.71828'
@@ -60,6 +60,7 @@ dependencies {
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
     //glide
     implementation 'com.github.bumptech.glide:glide:4.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-contrib:3.5.0-alpha07'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.4.0'
     //animation
     def lottieVersion = "3.4.0"
@@ -76,9 +77,9 @@ dependencies {
         exclude group: 'org.json', module: 'json'
     }
 
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.0-alpha07'
     androidTestImplementation 'androidx.test:runner:1.4.0'
-    androidTestImplementation 'androidx.test:rules:1.4.0'
+    androidTestImplementation 'androidx.test:rules:1.4.1-alpha07'
 
     // ui automator
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'

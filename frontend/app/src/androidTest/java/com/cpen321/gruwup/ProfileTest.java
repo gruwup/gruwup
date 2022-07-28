@@ -52,6 +52,7 @@ public class ProfileTest {
     @Test
     public void testLogin() throws UiObjectNotFoundException {
 
+        // To do: gruwup app has to be in home here / try from app drawer as well
         UiDevice device = UiDevice.getInstance(getInstrumentation());
         device.pressHome();
 
