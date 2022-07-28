@@ -107,20 +107,111 @@ describe("getRecommndationFeed tests", () => {
     });
 });
 
-// describe("getRecommendationFeed tests", () => {
-//     test("success scenario", async () => {
-//         filter = {}
-//         var result = await FilterService.findAdventuresByFilter("3");
-//         expect(result).toEqual(
-//             expect.objectContaining({ 
-//                 code: 200, 
-//                 message: 'Recommendation feed found',
-//             }));
+describe("findAdventureByFilter tests", () => {
+    test("success scenario", async () => {
+        filter = { 
+            categories: ["ART", "MOVIE"],
+            maxTimeStamp: "9999999999" ,
+            city: "Vancouver",
+            maxPeopleGoing: "99999999"
+        }
+        var result = await FilterService.findAdventuresByFilter(filter);
+        expect(result).toEqual(
+            expect.objectContaining({ 
+                code: 200, 
+                message: 'Adventures found',
+            }));
 
-//         expect(result.payload).toEqual(
-//             expect.objectContaining([
-//                 MockTestData.testAdventure1,
-//                 MockTestData.testAdventure2
-//             ]));
-//     });
-// });
+        expect(result.payload).toEqual(
+            expect.objectContaining([
+                MockTestData.testAdventure1,
+                MockTestData.testAdventure2
+            ]));
+    });
+
+    test("No adventure match category", async () => {
+        filter = { 
+            categories: [],
+            maxTimeStamp: "9999999999" ,
+            city: "Vancouver",
+            maxPeopleGoing: "99999999"
+        }
+        var result = await FilterService.findAdventuresByFilter(filter);
+        expect(result).toEqual(
+            expect.objectContaining({ 
+                code: 200, 
+                message: 'Adventures found',
+            }));
+
+        expect(result.payload).toEqual(
+            expect.objectContaining([]));
+    });
+
+    test("No adventure match time", async () => {
+        filter = { 
+            categories: ["ART", "MOVIE"],
+            maxTimeStamp: "0" ,
+            city: "Vancouver",
+            maxPeopleGoing: "99999999"
+        }
+        var result = await FilterService.findAdventuresByFilter(filter);
+        expect(result).toEqual(
+            expect.objectContaining({ 
+                code: 200, 
+                message: 'Adventures found',
+            }));
+
+        expect(result.payload).toEqual(
+            expect.objectContaining([]));
+    });
+
+    test("No adventure match city", async () => {
+        filter = { 
+            categories: ["ART", "MOVIE"],
+            maxTimeStamp: "9999999999" ,
+            city: "Toronto",
+            maxPeopleGoing: "99999999"
+        }
+        var result = await FilterService.findAdventuresByFilter(filter);
+        expect(result).toEqual(
+            expect.objectContaining({ 
+                code: 200, 
+                message: 'Adventures found',
+            }));
+
+        expect(result.payload).toEqual(
+            expect.objectContaining([]));
+    });
+
+    test("No adventure match max people going", async () => {
+        filter = { 
+            categories: ["ART", "MOVIE"],
+            maxTimeStamp: "9999999999" ,
+            city: "Toronto",
+            maxPeopleGoing: "0"
+        }
+        var result = await FilterService.findAdventuresByFilter(filter);
+        expect(result).toEqual(
+            expect.objectContaining({ 
+                code: 200, 
+                message: 'Adventures found',
+            }));
+
+        expect(result.payload).toEqual(
+            expect.objectContaining([]));
+    });
+
+    test("Invalid input - missing field", async () => {
+        filter = { 
+            maxTimeStamp: "9999999999" ,
+            city: "Toronto",
+            maxPeopleGoing: "0"
+        }
+        var result = await FilterService.findAdventuresByFilter(filter);
+        expect(result).toEqual(
+            expect.objectContaining({ 
+                code: 400, 
+                message: 'Mandatory filter field missing',
+            }));
+    });
+});

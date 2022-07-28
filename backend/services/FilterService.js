@@ -48,13 +48,11 @@ module.exports = class FilterService {
 
         var userProfile = {};
         await UserStore.getUserProfile(userId).then(async profile => {
-            console.log(profile);
             result = {
                 code: profile.code,
                 message: profile.message
             };
             if (profile.code === 200) {
-                console.log(userProfile.categories);
                 userProfile = profile.payload;
                 const statusOpen = {status: "OPEN"};
                 var recommendationFilter = { $and: [
