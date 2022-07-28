@@ -97,7 +97,7 @@ module.exports = class FilterService {
             message: "Server error"
         };
 
-        if (!filter || !filter.categories || !filter.dateTime) {
+        if (!filter || !filter.categories || !filter.maxTimeStamp) {
             result = {
                 code: 400,
                 message: "Mandatory filter field missing"
