@@ -8,7 +8,7 @@ const defaultMongoPort = "27017";
 const customMongoPort = "27384";
 
 // Grant is using the custom mongo port 27384, leave this boolean to true if you want to use the default mongo port 27017
-var useDefaultMongoPort = true;
+var useDefaultMongoPort = false;
 var mongoDbUrl = "mongodb://localhost:" + (useDefaultMongoPort ? defaultMongoPort : customMongoPort);
 
 app.use(express.json());
@@ -73,3 +73,5 @@ async function run() {
 }
 
 run()
+
+module.exports = app;
