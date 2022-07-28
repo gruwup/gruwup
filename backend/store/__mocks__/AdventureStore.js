@@ -72,14 +72,35 @@ module.exports = class AdventureStoreMocks {
     });
 
     static findAdventuresByFilter = jest.fn((filter) => {
-        var result =  {
-            code: 200,
-            message: "Adventures found",
-            payload: [
-                MockTestData.testAdventure1,
-                MockTestData.testAdventure2
-            ]
+        if (filter.city) {
+            if (filter.city === "Toronto") {
+                return new Promise((resolve, reject) => {
+                    resolve({
+                        code: 200,
+                        message: "Adventures found",
+                        payload: []
+                    });
+                }); 
+            }
         }
-        return result;
+        else if (!filter.$and[1].category.$in) {
+            return new Promise((resolve, reject) => {
+                resolve({
+                    code: 200,
+                    message: "Adventures found",
+                    payload: []
+                });
+            }); 
+        }
+        return new Promise((resolve, reject) => {
+            resolve({
+                code: 200,
+                message: "Adventures found",
+                payload: [
+                    MockTestData.testAdventure1,
+                    MockTestData.testAdventure2
+                ]
+            });
+        }); 
     });
 };
