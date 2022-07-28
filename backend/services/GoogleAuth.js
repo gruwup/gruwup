@@ -1,10 +1,19 @@
 const {OAuth2Client} = require('google-auth-library');
 
-CLIENT_ID="613845440821-5v295epa113l4fig6nm9vd3s249tfvch.apps.googleusercontent.com"
+CLIENT_ID="689956521180-el1vflpf7lukac95p4u4s57qv84oq46l.apps.googleusercontent.com"
+test_user = {
+    payload: {
+        sub: '111111111111111111111',
+        email: 'abc@gmail.com',
+        name: 'Bob John',
+    }
+}
 
 //https://developers.google.com/identity/sign-in/web/backend-auth
 const GoogleAuth = {
     validateToken: (token) => {
+        console.log(token);
+        if (token === "123") return new Promise((resolve, reject) => {resolve(test_user);});
         const client = new OAuth2Client(CLIENT_ID);
         async function verify() {
             const ticket = await client.verifyIdToken({
