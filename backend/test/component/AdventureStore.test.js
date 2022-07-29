@@ -3,7 +3,7 @@ const Adventure = require("../..//models/Adventure");
 const mongoose = require("mongoose");
 var ObjectId = require('mongoose').Types.ObjectId;
 
-const testMongoPort = "27384";
+const testMongoPort = "27017";
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
 
 beforeAll(async () => {

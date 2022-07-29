@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const Adventure = require('../../models/Adventure');
 const Request = require('../../models/Request');
 
-var mongoDbUrl = "mongodb://localhost:27384";
+const testMongoPort = "27017";
+var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
 
 beforeAll(async () => {
     await mongoose.connect(mongoDbUrl, { useNewUrlParser: true }).then(() => console.log("Connected to MongoDB")).catch(err => console.log(err));

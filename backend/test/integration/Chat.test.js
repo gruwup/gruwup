@@ -6,7 +6,7 @@ const Profile = require("../../models/Profile");
 const Message = require("../../models/Message");
 const ChatSocket = require("../../services/ChatSocket");
 
-const testMongoPort = "27384";
+const testMongoPort = "27017";
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
 
 beforeAll(async () => {

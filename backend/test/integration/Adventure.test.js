@@ -5,7 +5,7 @@ const Adventure = require("../../models/Adventure");
 const Profile = require("../../models/Profile");
 const { ObjectId } = require("mongodb");
 
-const testMongoPort = "27384";
+const testMongoPort = "27017";
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
 
 beforeAll(async () => {

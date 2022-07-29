@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const supertest = require("supertest");
 const Profile = require("../../models/Profile");
 
-const testMongoPort = "27384";
+const testMongoPort = "27017";
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
 
 beforeAll(async () => {
