@@ -78,7 +78,10 @@ module.exports = class User {
     };
     
     static updateUser = async (userId, profile) => {
-        var result;
+        var result = {
+            code: 500,
+            message: "Internal Server Error"
+        };
         
         await Profile.findOneAndUpdate({ userId }, { $set: profile }, {new: true, runValidators: true }).then(profileResult => {
             result = {
@@ -93,12 +96,11 @@ module.exports = class User {
                 }
             }
         }, err => {
-            result = {
-                code: 500,
-                message: err
-            };
+            console.log(err.name);
+            result.code = (err.name === "ValidationError") ? 400 : 500;
+            result.message = err._message;
         });
-
+        console.log(result);
         return result;
     };
 };
