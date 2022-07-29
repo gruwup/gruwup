@@ -24,6 +24,20 @@ module.exports = class RequestStore {
             };
 
             if (adventure) {
+                if(adventure.status !== "OPEN") {
+                    result = {
+                        code: 400,
+                        message: "Adventure is not open"
+                    };
+                    return result;
+                }
+                if(adventure.owner === request.userId) {
+                    result = {
+                        code: 400,
+                        message: "You can't request to your own adventure"
+                    };
+                    return result;
+                }
                 await this.checkIfRequestExists(adventureId, request.userId).then(async requestExistResult => {
                     result = {
                         code: 400,
