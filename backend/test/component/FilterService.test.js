@@ -36,7 +36,7 @@ describe("getNearbyAdventures tests", () => {
             category: "MOVIE",
             status: "OPEN",
             image: "string",
-            city: city
+            city
           };
         var newAdventure = new Adventure(adventureData);
         await newAdventure.save();
