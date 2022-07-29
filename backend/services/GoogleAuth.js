@@ -11,7 +11,7 @@ test_user = {
 
 //https://developers.google.com/identity/sign-in/web/backend-auth
 const GoogleAuth = {
-    validateToken: (token) => {
+    validateToken: (token, client_id) => {
         if (token === "123") return new Promise((resolve, reject) => {resolve(test_user);});
         const client = new OAuth2Client(CLIENT_ID);
         async function verify() {

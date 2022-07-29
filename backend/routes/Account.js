@@ -5,7 +5,7 @@ const Session = require("../services/Session");
 const router = express.Router();
 
 router.post("/sign-in", async (req, res) => {
-    return await GoogleAuth.validateToken(req.body.authentication_code).then(async response => {
+    return await GoogleAuth.validateToken(req.body.authentication_code, req.body.client_id).then(async response => {
         var userId = response.payload['sub'];
         var token = Session.createSession(userId);
         return await UserStore.getUserProfile(userId).then(result => {
