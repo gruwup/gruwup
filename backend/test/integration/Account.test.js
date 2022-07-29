@@ -1,7 +1,6 @@
 const app = require("../../app");
 const mongoose = require("mongoose");
 const supertest = require("supertest");
-const Adventure = require("../../models/Adventure");
 const Profile = require("../../models/Profile");
 const ChatSocket = require("../../services/ChatSocket");
 

@@ -5,9 +5,14 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v3
+      - name: Start MongoDB
+        uses: supercharge/mongodb-github-action@1.7.0
+        with:
+          mongodb-version: 4.7.0
+          mongodb-port: 27384
       - name: Setup
         working-directory: ./backend/
         run: npm install
       - name: Run tests
-        working-directory: ./backend/test
+        working-directory: ./backend/
         run: npm test
