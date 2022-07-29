@@ -1,11 +1,7 @@
 const app = require("../../app");
 const mongoose = require("mongoose");
 const supertest = require("supertest");
-const Adventure = require("../../models/Adventure");
 const Profile = require("../../models/Profile");
-const Request = require("../../models/Request");
-const { ObjectId } = require("mongodb");
-const { IdTokenClient } = require("google-auth-library");
 
 const testMongoPort = "27385";
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
