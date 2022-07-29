@@ -123,6 +123,7 @@ public class LogInActivity extends AppCompatActivity {
             JSONObject jsonObject = new JSONObject();
             try {
                 jsonObject.put("authentication_code", account.getIdToken());
+                jsonObject.put("client_id", getString(R.string.default_web_client_id));
             } catch (JSONException e) {
                 e.printStackTrace();
             }
