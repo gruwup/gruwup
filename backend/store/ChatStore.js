@@ -182,7 +182,7 @@ module.exports = class User {
             if (!messageResult.deletedCount) {
                 result = {
                     code: 404,
-                    message: "Adventure not found"
+                    message: "Messages not found"
                 }
             }
         }, err => {

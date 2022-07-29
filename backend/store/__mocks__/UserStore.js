@@ -2,7 +2,6 @@ const MockTestData = require('../../test/mocks/MockTestData');
 
 module.exports = class RequestStoreMocks {
     static getUserProfile = jest.fn((userId) => {
-        console.log(userId);
         var result =  {
             code: 200,
             message: "User Profile found",
