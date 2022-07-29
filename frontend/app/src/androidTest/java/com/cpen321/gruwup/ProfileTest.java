@@ -48,16 +48,6 @@ public class ProfileTest {
 
     @Test
     public void profTest() {
-//        ViewInteraction hj = onView(
-//                allOf(withText("Sign in"),
-//                        childAtPosition(
-//                                allOf(withId(R.id.sign_in_button),
-//                                        childAtPosition(
-//                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-//                                                0)),
-//                                0),
-//                        isDisplayed()));
-//        hj.perform(click());
 
         ViewInteraction bottomNavigationItemView = onView(
                 allOf(withId(R.id.nav_profile), withContentDescription("Profile"),

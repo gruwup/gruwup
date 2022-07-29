@@ -10,6 +10,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
+import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -165,16 +166,15 @@ public class LoginTest {
         next.click();
 
         UiObject agreeButton = mUiDevice.findObject(new UiSelector().text("I agree"));
-        agreeButton.waitForExists(timeOut);
         agreeButton.click();
 
-        UiObject moreButton = mUiDevice.findObject(new UiSelector().text("MORE"));
-        moreButton.waitForExists(timeOut);
-        moreButton.click();
+        SystemClock.sleep(5000);
 
-        UiObject acceptButton = mUiDevice.findObject(new UiSelector().text("ACCEPT"));
-        acceptButton.waitForExists(timeOut);
-        acceptButton.click();
+//        UiObject moreButton = mUiDevice.findObject(new UiSelector().text("MORE"));
+//        moreButton.click();
+//
+//        UiObject acceptButton = mUiDevice.findObject(new UiSelector().text("ACCEPT"));
+//        acceptButton.click();
     }
 
 
@@ -196,23 +196,6 @@ public class LoginTest {
         UiObject mText = mUiDevice.findObject(new UiSelector().text("gruwupinc@gmail.com"));
         mText.click();
 
-
-    }
-
-
-    @Test
-    public void loginTestUserLoggedIn() throws Exception {
-        ViewInteraction hj = onView(
-                allOf(withText("Sign in"),
-                        childAtPosition(
-                                allOf(withId(R.id.sign_in_button),
-                                        childAtPosition(
-                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                0)),
-                                0),
-                        isDisplayed()));
-
-        hj.perform(click());
 
     }
 
