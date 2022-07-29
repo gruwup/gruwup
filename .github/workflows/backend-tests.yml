@@ -3,12 +3,20 @@ on: [push]
 jobs:
   Backend-Tests:
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+        mongodb-version: ['4.7']
     steps:
       - uses: actions/checkout@v3
-      - name: Start MongoDB
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v2
+        with:
+          node-version: ${{ matrix.node-version }}
+      - name: Start MongoDB v${{ matrix.mongodb-version }}
         uses: supercharge/mongodb-github-action@1.7.0
         with:
-          mongodb-version: 4.7.0
+          mongodb-version: ${{ matrix.mongodb-version }}
           mongodb-port: 27384
       - name: Setup
         working-directory: ./backend/
