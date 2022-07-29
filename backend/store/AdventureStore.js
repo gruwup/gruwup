@@ -8,21 +8,29 @@ module.exports = class AdventureStore {
             message: "Server error"
         };
 
+        if (!adventure) {
+            result = {
+                code: 400,
+                message: "Adventure is required"
+            };
+            return result;
+        }
+
         var duplicationQuery = { 
             $and: [
-            { adventureOwner: adventure.adventureOwner },
+            { adventureOwner: adventure.owner },
             { title: adventure.title },
             { description: adventure.description },
             { category: adventure.category },
             { location: adventure.location }
         ]};
-        
+
         await Adventure.find(duplicationQuery).then(async adventures => {
             result = {
                 code: 400,
                 message: "Adventure already exists"
             };
-
+            
             if (adventures.length === 0) {
                 var adventureData = {
                     owner: adventure.owner,
@@ -37,7 +45,7 @@ module.exports = class AdventureStore {
                     city: adventure.location.split(", ")[1] ?? "unknown"
                 };
                 var newAdventure = new Adventure(adventureData);
-        
+
                 await newAdventure.save().then(adventure => {
                     result = {
                         code: 200,
@@ -67,6 +75,14 @@ module.exports = class AdventureStore {
             code: 500,
             message: "Server error"
         };
+
+        if (!adventureId) {
+            result = {
+                code: 400,
+                message: "Adventure id is required"
+            };
+            return result;
+        }
 
         if (!ObjectId.isValid(adventureId)) {
             result = {
@@ -106,6 +122,14 @@ module.exports = class AdventureStore {
             message: "Server error"
         };
 
+        if (!adventureId) {
+            result = {
+                code: 400,
+                message: "Adventure id is required"
+            };
+            return result;
+        }
+
         if (adventure.location) {
             adventure.city = adventure.location.split(", ")[1] ?? "unknown";
         }
@@ -137,6 +161,12 @@ module.exports = class AdventureStore {
                     code: 500,
                     message: err._message
                 };
+                if (err.name === "ValidationError") {
+                    result = {
+                        code: 400,
+                        message: err.message
+                    };
+                }
             });
         }
         
@@ -148,6 +178,14 @@ module.exports = class AdventureStore {
             code: 500,
             message: "Server error"
         };
+
+        if (!adventureId) {
+            result = {
+                code: 400,
+                message: "Adventure id is required"
+            };
+            return result;
+        }
 
         if (!ObjectId.isValid(adventureId)) {
             result = {
@@ -191,7 +229,7 @@ module.exports = class AdventureStore {
         if (!title) {
             result = {
                 code: 400,
-                message: "Missing title query parameter"
+                message: "Title is required"
             };
             return result;
         }
@@ -228,7 +266,7 @@ module.exports = class AdventureStore {
         if (!userId) {
             result = {
                 code: 400,
-                message: "Missing user id query parameter"
+                message: "User id is required"
             };
             return result;
         }
@@ -269,6 +307,14 @@ module.exports = class AdventureStore {
             code: 500,
             message: "Server error"
         };
+
+        if (!userId) {
+            result = {
+                code: 400,
+                message: "User id is required"
+            };
+            return result;
+        }
 
         if (!ObjectId.isValid(adventureId)) {
             result = {
@@ -311,7 +357,7 @@ module.exports = class AdventureStore {
                         ).then(adventure => {
                             result = {
                                 code: 200,
-                                message: "Remoced owner successfully, new owner is " + participants[0],
+                                message: "Removed owner successfully, new owner is " + participants[0],
                                 payload: adventure
                             };
                         }, err => {

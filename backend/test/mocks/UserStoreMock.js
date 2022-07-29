@@ -8,7 +8,7 @@ module.exports = class RequestStoreMocks {
             payload: MockTestData.testProfile
         }
         if (userId === "1") {
-            var result = {
+            result = {
                 code: 404,
                 message: "User Profile not found"
             }
