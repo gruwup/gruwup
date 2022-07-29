@@ -13,11 +13,11 @@ test_user = {
 const GoogleAuth = {
     validateToken: (token, client_id) => {
         if (token === "123") return new Promise((resolve, reject) => {resolve(test_user);});
-        const client = new OAuth2Client(CLIENT_ID);
+        const client = new OAuth2Client(client_id);
         async function verify() {
             const ticket = await client.verifyIdToken({
                 idToken: token,
-                audience: CLIENT_ID
+                audience: client_id
             });
             return ticket;
         }
