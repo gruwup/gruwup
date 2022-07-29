@@ -397,7 +397,7 @@ describe("GET /user/adventure/:userId/get-adventures", () => {
     it("valid user id", async () => {
         expect.assertions(1);
         const futureTimestamp = new Date().getTime() + 1000 * 60 * 60 * 24;
-        const adventure1 = await Adventure.create({
+        await Adventure.create({
             owner: "TestUser1",
             title: "Test Adventure1",
             description: "Test Adventure description",
@@ -408,7 +408,7 @@ describe("GET /user/adventure/:userId/get-adventures", () => {
             status: "OPEN",
             peopleGoing: ["TestUser1", "TestUser2"]
         });
-        const adventure2 = await Adventure.create({
+        await Adventure.create({
             owner: "TestUser2",
             title: "Test Adventure2",
             description: "Test Adventure description",
@@ -508,7 +508,7 @@ describe("GET /user/adventure/nearby", () => {
     it("call with city name", async() => {
         expect.assertions(1);
         const futureTimestamp = new Date().getTime() + 1000 * 60 * 60 * 24;
-        const adventure = await Adventure.create({
+        await Adventure.create({
             owner: "TestUser",
             title: "Test Adventure",
             description: "Test Adventure description",

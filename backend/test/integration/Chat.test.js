@@ -4,7 +4,6 @@ const supertest = require("supertest");
 const Adventure = require("../../models/Adventure");
 const Profile = require("../../models/Profile");
 const Message = require("../../models/Message");
-const { ObjectId } = require("mongodb");
 const ChatSocket = require("../../services/ChatSocket");
 
 const testMongoPort = "27384";
@@ -384,7 +383,7 @@ describe("GET /user/chat/:adventureId/recent-pagination", () => {
             peopleGoing: ["Random User"]
         });
 
-        const user = await Profile.create({
+        await Profile.create({
             userId: "Test User",
             name: "Test User",
             biography: "I am a 20 year old living in Vancouver",
