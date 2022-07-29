@@ -89,7 +89,6 @@ module.exports = class AdventureStoreMocks {
             }
             else if (filter.$and && filter.$and[0].category.$in && filter.$and[1].dateTime.$lte) { //findByFilter
                 for (var k = 0; k < filter.$and[0].category.$in.length; k++) {
-                    console.log(filter.$and[0].category.$in[k])
                     if (filter.$and[0].category.$in[k] === data[i].category && filter.$and[1].dateTime.$lte >= data[i].dateTime) {
                         if (filter.$and[2] && filter.$and[2].city) {
                             if (filter.$and[2].city === data[i].city) {
@@ -103,7 +102,6 @@ module.exports = class AdventureStoreMocks {
                 }
             }
         }
-        console.log(result);
         return new Promise((resolve, reject) => {
             resolve({
                 code: 200,

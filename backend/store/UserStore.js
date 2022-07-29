@@ -96,11 +96,9 @@ module.exports = class User {
                 }
             }
         }, err => {
-            console.log(err.name);
             result.code = (err.name === "ValidationError") ? 400 : 500;
             result.message = err._message;
         });
-        console.log(result);
         return result;
     };
 };

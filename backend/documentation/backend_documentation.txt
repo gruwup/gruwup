@@ -673,7 +673,7 @@ paths:
               schema:
                 allOf:
                   - $ref: '#/components/schemas/Error'
-  /user/chat/{adventureId}/recent:
+  /user/chat/{adventureId}/recent-pagination:
     get:
       summary: get most recent pagination value for adventureId
       tags:
@@ -918,6 +918,8 @@ components:
       type: object
       properties:
         authentication_code:
+          type: string
+        client_id:
           type: string
     userInfo:
       type: object
