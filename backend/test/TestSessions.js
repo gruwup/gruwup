@@ -1,6 +1,5 @@
 // This file is used for testing purposes only
 const axios = require('axios').default;
-const app = require('../app');
 const data = {
     client_id: "689956521180-32cf3ep88st89u27u5jnq7g32ve9ijp5.apps.googleusercontent.com",
     client_secret: "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",

@@ -21,8 +21,7 @@ router.post("/sign-in", async (req, res) => {
             return res.status(500).send({ message: err.toString() });
         });
     }, err => {
-        void err;
-        return res.status(400).send({ message: "Bad request" });
+        return res.status(400).send({ message: err.toString() });
     });
 });
 
