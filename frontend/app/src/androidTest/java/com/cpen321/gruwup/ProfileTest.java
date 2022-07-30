@@ -35,8 +35,8 @@ import org.junit.runner.RunWith;
 public class ProfileTest {
 
     @Rule
-    public ActivityScenarioRule<LogInActivity> mActivityScenarioRule =
-            new ActivityScenarioRule<>(LogInActivity.class);
+    public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
+            new ActivityScenarioRule<>(MainActivity.class);
 
     @Rule
     public GrantPermissionRule mGrantPermissionRule =
