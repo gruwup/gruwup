@@ -33,6 +33,7 @@ public class ChatFragment extends Fragment {
 
     ArrayList <Adventure> adventures = new ArrayList<>();
     private static String TAG = "ChatFragment";
+    final static String RESPONSE_TIME_TAG = "RESPONSE_TIME ";
 
 
     private String address;
@@ -104,9 +105,13 @@ public class ChatFragment extends Fragment {
         cookie = SharedPreferencesUtil.getCookie(this.getActivity());
         Log.d(TAG, "Cookie is "+cookie);
 
+        long start = System.currentTimeMillis();
         RequestsUtil.getWithCookie("http://"+address+":8000/user/chat/" + UserID + "/recent-list", cookie, new Callback() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                long end = System.currentTimeMillis();
+                Log.d(RESPONSE_TIME_TAG, "GET CHAT LIST: " + (end-start) + " millis");
+
                 if(response.isSuccessful()){
                     Log.d(TAG, "get request successful");
                     String jsonData = response.body().string();

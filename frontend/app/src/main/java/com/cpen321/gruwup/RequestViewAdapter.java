@@ -39,6 +39,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
 
     private String address;
     static final String TAG = "RequestViewAdapter";
+    final static String RESPONSE_TIME_TAG = "RESPONSE_TIME ";
 
     public RequestViewAdapter(Context context, ArrayList<Request> requests){
         this.context = context;
@@ -119,9 +120,13 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         if (action.equals("accept")){
             String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/accept";
             String json = "";
+
+            long start = System.currentTimeMillis();
             RequestsUtil.putWithCookie(url,json, cookie, new Callback() {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    long end = System.currentTimeMillis();
+                    Log.d(RESPONSE_TIME_TAG, "ACCEPT REQUEST: " + (end-start) + " millis");
                     String jsonData = response.body().string();
                     Log.d(TAG, jsonData);
                 }
@@ -137,9 +142,13 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         else if (action.equals("deny")){
             String url = "http://"+ address + ":8081/user/request/" + requests.get(position).getRequestId() + "/reject";
             String json = "";
+
+            long start = System.currentTimeMillis();
             RequestsUtil.putWithCookie(url,json, cookie,new Callback() {
                 @Override
                 public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                    long end = System.currentTimeMillis();
+                    Log.d(RESPONSE_TIME_TAG, "DENY REQUEST: " + (end-start) + " millis");
                     String jsonData = response.body().string();
                     Log.d(TAG, jsonData);
                 }

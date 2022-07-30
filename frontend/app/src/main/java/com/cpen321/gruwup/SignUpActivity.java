@@ -36,6 +36,7 @@ public class SignUpActivity extends AppCompatActivity {
     private ArrayList<String> mSelectedCategoryNames = new ArrayList<>();
     RecyclerView categoryView ;
     static final String TAG = "SignUpActivity";
+    final static String RESPONSE_TIME_TAG = "RESPONSE_TIME ";
     private GoogleSignInClient mGoogleSignInClient;
 
     private String address;
@@ -160,6 +161,7 @@ public class SignUpActivity extends AppCompatActivity {
 
         String cookie = SharedPreferencesUtil.getCookie(getApplicationContext());
 
+        long start = System.currentTimeMillis();
         RequestsUtil.postWithCookie("http://"+address+":8081/user/profile/create", jsonObject.toString(), cookie,new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -169,6 +171,9 @@ public class SignUpActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                long end = System.currentTimeMillis();
+                Log.d(RESPONSE_TIME_TAG, "CREATE PROFILE: " + (end-start) + " millis");
+
                 if(response.isSuccessful()){
                     Log.d(TAG, "create profile successful");
                 }
