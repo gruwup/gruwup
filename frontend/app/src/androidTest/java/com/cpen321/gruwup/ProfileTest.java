@@ -90,7 +90,7 @@ public class ProfileTest {
         materialButton2.perform(click());
 
         ViewInteraction appCompatEditText = onView(
-                allOf(withId(R.id.biographyInput), withText("I love travelling"),
+                allOf(withId(R.id.biographyInput),
                         childAtPosition(
                                 childAtPosition(
                                         withId(android.R.id.content),
