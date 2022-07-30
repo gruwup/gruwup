@@ -29,6 +29,7 @@ public class LogInActivity extends AppCompatActivity {
     private GoogleSignInClient mGoogleSignInClient;
     private int RC_SIGN_IN = 1;
     final static String TAG = "LogInActivity";
+    final static String RESPONSE_TIME_TAG = "RESPONSE_TIME ";
 
     private String address;
 
@@ -130,6 +131,7 @@ public class LogInActivity extends AppCompatActivity {
 
             //TO DO: change this to remote server url
             String finalImageUrl = imageUrl;
+            long start = System.currentTimeMillis();
             RequestsUtil.post("http://"+address+":8081/account/sign-in", jsonObject.toString(), new Callback(){
                         @Override
                         public void onFailure(Call call, IOException e) {
@@ -145,8 +147,9 @@ public class LogInActivity extends AppCompatActivity {
 
                         @Override
                         public void onResponse(Call call, Response response) throws IOException {
+                            long end = System.currentTimeMillis();
+                            Log.d(RESPONSE_TIME_TAG, "SIGN IN: " + (end-start) + " millis");
                             Log.d(TAG, "login successful");
-
                             String jsonData = response.body().string();
                             String cookie = response.headers().get("Set-Cookie");
 

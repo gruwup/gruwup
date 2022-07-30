@@ -239,12 +239,15 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
+        long start = System.currentTimeMillis();
         RequestsUtil.postWithCookie("http://"+address+":8081/account/sign-out", jsonObject.toString(), cookie, new Callback(){
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                long end = System.currentTimeMillis();
+                Log.d(RESPONSE_TIME_TAG, "SIGN OUT: " + (end-start) + " millis");
+
                 if(response.isSuccessful()){
-                    Log.d(TAG, "sign out successful");
                     Intent intent = new Intent(getActivity(), LogInActivity.class);
                     startActivity(intent);
                 }
@@ -359,7 +362,8 @@ public class ProfileFragment extends Fragment {
             e.printStackTrace();
         }
 
-        // To do: change this later with server url
+        long start = System.currentTimeMillis();
+
         RequestsUtil.putWithCookie("http://"+address+":8081/user/profile/" + UserID + "/edit", jsonObject.toString(), cookie, new Callback() {
             @Override
             public void onFailure(Call call, IOException e) {
@@ -369,6 +373,9 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                long end = System.currentTimeMillis();
+                Log.d(RESPONSE_TIME_TAG, "EDIT PROFILE: " + (end-start) + " millis");
+
                 if(response.isSuccessful()){
                     Log.d(TAG, "profile edit successful");
                 }
