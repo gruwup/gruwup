@@ -48,6 +48,7 @@ public class ProfileFragment extends Fragment {
     Dialog profileDialog;
     Button editButton;
     final static String TAG = "ProfileFragment";
+    final static String RESPONSE_TIME_TAG = "RESPONSE_TIME ";
 
     private String address;
 
@@ -271,6 +272,7 @@ public class ProfileFragment extends Fragment {
         // To do: replace this with server url
         String cookie = SharedPreferencesUtil.getCookie(this.getActivity());
         Log.d(TAG, "User Id is "+ UserID);
+        long start = System.currentTimeMillis();
         RequestsUtil.getWithCookie("http://"+address+":8081/user/profile/" + UserID + "/get", cookie, new Callback() {
 
             @Override
@@ -281,6 +283,9 @@ public class ProfileFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                long end = System.currentTimeMillis();
+                Log.d(RESPONSE_TIME_TAG, "GET PROFILE: " + (end-start) + " millis");
+
                 if(response.isSuccessful()){
                     Log.d(TAG, "get profile successful");
                     String jsonData = response.body().string();
