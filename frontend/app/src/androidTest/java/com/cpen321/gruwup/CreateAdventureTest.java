@@ -87,8 +87,7 @@ public class CreateAdventureTest {
     }
 
     @Test
-    public void createAdventureTest() {
-
+    public void createAdventureTestSuccess() {
         ViewInteraction materialTextView = onView(
                 allOf(withId(R.id.create_adventure), withText(" +"),
                         childAtPosition(
@@ -158,6 +157,207 @@ public class CreateAdventureTest {
                                 17)));
         materialButton2.perform(scrollTo(), click());
         SystemClock.sleep(3500);
+        onView(withText("Choose and Create Adventures!")).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void createAdventureTestFailNoImage() {
+        ViewInteraction materialTextView = onView(
+                allOf(withId(R.id.create_adventure), withText(" +"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.RelativeLayout")),
+                                        2),
+                                1),
+                        isDisplayed()));
+        materialTextView.perform(click());
+
+        ViewInteraction appCompatEditText = onView(
+                allOf(withId(R.id.create_adventure_title_input),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                2)));
+        appCompatEditText.perform(scrollTo(), replaceText("t"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText2 = onView(
+                allOf(withId(R.id.create_adventure_description_input),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                5)));
+        appCompatEditText2.perform(scrollTo(), replaceText("d"), closeSoftKeyboard());
+
+        ViewInteraction materialTextView2 = onView(
+                allOf(withId(R.id.categoryName), withText("MOVIE"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.cardview.widget.CardView")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView2.perform(click());
+
+        //no image!
+
+        ViewInteraction appCompatEditText3 = onView(
+                allOf(withId(R.id.create_adventure_time_input),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                12)));
+        appCompatEditText3.perform(scrollTo(), replaceText("11-11-2023 11:11:11"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText4 = onView(
+                allOf(withId(R.id.create_adventure_location_input)));
+        appCompatEditText4.perform(scrollTo(), replaceText("2110 Burrard St, Vancouver, BC V6J 3H6"), closeSoftKeyboard());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.confirmButton), withText("Create Adventure"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                17)));
+        materialButton2.perform(scrollTo(), click());
+        onView(allOf(withId(R.id.create_adventure_location_input))).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void createAdventureTestFailNoTime() {
+        ViewInteraction materialTextView = onView(
+                allOf(withId(R.id.create_adventure), withText(" +"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.RelativeLayout")),
+                                        2),
+                                1),
+                        isDisplayed()));
+        materialTextView.perform(click());
+
+        ViewInteraction appCompatEditText = onView(
+                allOf(withId(R.id.create_adventure_title_input),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                2)));
+        appCompatEditText.perform(scrollTo(), replaceText("t"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText2 = onView(
+                allOf(withId(R.id.create_adventure_description_input),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                5)));
+        appCompatEditText2.perform(scrollTo(), replaceText("d"), closeSoftKeyboard());
+
+        ViewInteraction materialTextView2 = onView(
+                allOf(withId(R.id.categoryName), withText("MOVIE"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.cardview.widget.CardView")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView2.perform(click());
+
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.create_adventure_upload_image_button), withText("Upload Image"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                9)));
+        materialButton.perform(scrollTo(), click());
+
+        //no time!
+
+        ViewInteraction appCompatEditText4 = onView(
+                allOf(withId(R.id.create_adventure_location_input)));
+        appCompatEditText4.perform(scrollTo(), replaceText("2110 Burrard St, Vancouver, BC V6J 3H6"), closeSoftKeyboard());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.confirmButton), withText("Create Adventure"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                17)));
+        materialButton2.perform(scrollTo(), click());
+        onView(allOf(withId(R.id.create_adventure_location_input))).check(matches(isDisplayed()));
+    }
+
+    @Test
+    public void createAdventureTestCancelled() {
+        ViewInteraction materialTextView = onView(
+                allOf(withId(R.id.create_adventure), withText(" +"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.RelativeLayout")),
+                                        2),
+                                1),
+                        isDisplayed()));
+        materialTextView.perform(click());
+
+        ViewInteraction appCompatEditText = onView(
+                allOf(withId(R.id.create_adventure_title_input),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                2)));
+        appCompatEditText.perform(scrollTo(), replaceText("t"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText2 = onView(
+                allOf(withId(R.id.create_adventure_description_input),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                5)));
+        appCompatEditText2.perform(scrollTo(), replaceText("d"), closeSoftKeyboard());
+
+        ViewInteraction materialTextView2 = onView(
+                allOf(withId(R.id.categoryName), withText("MOVIE"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("androidx.cardview.widget.CardView")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        materialTextView2.perform(click());
+
+        ViewInteraction materialButton = onView(
+                allOf(withId(R.id.create_adventure_upload_image_button), withText("Upload Image"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                9)));
+        materialButton.perform(scrollTo(), click());
+
+        ViewInteraction appCompatEditText3 = onView(
+                allOf(withId(R.id.create_adventure_time_input),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                12)));
+        appCompatEditText3.perform(scrollTo(), replaceText("11-11-2023 11:11:11"), closeSoftKeyboard());
+
+        ViewInteraction appCompatEditText4 = onView(
+                allOf(withId(R.id.create_adventure_location_input)));
+        appCompatEditText4.perform(scrollTo(), replaceText("2110 Burrard St, Vancouver, BC V6J 3H6"), closeSoftKeyboard());
+
+        ViewInteraction materialButton2 = onView(
+                allOf(withId(R.id.create_adventure_go_back)));
+        materialButton2.perform(scrollTo(), click());
+
         onView(withText("Choose and Create Adventures!")).check(matches(isDisplayed()));
     }
 
