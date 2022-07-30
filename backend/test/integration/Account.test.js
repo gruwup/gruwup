@@ -2,13 +2,24 @@ const app = require("../../app");
 const mongoose = require("mongoose");
 const supertest = require("supertest");
 const Profile = require("../../models/Profile");
-const ChatSocket = require("../../services/ChatSocket");
+const TestSessions = require("../TestSessions");
 
-const testMongoPort = "27017";
+const testMongoPort = "27384";
+const PORT = "8081"
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
+var token, cookie, server;
 
 beforeAll(async () => {
-    await mongoose.connect(mongoDbUrl, { useNewUrlParser: true }).then(() => console.log("Connected to MongoDB at Url: %s", mongoDbUrl)).catch(err => console.log(err));
+    await mongoose.connect(mongoDbUrl, { useNewUrlParser: true }).then(() => {
+        console.log("Connected to MongoDB at Url: %s", mongoDbUrl)
+        server = app.listen(PORT, (req, res) => {
+            var host = server.address().address;
+            var port = server.address().port;
+            console.log("App listening at http://%s:%s", host, port);
+        });
+    }).catch(err => console.log(err));
+    token = await TestSessions.generateTestToken();
+    cookie = await TestSessions.getSessionCookie();
 });
 
 afterEach(async () => {
@@ -17,13 +28,14 @@ afterEach(async () => {
 
 afterAll(async () => {
     await mongoose.connection.close();
+    await server.close();
 });
 
 describe("POST /account/sign-in", () => {
     it("sign in for exising user", async () => {
         expect.assertions(1);
         await Profile.create({
-            userId: "Test User",
+            userId: "102054894045485647180",
             name: "Test User",
             biography: "I am a 20 year old living in Vancouver",
             categories: ["MOVIE", "MUSIC"],
@@ -32,15 +44,14 @@ describe("POST /account/sign-in", () => {
 
         await supertest(app)    
             .post("/account/sign-in")
-            .set('Cookie', 'gruwup-session=123')
             .send({
-                authentication_code: "123",
-                client_id: "123"
+                authentication_code: token,
+                client_id: TestSessions.client_id
               })
             .expect(200)
             .then(res => {
                 expect(JSON.parse(res.text)).toEqual({
-                    userId: "Test User",
+                    userId: "102054894045485647180",
                     userExists: true
                 });
             });
@@ -50,15 +61,14 @@ describe("POST /account/sign-in", () => {
         expect.assertions(1);
         await supertest(app)    
             .post("/account/sign-in")
-            .set('Cookie', 'gruwup-session=123')
             .send({
-                authentication_code: "123",
-                client_id: "123"
+                authentication_code: token,
+                client_id: TestSessions.client_id
               })
             .expect(404)
             .then(res => {
                 expect(JSON.parse(res.text)).toEqual({
-                    userId: "Test User",
+                    userId: "102054894045485647180",
                     userExists: false
                 });
             });
@@ -80,7 +90,7 @@ describe("POST /account/sign-out", () => {
         expect.assertions(1);
         await supertest(app)    
             .post("/account/sign-out")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .send()
             .expect(200)
             .then(res => {

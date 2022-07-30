@@ -3,7 +3,7 @@ const FilterService = require("../../services/FilterService");
 const Adventure = require("../../models/Adventure");
 const mongoose = require("mongoose");
 
-const testMongoPort = "27017";
+const testMongoPort = "27384";
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
 
 beforeAll(async () => {

@@ -7,7 +7,7 @@ const defaultMongoPort = "27017";
 const customMongoPort = "27384";
 
 // Grant is using the custom mongo port 27384, leave this boolean to true if you want to use the default mongo port 27017
-var useDefaultMongoPort = true;
+var useDefaultMongoPort = false;
 var mongoDbUrl = "mongodb://localhost:" + (useDefaultMongoPort ? defaultMongoPort : customMongoPort);
 
 // Chat server
@@ -46,7 +46,7 @@ async function run() {
     }
     catch (err) {
         console.log(err.stack);
-        await client.close();
+        await server.close();
     }
 }
 
