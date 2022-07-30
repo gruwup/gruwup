@@ -26,6 +26,7 @@ import okhttp3.Response;
 public class RequestsFragment extends Fragment {
     ArrayList<Request> requests = new ArrayList<>();
     static final String TAG = "RequestsFragment";
+    static final String RESPONSE_TIME_TAG = "RESPONSE_TIME ";
 
     private String address;
     private RequestViewAdapter adapter;
@@ -61,7 +62,9 @@ public class RequestsFragment extends Fragment {
     private void getAllRequests() throws IOException {
         String UserID = SharedPreferencesUtil.getUserId(this.getActivity());
         String cookie = SharedPreferencesUtil.getCookie(this.getActivity());
-        Log.d(TAG, "User Id is "+ UserID);
+
+        long start = System.currentTimeMillis();
+
         RequestsUtil.getWithCookie("http://"+address+":8081/user/request/" + UserID + "/get-requests", cookie, new Callback() {
 
             @Override
@@ -72,6 +75,9 @@ public class RequestsFragment extends Fragment {
 
             @Override
             public void onResponse(Call call, Response response) throws IOException {
+                long end = System.currentTimeMillis();
+                Log.d(RESPONSE_TIME_TAG, "GET REQUESTS: " + (end-start) + " millis");
+
                 if(response.isSuccessful()){
                     Log.d(TAG, "GET request successful");
                     String jsonData = response.body().string();
