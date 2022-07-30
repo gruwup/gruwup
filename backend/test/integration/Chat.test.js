@@ -71,6 +71,55 @@ describe("POST /user/chat/:adventureId/send", () => {
         });
     });
 
+    it("send 2 messages with valid data", async () => {
+        expect.assertions(2);
+        const adventure = await Adventure.create({
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            location: "Test location, Test city",
+            dateTime: new Date().getTime() + 1000 * 60 * 60 * 24,
+            city: "Test city",
+            status: "OPEN",
+            peopleGoing: ["Test User"]
+        });
+
+        await Profile.create({
+            userId: "Test User",
+            name: "Test User",
+            biography: "I am a 20 year old living in Vancouver",
+            categories: ["MOVIE", "MUSIC"],
+            image: "imagegivenbygoogle.com"
+        });
+
+        await supertest(app)    
+            .post("/user/chat/" + adventure._id + "/send")
+            .set('Cookie', cookie)
+            .send({
+                userId: "Test User",
+                name: "Test User",
+                message: "Test message",
+                dateTime: new Date().getTime() + 1000 * 60 * 60 * 24
+        }).expect(200)
+        .then(res => {
+            expect(res.text).toEqual("OK");
+        });
+
+        await supertest(app)    
+            .post("/user/chat/" + adventure._id + "/send")
+            .set('Cookie', cookie)
+            .send({
+                userId: "Test User",
+                name: "Test User",
+                message: "Test message 2",
+                dateTime: new Date().getTime() + 1000 * 60 * 60 * 24
+        }).expect(200)
+        .then(res => {
+            expect(res.text).toEqual("OK");
+        });
+    });
+
     it("send message with invalid data", async () => {
         expect.assertions(1);
         const adventure = await Adventure.create({
@@ -103,6 +152,54 @@ describe("POST /user/chat/:adventureId/send", () => {
         }).expect(400)
         .then(res => {
             expect(JSON.parse(res.text).message).toEqual("Message validation failed");
+        });
+    });
+
+    it("send message with invalid data to existing message group", async () => {
+        expect.assertions(2);
+        const adventure = await Adventure.create({
+            owner: "Test User",
+            title: "Test Adventure",
+            description: "Test Adventure description",
+            category: "MOVIE",
+            location: "Test location, Test city",
+            dateTime: new Date().getTime() + 1000 * 60 * 60 * 24,
+            city: "Test city",
+            status: "OPEN",
+            peopleGoing: ["Test User"]
+        });
+
+        await Profile.create({
+            userId: "Test User",
+            name: "Test User",
+            biography: "I am a 20 year old living in Vancouver",
+            categories: ["MOVIE", "MUSIC"],
+            image: "imagegivenbygoogle.com"
+        });
+
+        await supertest(app)    
+            .post("/user/chat/" + adventure._id + "/send")
+            .set('Cookie', cookie)
+            .send({
+                userId: "Test User",
+                name: "Test User",
+                message: "Test message",
+                dateTime: new Date().getTime() + 1000 * 60 * 60 * 24
+        }).expect(200)
+        .then(res => {
+            expect(res.text).toEqual("OK");
+        });
+
+        await supertest(app)    
+            .post("/user/chat/" + adventure._id + "/send")
+            .set('Cookie', cookie)
+            .send({
+                userId: "Test User",
+                name: "Test User",
+                dateTime: new Date().getTime() + 1000 * 60 * 60 * 24
+        }).expect(400)
+        .then(res => {
+            expect(JSON.parse(res.text).message).toEqual("Validation failed");
         });
     });
 
@@ -338,7 +435,7 @@ describe("GET /user/chat/:userid/recent-list", () => {
 });
 
 describe("GET /user/chat/:adventureId/recent-pagination", () => {
-    it("Get recent pagination with adventure and corresponding messages", async () => {
+    it("Get recent pagination with adventure and 2 corresponding message groups", async () => {
         expect.assertions(1);
         const adventure = await Adventure.create({
             owner: "Random User",
@@ -346,7 +443,7 @@ describe("GET /user/chat/:adventureId/recent-pagination", () => {
             description: "Test Adventure description",
             category: "MOVIE",
             location: "Test location, Test city",
-            dateTime: new Date().getTime() + 1000 * 60 * 60 * 24,
+            dateTime: new Date().getTime() - 1000,
             city: "Test city",
             status: "OPEN",
             peopleGoing: ["Random User"]
@@ -363,12 +460,24 @@ describe("GET /user/chat/:adventureId/recent-pagination", () => {
         await Message.create({
             adventureId: adventure._id,
             pagination: adventure.dateTime,
-            prevPagination: null,
+            prevPagination: "999",
             messages: [{
                         userId: user.userId,
                         name: user.name,
                         message: "test message",
                         dateTime: adventure.dateTime
+                    }]
+        });
+
+        await Message.create({
+            adventureId: adventure._id,
+            pagination: "999",
+            prevPagination: null,
+            messages: [{
+                        userId: user.userId,
+                        name: user.name,
+                        message: "test message",
+                        dateTime: "999"
                     }]
         });
 
