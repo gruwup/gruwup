@@ -4,12 +4,23 @@ const supertest = require("supertest");
 const Adventure = require("../../models/Adventure");
 const Profile = require("../../models/Profile");
 const { ObjectId } = require("mongodb");
+const TestSessions = require("../TestSessions");
 
 const testMongoPort = "27017";
+const PORT = "8081"
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
+var cookie, server;
 
 beforeAll(async () => {
-    await mongoose.connect(mongoDbUrl, { useNewUrlParser: true }).then(() => console.log("Connected to MongoDB at Url: %s", mongoDbUrl)).catch(err => console.log(err));
+    await mongoose.connect(mongoDbUrl, { useNewUrlParser: true }).then(() => {
+        console.log("Connected to MongoDB at Url: %s", mongoDbUrl)
+        server = app.listen(PORT, (req, res) => {
+            var host = server.address().address;
+            var port = server.address().port;
+            console.log("App listening at http://%s:%s", host, port);
+        });
+    }).catch(err => console.log(err));
+    cookie = await TestSessions.getSessionCookie();
 });
 
 afterEach(async () => {
@@ -18,6 +29,7 @@ afterEach(async () => {
 
 afterAll(async () => {
     await mongoose.connection.close();
+    await server.close();
 });
 
 describe("POST /user/adventure/create", () => {
@@ -26,7 +38,7 @@ describe("POST /user/adventure/create", () => {
         const futureTimestamp = new Date().getTime() + 1000 * 60 * 60 * 24;
         await supertest(app)    
             .post("/user/adventure/create")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .send({
             owner: "Test User",
             title: "Test Adventure",
@@ -49,7 +61,7 @@ describe("POST /user/adventure/create", () => {
 
     it("create adventure with invalid dat", async () => {
         expect.assertions(1);
-        await supertest(app).post("/user/adventure/create").set('Cookie', 'gruwup-session=123').send({
+        await supertest(app).post("/user/adventure/create").set('Cookie', cookie).send({
             owner: "Test User",
             title: "Test Adventure",
             description: "Test Adventure description",
@@ -84,7 +96,7 @@ describe("POST /user/adventure/search-by-filter", () => {
             status: "OPEN",
             peopleGoing: ["Test User"]
         });
-        await supertest(app).post("/user/adventure/search-by-filter").set('Cookie', 'gruwup-session=123').send({
+        await supertest(app).post("/user/adventure/search-by-filter").set('Cookie', cookie).send({
             categories: "MOVIE",
             maxTimeStamp: searchTimestamp
         }).expect(200).then(res => {
@@ -102,7 +114,7 @@ describe("POST /user/adventure/search-by-filter", () => {
 
     it("search with valid filter and empty result", async () => {
         expect.assertions(1);
-        await supertest(app).post("/user/adventure/search-by-filter").set('Cookie', 'gruwup-session=123').send({
+        await supertest(app).post("/user/adventure/search-by-filter").set('Cookie', cookie).send({
             categories: "MOVIE",
             maxTimeStamp: new Date().getTime()
         }).expect(200).then(res => {
@@ -112,7 +124,7 @@ describe("POST /user/adventure/search-by-filter", () => {
 
     it("search with invalid filter", async () => {
         expect.assertions(1);
-        await supertest(app).post("/user/adventure/search-by-filter").set('Cookie', 'gruwup-session=123').send({
+        await supertest(app).post("/user/adventure/search-by-filter").set('Cookie', cookie).send({
             categories: "MOVIE"
         }).expect(400).then(res => {
             expect(res.text).toEqual("Mandatory filter field missing");
@@ -131,7 +143,7 @@ describe("POST /user/adventure/search-by-filter", () => {
 describe("GET /user/adventure/:userId/discover", () => {
     it("generate feed for non-exit user", async () => {
         expect.assertions(1);
-        await supertest(app).get("/user/adventure/testUser/discover").set('Cookie', 'gruwup-session=123').expect(404).then(res => {
+        await supertest(app).get("/user/adventure/testUser/discover").set('Cookie', cookie).expect(404).then(res => {
             expect(res.text).toEqual("User Profile not found");
         });
     });
@@ -157,7 +169,7 @@ describe("GET /user/adventure/:userId/discover", () => {
             peopleGoing: ["Test User"]
         });
 
-        await supertest(app).get("/user/adventure/testUser/discover").set('Cookie', 'gruwup-session=123').expect(200).then(res => {
+        await supertest(app).get("/user/adventure/testUser/discover").set('Cookie', cookie).expect(200).then(res => {
             expect(res._body).toEqual(expect.arrayContaining([expect.objectContaining({
                 owner: "testUser2",
                 title: "Test Adventure",
@@ -203,7 +215,7 @@ describe("GET /user/adventure/search-by-title", () => {
             peopleGoing: ["Test User"]
         });
         await supertest(app).get("/user/adventure/search-by-title")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .query({title: "Test"})
             .expect(200).then(res => {
                 expect(res._body).toEqual(expect.arrayContaining([expect.objectContaining({
@@ -231,14 +243,14 @@ describe("GET /user/adventure/:adventureId/detail", () => {
 
     it("invalid adventure id", async () => {
         expect.assertions(1);
-        await supertest(app).get("/user/adventure/123/detail").set('Cookie', 'gruwup-session=123').expect(400).then(res => {
+        await supertest(app).get("/user/adventure/123/detail").set('Cookie', cookie).expect(400).then(res => {
             expect(res.text).toEqual("Invalid adventure id");
         });
     });
 
     it("non-exist adventure id", async () => {
         expect.assertions(1);
-        await supertest(app).get("/user/adventure/" + ObjectId() + "/detail").set('Cookie', 'gruwup-session=123').expect(404).then(res => {
+        await supertest(app).get("/user/adventure/" + ObjectId() + "/detail").set('Cookie', cookie).expect(404).then(res => {
             expect(res.text).toEqual("Adventure not found");
         });
     });
@@ -257,7 +269,7 @@ describe("GET /user/adventure/:adventureId/detail", () => {
             status: "OPEN",
             peopleGoing: ["Test User"]
         });
-        await supertest(app).get("/user/adventure/" + adventure._id + "/detail").set('Cookie', 'gruwup-session=123').expect(200).then(res => {
+        await supertest(app).get("/user/adventure/" + adventure._id + "/detail").set('Cookie', cookie).expect(200).then(res => {
             expect(res._body).toEqual(expect.objectContaining({
                 owner: "Test User",
                 title: "Test Adventure",
@@ -283,14 +295,14 @@ describe("PUT /user/adventure/:adventureId/update", () => {
 
     it("invalid adventure id", async () => {
         expect.assertions(1);
-        await supertest(app).put("/user/adventure/123/update").set('Cookie', 'gruwup-session=123').send().expect(400).then(res => {
+        await supertest(app).put("/user/adventure/123/update").set('Cookie', cookie).send().expect(400).then(res => {
             expect(res.text).toEqual("Invalid adventure id");
         });
     });
 
     it("non-exist adventure id", async () => {
         expect.assertions(1);
-        await supertest(app).put("/user/adventure/" + ObjectId() + "/update").set('Cookie', 'gruwup-session=123').send().expect(404).then(res => {
+        await supertest(app).put("/user/adventure/" + ObjectId() + "/update").set('Cookie', cookie).send().expect(404).then(res => {
             expect(res.text).toEqual("Adventure not found");
         });
     });
@@ -309,7 +321,7 @@ describe("PUT /user/adventure/:adventureId/update", () => {
             status: "OPEN",
             peopleGoing: ["Test User"]
         });
-        await supertest(app).put("/user/adventure/" + adventure._id + "/update").set('Cookie', 'gruwup-session=123').send({
+        await supertest(app).put("/user/adventure/" + adventure._id + "/update").set('Cookie', cookie).send({
             title: "Test Adventure updated",
             description: "Test Adventure description updated",
             category: "MUSIC",
@@ -344,14 +356,14 @@ describe("put /user/adventure/:adventureId/cancel", () => {
 
     it("invalid adventure id", async () => {
         expect.assertions(1);
-        await supertest(app).put("/user/adventure/123/cancel").set('Cookie', 'gruwup-session=123').send().expect(400).then(res => {
+        await supertest(app).put("/user/adventure/123/cancel").set('Cookie', cookie).send().expect(400).then(res => {
             expect(res.text).toEqual("Invalid adventure id");
         });
     });
 
     it("non-exist adventure id", async () => {
         expect.assertions(1);
-        await supertest(app).put("/user/adventure/" + ObjectId() + "/cancel").set('Cookie', 'gruwup-session=123').send().expect(404).then(res => {
+        await supertest(app).put("/user/adventure/" + ObjectId() + "/cancel").set('Cookie', cookie).send().expect(404).then(res => {
             expect(res.text).toEqual("Adventure not found");
         });
     });
@@ -370,7 +382,7 @@ describe("put /user/adventure/:adventureId/cancel", () => {
             status: "OPEN",
             peopleGoing: ["Test User"]
         });
-        await supertest(app).put("/user/adventure/" + adventure._id + "/cancel").set('Cookie', 'gruwup-session=123').send().expect(200).then(res => {
+        await supertest(app).put("/user/adventure/" + adventure._id + "/cancel").set('Cookie', cookie).send().expect(200).then(res => {
             expect(res._body).toEqual(expect.objectContaining({
                 owner: "Test User",
                 title: "Test Adventure",
@@ -419,7 +431,7 @@ describe("GET /user/adventure/:userId/get-adventures", () => {
             status: "OPEN",
             peopleGoing: ["TestUser2"]
         });
-        await supertest(app).get("/user/adventure/TestUser2/get-adventures").set('Cookie', 'gruwup-session=123').send().expect(200).then(res => {
+        await supertest(app).get("/user/adventure/TestUser2/get-adventures").set('Cookie', cookie).send().expect(200).then(res => {
             expect(res._body).toEqual(expect.arrayContaining([
                 expect.objectContaining({
                     owner: "TestUser2",
@@ -458,21 +470,21 @@ describe("PUT /user/adventure/:adventureId/quit", () => {
 
     it("invalid adventure id", async () => {
         expect.assertions(1);
-        await supertest(app).put("/user/adventure/123/quit?userId=123").set('Cookie', 'gruwup-session=123').send().expect(400).then(res => {
+        await supertest(app).put("/user/adventure/123/quit?userId=123").set('Cookie', cookie).send().expect(400).then(res => {
             expect(res.text).toEqual("Invalid adventure id");
         });
     });
 
     it("missing user id", async () => {
         expect.assertions(1);
-        await supertest(app).put("/user/adventure/" + ObjectId() + "/quit").set('Cookie', 'gruwup-session=123').send().expect(400).then(res => {
+        await supertest(app).put("/user/adventure/" + ObjectId() + "/quit").set('Cookie', cookie).send().expect(400).then(res => {
             expect(res.text).toEqual("User id is required");
         });
     });
 
     it("non-exist adventure id", async () => {
         expect.assertions(1);
-        await supertest(app).put("/user/adventure/" + ObjectId() + "/quit?userId=123").set('Cookie', 'gruwup-session=123').send().expect(404).then(res => {
+        await supertest(app).put("/user/adventure/" + ObjectId() + "/quit?userId=123").set('Cookie', cookie).send().expect(404).then(res => {
             expect(res.text).toEqual("Adventure not found");
         });
     });
@@ -491,7 +503,7 @@ describe("PUT /user/adventure/:adventureId/quit", () => {
             status: "OPEN",
             peopleGoing: ["TestUser"]
         });
-        await supertest(app).put("/user/adventure/" + adventure._id + "/quit?userId=TestUser").set('Cookie', 'gruwup-session=123').send().expect(200).then(res => {
+        await supertest(app).put("/user/adventure/" + adventure._id + "/quit?userId=TestUser").set('Cookie', cookie).send().expect(200).then(res => {
             expect(res.text).toEqual("Adventure deleted successfully");
         });
     });
@@ -519,7 +531,7 @@ describe("GET /user/adventure/nearby", () => {
             status: "OPEN",
             peopleGoing: ["TestUser"]
         });
-        await supertest(app).get("/user/adventure/nearby?city=Test city").set('Cookie', 'gruwup-session=123').send().expect(200).then(res => {
+        await supertest(app).get("/user/adventure/nearby?city=Test city").set('Cookie', cookie).send().expect(200).then(res => {
             expect(res._body).toEqual(expect.arrayContaining([
                 expect.objectContaining({
                     owner: "TestUser",

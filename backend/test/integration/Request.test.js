@@ -4,12 +4,23 @@ const supertest = require("supertest");
 const Adventure = require("../../models/Adventure");
 const Request = require("../../models/Request");
 const { ObjectId } = require("mongodb");
+const TestSessions = require("../TestSessions");
 
 const testMongoPort = "27017";
+const PORT = "8081"
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
+var cookie, server;
 
 beforeAll(async () => {
-    await mongoose.connect(mongoDbUrl, { useNewUrlParser: true }).then(() => console.log("Connected to MongoDB at Url: %s", mongoDbUrl)).catch(err => console.log(err));
+    await mongoose.connect(mongoDbUrl, { useNewUrlParser: true }).then(() => {
+        console.log("Connected to MongoDB at Url: %s", mongoDbUrl)
+        server = app.listen(PORT, (req, res) => {
+            var host = server.address().address;
+            var port = server.address().port;
+            console.log("App listening at http://%s:%s", host, port);
+        });
+    }).catch(err => console.log(err));
+    cookie = await TestSessions.getSessionCookie();
 });
 
 afterEach(async () => {
@@ -18,6 +29,7 @@ afterEach(async () => {
 
 afterAll(async () => {
     await mongoose.connection.close();
+    await server.close();
 });
 
 describe("POST /user/request/:adventureId/send-request", () => {
@@ -30,14 +42,14 @@ describe("POST /user/request/:adventureId/send-request", () => {
 
     it("call with invalid adventureId", async () => {
         expect.assertions(1);
-        await supertest(app).post("/user/request/123/send-request").set('Cookie', 'gruwup-session=123').send().expect(400).then(res => {
+        await supertest(app).post("/user/request/123/send-request").set('Cookie', cookie).send().expect(400).then(res => {
             expect(res.text).toEqual("Invalid adventure id");
         });
     });
 
     it("request to non-existing adventure", async () => {
         expect.assertions(1);
-        await supertest(app).post("/user/request/" + ObjectId() + "/send-request").set('Cookie', 'gruwup-session=123').send().expect(404).then(res => {
+        await supertest(app).post("/user/request/" + ObjectId() + "/send-request").set('Cookie', cookie).send().expect(404).then(res => {
             expect(res.text).toEqual("Adventure not found");
         });
     });
@@ -58,7 +70,7 @@ describe("POST /user/request/:adventureId/send-request", () => {
         });
         await supertest(app)
             .post("/user/request/" + adventure._id + "/send-request")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .send({
                 "userId": "Test User",
                 "userName": "Test User",
@@ -85,7 +97,7 @@ describe("POST /user/request/:adventureId/send-request", () => {
         });
         await supertest(app)
             .post("/user/request/" + adventure._id + "/send-request")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .send({
                 "userId": "Test User",
                 "userName": "Test User",
@@ -124,7 +136,7 @@ describe("POST /user/request/:adventureId/send-request", () => {
 
         await supertest(app)
             .post("/user/request/" + adventure._id + "/send-request")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .send({
                 "userId": "Test User2",
                 "userName": "Test User2",
@@ -152,7 +164,7 @@ describe("POST /user/request/:adventureId/send-request", () => {
 
         await supertest(app)
             .post("/user/request/" + adventure._id + "/send-request")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .send({
                 "userId": "Test User",
                 "userName": "Test User2"
@@ -179,7 +191,7 @@ describe("POST /user/request/:adventureId/send-request", () => {
 
         await supertest(app)
             .post("/user/request/" + adventure._id + "/send-request")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .send({
                 "userId": "Test User",
                 "userName": "Test User2",
@@ -236,7 +248,7 @@ describe("GET /user/request/:userId/get-requests", () => {
 
         await supertest(app)
             .get("/user/request/Test User2/get-requests")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .then(res => {
                 expect(res._body.requests.length).toEqual(2);
                 res._body.requests.forEach(request => {
@@ -257,14 +269,14 @@ describe("PUT /user/request/:requestId/accept", () => {
 
     it("calling with invalid request id", async () => {
         expect.assertions(1);
-        await supertest(app).put("/user/request/123/accept").set('Cookie', 'gruwup-session=123').send().expect(400).then(res => {
+        await supertest(app).put("/user/request/123/accept").set('Cookie', cookie).send().expect(400).then(res => {
             expect(res.text).toEqual("Invalid request id");
         });
     });
 
     it("calling with non-exit request id", async () => {
         expect.assertions(1);
-        await supertest(app).put("/user/request/" + ObjectId() + "/accept").set('Cookie', 'gruwup-session=123').send().expect(404).then(res => {
+        await supertest(app).put("/user/request/" + ObjectId() + "/accept").set('Cookie', cookie).send().expect(404).then(res => {
             expect(res.text).toEqual("Request not found");
         });
     });
@@ -296,7 +308,7 @@ describe("PUT /user/request/:requestId/accept", () => {
 
         await supertest(app)
             .put("/user/request/" + request._id + "/accept")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(200)
             .then(res => {
                 expect(res.text).toEqual("Request accepted");
@@ -320,14 +332,14 @@ describe("PUT /user/request/:requestId/reject", () => {
 
     it("calling with invalid request id", async () => {
         expect.assertions(1);
-        await supertest(app).put("/user/request/123/reject").set('Cookie', 'gruwup-session=123').send().expect(400).then(res => {
+        await supertest(app).put("/user/request/123/reject").set('Cookie', cookie).send().expect(400).then(res => {
             expect(res.text).toEqual("Invalid request id");
         });
     });
 
     it("calling with non-exit request id", async () => {
         expect.assertions(1);
-        await supertest(app).put("/user/request/" + ObjectId() + "/reject").set('Cookie', 'gruwup-session=123').send().expect(404).then(res => {
+        await supertest(app).put("/user/request/" + ObjectId() + "/reject").set('Cookie', cookie).send().expect(404).then(res => {
             expect(res.text).toEqual("Request not found");
         });
     });
@@ -359,7 +371,7 @@ describe("PUT /user/request/:requestId/reject", () => {
 
         await supertest(app)
             .put("/user/request/" + request._id + "/reject")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(200)
             .then(res => {
                 expect(res.text).toEqual("Request rejected");

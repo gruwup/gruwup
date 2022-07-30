@@ -4,14 +4,25 @@ const supertest = require("supertest");
 const Adventure = require("../../models/Adventure");
 const Profile = require("../../models/Profile");
 const Message = require("../../models/Message");
+const TestSessions = require("../TestSessions");
 const ChatSocket = require("../../services/ChatSocket");
 
 const testMongoPort = "27017";
+const PORT = "8081"
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
+var cookie, server;
 
 beforeAll(async () => {
-    await mongoose.connect(mongoDbUrl, { useNewUrlParser: true }).then(() => console.log("Connected to MongoDB at Url: %s", mongoDbUrl)).catch(err => console.log(err));
-    ChatSocket.runChat();
+    await mongoose.connect(mongoDbUrl, { useNewUrlParser: true }).then(() => {
+        console.log("Connected to MongoDB at Url: %s", mongoDbUrl)
+        server = app.listen(PORT, (req, res) => {
+            var host = server.address().address;
+            var port = server.address().port;
+            console.log("App listening at http://%s:%s", host, port);
+        });
+    }).catch(err => console.log(err));
+    await ChatSocket.runChat();
+    cookie = await TestSessions.getSessionCookie();
 });
 
 afterEach(async () => {
@@ -20,6 +31,7 @@ afterEach(async () => {
 
 afterAll(async () => {
     await mongoose.connection.close();
+    await server.close();
 });
 
 describe("POST /user/chat/:adventureId/send", () => {
@@ -47,7 +59,7 @@ describe("POST /user/chat/:adventureId/send", () => {
 
         await supertest(app)    
             .post("/user/chat/" + adventure._id + "/send")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .send({
                 userId: "Test User",
                 name: "Test User",
@@ -83,7 +95,7 @@ describe("POST /user/chat/:adventureId/send", () => {
 
         await supertest(app)    
             .post("/user/chat/" + adventure._id + "/send")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .send({
                 userId: "Test User",
                 name: "Test User",
@@ -107,7 +119,7 @@ describe("POST /user/chat/:adventureId/send", () => {
 
         await supertest(app)    
             .post("/user/chat/123123/send")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .send({
                 userId: "Test User",
                 name: "Test User",
@@ -136,7 +148,7 @@ describe("POST /user/chat/:adventureId/send", () => {
 
         await supertest(app)    
             .post("/user/chat/" + adventure._id + "/send")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .send({
                 userId: "Test User",
                 name: "Test User",
@@ -173,7 +185,7 @@ describe("POST /user/chat/:adventureId/send", () => {
 
         await supertest(app)    
             .post("/user/chat/" + adventure._id + "/send")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .send({
                 userId: "Test User",
                 name: "Test User",
@@ -218,7 +230,7 @@ describe("GET /user/chat/:userid/recent-list", () => {
 
         await supertest(app)    
             .get("/user/chat/" + user.userId +"/recent-list")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(200)
             .then(res => {
                 expect(JSON.parse(res.text).messages).toEqual([]);
@@ -249,7 +261,7 @@ describe("GET /user/chat/:userid/recent-list", () => {
 
         await supertest(app)    
             .get("/user/chat/" + user.userId +"/recent-list")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(200)
             .then(res => {
                 expect(JSON.parse(res.text).messages).toEqual(
@@ -301,7 +313,7 @@ describe("GET /user/chat/:userid/recent-list", () => {
 
         await supertest(app)    
             .get("/user/chat/" + user.userId +"/recent-list")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(200)
             .then(res => {
                 expect(JSON.parse(res.text).messages).toEqual(
@@ -362,7 +374,7 @@ describe("GET /user/chat/:adventureId/recent-pagination", () => {
 
         await supertest(app)    
             .get("/user/chat/" + adventure._id +"/recent-pagination")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(200)
             .then(res => {
                 expect(JSON.parse(res.text).pagination).toEqual(adventure.dateTime.toString());
@@ -393,7 +405,7 @@ describe("GET /user/chat/:adventureId/recent-pagination", () => {
 
         await supertest(app)    
             .get("/user/chat/" + adventure._id +"/recent-pagination")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(404)
             .then(res => {
                 expect(JSON.parse(res.text).message).toEqual("No previous messages found");
@@ -445,7 +457,7 @@ describe("GET /user/chat/:adventureId/messages/:pagination", () => {
 
         await supertest(app)    
             .get("/user/chat/" + adventure._id +"/messages/" + adventure.dateTime)
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(200)
             .then(res => {
                 expect(res._body).toEqual({
@@ -501,7 +513,7 @@ describe("GET /user/chat/:adventureId/messages/:pagination", () => {
 
         await supertest(app)    
             .get("/user/chat/" + adventure._id +"/messages/123")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(404)
             .then(res => {
                 expect(JSON.parse(res.text).message).toEqual("Messages not found");
@@ -544,7 +556,7 @@ describe("GET /user/chat/:adventureId/messages/:pagination", () => {
 
         await supertest(app)    
             .get("/user/chat/123/messages/" + adventure.dateTime)
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(404)
             .then(res => {
                 expect(JSON.parse(res.text).message).toEqual("Messages not found");
@@ -588,7 +600,7 @@ describe("GET /user/chat/:adventureId/delete-chat", () => {
 
         await supertest(app)    
             .delete("/user/chat/" + adventure._id + "/delete-chat")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(200)
             .then(res => {
                 expect(res.text).toEqual("OK");
@@ -612,7 +624,7 @@ describe("GET /user/chat/:adventureId/delete-chat", () => {
 
         await supertest(app)    
             .delete("/user/chat/" + message.adventureId + "/delete-chat")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(200)
             .then(res => {
                 expect(res.text).toEqual("OK");
@@ -636,7 +648,7 @@ describe("GET /user/chat/:adventureId/delete-chat", () => {
 
         await supertest(app)    
             .delete("/user/chat/" + adventure._id + "/delete-chat")
-            .set('Cookie', 'gruwup-session=123')
+            .set('Cookie', cookie)
             .expect(404)
             .then(res => {
                 expect(JSON.parse(res.text).message).toEqual("Messages not found");
