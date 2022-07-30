@@ -6,7 +6,7 @@ const Request = require("../../models/Request");
 const { ObjectId } = require("mongodb");
 const TestSessions = require("../TestSessions");
 
-const testMongoPort = "27384";
+const testMongoPort = "27017";
 const PORT = "8081"
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
 var cookie, server;

@@ -4,7 +4,7 @@ const supertest = require("supertest");
 const Profile = require("../../models/Profile");
 const TestSessions = require("../TestSessions");
 
-const testMongoPort = "27384";
+const testMongoPort = "27017";
 const PORT = "8081"
 var mongoDbUrl = "mongodb://localhost:" + testMongoPort;
 var token, cookie, server;
