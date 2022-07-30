@@ -2,24 +2,18 @@ package com.cpen321.gruwup;
 
 
 import android.annotation.SuppressLint;
-import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
-import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
-import android.net.Uri;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
 import android.os.StrictMode;
-import android.provider.MediaStore;
-import android.util.Base64;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -37,15 +31,11 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.riversun.okhttp3.OkHttp3CookieHelper;
 
-import java.io.ByteArrayOutputStream;
-
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -68,7 +58,6 @@ public class SearchFragment extends Fragment{
     static ArrayList<Map<String, String>> mAdventureList;
     DiscAdvViewAdapter AdventureAdapter;
     String HTTPRESULT = "";
-    static int GET_FROM_GALLERY = 69;
     RecyclerView categoryView;
     Button uploadImage;
     Button filterButton;
@@ -229,7 +218,7 @@ public class SearchFragment extends Fragment{
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
 
-        if(getActivity() == null)
+        if(getActivity() == null) //can refactor with bottom block
             return;
 
         getActivity().runOnUiThread(new Runnable() {
@@ -295,12 +284,14 @@ public class SearchFragment extends Fragment{
         JSONObject jsonObject = new JSONObject();
         try {
             jsonObject.put("categories", jsonArray);
-            if(numPeople.getText().toString() != null) jsonObject.put("maxPeopleGoing",  Integer.valueOf(numPeople.getText().toString()));
+            if(!(numPeople.getText().toString() == null || numPeople.getText().toString().isEmpty())) jsonObject.put("maxPeopleGoing",  Integer.valueOf(numPeople.getText().toString()));
             jsonObject.put("maxTimeStamp", Integer.valueOf(buttonToEpoch(timeSelection.getCheckedRadioButtonId())));
-            if(location.getText().toString() != null) jsonObject.put("city", location.getText().toString());
+            if(!(location.getText().toString() == null || location.getText().toString().isEmpty())) jsonObject.put("city", location.getText().toString());
         } catch (JSONException e) {
             e.printStackTrace();
             System.out.println("JSON EXCEPTION!!!");
+        } catch (Exception e) {
+            System.out.println("String Exception! " + numPeople.getText().toString() + " " + location.getText().toString());
         }
         String cookie = SharedPreferencesUtil.getCookie(getActivity());
         String[] cookieList  =  cookie.split("=",2);
@@ -377,39 +368,6 @@ public class SearchFragment extends Fragment{
         }
     }
 
-    public void onActivityResult(int requestCode, int resultCode, Intent data) {
-        super.onActivityResult(requestCode, resultCode, data);
-        //Detects request codes
-        if (requestCode == GET_FROM_GALLERY && resultCode == Activity.RESULT_OK) {
-            Uri selectedImage = data.getData();
-            Bitmap bitmap = null;
-            try {
-                bitmap = MediaStore.Images.Media.getBitmap(this.getActivity().getContentResolver(), selectedImage);
-                imageBMP = bitmap;
-            } catch (FileNotFoundException e) {
-                e.printStackTrace();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
-        }
-    }
-
-    public static String bmpToB64(Bitmap bmp) {
-        if (bmp == null) return null;
-        ByteArrayOutputStream baos = new ByteArrayOutputStream();
-        bmp.compress(Bitmap.CompressFormat.JPEG, 0, baos);
-        byte[] b = baos.toByteArray();
-        String imageEncoded = Base64.encodeToString(b, Base64.DEFAULT);
-        return (imageEncoded);
-    }
-
-    public static Bitmap B64ToBmp(String b64) {
-        if (b64 == null) return null;
-        byte[] decodedString = Base64.decode(b64, Base64.DEFAULT);
-        Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
-        return decodedByte;
-    }
-
     private String buttonToEpoch(int buttonId) {
         switch (buttonId) {
             case R.id.todayRadioButton:
@@ -433,7 +391,8 @@ public class SearchFragment extends Fragment{
             if (addresses.size() > 0) {
                 city = addresses.get(0).getLocality();
             }
-        } catch (IOException e) {
+        } catch (Exception e) {
+            city = "Vancouver"; //shouldn't happen
             e.printStackTrace();
         }
         return city;
