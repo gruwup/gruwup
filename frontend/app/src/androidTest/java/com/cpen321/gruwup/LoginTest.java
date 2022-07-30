@@ -113,6 +113,8 @@ public class LoginTest {
         UiObject acceptButton = mUiDevice.findObject(new UiSelector().text("ACCEPT"));
         acceptButton.waitForExists(timeOut);
         acceptButton.click();
+        SystemClock.sleep(2000);
+
 
     }
 
@@ -196,6 +198,7 @@ public class LoginTest {
         UiObject mText = mUiDevice.findObject(new UiSelector().text("gruwupinc@gmail.com"));
         mText.click();
 
+        SystemClock.sleep(5000);
 
     }
 

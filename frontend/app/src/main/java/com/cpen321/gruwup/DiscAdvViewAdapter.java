@@ -38,6 +38,8 @@ import okhttp3.Response;
 public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.ViewHolder> {
 
     private static final String TAG = "DiscAdvViewAdapter";
+    final static String RESPONSE_TIME_TAG = "RESPONSE_TIME ";
+
     Dialog viewAdventureDialog;
     private ArrayList<Map<String, String>> mAdvNames = new ArrayList<>();
     private Context mContext;
@@ -152,6 +154,7 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
             public void onClick(View view) {
                 Toast.makeText(mContext, "Request sent!", Toast.LENGTH_SHORT).show();
                 String cookie = SharedPreferencesUtil.getCookie(mContext);
+                long start = System.currentTimeMillis();
                 RequestsUtil.postWithCookie("http://" + address + ":8081/user/request/" + id + "/send-request", jsonObject.toString(), cookie, new Callback() {
                     @Override
                     public void onFailure(Call call, IOException e) {
@@ -160,6 +163,8 @@ public class DiscAdvViewAdapter extends RecyclerView.Adapter<DiscAdvViewAdapter.
 
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
+                        long end = System.currentTimeMillis();
+                        Log.d(RESPONSE_TIME_TAG, "SEND REQUEST: " + (end-start) + " millis");
                         if (response.isSuccessful()) {
                             String responseData = response.body().string();
                             Log.d(TAG, "Response: " + responseData);

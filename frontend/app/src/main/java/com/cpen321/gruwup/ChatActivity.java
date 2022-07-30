@@ -40,6 +40,8 @@ import okhttp3.Response;
 public class ChatActivity extends AppCompatActivity {
 
     static final String TAG = "ChatActivity";
+    static final String RESPONSE_TIME_TAG = "RESPONSE TIME";
+
     private static final String SENT_MESSAGE = "sent";
     private static final String RECEIVED_MESSAGE = "received";
     private RecyclerView messageRecyclerView;
@@ -242,9 +244,14 @@ public class ChatActivity extends AppCompatActivity {
 
     private void getOldMessages(String pagination) {
         cookie = SharedPreferencesUtil.getCookie(getApplicationContext());
+        long start = System.currentTimeMillis();
+
         RequestsUtil.getWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/messages/" + pagination, cookie, new Callback() {
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                long end = System.currentTimeMillis();
+                Log.d(RESPONSE_TIME_TAG, "GET OLD CHAT: " + (end-start) + " millis");
+
 
                 if (response.isSuccessful()) {
 
@@ -324,6 +331,7 @@ public class ChatActivity extends AppCompatActivity {
             e.printStackTrace();
         }
 
+        long start = System.currentTimeMillis();
         RequestsUtil.postWithCookie("http://" + address + ":8000/user/chat/" + adventureId + "/send", jsonObject.toString(), cookie, new Callback() {
             @Override
             public void onFailure(@NonNull Call call, @NonNull IOException e) {
@@ -332,6 +340,8 @@ public class ChatActivity extends AppCompatActivity {
 
             @Override
             public void onResponse(@NonNull Call call, @NonNull Response response) throws IOException {
+                long end = System.currentTimeMillis();
+                Log.d(RESPONSE_TIME_TAG, "SEND CHAT: " + (end-start) + " millis");
                 if (response.isSuccessful()) {
                     runOnUiThread(new Runnable() {
                         @Override
