@@ -1,4 +1,3 @@
-const { prependListener } = require("../app");
 const Message = require("../models/Message");
 
 module.exports = class User {
