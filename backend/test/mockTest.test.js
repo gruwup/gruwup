@@ -1,6 +1,7 @@
 var AdventureStoreMocks = require('./mocks/AdventureStoreMocks');
 var FilterServiceMocks = require('./mocks/FilterServiceMocks');
 var RequestStoreMocks = require('./mocks/RequestStoreMocks');
+var UserStoreMocks = require('./mocks/UserStoreMocks');
 var MockTestData = require('./mocks/MockTestData');
 
 // AdventureStoreMocks tests
@@ -157,5 +158,13 @@ test('checkIfRequestExists', () => {
         code: 200,
         message: "Request found",
         payload: MockTestData.testRequest1
+    });
+});
+
+test('getUserProfile', () => {
+    expect(UserStoreMocks.getUserProfile("")).toEqual({
+        code: 200,
+        message: "User Profile found",
+        payload: MockTestData.testProfile
     });
 });
