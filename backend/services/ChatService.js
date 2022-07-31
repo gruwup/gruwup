@@ -22,7 +22,7 @@ module.exports = class ChatService {
                 if (participants.includes(message.userId)) {
                     if (!messageCount[adventureId] || messageCount[adventureId] === 10) messageCount[adventureId] = 0;
                     messageCount[adventureId]++;
-                    ChatSocket.sendMessage(message.userId, adventureId, message);
+                    ChatSocket.sendMessage(message.userId, adventureId, adventure.adventureTitle, message);
     
                     if (messageCount[adventureId] === 1) {
                         await ChatStore.storeNewMessageGroup(adventureId, message, message.dateTime).then(messageResult => {
