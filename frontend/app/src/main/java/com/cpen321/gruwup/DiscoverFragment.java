@@ -307,13 +307,14 @@ public class DiscoverFragment extends Fragment {
         mAdventureList = new ArrayList<Map<String, String>>();
         JSONArray jsonArray = new JSONArray(HTTPRESULT);
         int arrlen = jsonArray.length();
-        if (noAdventures != null) {
-            if (arrlen > 0) {
-                noAdventures.setVisibility(View.INVISIBLE);
-            } else {
-                noAdventures.setVisibility(View.VISIBLE);
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                updateNoAdventures();
             }
-        }
+        });
+
         for (int i = 0; i < arrlen; i++) {
             JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());
@@ -391,6 +392,16 @@ public class DiscoverFragment extends Fragment {
         } catch (NumberFormatException e) {
             e.printStackTrace();
             return "E2D error!";
+        }
+    }
+
+    private void updateNoAdventures() {
+        if(mAdventureList != null) {
+            if (mAdventureList.size() > 0) {
+                noAdventures.setVisibility(View.INVISIBLE);
+            } else {
+                noAdventures.setVisibility(View.VISIBLE);
+            }
         }
     }
 }
