@@ -355,6 +355,9 @@ public class ChatActivity extends AppCompatActivity {
                                 messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
                             }
                             Log.d(TAG, "message sent successfully");
+                            Log.d(TAG, "http://" + address + ":8000/user/chat/" + adventureId + "/send");
+                            Log.d(TAG,jsonObject.toString());
+
                         }
                     });
                 } else {
@@ -579,8 +582,11 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.d(TAG, "adventure ID=====>" + args[0].toString());
-                    Log.d(TAG, "message=====>" + args[1].toString());
-                    JSONObject data = (JSONObject) args[1];
+                    Log.d(TAG, "adventure Name=====>" + args[1].toString());
+                    Log.d(TAG, "message=====>" + args[2].toString());
+
+
+                    JSONObject data = (JSONObject) args[2];
 
                     String userName;
                     String userId;
