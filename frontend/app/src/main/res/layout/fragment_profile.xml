@@ -30,7 +30,7 @@
             android:layout_height="180dp"
             android:layout_centerHorizontal="true"
             android:layout_gravity="center"
-            android:layout_marginTop="140dp"
+            android:layout_marginTop="100dp"
             android:elevation="12dp"
             android:innerRadius="0dp"
             android:shape="ring"
@@ -107,17 +107,29 @@
         <Button
             android:id="@+id/sign_out_button"
             android:layout_width="150dp"
-            android:drawableLeft="@drawable/common_google_signin_btn_icon_dark"
             android:layout_height="50dp"
-            android:backgroundTint="@color/colorPrimary"
             android:layout_gravity="center"
             android:layout_marginTop="50dp"
+            android:backgroundTint="@color/colorPrimary"
+            android:drawableLeft="@drawable/common_google_signin_btn_icon_dark"
             android:text="Sign Out"
             app:backgroundTint="@color/purple_700"
 
             app:iconTint="@android:color/holo_blue_light"
 
             />
+
+        <Button
+            android:id="@+id/user1button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TestUser1" />
+
+        <Button
+            android:id="@+id/user2button"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:text="TestUser2" />
 
     </LinearLayout>
 

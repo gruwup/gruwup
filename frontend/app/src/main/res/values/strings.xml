@@ -13,10 +13,10 @@
 
 <!--    Jerry client id-->
 <!--    <string name="default_web_client_id">49639527667-kedtseacf04k3vfk34jrj0j6oohg9mcv.apps.googleusercontent.com</string>-->
-<!--    <string name="connection_address">10.0.2.2</string>-->
+    <string name="connection_address">10.0.2.2</string>
 
 <!--    Remote address-->
-        <string name="connection_address">20.227.142.169</string>
+<!--        <string name="connection_address">20.227.142.169</string>-->
 
     <string name="enter_message">Enter Message</string>
     <string name="googleAPIKey">AIzaSyBTzzjkUX-5Snzfhc8JrGn1wA07jgKbluk</string>

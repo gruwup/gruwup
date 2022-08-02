@@ -2,6 +2,7 @@ package com.cpen321.gruwup;
 
 import android.app.Dialog;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.graphics.Paint;
 import android.os.Bundle;
 import android.util.Log;
@@ -77,6 +78,49 @@ public class ProfileFragment extends Fragment {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         address = getActivity().getString(R.string.connection_address);
         View view= inflater.inflate(R.layout.fragment_profile, container, false);
+
+        //    remove this later
+        Button testUser1 = view.findViewById(R.id.user1button);
+        Button testUser2 = view.findViewById(R.id.user2button);
+
+        testUser1.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String PREF_NAME = "LogIn";
+                final String DATA_TAG = "UserId";
+                final String USER_NAME = "UserName";
+                final String COOKIE_TAG = "Cookie";
+                SharedPreferences settings = getContext().getSharedPreferences(PREF_NAME,0);
+                SharedPreferences.Editor editor = settings.edit();
+
+                // store userId
+                editor.putString(USER_NAME, "Test User 1");
+                editor.putString(DATA_TAG, "112559584626040550555");
+                editor.putString(COOKIE_TAG, "gruwup-session=123");
+                editor.commit();
+            }
+        });
+
+        testUser2.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                final String PREF_NAME = "LogIn";
+                final String DATA_TAG = "UserId";
+                final String USER_NAME = "UserName";
+                final String COOKIE_TAG = "Cookie";
+                SharedPreferences settings = getContext().getSharedPreferences(PREF_NAME,0);
+                SharedPreferences.Editor editor = settings.edit();
+
+                // store userId
+                editor.putString(USER_NAME, "Test User 2");
+                editor.putString(DATA_TAG, "116853060753534924974");
+                editor.putString(COOKIE_TAG, "gruwup-session=123");
+                editor.commit();
+
+            }
+        });
+
+//
 
         // Note: get stored UserID this way for fragment
         UserID = SharedPreferencesUtil.getUserId(this.getActivity());
