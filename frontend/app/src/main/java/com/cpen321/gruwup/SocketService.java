@@ -54,12 +54,9 @@ public class SocketService extends Service {
             Log.d("SocketService", args[0].toString());
             if (args[0].toString().equals("true")) {
                 Log.d(TAG, "===>connected to socket");
-                Log.d(TAG, args[0].toString());
-
                 mSocket.on("message", onNewNotification);
             } else {
                 Log.d(TAG, "===>cannot connect to socket");
-                Log.d(TAG, args[0].toString());
             }
         }
     };
@@ -79,15 +76,6 @@ public class SocketService extends Service {
     private Emitter.Listener onNewNotification = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
-//            Log.d(TAG, args.toString());
-            Log.d(TAG, "PLS WOREK ILY");
-            // adventureId
-            Log.d(TAG, args[0].toString());
-            // adventureName
-            Log.d(TAG, args[1].toString());
-            // message
-            Log.d(TAG, args[2].toString());
-
             JSONObject data = (JSONObject) args[2];
 
             String userName;
