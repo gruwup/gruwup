@@ -170,19 +170,15 @@ public class SearchFragment extends Fragment{
             @Override
             public void onResponse(Call call, Response response) throws IOException {
                 if (response.isSuccessful()) {
-                    try {
-                        HTTPRESULT = response.body().string();
-                        System.out.println("!map response data" + HTTPRESULT);
-                        initAdventures();
-                        mHandler.post(new Runnable() {
-                            @Override
-                            public void run() {
-                                displayAdventures(view);
-                            }
-                        });
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
+                    HTTPRESULT = response.body().string();
+                    System.out.println("!map response data" + HTTPRESULT);
+                    initAdventures();
+                    mHandler.post(new Runnable() {
+                        @Override
+                        public void run() {
+                            displayAdventures(view);
+                        }
+                    });
                 } else {
                     System.out.println("HTTP request failed");
                 }
@@ -201,33 +197,37 @@ public class SearchFragment extends Fragment{
         adventureListView.setAdapter(AdventureAdapter); //update via global reference
     }
 
-    private void initAdventures() throws JSONException {
-        mAdventureList = new ArrayList<Map<String, String>>();
-        JSONArray jsonArray = new JSONArray(HTTPRESULT);
-        int arrlen = jsonArray.length();
-        for (int i = 0; i < arrlen; i++) {
-            JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
-            mAdventureList.add(new HashMap<String, String>());
-            mAdventureList.get(i).put("title", jsonObject.getString("title"));
-            mAdventureList.get(i).put("id", jsonObject.getString("_id"));
-            mAdventureList.get(i).put("event", jsonObject.getString("category"));
-            mAdventureList.get(i).put("time", DiscoverFragment.epochToDate(String.valueOf(jsonObject.getString("dateTime"))));
-            mAdventureList.get(i).put("location", jsonObject.getString("location"));
-            mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
-            mAdventureList.get(i).put("description", jsonObject.getString("description"));
-            mAdventureList.get(i).put("image", jsonObject.getString("image"));
-        }
-
-        if(getActivity() == null) //can refactor with bottom block
-            return;
-
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                updateNoAdventures();
+    private void initAdventures() {
+        try {
+            mAdventureList = new ArrayList<Map<String, String>>();
+            JSONArray jsonArray = new JSONArray(HTTPRESULT);
+            int arrlen = jsonArray.length();
+            for (int i = 0; i < arrlen; i++) {
+                JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
+                mAdventureList.add(new HashMap<String, String>());
+                mAdventureList.get(i).put("title", jsonObject.getString("title"));
+                mAdventureList.get(i).put("id", jsonObject.getString("_id"));
+                mAdventureList.get(i).put("event", jsonObject.getString("category"));
+                mAdventureList.get(i).put("time", DiscoverFragment.epochToDate(String.valueOf(jsonObject.getString("dateTime"))));
+                mAdventureList.get(i).put("location", jsonObject.getString("location"));
+                mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
+                mAdventureList.get(i).put("description", jsonObject.getString("description"));
+                mAdventureList.get(i).put("image", jsonObject.getString("image"));
             }
-        });
 
+            if (getActivity() == null) //can refactor with bottom block
+                return;
+
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateNoAdventures();
+                }
+            });
+        }
+        catch (Exception e) {
+            System.out.println("A JSON error occurred!");
+        }
     }
 
     private void filterAdventure() {
@@ -348,18 +348,14 @@ public class SearchFragment extends Fragment{
                 @Override
                 public void onResponse(Call call, Response response) throws IOException {
                     if (response.isSuccessful()) {
-                        try {
-                            HTTPRESULT = response.body().string();
-                            initAdventures();
-                            mHandler.post(new Runnable() {
-                                @Override
-                                public void run() {
-                                    displayAdventures(view);
-                                }
-                            });
-                        } catch (JSONException e) {
-                            e.printStackTrace();
-                        }
+                        HTTPRESULT = response.body().string();
+                        initAdventures();
+                        mHandler.post(new Runnable() {
+                            @Override
+                            public void run() {
+                                displayAdventures(view);
+                            }
+                        });
                     } else {
                         System.out.println("HTTP req failed");
                     }
