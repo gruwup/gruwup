@@ -20,6 +20,7 @@ afterAll(async () => {
 
 jest.mock("../../store/AdventureStore");
 jest.mock("../../store/UserStore");
+jest.mock("../../store/RequestStore");
 
 describe("getNearbyAdventures tests", () => {
     test("Success scenario", async () => {
@@ -75,7 +76,7 @@ describe("getNearbyAdventures tests", () => {
 
 describe("getRecommndationFeed tests", () => {
     test("Success scenario", async () => {
-        var result = await FilterService.getRecommendationFeed("3");
+        var result = await FilterService.getRecommendationFeed("4");
         expect(result).toEqual(
             expect.objectContaining({ 
                 code: 200, 
@@ -89,7 +90,7 @@ describe("getRecommndationFeed tests", () => {
             ]));
     });
 
-    test('No nearby adventures', async () => {
+    test('Success Scenario no nearby adventures', async () => {
         var result = await FilterService.getRecommendationFeed("2");
         expect(result).toEqual({
             code: 200,
@@ -103,6 +104,15 @@ describe("getRecommndationFeed tests", () => {
         expect(result).toEqual({
             code: 404,
             message: "User Profile not found"
+        });
+    });
+
+    test('User requested to adventures already', async () => {
+        var result = await FilterService.getRecommendationFeed("3");
+        expect(result).toEqual({
+            code: 200,
+            message: "Recommendation feed found",
+            payload: []
         });
     });
 });

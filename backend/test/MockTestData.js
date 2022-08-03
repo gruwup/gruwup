@@ -28,6 +28,30 @@ module.exports = class MockTestData {
     };
 
     static testRequest1 = {
+        _id: "10",
+        adventureId: "10",
+        adventureOwner: "Spongebob Squarepants",
+        adventureTitle: "Krabby Patty Cooking Class",
+        requester: "Plankton",
+        requesterId: "123",
+        status: "PENDING",
+        dateTime: "1887602211",
+        __v: 0
+    };
+
+    static testRequest2 = {
+        _id: "20",
+        adventureId: "20",
+        adventureOwner: "Bob the builder",
+        adventureTitle: "Construction time",
+        requester: "person",
+        requesterId: "123",
+        status: "PENDING",
+        dateTime: "1887602991",
+        __v: 0
+    }
+
+    static testRequest3 = {
         _id: "1",
         adventureId: "1",
         adventureOwner: "minerva",
@@ -39,7 +63,7 @@ module.exports = class MockTestData {
         __v: 0
     };
 
-    static testRequest2 = {
+    static testRequest4 = {
         _id: "2",
         adventureId: "2",
         adventureOwner: "severus",
