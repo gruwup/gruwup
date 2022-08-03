@@ -1,6 +1,7 @@
 package com.cpen321.gruwup;
 
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -14,6 +15,7 @@ import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 import android.app.Activity;
@@ -26,6 +28,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.test.espresso.DataInteraction;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -135,14 +138,53 @@ public class CreateAdventureTest {
                                 9)));
         materialButton.perform(scrollTo(), click());
 
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.create_adventure_time_input),
+        //----------------------------------------------------------------------------------------------------------------------
+
+        ViewInteraction timeButton = onView(
+                allOf(withId(R.id.create_adventure_time_input), withText("Choose A Time"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 12)));
-        appCompatEditText3.perform(scrollTo(), replaceText("11-11-2023 11:11:11"), closeSoftKeyboard());
+        timeButton.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogYear = onView(
+                allOf(withClassName(is("com.google.android.material.textview.MaterialTextView")), withText("2022"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        timeDialogYear.perform(click());
+
+        DataInteraction timeDialogYear2 = onData(anything())
+                .inAdapterView(allOf(withClassName(is("android.widget.YearPickerView")),
+                        childAtPosition(
+                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
+                                1)))
+                .atPosition(123);
+        timeDialogYear2.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogOK = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        timeDialogOK.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogOK2 = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        timeDialogOK2.perform(scrollTo(), click());
+        //----------------------------------------------------------------------------------------------------------------------
 
         ViewInteraction appCompatEditText4 = onView(
                 allOf(withId(R.id.create_adventure_location_input)));
@@ -202,14 +244,50 @@ public class CreateAdventureTest {
 
         //no image!
 
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.create_adventure_time_input),
+        ViewInteraction timeButton = onView(
+                allOf(withId(R.id.create_adventure_time_input), withText("Choose A Time"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 12)));
-        appCompatEditText3.perform(scrollTo(), replaceText("11-11-2023 11:11:11"), closeSoftKeyboard());
+        timeButton.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogYear = onView(
+                allOf(withClassName(is("com.google.android.material.textview.MaterialTextView")), withText("2022"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        timeDialogYear.perform(click());
+
+        DataInteraction timeDialogYear2 = onData(anything())
+                .inAdapterView(allOf(withClassName(is("android.widget.YearPickerView")),
+                        childAtPosition(
+                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
+                                1)))
+                .atPosition(123);
+        timeDialogYear2.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogOK = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        timeDialogOK.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogOK2 = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        timeDialogOK2.perform(scrollTo(), click());
 
         ViewInteraction appCompatEditText4 = onView(
                 allOf(withId(R.id.create_adventure_location_input)));
@@ -341,14 +419,50 @@ public class CreateAdventureTest {
                                 9)));
         materialButton.perform(scrollTo(), click());
 
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.create_adventure_time_input),
+        ViewInteraction timeButton = onView(
+                allOf(withId(R.id.create_adventure_time_input), withText("Choose A Time"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 12)));
-        appCompatEditText3.perform(scrollTo(), replaceText("11-11-2023 11:11:11"), closeSoftKeyboard());
+        timeButton.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogYear = onView(
+                allOf(withClassName(is("com.google.android.material.textview.MaterialTextView")), withText("2022"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        timeDialogYear.perform(click());
+
+        DataInteraction timeDialogYear2 = onData(anything())
+                .inAdapterView(allOf(withClassName(is("android.widget.YearPickerView")),
+                        childAtPosition(
+                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
+                                1)))
+                .atPosition(123);
+        timeDialogYear2.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogOK = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        timeDialogOK.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogOK2 = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        timeDialogOK2.perform(scrollTo(), click());
 
         ViewInteraction appCompatEditText4 = onView(
                 allOf(withId(R.id.create_adventure_location_input)));

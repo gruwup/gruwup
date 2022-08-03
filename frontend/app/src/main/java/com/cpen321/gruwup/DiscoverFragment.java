@@ -1,7 +1,9 @@
 package com.cpen321.gruwup;
 
 import android.app.Activity;
+import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -18,8 +20,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.TextView;
+import android.widget.TimePicker;
 import android.widget.Toast;
 
 import androidx.annotation.NonNull;
@@ -45,6 +49,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -164,7 +169,7 @@ public class DiscoverFragment extends Fragment {
     private void createAdventure() {
         EditText title;
         EditText description;
-        EditText time;
+        Button time;
         final Dialog dialog = new Dialog(getActivity());
         dialog.setContentView(R.layout.create_adventure_pop_up);
         dialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
@@ -188,7 +193,7 @@ public class DiscoverFragment extends Fragment {
 
         title = (EditText) dialog.findViewById(R.id.create_adventure_title_input);
         description = (EditText) dialog.findViewById(R.id.create_adventure_description_input);
-        time = (EditText) dialog.findViewById(R.id.create_adventure_time_input);
+        time = (Button) dialog.findViewById(R.id.create_adventure_time_input);
         location = (EditText) dialog.findViewById(R.id.create_adventure_location_input);
 
         titleAlert = (TextView) dialog.findViewById(R.id.setTitleAlert);
@@ -218,6 +223,30 @@ public class DiscoverFragment extends Fragment {
             }
         });
 
+        Calendar[] date = new Calendar[1];
+        String[] dateString = new String[1];
+        time.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                date[0] = Calendar.getInstance();
+                new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                    @Override
+                    public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
+                        date[0].set(year, monthOfYear, dayOfMonth);
+                        new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                            @Override
+                            public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
+                                date[0].set(Calendar.HOUR_OF_DAY, hourOfDay);
+                                date[0].set(Calendar.MINUTE, minute);
+                                dateString[0] = dateToEpoch((date[0].get(Calendar.MONTH)+1 < 10 ? "0"+(date[0].get(Calendar.MONTH)+1) : date[0].get(Calendar.MONTH)+1) + "-" + (date[0].get(Calendar.DAY_OF_MONTH) < 10 ? "0"+date[0].get(Calendar.DAY_OF_MONTH) : date[0].get(Calendar.DAY_OF_MONTH)) + "-" + date[0].get(Calendar.YEAR) + " " + (date[0].get(Calendar.HOUR_OF_DAY) < 10 ? "0"+date[0].get(Calendar.HOUR_OF_DAY) : date[0].get(Calendar.HOUR_OF_DAY)) + ":" + (date[0].get(Calendar.MINUTE) < 10 ? "0"+date[0].get(Calendar.MINUTE) : date[0].get(Calendar.MINUTE)) + ":00");
+                                System.out.println("testTime: " + (date[0].get(Calendar.MONTH)+1 < 10 ? "0"+(date[0].get(Calendar.MONTH)+1) : date[0].get(Calendar.MONTH)+1) + "-" + (date[0].get(Calendar.DAY_OF_MONTH) < 10 ? "0"+date[0].get(Calendar.DAY_OF_MONTH) : date[0].get(Calendar.DAY_OF_MONTH)) + "-" + date[0].get(Calendar.YEAR) + " " + (date[0].get(Calendar.HOUR_OF_DAY) < 10 ? "0"+date[0].get(Calendar.HOUR_OF_DAY) : date[0].get(Calendar.HOUR_OF_DAY)) + ":" + (date[0].get(Calendar.MINUTE) < 10 ? "0"+date[0].get(Calendar.MINUTE) : date[0].get(Calendar.MINUTE)) + ":00");
+                            }
+                        }, date[0].get(Calendar.HOUR_OF_DAY), date[0].get(Calendar.MINUTE), false).show();
+                    }
+                }, date[0].get(Calendar.YEAR), date[0].get(Calendar.MONTH), date[0].get(Calendar.DATE)).show();
+            }
+        });
+
         confirmCreateButton = (TextView) dialog.findViewById(R.id.confirmButton);
         confirmCreateButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -229,11 +258,13 @@ public class DiscoverFragment extends Fragment {
                 } else if (ProfileFragment.verifyUserInput(description) != "valid") {
                     titleAlert.setText(null);
                     descriptionAlert.setText("Make sure all fields are not empty and use alphanumeric characters!");
-                } else if (ProfileFragment.verifyUserInput(time) != "valid" || dateToEpoch(time.getText().toString()).equals("D2E error!") || (Long.valueOf(dateToEpoch(time.getText().toString())) < System.currentTimeMillis()/1000L)) {
+                }
+                else if (dateString[0] == null || dateString[0].equals("") || dateString[0].isEmpty()) {
                     titleAlert.setText(null);
                     descriptionAlert.setText(null);
                     timeAlert.setText("Make field contains a valid time (in proper format)!");
-                } else if (ProfileFragment.verifyUserInput(location) != "valid") {
+                }
+                else if (ProfileFragment.verifyUserInput(location) != "valid") {
                     titleAlert.setText(null);
                     descriptionAlert.setText(null);
                     timeAlert.setText(null);
@@ -272,8 +303,7 @@ public class DiscoverFragment extends Fragment {
                         jsonObject.put("owner", SharedPreferencesUtil.getUserId(v.getContext().getApplicationContext()));
                         jsonObject.put("title", title.getText().toString().trim());
                         jsonObject.put("description", description.getText().toString().trim());
-                        jsonObject.put("dateTime", Integer.valueOf(dateToEpoch(time.getText().toString().trim())));
-                        System.out.println(dateToEpoch(time.getText().toString().trim()));
+                        jsonObject.put("dateTime", Integer.valueOf(dateString[0]));
                         jsonObject.put("location", location.getText().toString().trim());
                         jsonObject.put("category", mSelectedCategoryNames.get(0));
                         jsonObject.put("image", bmpToB64(imageBMP));
