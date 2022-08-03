@@ -83,12 +83,16 @@ module.exports = class AdventureStoreMocks {
                 category = filter.$and[2].category;
                 if (category.$in) {
                     for (var j = 0; j < category.$in.length; j++) {
-                        if (category.$in[j] === data[i].category) {
-                            if (result.indexOf(data[i]) === -1) result.push(data[i]);
+                        if (category.$in[j] !== data[i].category) {
+                            console.log(data[i]._id + " " + filter.$and[1]._id.$nin);
+                            if (filter.$and[1]._id.$nin.indexOf(data[i]._id) === -1) {
+                                if (result.indexOf(data[i]) === -1) result.push(data[i]);
+                            }
                         }
                     }
                 }
             }
+            
             else if (filter.$and && filter.$and[0].category.$in && filter.$and[1].dateTime.$lte) { //findByFilter
                 category = filter.$and[0].category.$in;
                 var dateTime = filter.$and[1].dateTime.$lte;
