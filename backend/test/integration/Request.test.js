@@ -105,7 +105,7 @@ describe("POST /user/request/:adventureId/send-request", () => {
             })
             .expect(400)
             .then(res => {
-            expect(res.text).toEqual("You can't request to your own adventure");
+            expect(res.text).toEqual("You can't request to join your own adventure");
         });
     });
 

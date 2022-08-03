@@ -1,5 +1,6 @@
 const AdventureStore = require("../store/AdventureStore");
 const UserStore = require("../store/UserStore");
+const RequestStore = require("../store/RequestStore");
 
 module.exports = class FilterService {
     static getNearbyAdventures = async (cityName) => {
@@ -53,25 +54,40 @@ module.exports = class FilterService {
                 message: profile.message
             };
             if (profile.code === 200) {
-                userProfile = profile.payload;
-                const statusOpen = {status: "OPEN"};
-                var recommendationFilter = { $and: [
-                    statusOpen,
-                    { category: { $in: userProfile.categories } },
-                    { owner: { $ne: userId } },
-                    { peopleGoing: { $nin: userId } },
-                ]};
-                await AdventureStore.findAdventuresByFilter(recommendationFilter).then(adventures => {
+                await RequestStore.getRequests(userId).then(async requests => {
                     result = {
-                        code: adventures.code,
-                        message: adventures.message
+                        code: profile.code,
+                        message: profile.message
                     };
-                    if (adventures.code === 200) {
-                        result = {
-                            code: 200,
-                            message: "Recommendation feed found",
-                            payload: adventures.payload
-                        };
+                    const requestIds = requests.payload.map(request => request.adventureId);
+                    if (requests.code === 200) {
+                        userProfile = profile.payload;
+                        const statusOpen = {status: "OPEN"};
+                        var recommendationFilter = { $and: [
+                            statusOpen,
+                            { _id: { $nin: requestIds } },
+                            { category: { $in: userProfile.categories } },
+                            { owner: { $ne: userId } },
+                            { peopleGoing: { $nin: userId } },
+                        ]};
+                        await AdventureStore.findAdventuresByFilter(recommendationFilter).then(adventures => {
+                            result = {
+                                code: adventures.code,
+                                message: adventures.message
+                            };
+                            if (adventures.code === 200) {
+                                result = {
+                                    code: 200,
+                                    message: "Recommendation feed found",
+                                    payload: adventures.payload
+                                };
+                            }
+                        }, err => {
+                            result = {
+                                code: 500,
+                                message: err._message
+                            };
+                        });
                     }
                 }, err => {
                     result = {

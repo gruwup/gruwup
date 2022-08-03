@@ -1,4 +1,4 @@
-const MockTestData = require('../mocks/MockTestData');
+const MockTestData = require('../MockTestData');
 const FilterService = require("../../services/FilterService");
 const Adventure = require("../../models/Adventure");
 const mongoose = require("mongoose");

@@ -1,1 +1,3 @@
 node_modules/
+backend/coverage/
+backend/TestMode.js
