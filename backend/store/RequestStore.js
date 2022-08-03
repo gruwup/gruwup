@@ -34,7 +34,7 @@ module.exports = class RequestStore {
                 if(adventure.owner === request.userId) {
                     result = {
                         code: 400,
-                        message: "You can't request to your own adventure"
+                        message: "You can't request to join your own adventure"
                     };
                     return result;
                 }

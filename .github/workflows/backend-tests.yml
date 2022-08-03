@@ -20,6 +20,30 @@ jobs:
         run: npm install
       - name: Start MongoDB
         run: sudo systemctl start mongod
-      - name: Run tests
+      - name: Run AdventureStore tests
         working-directory: ./backend/
-        run: npm test
+        run: npm test AdventureStore.test.js
+      - name: Run RequestStore tests
+        working-directory: ./backend/
+        run: npm test RequestStore.test.js
+      - name: Run FilterService tests
+        working-directory: ./backend/
+        run: npm test FilterService.test.js
+      - name: Run Account integration tests
+        working-directory: ./backend/
+        run: npm test Account.test.js
+      - name: Run Adventure integration tests
+        working-directory: ./backend/
+        run: npm test Adventure.test.js
+      - name: Run Chat integration tests
+        working-directory: ./backend/
+        run: npm test Chat.test.js
+      - name: Run Profile integration tests
+        working-directory: ./backend/
+        run: npm test Profile.test.js
+      - name: Run Request integration tests
+        working-directory: ./backend/
+        run: npm test Request.test.js
+      - name: Run all integration tests
+        working-directory: ./backend/
+        run: npm test integration

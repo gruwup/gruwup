@@ -1,4 +1,4 @@
-const MockTestData = require('../../test/mocks/MockTestData');
+const MockTestData = require('../../test/MockTestData');
 
 module.exports = class UserStoreMocks {
     static getUserProfile = jest.fn((userId) => {
