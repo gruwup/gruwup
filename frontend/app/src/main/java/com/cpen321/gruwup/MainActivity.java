@@ -61,19 +61,19 @@ public class MainActivity extends AppCompatActivity {
         public void onReceive(Context context, Intent intent) {
             if(intent.getBooleanExtra("showalert",false))
             {
-                showMsg(intent.getStringExtra("name"), intent.getStringExtra("message"));
+                showMsg(intent.getStringExtra("name"), intent.getStringExtra("message"), intent.getStringExtra("adventureName"));
             }
         }
 
 
     };
-    public void showMsg(String name, String message){
+    public void showMsg(String name, String message, String adventureName){
 
         runOnUiThread(new Runnable() {
             @Override
             public void run() {
                 AlertDialog alertDialog = new AlertDialog.Builder(MainActivity.this)
-                        .setMessage("New Message by "+ name + ": " + message)
+                        .setMessage("New message on " + adventureName + "\n"+ name + ": " + message)
                         .setPositiveButton("Ok", new DialogInterface.OnClickListener() {
                             @Override
                             public void onClick(DialogInterface dialog, int which) {

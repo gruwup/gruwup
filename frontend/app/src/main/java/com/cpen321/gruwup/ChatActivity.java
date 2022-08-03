@@ -354,7 +354,7 @@ public class ChatActivity extends AppCompatActivity {
                             if (adapter != null) {
                                 messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
                             }
-                            Log.d(TAG, "message sent successfully");
+
                         }
                     });
                 } else {
@@ -459,9 +459,6 @@ public class ChatActivity extends AppCompatActivity {
                     try {
                         JSONObject jsonObj = new JSONObject(jsonData);
                         adventureOwner = jsonObj.getString("owner");
-
-                        Log.d(TAG, "FOR EDIT UID" + UserID);
-                        Log.d(TAG, "FOR EDIT AVID" + adventureOwner);
                         if (UserID.equals(adventureOwner)) {
                             runOnUiThread(new Runnable() {
                                 @Override
@@ -579,8 +576,11 @@ public class ChatActivity extends AppCompatActivity {
                 @Override
                 public void run() {
                     Log.d(TAG, "adventure ID=====>" + args[0].toString());
-                    Log.d(TAG, "message=====>" + args[1].toString());
-                    JSONObject data = (JSONObject) args[1];
+                    Log.d(TAG, "adventure Name=====>" + args[1].toString());
+                    Log.d(TAG, "message=====>" + args[2].toString());
+
+
+                    JSONObject data = (JSONObject) args[2];
 
                     String userName;
                     String userId;

@@ -69,15 +69,26 @@ public class ChatFragment extends Fragment {
             if(intent.getBooleanExtra("showalert",false))
             {
                 String adventureId = intent.getStringExtra("adventureId");
+                String adventureName = intent.getStringExtra("adventureName");
                 String lastMessage = intent.getStringExtra("message");
                 String lastMessageTime = intent.getStringExtra("dateTime");
+                String lastMessageSender = intent.getStringExtra("name");
 
+                Boolean adventureExist = false;
                 for (int i=0; i<adventures.size(); i++){
                     if (adventures.get(i).getAdventureId().equals(adventureId)){
                         adventures.get(i).setLastMessage(lastMessage);
                         adventures.get(i).setLastMessageTime(lastMessageTime);
+                        adventureExist = true;
                     }
                 }
+
+                if (!adventureExist){
+                    Adventure adventure = new Adventure("",adventureName,adventureId,lastMessage,lastMessageTime,lastMessageSender);
+                    adventures.add(adventure);
+                    adapter.notifyDataSetChanged();
+                }
+
                 if(adventures.size()>0) {
                     noMessages.setVisibility(View.GONE);
                 }

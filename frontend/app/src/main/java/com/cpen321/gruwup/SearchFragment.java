@@ -293,6 +293,12 @@ public class SearchFragment extends Fragment{
         } catch (Exception e) {
             System.out.println("String Exception! " + numPeople.getText().toString() + " " + location.getText().toString());
         }
+
+        filterSubOperation(jsonObject, dialog);
+
+    }
+
+    private void filterSubOperation(JSONObject jsonObject, Dialog dialog){
         String cookie = SharedPreferencesUtil.getCookie(getActivity());
         String[] cookieList  =  cookie.split("=",2);
         OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
@@ -323,6 +329,7 @@ public class SearchFragment extends Fragment{
         recyclerView.invalidate();
         updateNoAdventures();
         dialog.dismiss();
+
     }
 
     private void updateNoAdventures() {

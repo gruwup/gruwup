@@ -40,10 +40,12 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
     private String address;
     static final String TAG = "RequestViewAdapter";
     final static String RESPONSE_TIME_TAG = "RESPONSE_TIME ";
+    private RequestsFragment fragment;
 
-    public RequestViewAdapter(Context context, ArrayList<Request> requests){
+    public RequestViewAdapter(Context context, ArrayList<Request> requests, RequestsFragment fragment){
         this.context = context;
         this.requests = requests;
+        this.fragment = fragment;
         address = context.getString(R.string.connection_address);
     }
 
@@ -63,6 +65,7 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
         holder.adventureTitle.setText(request.getAdventureName());
 
         requestDialog = new Dialog(this.context);
+        TextView requestList = fragment.requestList;
         holder.acceptRequest.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -70,6 +73,13 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
                 showPopUp( "accept",position);
                 requests.remove(position);
                 notifyItemRemoved(position);
+
+                if (getItemCount()==0){
+                    requestList.setVisibility(View.VISIBLE);
+                }
+                else {
+                    requestList.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -80,6 +90,13 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
                 showPopUp("deny",position);
                 requests.remove(position);
                 notifyItemRemoved(position);
+
+                if (getItemCount()==0){
+                    requestList.setVisibility(View.VISIBLE);
+                }
+                else {
+                    requestList.setVisibility(View.GONE);
+                }
             }
         });
 
@@ -95,6 +112,8 @@ public class RequestViewAdapter extends RecyclerView.Adapter<RequestViewAdapter.
                 }
             }
         });
+
+
 
     }
 

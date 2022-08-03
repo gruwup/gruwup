@@ -57,38 +57,40 @@ public class SocketService extends Service {
                 mSocket.on("message", onNewNotification);
             } else {
                 Log.d(TAG, "===>cannot connect to socket");
-                Log.d(TAG, args[0].toString());
             }
         }
     };
 
     //Send message to activity
-    private void sendMessage(String userName, String message, String dateTime, String adventureId) {
+    private void sendMessage(String userName, String message, String dateTime, String adventureId, String adventureName) {
         Intent intent = new Intent("broadcastMsg");
         intent.putExtra("showalert", true);
         intent.putExtra("name", userName);
         intent.putExtra("message", message);
         intent.putExtra("adventureId", adventureId);
         intent.putExtra("dateTime", dateTime);
+        intent.putExtra("adventureName", adventureName);
         LocalBroadcastManager.getInstance(this).sendBroadcast(intent);
     }
 
     private Emitter.Listener onNewNotification = new Emitter.Listener() {
         @Override
         public void call(final Object... args) {
-            JSONObject data = (JSONObject) args[1];
+            JSONObject data = (JSONObject) args[2];
 
             String userName;
             String message;
             String dateTime;
             String adventureId;
+            String adventureName;
 
             try {
                 adventureId = args[0].toString();
+                adventureName = args[1].toString();
                 userName = data.getString("name");
                 message = data.getString("message");
                 dateTime = String.valueOf(data.getString("dateTime"));
-                sendMessage(userName, message, dateTime, adventureId);
+                sendMessage(userName, message, dateTime, adventureId, adventureName);
             } catch (JSONException e) {
                 return;
             }
