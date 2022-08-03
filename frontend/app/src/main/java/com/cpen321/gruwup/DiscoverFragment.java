@@ -328,7 +328,6 @@ public class DiscoverFragment extends Fragment {
                                 date[0].set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 date[0].set(Calendar.MINUTE, minute);
                                 dateString[0] = dateToEpoch((date[0].get(Calendar.MONTH)+1 < 10 ? "0"+(date[0].get(Calendar.MONTH)+1) : date[0].get(Calendar.MONTH)+1) + "-" + (date[0].get(Calendar.DAY_OF_MONTH) < 10 ? "0"+date[0].get(Calendar.DAY_OF_MONTH) : date[0].get(Calendar.DAY_OF_MONTH)) + "-" + date[0].get(Calendar.YEAR) + " " + (date[0].get(Calendar.HOUR_OF_DAY) < 10 ? "0"+date[0].get(Calendar.HOUR_OF_DAY) : date[0].get(Calendar.HOUR_OF_DAY)) + ":" + (date[0].get(Calendar.MINUTE) < 10 ? "0"+date[0].get(Calendar.MINUTE) : date[0].get(Calendar.MINUTE)) + ":00");
-                                System.out.println("testTime: " + (date[0].get(Calendar.MONTH)+1 < 10 ? "0"+(date[0].get(Calendar.MONTH)+1) : date[0].get(Calendar.MONTH)+1) + "-" + (date[0].get(Calendar.DAY_OF_MONTH) < 10 ? "0"+date[0].get(Calendar.DAY_OF_MONTH) : date[0].get(Calendar.DAY_OF_MONTH)) + "-" + date[0].get(Calendar.YEAR) + " " + (date[0].get(Calendar.HOUR_OF_DAY) < 10 ? "0"+date[0].get(Calendar.HOUR_OF_DAY) : date[0].get(Calendar.HOUR_OF_DAY)) + ":" + (date[0].get(Calendar.MINUTE) < 10 ? "0"+date[0].get(Calendar.MINUTE) : date[0].get(Calendar.MINUTE)) + ":00");
                             }
                         }, date[0].get(Calendar.HOUR_OF_DAY), date[0].get(Calendar.MINUTE), false).show();
                     }
