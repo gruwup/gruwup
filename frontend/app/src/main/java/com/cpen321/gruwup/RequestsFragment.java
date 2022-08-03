@@ -30,7 +30,7 @@ public class RequestsFragment extends Fragment {
 
     private String address;
     private RequestViewAdapter adapter;
-    private TextView requestList;
+    public TextView requestList;
 
     private void initRequestData() throws IOException {
         this.getAllRequests();
@@ -43,7 +43,7 @@ public class RequestsFragment extends Fragment {
         View view = inflater.inflate(R.layout.fragment_requests, container, false);
         try {
             initRequestData();
-            adapter = new RequestViewAdapter(getActivity(),requests);
+            adapter = new RequestViewAdapter(getActivity(),requests, this);
             RecyclerView requestView = (RecyclerView) view.findViewById(R.id.getRequestView);
             requestView.setLayoutManager(new LinearLayoutManager(getActivity()));
             requestView.setAdapter(adapter);
