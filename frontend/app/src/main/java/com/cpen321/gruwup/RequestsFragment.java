@@ -49,7 +49,12 @@ public class RequestsFragment extends Fragment {
             requestView.setAdapter(adapter);
             requestList = view.findViewById(R.id.requestList);
 
-            requestList.setVisibility(View.GONE);
+            if (adapter.getItemCount()==0){
+                requestList.setVisibility(View.VISIBLE);
+            }
+            else {
+                requestList.setVisibility(View.GONE);
+            }
 
         } catch (IOException e) {
             e.printStackTrace();
