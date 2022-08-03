@@ -55,7 +55,8 @@ describe("sendRequest tests", () => {
 
         expect(result.payload).toEqual(
             expect.objectContaining({
-                adventureExpireAt: time,
+                adventureExpireAt: time, 
+                // adventureId: adventureId,
                 adventureOwner: "userid",
                 adventureTitle: "title",
                 dateTime: time,

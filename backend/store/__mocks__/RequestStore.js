@@ -2,8 +2,6 @@ const MockTestData = require('../../test/MockTestData');
 
 module.exports = class RequestStoreMocks {
     static getRequests = jest.fn((userId) => {
-        console.log("hi");
-        console.log(userId);
         var result =  {
             code: 200,
             message: "Requests found",
