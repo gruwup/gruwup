@@ -90,7 +90,8 @@
                 android:id="@+id/messageRecyclerView"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:nestedScrollingEnabled="false">
+                android:nestedScrollingEnabled="false"
+                >
 
             </androidx.recyclerview.widget.RecyclerView>
 

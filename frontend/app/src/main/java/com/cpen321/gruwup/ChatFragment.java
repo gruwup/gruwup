@@ -46,6 +46,7 @@ public class ChatFragment extends Fragment {
         address = getActivity().getString(R.string.connection_address);
         View view = inflater.inflate(R.layout.fragment_chat, container, false);
         noMessages = view.findViewById(R.id.noMessages);
+        noMessages.setVisibility(View.INVISIBLE);
         adapter = new ChatViewAdapter(getActivity(),adventures);
         RecyclerView chatView = (RecyclerView) view.findViewById(R.id.chatView);
         chatView.setLayoutManager(new LinearLayoutManager(getActivity()));
@@ -56,6 +57,9 @@ public class ChatFragment extends Fragment {
     @Override
     public void onResume() {
         super.onResume();
+        adventures.clear();
+        adapter.notifyDataSetChanged();
+        noMessages.setVisibility(View.INVISIBLE);
         getAllChats();
         // This registers mMessageReceiver to receive messages.
         LocalBroadcastManager.getInstance(this.getActivity())
@@ -90,7 +94,7 @@ public class ChatFragment extends Fragment {
                 }
 
                 if(adventures.size()>0) {
-                    noMessages.setVisibility(View.GONE);
+                    noMessages.setVisibility(View.INVISIBLE);
                 }
                 else {
                     noMessages.setVisibility(View.VISIBLE);
@@ -109,7 +113,6 @@ public class ChatFragment extends Fragment {
     };
 
     public void getAllChats() {
-
         String UserID = SharedPreferencesUtil.getUserId(this.getActivity());
         Log.d(TAG, "User Id is "+ UserID);
         String cookie;
@@ -136,11 +139,11 @@ public class ChatFragment extends Fragment {
                             public void run() {
                                 adventures.clear();
                                 adapter.notifyDataSetChanged();
-                                if(adventures.size()>0) {
-                                    noMessages.setVisibility(View.INVISIBLE);
+                                if(adventures.size()==0) {
+                                    noMessages.setVisibility(View.VISIBLE);
                                 }
                                 else {
-                                    noMessages.setVisibility(View.VISIBLE);
+                                    noMessages.setVisibility(View.INVISIBLE);
                                 }
                             }
                         });
@@ -168,11 +171,11 @@ public class ChatFragment extends Fragment {
                                         Adventure adventure = new Adventure(image,adventureName,adventureId,lastMessage,lastMessageTime,lastMessageSender);
                                         adventures.add(adventure);
                                         adapter.notifyDataSetChanged();
-                                        if(adventures.size()>0) {
-                                            noMessages.setVisibility(View.INVISIBLE);
+                                        if(adventures.size()==0) {
+                                            noMessages.setVisibility(View.VISIBLE);
                                         }
                                         else {
-                                            noMessages.setVisibility(View.VISIBLE);
+                                            noMessages.setVisibility(View.INVISIBLE);
                                         }
                                     }
                                 });
