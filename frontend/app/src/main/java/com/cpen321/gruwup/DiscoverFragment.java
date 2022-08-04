@@ -341,13 +341,6 @@ public class DiscoverFragment extends Fragment {
         JSONArray jsonArray = new JSONArray(HTTPRESULT);
         int arrlen = jsonArray.length();
 
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                updateNoAdventures();
-            }
-        });
-
         for (int i = 0; i < arrlen; i++) {
             JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
             mAdventureList.add(new HashMap<String, String>());
@@ -360,6 +353,13 @@ public class DiscoverFragment extends Fragment {
             mAdventureList.get(i).put("description", jsonObject.getString("description"));
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
+
+        getActivity().runOnUiThread(new Runnable() {
+            @Override
+            public void run() {
+                updateNoAdventures();
+            }
+        });
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
