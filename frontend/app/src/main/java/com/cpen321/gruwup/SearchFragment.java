@@ -184,7 +184,6 @@ public class SearchFragment extends Fragment{
                 }
             }
         });
-        displayAdventures(view);
         return view;
     }
 
