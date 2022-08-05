@@ -5,9 +5,6 @@ import android.app.Activity;
 import android.app.Dialog;
 import android.content.Context;
 import android.content.ContextWrapper;
-import android.os.Bundle;
-import android.os.Handler;
-import android.os.Looper;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -17,29 +14,19 @@ import android.view.animation.AnimationUtils;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
-import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.RecyclerView;
 
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Map;
 
-import okhttp3.Call;
-import okhttp3.Callback;
-import okhttp3.Response;
-
 public class AdventureInfoAdapter extends RecyclerView.Adapter<AdventureInfoAdapter.ViewHolder> {
-
     private static final String TAG = "AdventureInfoAdapter";
-    final static String RESPONSE_TIME_TAG = "RESPONSE_TIME ";
 
     Dialog viewAdventureDialog;
     private ArrayList<Map<String, String>> mAdvNames = new ArrayList<>();
@@ -98,7 +85,7 @@ public class AdventureInfoAdapter extends RecyclerView.Adapter<AdventureInfoAdap
         TextView time;
         TextView location;
         TextView description;
-        
+
         viewAdventureDialog.setContentView(R.layout.adventure_info_pop_up);
         viewAdventureDialog.getWindow().setBackgroundDrawableResource(android.R.color.transparent);
         cancel = (TextView) viewAdventureDialog.findViewById(R.id.cancel_view_adventure);
@@ -108,14 +95,13 @@ public class AdventureInfoAdapter extends RecyclerView.Adapter<AdventureInfoAdap
         time = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_time);
         location = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_location);
         description = (TextView) viewAdventureDialog.findViewById(R.id.view_adventure_description);
-
         cancel.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 viewAdventureDialog.dismiss();
             }
         });
-        id = mAdvNames.get(position).get("id");
+
         // Set the contents of the popup
 
         title.setText(mAdvNames.get(position).get("title"));
