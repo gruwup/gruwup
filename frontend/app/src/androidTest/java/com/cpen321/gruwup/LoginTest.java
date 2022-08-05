@@ -5,13 +5,11 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
-import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
 import static org.hamcrest.Matchers.is;
 
-import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -23,10 +21,8 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
-import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
-import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiSelector;
 
 import org.hamcrest.Description;
@@ -37,7 +33,6 @@ import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 
-import java.util.regex.Pattern;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -93,31 +88,12 @@ public class LoginTest {
         mText.waitForExists(timeOut);
         mText.click();
 
-//        // Confirm Button Click
-//        UiObject next = mDevice.findObject(new UiSelector()
-//                .resourceId("identifierNext"));
-//        next.waitForExists(timeOut);
-//        next.click();
-
         // Set Password
         UiObject passwordInput = mDevice.findObject(new UiSelector()
                 .resourceId("password"));
 
         passwordInput.waitForExists(timeOut);
         passwordInput.legacySetText("cpen321gruwup");
-
-        // Confirm Button Click
-//        UiObject next = mDevice.findObject(new UiSelector()
-//                .resourceId("passwordNext"));
-//        next.waitForExists(timeOut);
-//        next.click();
-
-//        Pattern patternToMatch2 = Pattern.compile("NEXT", Pattern.CASE_INSENSITIVE);
-////        device.wait(Until.findObjects(By.text(patternToMatch)),4000);
-//
-////        UiObject pText = mUiDevice.findObject(new UiSelector().text("NEXT"));
-//        UiObject2 pText = mUiDevice.findObject(By.text(patternToMatch2));
-//        pText.click();
 
         UiObject nText = mUiDevice.findObject(new UiSelector().textStartsWith("Next"));
         nText.waitForExists(timeOut);
