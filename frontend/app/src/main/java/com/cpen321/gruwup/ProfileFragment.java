@@ -1,5 +1,7 @@
 package com.cpen321.gruwup;
 
+import static com.cpen321.gruwup.DiscoverFragment.epochToDate;
+
 import android.app.Dialog;
 import android.content.Intent;
 import android.graphics.Paint;
@@ -31,6 +33,8 @@ import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 import okhttp3.Call;
 import okhttp3.Callback;
@@ -47,6 +51,9 @@ public class ProfileFragment extends Fragment {
 
     Dialog profileDialog;
     Button editButton;
+    Button infoButton;
+    ArrayList<Map<String, String>> mAdventureList;
+
     final static String TAG = "ProfileFragment";
     final static String RESPONSE_TIME_TAG = "RESPONSE_TIME ";
 
@@ -134,8 +141,61 @@ public class ProfileFragment extends Fragment {
             }
         });
 
+        infoButton = view.findViewById(R.id.info_button);
+        infoButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                try {
+                    showInfo(view);
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
         return view;
+    }
+
+    public void showInfo(View v) throws IOException {
+
+//        LinearLayoutManager layoutManager = new LinearLayoutManager(profileDialog.getContext());
+//        RecyclerView adventureListView = (RecyclerView) profileDialog.findViewById(R.id.adventureRecyclerView);
+//        adventureListView.setLayoutManager(layoutManager);
+//        DiscAdvViewAdapter adapter = new DiscAdvViewAdapter(getActivity(), mAdventureList);
+//        adventureListView.setAdapter(adapter);
+
+        TextView goBack;
+        profileDialog.setContentView(R.layout.info_pop_up);
+
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getActivity(), LinearLayoutManager.HORIZONTAL, false);
+        RecyclerView adventureListView = (RecyclerView) profileDialog.findViewById(R.id.adventureRecyclerView);
+        adventureListView.setLayoutManager(layoutManager);
+        AdventureInfoAdapter adapter = new AdventureInfoAdapter(getActivity(),mAdventureList);
+        adventureListView.setAdapter(adapter);
+
+        goBack  = (TextView) profileDialog.findViewById(R.id.goBack);
+        goBack.setPaintFlags(goBack.getPaintFlags()|Paint.UNDERLINE_TEXT_FLAG);
+        goBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                //Note: can change this to display from cache  (previous selected categories)
+                try {
+                    getProfileRequest();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+                profileDialog.dismiss();
+            }
+        });
+
+        TextView noAdventure = (TextView) profileDialog.findViewById(R.id.noAdventures);
+        if (mAdventureList.size()==0){
+            noAdventure.setVisibility(View.VISIBLE);
+        }else{
+            noAdventure.setVisibility(View.INVISIBLE);
+        }
+
+        profileDialog.show();
     }
 
     public void showPopUp(View v) throws IOException {
@@ -292,11 +352,31 @@ public class ProfileFragment extends Fragment {
                 if(response.isSuccessful()){
                     Log.d(TAG, "get profile successful");
                     String jsonData = response.body().string();
+                    Log.d(TAG, "get profile data "+ jsonData);
 
                     try {
                         JSONObject jsonObj = new JSONObject(jsonData);
                         bio = jsonObj.getString("biography");
                         JSONArray pref = jsonObj.getJSONArray("categories");
+
+                        mAdventureList = new ArrayList<Map<String, String>>();
+                        JSONArray jsonArray = jsonObj.getJSONArray("adventuresCreated");
+                        int arrlen = jsonArray.length();
+
+                        for (int i = 0; i < arrlen; i++) {
+                            JSONObject jsonObject = (JSONObject) jsonArray.getJSONObject(i);
+                            mAdventureList.add(new HashMap<String, String>());
+                            mAdventureList.get(i).put("title", jsonObject.getString("title"));
+                            mAdventureList.get(i).put("event", jsonObject.getString("category"));
+                            mAdventureList.get(i).put("id", jsonObject.getString("_id"));
+                            mAdventureList.get(i).put("time", String.valueOf(epochToDate(String.valueOf(jsonObject.getString("dateTime")))));
+                            mAdventureList.get(i).put("location", jsonObject.getString("location"));
+                            mAdventureList.get(i).put("count", String.valueOf((new JSONArray(jsonObject.getString("peopleGoing"))).length()));
+                            mAdventureList.get(i).put("description", jsonObject.getString("description"));
+                            mAdventureList.get(i).put("image", jsonObject.getString("image"));
+                        }
+
+//                        Log.d(TAG, "LIST OF ADV" + mAdventureList.toString());
 
                         ArrayList<String> preferences_list = new ArrayList<String>();
                         if (pref !=null){

@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout android:orientation="vertical"
+    android:layout_width="320dp"
+    android:layout_height="500dp"
+    android:background="#FFF2F1"
+    android:padding="5dp"
+    android:layout_gravity="center"
+    xmlns:android="http://schemas.android.com/apk/res/android">
+    <TextView
+        android:id="@+id/goBack"
+        android:layout_width="50dp"
+        android:layout_height="20dp"
+        android:textColor="@color/lightGray"
+        android:text="Close"
+        android:textSize="30px"
+        android:textStyle="bold"
+        android:gravity="center"
+        android:layout_gravity="end"
+        />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:textSize="45px"
+        android:text="Adventures Created by You"
+        android:textStyle="bold" />
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="2dp"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:layout_marginRight="25dp"
+        android:background="@color/black" />
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:id="@+id/noAdventures"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:textSize="38px"
+        android:text="You have not created any adventures yet"
+        android:visibility="gone"
+        />
+
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_marginTop="40dp"
+
+        android:id="@+id/adventureRecyclerView"
+        android:orientation="horizontal"
+        >
+    </androidx.recyclerview.widget.RecyclerView>
+</LinearLayout>
