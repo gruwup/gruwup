@@ -303,6 +303,32 @@ public class DiscoverFragment extends Fragment {
                             if (!response.isSuccessful()) {
                                 System.out.println("Failure on response from create adventure: " + response.code() + " " + response.message() + " " + response.body().string() + " ");
                             }
+                            else{
+
+                                Handler uiHandler = new Handler(Looper.getMainLooper());
+                                uiHandler.post(new Runnable(){
+                                    @Override
+                                    public void run() {
+                                        Dialog adventureDialog = new Dialog(getActivity());
+                                        adventureDialog.setContentView(R.layout.createadv_success_pop_up);
+                                        adventureDialog.show();
+
+                                        new CountDownTimer(3000, 1000) {
+                                            @Override
+                                            public void onTick(long millisUntilFinished) {
+                                                // Callback fired on regular interval
+                                            }
+
+                                            @Override
+                                            public void onFinish() {
+                                                adventureDialog.dismiss();
+                                            }
+                                        }.start();
+                                    }
+                                });
+
+
+                            }
                         }
                     });
 
