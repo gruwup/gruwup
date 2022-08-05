@@ -412,6 +412,14 @@ public class ProfileFragment extends Fragment {
                 else {
                     Log.d(TAG, "get profile is unsuccessful");
                     Log.d(TAG, response.body().string());
+
+                    getActivity().runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            Toast.makeText(getContext(), "Failed to get profile, try navigating again or contact developers.", Toast.LENGTH_LONG).show();
+                        }
+                    });
+
                 }
             }
         });
