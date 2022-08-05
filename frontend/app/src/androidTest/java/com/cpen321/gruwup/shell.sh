@@ -1,4 +1,3 @@
-#shell.sh
 clear
 echo "Starting shell ....";
 cd C:/Users/Sijan/.android/avd;
