@@ -89,15 +89,8 @@ public class LoginTest {
         emailInput.waitForExists(timeOut);
         emailInput.setText("gruwupinc@gmail.com");
 
-//        UiObject mText = mUiDevice.findObject(new UiSelector().text("NEXT"));
-//        mText.waitForExists(timeOut);
-//        mText.click();
-
-        Pattern patternToMatch1 = Pattern.compile("NEXT", Pattern.CASE_INSENSITIVE);
-//        device.wait(Until.findObjects(By.text(patternToMatch)),4000);
-
-//        UiObject pText = mUiDevice.findObject(new UiSelector().text("NEXT"));
-        UiObject2 mText = mUiDevice.findObject(By.text(patternToMatch1));
+        UiObject mText = mUiDevice.findObject(new UiSelector().textStartsWith("Next"));
+        mText.waitForExists(timeOut);
         mText.click();
 
 //        // Confirm Button Click
@@ -119,13 +112,16 @@ public class LoginTest {
 //        next.waitForExists(timeOut);
 //        next.click();
 
-        Pattern patternToMatch2 = Pattern.compile("NEXT", Pattern.CASE_INSENSITIVE);
-//        device.wait(Until.findObjects(By.text(patternToMatch)),4000);
+//        Pattern patternToMatch2 = Pattern.compile("NEXT", Pattern.CASE_INSENSITIVE);
+////        device.wait(Until.findObjects(By.text(patternToMatch)),4000);
+//
+////        UiObject pText = mUiDevice.findObject(new UiSelector().text("NEXT"));
+//        UiObject2 pText = mUiDevice.findObject(By.text(patternToMatch2));
+//        pText.click();
 
-//        UiObject pText = mUiDevice.findObject(new UiSelector().text("NEXT"));
-        UiObject2 pText = mUiDevice.findObject(By.text(patternToMatch2));
-        pText.click();
-
+        UiObject nText = mUiDevice.findObject(new UiSelector().textStartsWith("Next"));
+        nText.waitForExists(timeOut);
+        nText.click();
 
         UiObject agreeButton = mUiDevice.findObject(new UiSelector().text("I agree"));
         agreeButton.waitForExists(timeOut);
@@ -138,7 +134,6 @@ public class LoginTest {
         UiObject acceptButton = mUiDevice.findObject(new UiSelector().text("ACCEPT"));
         acceptButton.waitForExists(timeOut);
         acceptButton.click();
-        SystemClock.sleep(5000);
 
     }
 
