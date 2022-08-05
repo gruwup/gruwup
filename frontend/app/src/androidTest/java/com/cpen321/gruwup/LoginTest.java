@@ -83,11 +83,16 @@ public class LoginTest {
 
         emailInput.waitForExists(timeOut);
         emailInput.setText("gruwupinc@gmail.com");
-        // Confirm Button Click
-        UiObject next = mDevice.findObject(new UiSelector()
-                .resourceId("identifierNext"));
-        next.waitForExists(timeOut);
-        next.click();
+
+        UiObject mText = mUiDevice.findObject(new UiSelector().text("NEXT"));
+        mText.waitForExists(timeOut);
+        mText.click();
+
+//        // Confirm Button Click
+//        UiObject next = mDevice.findObject(new UiSelector()
+//                .resourceId("identifierNext"));
+//        next.waitForExists(timeOut);
+//        next.click();
 
         // Set Password
         UiObject passwordInput = mDevice.findObject(new UiSelector()
@@ -97,10 +102,14 @@ public class LoginTest {
         passwordInput.legacySetText("cpen321gruwup");
 
         // Confirm Button Click
-        next = mDevice.findObject(new UiSelector()
-                .resourceId("passwordNext"));
-        next.waitForExists(timeOut);
-        next.click();
+//        UiObject next = mDevice.findObject(new UiSelector()
+//                .resourceId("passwordNext"));
+//        next.waitForExists(timeOut);
+//        next.click();
+
+        UiObject pText = mUiDevice.findObject(new UiSelector().text("NEXT"));
+        pText.click();
+
 
         UiObject agreeButton = mUiDevice.findObject(new UiSelector().text("I agree"));
         agreeButton.waitForExists(timeOut);
@@ -113,7 +122,7 @@ public class LoginTest {
         UiObject acceptButton = mUiDevice.findObject(new UiSelector().text("ACCEPT"));
         acceptButton.waitForExists(timeOut);
         acceptButton.click();
-        SystemClock.sleep(2000);
+//        SystemClock.sleep(2000);
 
 
     }
