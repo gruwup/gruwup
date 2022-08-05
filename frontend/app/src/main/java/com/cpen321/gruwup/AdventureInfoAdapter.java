@@ -59,6 +59,8 @@ public class AdventureInfoAdapter extends RecyclerView.Adapter<AdventureInfoAdap
         holder.adventureCount.setText("Person count: " + mAdvNames.get(position).get("count"));
         holder.adventureDescription.setText("Description: " + mAdvNames.get(position).get("description"));
         holder.adventureImage.setImageBitmap(DiscoverFragment.B64ToBmp(mAdvNames.get(position).get("image")));
+//        holder.adventureCard.Wid
+        holder.adventureCard.getLayoutParams().width = 650;
         holder.adventureCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
