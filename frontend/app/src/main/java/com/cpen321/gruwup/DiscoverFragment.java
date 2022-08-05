@@ -106,7 +106,6 @@ public class DiscoverFragment extends Fragment {
         createButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                System.out.println("Create adventure button clicked");
                 createAdventure();
             }
         });
@@ -318,16 +317,18 @@ public class DiscoverFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 date[0] = Calendar.getInstance();
-                new DatePickerDialog(getContext(), new DatePickerDialog.OnDateSetListener() {
+                new DatePickerDialog(getContext(), R.style.DialogTheme, new DatePickerDialog.OnDateSetListener() {
                     @Override
                     public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
                         date[0].set(year, monthOfYear, dayOfMonth);
-                        new TimePickerDialog(getContext(), new TimePickerDialog.OnTimeSetListener() {
+                        new TimePickerDialog(getContext(), R.style.DialogTheme, new TimePickerDialog.OnTimeSetListener() {
                             @Override
                             public void onTimeSet(TimePicker view, int hourOfDay, int minute) {
                                 date[0].set(Calendar.HOUR_OF_DAY, hourOfDay);
                                 date[0].set(Calendar.MINUTE, minute);
-                                dateString[0] = dateToEpoch((date[0].get(Calendar.MONTH)+1 < 10 ? "0"+(date[0].get(Calendar.MONTH)+1) : date[0].get(Calendar.MONTH)+1) + "-" + (date[0].get(Calendar.DAY_OF_MONTH) < 10 ? "0"+date[0].get(Calendar.DAY_OF_MONTH) : date[0].get(Calendar.DAY_OF_MONTH)) + "-" + date[0].get(Calendar.YEAR) + " " + (date[0].get(Calendar.HOUR_OF_DAY) < 10 ? "0"+date[0].get(Calendar.HOUR_OF_DAY) : date[0].get(Calendar.HOUR_OF_DAY)) + ":" + (date[0].get(Calendar.MINUTE) < 10 ? "0"+date[0].get(Calendar.MINUTE) : date[0].get(Calendar.MINUTE)) + ":00");
+                                String displayDateString = (date[0].get(Calendar.MONTH)+1 < 10 ? "0"+(date[0].get(Calendar.MONTH)+1) : date[0].get(Calendar.MONTH)+1) + "-" + (date[0].get(Calendar.DAY_OF_MONTH) < 10 ? "0"+date[0].get(Calendar.DAY_OF_MONTH) : date[0].get(Calendar.DAY_OF_MONTH)) + "-" + date[0].get(Calendar.YEAR) + " " + (date[0].get(Calendar.HOUR_OF_DAY) < 10 ? "0"+date[0].get(Calendar.HOUR_OF_DAY) : date[0].get(Calendar.HOUR_OF_DAY)) + ":" + (date[0].get(Calendar.MINUTE) < 10 ? "0"+date[0].get(Calendar.MINUTE) : date[0].get(Calendar.MINUTE)) + ":00";
+                                time.setText(displayDateString);
+                                dateString[0] = dateToEpoch(displayDateString);
                             }
                         }, date[0].get(Calendar.HOUR_OF_DAY), date[0].get(Calendar.MINUTE), false).show();
                     }
