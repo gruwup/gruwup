@@ -5,6 +5,7 @@ import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
+import static androidx.test.espresso.matcher.ViewMatchers.withContentDescription;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
@@ -22,8 +23,10 @@ import androidx.test.ext.junit.runners.AndroidJUnit4;
 import androidx.test.filters.LargeTest;
 import androidx.test.platform.app.InstrumentationRegistry;
 import androidx.test.rule.GrantPermissionRule;
+import androidx.test.uiautomator.By;
 import androidx.test.uiautomator.UiDevice;
 import androidx.test.uiautomator.UiObject;
+import androidx.test.uiautomator.UiObject2;
 import androidx.test.uiautomator.UiSelector;
 
 import org.hamcrest.Description;
@@ -33,6 +36,8 @@ import org.junit.Before;
 import org.junit.Rule;
 import org.junit.Test;
 import org.junit.runner.RunWith;
+
+import java.util.regex.Pattern;
 
 @LargeTest
 @RunWith(AndroidJUnit4.class)
@@ -84,8 +89,15 @@ public class LoginTest {
         emailInput.waitForExists(timeOut);
         emailInput.setText("gruwupinc@gmail.com");
 
-        UiObject mText = mUiDevice.findObject(new UiSelector().text("NEXT"));
-        mText.waitForExists(timeOut);
+//        UiObject mText = mUiDevice.findObject(new UiSelector().text("NEXT"));
+//        mText.waitForExists(timeOut);
+//        mText.click();
+
+        Pattern patternToMatch1 = Pattern.compile("NEXT", Pattern.CASE_INSENSITIVE);
+//        device.wait(Until.findObjects(By.text(patternToMatch)),4000);
+
+//        UiObject pText = mUiDevice.findObject(new UiSelector().text("NEXT"));
+        UiObject2 mText = mUiDevice.findObject(By.text(patternToMatch1));
         mText.click();
 
 //        // Confirm Button Click
@@ -107,7 +119,11 @@ public class LoginTest {
 //        next.waitForExists(timeOut);
 //        next.click();
 
-        UiObject pText = mUiDevice.findObject(new UiSelector().text("NEXT"));
+        Pattern patternToMatch2 = Pattern.compile("NEXT", Pattern.CASE_INSENSITIVE);
+//        device.wait(Until.findObjects(By.text(patternToMatch)),4000);
+
+//        UiObject pText = mUiDevice.findObject(new UiSelector().text("NEXT"));
+        UiObject2 pText = mUiDevice.findObject(By.text(patternToMatch2));
         pText.click();
 
 
@@ -122,95 +138,9 @@ public class LoginTest {
         UiObject acceptButton = mUiDevice.findObject(new UiSelector().text("ACCEPT"));
         acceptButton.waitForExists(timeOut);
         acceptButton.click();
-//        SystemClock.sleep(2000);
-
-
-    }
-
-
-    @Test
-    public void loginTestOtherAccountExists() throws Exception {
-        ViewInteraction hj = onView(
-                allOf(withText("Sign in"),
-                        childAtPosition(
-                                allOf(withId(R.id.sign_in_button),
-                                        childAtPosition(
-                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                0)),
-                                0),
-                        isDisplayed()));
-
-        hj.perform(click());
-
-        // check for add account
-        UiObject mText = mUiDevice.findObject(new UiSelector().text("Add another account"));
-        mText.click();
-
-        final UiDevice mDevice=
-                UiDevice.getInstance(InstrumentationRegistry.getInstrumentation());
-        final int timeOut = 1000 * 60;
-
-        // Set Login
-        UiObject emailInput = mDevice.findObject(new UiSelector()
-                .instance(0)
-                .className(EditText.class));
-
-        emailInput.waitForExists(timeOut);
-        emailInput.setText("gruwupinc@gmail.com");
-        // Confirm Button Click
-        UiObject next = mDevice.findObject(new UiSelector()
-                .resourceId("identifierNext"));
-        next.waitForExists(timeOut);
-        next.click();
-
-        // Set Password
-        UiObject passwordInput = mDevice.findObject(new UiSelector()
-                .resourceId("password"));
-
-        passwordInput.waitForExists(timeOut);
-        passwordInput.legacySetText("cpen321gruwup");
-
-        // Confirm Button Click
-        next = mDevice.findObject(new UiSelector()
-                .resourceId("passwordNext"));
-        next.waitForExists(timeOut);
-        next.click();
-
-        UiObject agreeButton = mUiDevice.findObject(new UiSelector().text("I agree"));
-        agreeButton.click();
-
-        SystemClock.sleep(5000);
-
-//        UiObject moreButton = mUiDevice.findObject(new UiSelector().text("MORE"));
-//        moreButton.click();
-//
-//        UiObject acceptButton = mUiDevice.findObject(new UiSelector().text("ACCEPT"));
-//        acceptButton.click();
-    }
-
-
-    @Test
-    public void loginTestUserAccountExists() throws Exception {
-        ViewInteraction hj = onView(
-                allOf(withText("Sign in"),
-                        childAtPosition(
-                                allOf(withId(R.id.sign_in_button),
-                                        childAtPosition(
-                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                0)),
-                                0),
-                        isDisplayed()));
-
-        hj.perform(click());
-
-        // check for gruwup email
-        UiObject mText = mUiDevice.findObject(new UiSelector().text("gruwupinc@gmail.com"));
-        mText.click();
-
         SystemClock.sleep(5000);
 
     }
-
 
     private static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
