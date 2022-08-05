@@ -31,7 +31,7 @@ public class AdventureInfoAdapter extends RecyclerView.Adapter<AdventureInfoAdap
     Dialog viewAdventureDialog;
     private ArrayList<Map<String, String>> mAdvNames = new ArrayList<>();
     private Context mContext;
-    private String address;
+    String address;
 
     public AdventureInfoAdapter(Context mContext, ArrayList<Map<String, String>> mAdvNames) {
         if (mContext==null){
@@ -77,7 +77,6 @@ public class AdventureInfoAdapter extends RecyclerView.Adapter<AdventureInfoAdap
     }
 
     private void showPopUp(int position) {
-        Button requestToJoin;
         TextView cancel;
         TextView title;
         TextView eventType;
