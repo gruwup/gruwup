@@ -59,6 +59,14 @@ import org.junit.runner.RunWith;
 public class CreateAdventureTest {
 
     @Rule
+    public GrantPermissionRule mGrantPermissionRule =
+            GrantPermissionRule.grant(
+                    "android.permission.ACCESS_FINE_LOCATION",
+                    "android.permission.ACCESS_COARSE_LOCATION",
+                    "android.permission.INTERNET",
+                    "android.permission.ACCESS_WIFI_STATE");
+
+    @Rule
     public ActivityScenarioRule<LogInActivity> mActivityScenarioRule =
             new ActivityScenarioRule<>(LogInActivity.class);
 
@@ -89,15 +97,6 @@ public class CreateAdventureTest {
             return false;
         }
     }
-
-
-    @Rule
-    public GrantPermissionRule mGrantPermissionRule =
-            GrantPermissionRule.grant(
-                    "android.permission.ACCESS_FINE_LOCATION",
-                    "android.permission.ACCESS_COARSE_LOCATION",
-                    "android.permission.INTERNET",
-                    "android.permission.ACCESS_WIFI_STATE");
 
     @Before
     public void stubCameraIntent() {
@@ -467,7 +466,7 @@ public class CreateAdventureTest {
         if (exists(hj)){
             hj.perform(click());
         }
-        
+
         ViewInteraction materialTextView = onView(
                 allOf(withId(R.id.create_adventure), withText(" +"),
                         childAtPosition(
