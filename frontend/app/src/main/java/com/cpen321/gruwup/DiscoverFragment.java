@@ -381,12 +381,15 @@ public class DiscoverFragment extends Fragment {
             mAdventureList.get(i).put("image", jsonObject.getString("image"));
         }
 
-        getActivity().runOnUiThread(new Runnable() {
-            @Override
-            public void run() {
-                updateNoAdventures();
-            }
-        });
+        if (getActivity()!=null){
+            getActivity().runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    updateNoAdventures();
+                }
+            });
+        }
+
     }
 
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
