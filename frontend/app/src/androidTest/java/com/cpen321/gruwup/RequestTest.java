@@ -15,6 +15,7 @@ import static org.hamcrest.Matchers.any;
 import static org.hamcrest.Matchers.is;
 import static org.junit.Assert.assertTrue;
 
+import android.os.SystemClock;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
@@ -91,6 +92,7 @@ public class RequestTest {
         }
 
         onView(withText("Choose and Create Adventures!")).check(matches(isDisplayed()));
+        SystemClock.sleep(2500);
         onView(withId(R.id.discoveredAdventures)).check(matches(isDisplayed()));
         ViewInteraction cardView = onView(
                 allOf(withId(R.id.adventure_card),
@@ -101,6 +103,7 @@ public class RequestTest {
                                 0),
                         isDisplayed()));
         cardView.perform(click());
+
         onView(withId(R.id.request_join_adventure)).check(matches(isDisplayed())).perform(click());
         boolean isDismissed = false;
         try {
@@ -133,6 +136,7 @@ public class RequestTest {
         onView(withText("Choose and Create Adventures!")).check(matches(isDisplayed()));
         onView((withId(R.id.nav_search))).check(matches(isDisplayed())).perform(click());
         onView(withText("Search Results")).check(matches(isDisplayed()));
+        SystemClock.sleep(2500);
         ViewInteraction cardView = onView(
                 allOf(withId(R.id.adventure_card),
                         this.childAtPosition(
