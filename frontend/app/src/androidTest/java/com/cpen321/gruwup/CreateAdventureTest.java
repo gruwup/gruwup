@@ -1,6 +1,7 @@
 package com.cpen321.gruwup;
 
 
+import static androidx.test.espresso.Espresso.onData;
 import static androidx.test.espresso.Espresso.onView;
 import static androidx.test.espresso.action.ViewActions.click;
 import static androidx.test.espresso.action.ViewActions.closeSoftKeyboard;
@@ -14,6 +15,8 @@ import static androidx.test.espresso.matcher.ViewMatchers.withClassName;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 import static androidx.test.espresso.matcher.ViewMatchers.withText;
 import static org.hamcrest.Matchers.allOf;
+import static org.hamcrest.Matchers.any;
+import static org.hamcrest.Matchers.anything;
 import static org.hamcrest.Matchers.is;
 
 import android.app.Activity;
@@ -26,6 +29,13 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.view.ViewParent;
 
+import androidx.annotation.CheckResult;
+import androidx.test.espresso.AmbiguousViewMatcherException;
+import androidx.test.espresso.DataInteraction;
+import androidx.test.espresso.NoMatchingRootException;
+import androidx.test.espresso.NoMatchingViewException;
+import androidx.test.espresso.UiController;
+import androidx.test.espresso.ViewAction;
 import androidx.test.espresso.ViewInteraction;
 import androidx.test.espresso.intent.Intents;
 import androidx.test.ext.junit.rules.ActivityScenarioRule;
@@ -49,16 +59,44 @@ import org.junit.runner.RunWith;
 public class CreateAdventureTest {
 
     @Rule
-    public ActivityScenarioRule<MainActivity> mActivityScenarioRule =
-            new ActivityScenarioRule<>(MainActivity.class);
-
-    @Rule
     public GrantPermissionRule mGrantPermissionRule =
             GrantPermissionRule.grant(
                     "android.permission.ACCESS_FINE_LOCATION",
                     "android.permission.ACCESS_COARSE_LOCATION",
                     "android.permission.INTERNET",
                     "android.permission.ACCESS_WIFI_STATE");
+
+    @Rule
+    public ActivityScenarioRule<LogInActivity> mActivityScenarioRule =
+            new ActivityScenarioRule<>(LogInActivity.class);
+
+
+    @CheckResult
+    public static boolean exists(ViewInteraction interaction) {
+        try {
+            interaction.perform(new ViewAction() {
+                @Override public Matcher<View> getConstraints() {
+                    return any(View.class);
+                }
+                @Override public String getDescription() {
+                    return "check for existence";
+                }
+                @Override
+                public void perform(UiController uiController, View view) {
+                    // no op, if this is run, then the execution will continue after .perform(...)
+                }
+            });
+            return true;
+        } catch (AmbiguousViewMatcherException ex) {
+            // if there's any interaction later with the same matcher, that'll fail anyway
+            return true; // we found more than one
+        } catch (NoMatchingViewException ex) {
+            return false;
+        } catch (NoMatchingRootException ex) {
+            // optional depending on what you think "exists" means
+            return false;
+        }
+    }
 
     @Before
     public void stubCameraIntent() {
@@ -88,6 +126,21 @@ public class CreateAdventureTest {
 
     @Test
     public void createAdventureTestSuccess() {
+
+        ViewInteraction hj = onView(
+                allOf(withText("Sign in"),
+                        childAtPosition(
+                                allOf(withId(R.id.sign_in_button),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                0)),
+                                0),
+                        isDisplayed()));
+
+        if (exists(hj)){
+            hj.perform(click());
+        }
+
         ViewInteraction materialTextView = onView(
                 allOf(withId(R.id.create_adventure), withText(" +"),
                         childAtPosition(
@@ -135,14 +188,53 @@ public class CreateAdventureTest {
                                 9)));
         materialButton.perform(scrollTo(), click());
 
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.create_adventure_time_input),
+        //----------------------------------------------------------------------------------------------------------------------
+
+        ViewInteraction timeButton = onView(
+                allOf(withId(R.id.create_adventure_time_input), withText("Choose A Time"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 12)));
-        appCompatEditText3.perform(scrollTo(), replaceText("11-11-2023 11:11:11"), closeSoftKeyboard());
+        timeButton.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogYear = onView(
+                allOf(withClassName(is("com.google.android.material.textview.MaterialTextView")), withText("2022"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        timeDialogYear.perform(click());
+
+        DataInteraction timeDialogYear2 = onData(anything())
+                .inAdapterView(allOf(withClassName(is("android.widget.YearPickerView")),
+                        childAtPosition(
+                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
+                                1)))
+                .atPosition(123);
+        timeDialogYear2.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogOK = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        timeDialogOK.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogOK2 = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        timeDialogOK2.perform(scrollTo(), click());
+        //----------------------------------------------------------------------------------------------------------------------
 
         ViewInteraction appCompatEditText4 = onView(
                 allOf(withId(R.id.create_adventure_location_input)));
@@ -162,6 +254,21 @@ public class CreateAdventureTest {
 
     @Test
     public void createAdventureTestFailNoImage() {
+
+        ViewInteraction hj = onView(
+                allOf(withText("Sign in"),
+                        childAtPosition(
+                                allOf(withId(R.id.sign_in_button),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                0)),
+                                0),
+                        isDisplayed()));
+
+        if (exists(hj)){
+            hj.perform(click());
+        }
+
         ViewInteraction materialTextView = onView(
                 allOf(withId(R.id.create_adventure), withText(" +"),
                         childAtPosition(
@@ -202,14 +309,50 @@ public class CreateAdventureTest {
 
         //no image!
 
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.create_adventure_time_input),
+        ViewInteraction timeButton = onView(
+                allOf(withId(R.id.create_adventure_time_input), withText("Choose A Time"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 12)));
-        appCompatEditText3.perform(scrollTo(), replaceText("11-11-2023 11:11:11"), closeSoftKeyboard());
+        timeButton.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogYear = onView(
+                allOf(withClassName(is("com.google.android.material.textview.MaterialTextView")), withText("2022"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        timeDialogYear.perform(click());
+
+        DataInteraction timeDialogYear2 = onData(anything())
+                .inAdapterView(allOf(withClassName(is("android.widget.YearPickerView")),
+                        childAtPosition(
+                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
+                                1)))
+                .atPosition(123);
+        timeDialogYear2.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogOK = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        timeDialogOK.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogOK2 = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        timeDialogOK2.perform(scrollTo(), click());
 
         ViewInteraction appCompatEditText4 = onView(
                 allOf(withId(R.id.create_adventure_location_input)));
@@ -228,6 +371,21 @@ public class CreateAdventureTest {
 
     @Test
     public void createAdventureTestFailNoTime() {
+
+        ViewInteraction hj = onView(
+                allOf(withText("Sign in"),
+                        childAtPosition(
+                                allOf(withId(R.id.sign_in_button),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                0)),
+                                0),
+                        isDisplayed()));
+
+        if (exists(hj)){
+            hj.perform(click());
+        }
+
         ViewInteraction materialTextView = onView(
                 allOf(withId(R.id.create_adventure), withText(" +"),
                         childAtPosition(
@@ -294,6 +452,21 @@ public class CreateAdventureTest {
 
     @Test
     public void createAdventureTestCancelled() {
+
+        ViewInteraction hj = onView(
+                allOf(withText("Sign in"),
+                        childAtPosition(
+                                allOf(withId(R.id.sign_in_button),
+                                        childAtPosition(
+                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+                                                0)),
+                                0),
+                        isDisplayed()));
+
+        if (exists(hj)){
+            hj.perform(click());
+        }
+
         ViewInteraction materialTextView = onView(
                 allOf(withId(R.id.create_adventure), withText(" +"),
                         childAtPosition(
@@ -341,14 +514,50 @@ public class CreateAdventureTest {
                                 9)));
         materialButton.perform(scrollTo(), click());
 
-        ViewInteraction appCompatEditText3 = onView(
-                allOf(withId(R.id.create_adventure_time_input),
+        ViewInteraction timeButton = onView(
+                allOf(withId(R.id.create_adventure_time_input), withText("Choose A Time"),
                         childAtPosition(
                                 childAtPosition(
                                         withClassName(is("android.widget.ScrollView")),
                                         0),
                                 12)));
-        appCompatEditText3.perform(scrollTo(), replaceText("11-11-2023 11:11:11"), closeSoftKeyboard());
+        timeButton.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogYear = onView(
+                allOf(withClassName(is("com.google.android.material.textview.MaterialTextView")), withText("2022"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.LinearLayout")),
+                                        0),
+                                0),
+                        isDisplayed()));
+        timeDialogYear.perform(click());
+
+        DataInteraction timeDialogYear2 = onData(anything())
+                .inAdapterView(allOf(withClassName(is("android.widget.YearPickerView")),
+                        childAtPosition(
+                                withClassName(is("com.android.internal.widget.DialogViewAnimator")),
+                                1)))
+                .atPosition(123);
+        timeDialogYear2.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogOK = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        timeDialogOK.perform(scrollTo(), click());
+
+        ViewInteraction timeDialogOK2 = onView(
+                allOf(withId(android.R.id.button1), withText("OK"),
+                        childAtPosition(
+                                childAtPosition(
+                                        withClassName(is("android.widget.ScrollView")),
+                                        0),
+                                3)));
+        timeDialogOK2.perform(scrollTo(), click());
 
         ViewInteraction appCompatEditText4 = onView(
                 allOf(withId(R.id.create_adventure_location_input)));

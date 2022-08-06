@@ -152,16 +152,19 @@
                 android:layout_marginTop="2dp"
                 />
 
-            <EditText
+            <Button
                 android:id="@+id/create_adventure_time_input"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
                 android:layout_marginRight="30dp"
-                android:background="@drawable/rectangle_border"
-                android:hint="MM-dd-yyyy hh:mm:ss"
-                android:minHeight="48dp"
-                android:padding="10dp" />
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_btn"
+                android:gravity="center"
+                android:text="Choose A Time"
+                android:textSize="14sp"
+                />
 
             <TextView
                 android:id="@+id/setTimeAlert"

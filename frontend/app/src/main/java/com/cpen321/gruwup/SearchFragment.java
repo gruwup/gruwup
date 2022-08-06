@@ -18,6 +18,7 @@ import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.RadioGroup;
@@ -120,8 +121,11 @@ public class SearchFragment extends Fragment{
 
         searchText = (EditText) view.findViewById(R.id.search_events);
         searchText.setOnKeyListener(new View.OnKeyListener() {
-            public boolean onKey(View v, int keyCode, KeyEvent event) { //responds per alphabetical key press
-                searchAdventure(view);
+            public boolean onKey(View v, int keyCode, KeyEvent event) {
+                if ((event.getAction() == KeyEvent.ACTION_DOWN) &&
+                        (keyCode == KeyEvent.KEYCODE_ENTER || keyCode == EditorInfo.IME_ACTION_DONE)) {
+                    searchAdventure(view);
+                }
                 return true;
             }
         });
@@ -184,7 +188,6 @@ public class SearchFragment extends Fragment{
                 }
             }
         });
-        displayAdventures(view);
         return view;
     }
 
@@ -293,6 +296,12 @@ public class SearchFragment extends Fragment{
         } catch (Exception e) {
             System.out.println("String Exception! " + numPeople.getText().toString() + " " + location.getText().toString());
         }
+
+        filterSubOperation(jsonObject, dialog);
+
+    }
+
+    private void filterSubOperation(JSONObject jsonObject, Dialog dialog){
         String cookie = SharedPreferencesUtil.getCookie(getActivity());
         String[] cookieList  =  cookie.split("=",2);
         OkHttp3CookieHelper cookieHelper = new OkHttp3CookieHelper();
@@ -323,6 +332,7 @@ public class SearchFragment extends Fragment{
         recyclerView.invalidate();
         updateNoAdventures();
         dialog.dismiss();
+
     }
 
     private void updateNoAdventures() {
@@ -389,6 +399,7 @@ public class SearchFragment extends Fragment{
             }
         } catch (Exception e) {
             city = "Vancouver"; //shouldn't happen
+            System.out.println("This shouldn't happen");
             e.printStackTrace();
         }
         return city;

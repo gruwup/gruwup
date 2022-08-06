@@ -34,7 +34,10 @@
             android:minHeight="48dp"
             android:padding="10dp"
             android:layout_marginLeft="20dp"
-            android:imeOptions="actionSend"/>
+            android:imeOptions="actionSend"
+            android:inputType="text"
+
+            android:maxLines="1"/>
 
         <Button
             android:id="@+id/filter_button"

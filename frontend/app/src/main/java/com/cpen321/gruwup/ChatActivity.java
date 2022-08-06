@@ -11,6 +11,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -349,11 +350,18 @@ public class ChatActivity extends AppCompatActivity {
                             messages.add(sendMessage);
                             adapter.notifyItemInserted(messages.size() - 1);
                             NestedScrollView scrollView = (NestedScrollView) findViewById(R.id.nest);
-
                             scrollView.smoothScrollTo(0, scrollView.getChildAt(0).getHeight());
                             if (adapter != null) {
                                 messageRecyclerView.scrollToPosition(adapter.getItemCount() - 1);
                             }
+
+                            try {
+                                InputMethodManager imm = (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+                                imm.hideSoftInputFromWindow(getCurrentFocus().getWindowToken(), 0);
+                            } catch (Exception e) {
+
+                            }
+
 
                         }
                     });

@@ -6,6 +6,8 @@ import android.content.Context;
 import android.location.Address;
 import android.location.Geocoder;
 import android.os.Bundle;
+import android.os.Handler;
+import android.os.Looper;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -225,12 +227,23 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
                     @Override
                     public void onResponse(Call call, Response response) throws IOException {
                         if (!response.isSuccessful()) {
-                            System.out.println("HTTP req failed inside map fragment" + response.body().string());
+                            new Handler(Looper.getMainLooper()).post(new Runnable() {
+                                @Override
+                                public void run() {
+                                    try {
+                                        Toast.makeText(getContext(), response.body().string(), Toast.LENGTH_SHORT).show();
+                                    } catch (IOException e) {
+                                        e.printStackTrace();
+                                    }
+                                }
+                            });
+                        }
+                        else {
+                            Toast.makeText(getContext(), "Request Sent!", Toast.LENGTH_SHORT).show();
                         }
                     }
                 });
                 dialog.dismiss();
-                Toast.makeText(getActivity(), "Request sent!", Toast.LENGTH_SHORT).show();
             }
         });
 
