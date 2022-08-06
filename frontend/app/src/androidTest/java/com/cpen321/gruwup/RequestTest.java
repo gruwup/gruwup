@@ -116,48 +116,48 @@ public class RequestTest {
             assertTrue(isDismissed);
         }
     }
-
-    @Test
-    public void requestFromSearch() { //checks that Search Fragment can be opened from navbar
-        ViewInteraction hj = onView(
-                allOf(withText("Sign in"),
-                        childAtPosition(
-                                allOf(withId(R.id.sign_in_button),
-                                        childAtPosition(
-                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
-                                                0)),
-                                0),
-                        isDisplayed()));
-
-        if (exists(hj)){
-            hj.perform(click());
-        }
-
-        onView(withText("Choose and Create Adventures!")).check(matches(isDisplayed()));
-        onView((withId(R.id.nav_search))).check(matches(isDisplayed())).perform(click());
-        onView(withText("Search Results")).check(matches(isDisplayed()));
-        SystemClock.sleep(2500);
-        ViewInteraction cardView = onView(
-                allOf(withId(R.id.adventure_card),
-                        this.childAtPosition(
-                                this.childAtPosition(
-                                        withId(R.id.searchedAdventures),
-                                        0),
-                                0),
-                        isDisplayed()));
-        cardView.perform(click());
-        onView(withId(R.id.request_join_adventure)).check(matches(isDisplayed())).perform(click());
-        boolean isDismissed = false;
-        try {
-            onView(withId(R.id.request_join_adventure)).check(matches(isDisplayed()));
-        }
-        catch (Exception e) {
-            isDismissed = true;
-        }
-        finally {
-            assertTrue(isDismissed);
-        }
-    }
+//
+//    @Test
+//    public void requestFromSearch() { //checks that Search Fragment can be opened from navbar
+//        ViewInteraction hj = onView(
+//                allOf(withText("Sign in"),
+//                        childAtPosition(
+//                                allOf(withId(R.id.sign_in_button),
+//                                        childAtPosition(
+//                                                withClassName(is("androidx.constraintlayout.widget.ConstraintLayout")),
+//                                                0)),
+//                                0),
+//                        isDisplayed()));
+//
+//        if (exists(hj)){
+//            hj.perform(click());
+//        }
+//
+//        onView(withText("Choose and Create Adventures!")).check(matches(isDisplayed()));
+//        onView((withId(R.id.nav_search))).check(matches(isDisplayed())).perform(click());
+//        onView(withText("Search Results")).check(matches(isDisplayed()));
+//        SystemClock.sleep(2500);
+//        ViewInteraction cardView = onView(
+//                allOf(withId(R.id.adventure_card),
+//                        this.childAtPosition(
+//                                this.childAtPosition(
+//                                        withId(R.id.searchedAdventures),
+//                                        0),
+//                                0),
+//                        isDisplayed()));
+//        cardView.perform(click());
+//        onView(withId(R.id.request_join_adventure)).check(matches(isDisplayed())).perform(click());
+//        boolean isDismissed = false;
+//        try {
+//            onView(withId(R.id.request_join_adventure)).check(matches(isDisplayed()));
+//        }
+//        catch (Exception e) {
+//            isDismissed = true;
+//        }
+//        finally {
+//            assertTrue(isDismissed);
+//        }
+//    }
 
     static Matcher<View> childAtPosition(
             final Matcher<View> parentMatcher, final int position) {
