@@ -44,16 +44,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="title"
-                    />
+                    android:text="title" />
 
                 <TextView
                     android:id="@+id/disc_adventure_name"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="event"
-                    />
+                    android:text="event" />
 
                 <TextView
                     android:id="@+id/disc_adventure_time"
@@ -74,15 +72,14 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="people count"/>
+                    android:text="people count" />
 
                 <TextView
                     android:id="@+id/disc_adventure_description"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
-                    android:text="description"
-                    />
+                    android:text="description" />
             </LinearLayout>
 
         </androidx.cardview.widget.CardView>
