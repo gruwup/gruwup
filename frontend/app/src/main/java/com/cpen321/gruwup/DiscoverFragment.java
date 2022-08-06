@@ -224,6 +224,8 @@ public class DiscoverFragment extends Fragment {
 
         Calendar[] date = new Calendar[1];
         String[] dateString = new String[1];
+        Long UTCEpoch = System.currentTimeMillis() / 1000 + 7 * 60 * 60;
+
         dateTimePickerHelper(time, date, dateString);
 
         confirmCreateButton = (TextView) dialog.findViewById(R.id.confirmButton);
@@ -268,6 +270,8 @@ public class DiscoverFragment extends Fragment {
                     locationAlert.setText(null);
                     imageAlert.setText(null);
                     Toast.makeText(getActivity(), "Only one activity tag allowed!", Toast.LENGTH_SHORT).show();
+                } else if (UTCEpoch >= Long.valueOf(dateString[0])) {
+                    Toast.makeText(getActivity(), "Make sure time is in future (UTC)!", Toast.LENGTH_SHORT).show();
                 } else {
                     for (int i = 0; i < adapter.getSelectedCategoriesCount(); i++) {
                         mSelectedCategoryNames.add(mCategoryNames.get(adapter.getSelectedCategories().get(i)));
