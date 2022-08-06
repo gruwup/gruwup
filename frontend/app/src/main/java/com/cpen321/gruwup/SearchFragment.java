@@ -399,6 +399,7 @@ public class SearchFragment extends Fragment{
             }
         } catch (Exception e) {
             city = "Vancouver"; //shouldn't happen
+            System.out.println("This shouldn't happen");
             e.printStackTrace();
         }
         return city;
