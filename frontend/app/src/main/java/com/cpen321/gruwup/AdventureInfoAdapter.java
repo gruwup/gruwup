@@ -60,6 +60,8 @@ public class AdventureInfoAdapter extends RecyclerView.Adapter<AdventureInfoAdap
         holder.adventureImage.setImageBitmap(DiscoverFragment.B64ToBmp(mAdvNames.get(position).get("image")));
 //        holder.adventureCard.Wid
         holder.adventureCard.getLayoutParams().width = 650;
+        holder.adventureCard.getLayoutParams().height = 900;
+
         holder.adventureCard.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
