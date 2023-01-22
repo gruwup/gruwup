@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.cardview.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:card_view="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="370dp"
+    android:layout_height="700dp"
+    card_view:cardCornerRadius="25dp"
+    card_view:cardElevation="15dp"
+
+    android:layout_gravity="center">
+
+    <ScrollView
+        android:layout_width="370dp"
+        android:layout_height="wrap_content">
+        android:fillViewport="true"
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="13dp">
+
+            <TextView
+                android:id="@+id/create_adventure_go_back"
+                android:layout_width="100dp"
+                android:layout_height="20dp"
+                android:textColor="@color/lightGray"
+                android:text="Cancel"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:layout_marginTop="5dp"
+                android:gravity="center"
+                android:layout_marginLeft="10dp"
+                android:layout_gravity="end"
+                />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lightGray"
+                android:text="Title"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                />
+
+            <EditText
+                android:id="@+id/create_adventure_title_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/rectangle_border"
+                android:hint="Enter title..."
+                android:minHeight="48dp"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/setTitleAlert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="30dp"
+                android:textSize="10dp"
+                android:textColor="@color/design_default_color_error" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lightGray"
+                android:text="Description"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="2dp"
+                />
+
+            <EditText
+                android:id="@+id/create_adventure_description_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/rectangle_border"
+                android:hint="Enter description..."
+                android:minHeight="48dp"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/setDescriptionAlert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="30dp"
+                android:textSize="10dp"
+                android:textColor="@color/design_default_color_error" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lightGray"
+                android:text="Categories (pick one)"
+                android:textSize="15dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                />
+
+            <androidx.recyclerview.widget.RecyclerView
+                android:layout_width="match_parent"
+                android:layout_height="90dp"
+                android:layout_marginTop="0dp"
+                android:id="@+id/create_adventure_recycler_view"
+                android:orientation="horizontal"
+                />
+
+            <Button
+                android:id="@+id/create_adventure_upload_image_button"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_btn"
+                android:gravity="center"
+                android:text="Upload Image"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/setImageAlert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="30dp"
+                android:textSize="15dp"
+                android:textColor="@color/design_default_color_error" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lightGray"
+                android:text="Time"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="2dp"
+                />
+
+            <Button
+                android:id="@+id/create_adventure_time_input"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="0dp"
+                android:layout_marginTop="10dp"
+                android:background="@drawable/rounded_btn"
+                android:gravity="center"
+                android:text="Choose A Time"
+                android:textSize="14sp"
+                />
+
+            <TextView
+                android:id="@+id/setTimeAlert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="30dp"
+                android:textSize="10dp"
+                android:textColor="@color/design_default_color_error" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/lightGray"
+                android:text="Location"
+                android:textSize="20dp"
+                android:textStyle="bold"
+                android:gravity="center"
+                android:layout_marginTop="10dp"
+                />
+
+            <EditText
+                android:id="@+id/create_adventure_location_input"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="30dp"
+                android:background="@drawable/rectangle_border"
+                android:hint="Address, City, Province, Code"
+                android:minHeight="48dp"
+                android:padding="10dp" />
+
+            <TextView
+                android:id="@+id/setLocationAlert"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="4dp"
+                android:layout_marginRight="30dp"
+                android:textSize="10dp"
+                android:textColor="@color/design_default_color_error" />
+
+            <Button
+                android:id="@+id/confirmButton"
+                android:layout_width="match_parent"
+                android:layout_height="40dp"
+                android:layout_alignParentBottom="true"
+
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+                android:layout_marginTop="20dp"
+                android:background="@drawable/rounded_btn"
+                android:gravity="center"
+                android:text="Create Adventure"
+                android:textSize="14sp"
+
+                />
+        </LinearLayout>
+    </ScrollView>
+</androidx.cardview.widget.CardView>

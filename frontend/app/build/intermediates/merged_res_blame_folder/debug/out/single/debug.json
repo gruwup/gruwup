@@ -1,0 +1,1010 @@
+[
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_discover_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_discover_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_edit_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_edit_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_icons8_clock.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_icons8_clock.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_filter_adventure_pop_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\filter_adventure_pop_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_baseline_explore_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_baseline_explore_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_message_list.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\message_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_leave_chat.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_leave_chat.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-xxxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-xxxhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_discover_add_sign.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_discover_add_sign.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_edit_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_edit_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_user_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_user_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable_rectangle_border.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable\\rectangle_border.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_info_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_info_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_group.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_group.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_chat_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_chat_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_filter.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_filter.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_delete_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_delete_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_discover_adventure_list.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\discover_adventure_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_baseline_search_24.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_baseline_search_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_accept.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_accept.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\font_bubbler_one.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\font\\bubbler_one.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_leave_chat.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_leave_chat.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_descirption.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_descirption.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_edit_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_edit_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_baseline_chat_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_baseline_chat_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_create_adventure_pop_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\create_adventure_pop_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_rieditboxline.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_rieditboxline.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_edit_adv.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_edit_adv.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_leave_chat.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable-mdpi\\ic_leave_chat.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_deny.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_deny.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_icons8_clock.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_icons8_clock.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_baseline_explore_24.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_baseline_explore_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_leave_chat.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable-xhdpi\\ic_leave_chat.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_info_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_info_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v24_ic_location.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v24\\ic_location.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_profile_pop_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\profile_pop_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_location.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_location.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_location.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_location.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_filter.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_filter.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_fragment_chat.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\fragment_chat.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_info_pop_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\info_pop_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_baseline_grade_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_baseline_grade_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_deny.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_deny.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_baseline_account_circle_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_baseline_account_circle_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_descirption.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_descirption.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_requests_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_requests_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_accept.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_accept.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_discover_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_discover_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_filter.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_filter.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_discover_vector.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_discover_vector.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_chat_vector.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_chat_vector.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_requests_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_requests_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-hdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-hdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_descirption.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_descirption.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_baseline_search_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_baseline_search_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_request_list.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\request_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_activity_log_in.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\activity_log_in.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_deny.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_deny.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_baseline_grade_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_baseline_grade_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-hdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-hdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_leave_chat.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable-xxhdpi\\ic_leave_chat.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_search_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_search_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_group.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_group.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_filter.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_filter.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_activity_main.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\activity_main.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_baseline_explore_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_baseline_explore_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-xhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-xhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_rieditboxline.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_rieditboxline.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_createadv_success_pop_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\createadv_success_pop_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_accept.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_accept.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_send.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable-xxhdpi\\ic_send.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_adventure_info_pop_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\adventure_info_pop_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_delete_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_delete_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_baseline_grade_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_baseline_grade_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_baseline_search_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_baseline_search_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\font_antic_slab.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\font\\antic_slab.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_activity_sign_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\activity_sign_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_search_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_search_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_activity_chat.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\activity_chat.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_deny.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_deny.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_baseline_chat_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_baseline_chat_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_baseline_explore_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_baseline_explore_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_user_chat_list.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\user_chat_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\font_belleza.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\font\\belleza.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_user_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_user_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_category.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_category.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_info_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable-xhdpi\\ic_info_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_accept.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_accept.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\raw_create_adventure.json.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\raw\\create_adventure.json"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable_gruwup_bg.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable\\gruwup_bg.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_search_vector.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_search_vector.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_chat_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_chat_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_accept.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_accept.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_rieditboxline.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_rieditboxline.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_discover_add_sign.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_discover_add_sign.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_baseline_chat_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_baseline_chat_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_fragment_profile.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\fragment_profile.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_launcher_background.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_launcher_background.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_search_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_search_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_chat_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_chat_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_location_fragment.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\location_fragment.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_fragment_search.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\fragment_search.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_accept.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_accept.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable_chat_border.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable\\chat_border.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_deny.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_deny.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_baseline_account_circle_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_baseline_account_circle_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\raw_deny_animation.json.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\raw\\deny_animation.json"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_discover_add_sign.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_discover_add_sign.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-xhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-xhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable_college_student.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable\\college_student.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_user_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_user_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-hdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-hdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_send.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable-xhdpi\\ic_send.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_edit_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_edit_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_user_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_user_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_fragment_requests.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\fragment_requests.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_icons8_clock.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_icons8_clock.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_filter.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_filter.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_group.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_group.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_delete_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_delete_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_fragment_discover.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\fragment_discover.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_location.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_location.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\raw_load_animation.json.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\raw\\load_animation.json"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_baseline_account_circle_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_baseline_account_circle_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_discover_add_sign.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_discover_add_sign.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_search_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_search_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_nearby.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_nearby.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_search_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_search_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_baseline_explore_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_baseline_explore_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable_category_border.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable\\category_border.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\xml_data_extraction_rules.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\xml\\data_extraction_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_baseline_grade_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_baseline_grade_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v24_ic_launcher_foreground.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v24\\ic_launcher_foreground.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_delete_adv.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_delete_adv.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_chat_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_chat_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_requests_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_requests_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_icons8_clock.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_icons8_clock.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_deny.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_deny.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-mdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-mdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\menu_bottom_navigation.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\menu\\bottom_navigation.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_delete_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_delete_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_leave_chat.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable-hdpi\\ic_leave_chat.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_descirption.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_descirption.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-xxxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-xxxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_nearby.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_nearby.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-xxxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-xxxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable_rounded_btn.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable\\rounded_btn.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable_circle_border.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable\\circle_border.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_baseline_chat_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_baseline_chat_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_info_adv.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_info_adv.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_send.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_send.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_baseline_search_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_baseline_search_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_user_vector.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_user_vector.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_info_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable-xxhdpi\\ic_info_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_requests_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_requests_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_info_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable-hdpi\\ic_info_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\raw_accept_animation.json.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\raw\\accept_animation.json"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_filter.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_filter.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_nearby.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_nearby.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_edit_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_edit_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_rieditboxline.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_rieditboxline.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_send.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable-mdpi\\ic_send.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_requests_vector.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_requests_vector.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_category_list.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\category_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_nearby.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_nearby.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_baseline_grade_24.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_baseline_grade_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_view_adventure_pop_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\view_adventure_pop_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_discover_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_discover_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_nearby.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_nearby.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_location.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_location.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_send.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_send.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\font_acme_regular.ttf.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\font\\acme_regular.ttf"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_location.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_location.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_info_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable-mdpi\\ic_info_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_icons8_clock.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_icons8_clock.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_group.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_group.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_baseline_search_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_baseline_search_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_category.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_category.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\xml_backup_rules.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\xml\\backup_rules.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_descirption.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_descirption.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_baseline_account_circle_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_baseline_account_circle_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_delete_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_delete_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_launcher_background.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_launcher_background.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_nearby.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_nearby.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-mdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-mdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_accept.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_accept.png"
+    },
+    {
+        "merged": "com.cpen321.gruwup.app-merged_res-31:/layout_user_chat_list.xml.flat",
+        "source": "com.cpen321.gruwup.app-main-33:/layout/user_chat_list.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_requests_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_requests_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_discover_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_discover_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_baseline_explore_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_baseline_explore_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_category.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_category.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_discover_add_sign.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_discover_add_sign.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_baseline_grade_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_baseline_grade_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-xhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-xhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_icons8_clock.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_icons8_clock.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_deny.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_deny.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v24_ic_category.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v24\\ic_category.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_search_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_search_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_baseline_account_circle_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_baseline_account_circle_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-xxhdpi_ic_launcher_round.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-xxhdpi\\ic_launcher_round.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_user_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_user_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_adventure_edit_pop_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\adventure_edit_pop_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_descirption.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_descirption.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_accept_request_pop_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\accept_request_pop_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_rieditboxline.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_rieditboxline.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_filter.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_filter.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_deny_request_pop_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\deny_request_pop_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_requests_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_requests_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_category.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_category.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_group.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_group.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_discover_add_sign.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_discover_add_sign.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_chat_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_chat_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_requester_profile_pop_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\requester_profile_pop_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_send.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_send.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_nearby.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_nearby.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_discover_add_sign.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_discover_add_sign.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_category.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_category.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxxhdpi_ic_baseline_search_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxxhdpi\\ic_baseline_search_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_icons8_clock.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_icons8_clock.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_baseline_account_circle_24.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_baseline_account_circle_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_group.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_group.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v21_ic_baseline_chat_24.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v21\\ic_baseline_chat_24.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-xxhdpi_ic_launcher_foreground.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-xxhdpi\\ic_launcher_foreground.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_discover_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_discover_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_leave_chat.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_leave_chat.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_user_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_user_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_send.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable-hdpi\\ic_send.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_rieditboxline.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_rieditboxline.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_discover_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_discover_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_baseline_search_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_baseline_search_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_category.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_category.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_baseline_account_circle_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_baseline_account_circle_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\layout_adventure_detail_pop_up.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\layout\\adventure_detail_pop_up.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-mdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-mdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_chat_vector.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_chat_vector.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_baseline_chat_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_baseline_chat_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-hdpi_ic_baseline_explore_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-hdpi\\ic_baseline_explore_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xxhdpi_ic_baseline_chat_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xxhdpi\\ic_baseline_chat_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-xhdpi_ic_location.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-xhdpi\\ic_location.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-anydpi-v24_ic_descirption.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-anydpi-v24\\ic_descirption.xml"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\mipmap-xxhdpi_ic_launcher.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\mipmap-xxhdpi\\ic_launcher.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_baseline_grade_24.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_baseline_grade_24.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_delete_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_delete_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_rieditboxline.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_rieditboxline.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-mdpi_ic_edit_adv.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-mdpi\\ic_edit_adv.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable-ldpi_ic_group.png.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-pngs-26:\\drawable-ldpi\\ic_group.png"
+    },
+    {
+        "merged": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-merged_res-31:\\drawable_layout_border.xml.flat",
+        "source": "C:\\Users\\shaoj\\.gradle\\daemon\\7.3.3\\com.cpen321.gruwup.app-main-33:\\drawable\\layout_border.xml"
+    }
+]

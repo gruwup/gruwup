@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Gradle: org.riversun:okhttp3-cookie-helper:1.0.1">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.riversun/okhttp3-cookie-helper/1.0.1/498f3628cc78c2d1ad8ade384bba7e06726af199/okhttp3-cookie-helper-1.0.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.riversun/okhttp3-cookie-helper/1.0.1/9e1213f96881b55e86dccef1e3cf66d06fb65d54/okhttp3-cookie-helper-1.0.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/org.riversun/okhttp3-cookie-helper/1.0.1/500911701e32f50022a51a1a06ccc5158cf2b436/okhttp3-cookie-helper-1.0.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

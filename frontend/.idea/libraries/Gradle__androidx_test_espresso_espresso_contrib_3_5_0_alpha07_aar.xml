@@ -1,0 +1,15 @@
+<component name="libraryTable">
+  <library name="Gradle: androidx.test.espresso:espresso-contrib:3.5.0-alpha07@aar">
+    <CLASSES>
+      <root url="jar://$USER_HOME$/.gradle/caches/transforms-3/96e9f16f9433a1e848d803cb8ca50971/transformed/espresso-contrib-3.5.0-alpha07/jars/classes.jar!/" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/96e9f16f9433a1e848d803cb8ca50971/transformed/espresso-contrib-3.5.0-alpha07/res" />
+      <root url="file://$USER_HOME$/.gradle/caches/transforms-3/96e9f16f9433a1e848d803cb8ca50971/transformed/espresso-contrib-3.5.0-alpha07/AndroidManifest.xml" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.test.espresso/espresso-contrib/3.5.0-alpha07/9687bd261512a2e648c8f8999086c96e1d8414d/espresso-contrib-3.5.0-alpha07-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$USER_HOME$/.gradle/caches/modules-2/files-2.1/androidx.test.espresso/espresso-contrib/3.5.0-alpha07/81e6b61294cbac5bda68bf1f9bd4bc65934a4e93/espresso-contrib-3.5.0-alpha07-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

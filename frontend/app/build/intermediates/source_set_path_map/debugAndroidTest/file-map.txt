@@ -1,0 +1,29 @@
+com.cpen321.gruwup.test.app-cardview-1.0.0-0 C:\Users\shaoj\.gradle\caches\transforms-3\0751861119962ac0f78d2deaf3a4a68f\transformed\cardview-1.0.0\res
+com.cpen321.gruwup.test.app-fragment-1.3.6-1 C:\Users\shaoj\.gradle\caches\transforms-3\08be5f2811952d88fdbd324236b15817\transformed\fragment-1.3.6\res
+com.cpen321.gruwup.test.app-recyclerview-1.1.0-2 C:\Users\shaoj\.gradle\caches\transforms-3\0a48c48e7ac9cdb1931530cff684f072\transformed\recyclerview-1.1.0\res
+com.cpen321.gruwup.test.app-lifecycle-runtime-2.4.0-3 C:\Users\shaoj\.gradle\caches\transforms-3\3f01866c3eb0b5387e0f45d19136fe35\transformed\lifecycle-runtime-2.4.0\res
+com.cpen321.gruwup.test.app-material-1.6.1-4 C:\Users\shaoj\.gradle\caches\transforms-3\4948de165b5218454019e0897afa16ee\transformed\material-1.6.1\res
+com.cpen321.gruwup.test.app-jetified-annotation-experimental-1.1.0-5 C:\Users\shaoj\.gradle\caches\transforms-3\528f96469cb86a51f5b29376625b5ce1\transformed\jetified-annotation-experimental-1.1.0\res
+com.cpen321.gruwup.test.app-drawerlayout-1.1.1-6 C:\Users\shaoj\.gradle\caches\transforms-3\576bbfeb8ca3116493a5dde1a08f50b1\transformed\drawerlayout-1.1.1\res
+com.cpen321.gruwup.test.app-jetified-startup-runtime-1.0.0-7 C:\Users\shaoj\.gradle\caches\transforms-3\7289baf9a60250fc6044c748072f42fd\transformed\jetified-startup-runtime-1.0.0\res
+com.cpen321.gruwup.test.app-jetified-savedstate-1.1.0-8 C:\Users\shaoj\.gradle\caches\transforms-3\72bba5287bce37b61ffc9cf1fc73e195\transformed\jetified-savedstate-1.1.0\res
+com.cpen321.gruwup.test.app-appcompat-1.4.2-9 C:\Users\shaoj\.gradle\caches\transforms-3\846bd1e6ef12a6d68419ac9e045844bf\transformed\appcompat-1.4.2\res
+com.cpen321.gruwup.test.app-espresso-contrib-3.5.0-alpha07-10 C:\Users\shaoj\.gradle\caches\transforms-3\96e9f16f9433a1e848d803cb8ca50971\transformed\espresso-contrib-3.5.0-alpha07\res
+com.cpen321.gruwup.test.app-constraintlayout-2.1.4-11 C:\Users\shaoj\.gradle\caches\transforms-3\af607507a3d3d50a4db50c5cd4e7b0c6\transformed\constraintlayout-2.1.4\res
+com.cpen321.gruwup.test.app-jetified-emoji2-views-helper-1.0.0-12 C:\Users\shaoj\.gradle\caches\transforms-3\b5e3385e87e4660c6c5422259887e937\transformed\jetified-emoji2-views-helper-1.0.0\res
+com.cpen321.gruwup.test.app-jetified-appcompat-resources-1.4.2-13 C:\Users\shaoj\.gradle\caches\transforms-3\b6ecd316b38ad5f1ed3eb993c95115eb\transformed\jetified-appcompat-resources-1.4.2\res
+com.cpen321.gruwup.test.app-core-1.7.0-14 C:\Users\shaoj\.gradle\caches\transforms-3\d8338c189490aee58604e111af57865f\transformed\core-1.7.0\res
+com.cpen321.gruwup.test.app-jetified-emoji2-1.0.0-15 C:\Users\shaoj\.gradle\caches\transforms-3\dafda43020c998140bb590dd363804eb\transformed\jetified-emoji2-1.0.0\res
+com.cpen321.gruwup.test.app-jetified-core-1.4.1-alpha07-16 C:\Users\shaoj\.gradle\caches\transforms-3\df6983f0b3a1d4b84b0f00e05e4628bb\transformed\jetified-core-1.4.1-alpha07\res
+com.cpen321.gruwup.test.app-transition-1.2.0-17 C:\Users\shaoj\.gradle\caches\transforms-3\e353275a5dad5cd7dd5d51284dfd5302\transformed\transition-1.2.0\res
+com.cpen321.gruwup.test.app-lifecycle-viewmodel-2.3.1-18 C:\Users\shaoj\.gradle\caches\transforms-3\e988628139fdde72599a7fb0173533f5\transformed\lifecycle-viewmodel-2.3.1\res
+com.cpen321.gruwup.test.app-jetified-viewpager2-1.0.0-19 C:\Users\shaoj\.gradle\caches\transforms-3\e9a984f11cfdd45d3f413f1476f7f21f\transformed\jetified-viewpager2-1.0.0\res
+com.cpen321.gruwup.test.app-coordinatorlayout-1.1.0-20 C:\Users\shaoj\.gradle\caches\transforms-3\fafe20f33fc1f1973a5a6b5f88e11979\transformed\coordinatorlayout-1.1.0\res
+com.cpen321.gruwup.test.app-jetified-lifecycle-process-2.4.0-21 C:\Users\shaoj\.gradle\caches\transforms-3\fb7578b74fadc6b60a379e8d199d207c\transformed\jetified-lifecycle-process-2.4.0\res
+com.cpen321.gruwup.test.app-androidTest-22 C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\frontend\app\build\generated\res\resValues\androidTest\debug
+com.cpen321.gruwup.test.app-androidTest-23 C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\frontend\app\build\generated\res\rs\androidTest\debug
+com.cpen321.gruwup.test.app-mergeDebugAndroidTestResources-24 C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\frontend\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\merged.dir
+com.cpen321.gruwup.test.app-mergeDebugAndroidTestResources-25 C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\frontend\app\build\intermediates\incremental\debugAndroidTest\mergeDebugAndroidTestResources\stripped.dir
+com.cpen321.gruwup.test.app-merged_res-26 C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\frontend\app\build\intermediates\merged_res\debugAndroidTest
+com.cpen321.gruwup.test.app-androidTest-27 C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\frontend\app\src\androidTest\res
+com.cpen321.gruwup.test.app-androidTestDebug-28 C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\frontend\app\src\androidTestDebug\res

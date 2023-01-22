@@ -17,7 +17,7 @@ public class RequestsUtil {
             static MediaType JSON = MediaType.parse("application/json");
     static String TAG = "SupportRequests";
 
-    public static Call get(String url , Callback callback){
+    public static Call get(String url , Callback    callback){
         OkHttpClient client = new OkHttpClient();
         Log.d(TAG, "Get request from "+url);
         Request request = new Request.Builder()
@@ -28,7 +28,6 @@ public class RequestsUtil {
         Call call = client.newCall(request);
         call.enqueue(callback);
         return call;
-
     }
 
     public static Call getWithCookie(String url , String cookie, Callback callback){

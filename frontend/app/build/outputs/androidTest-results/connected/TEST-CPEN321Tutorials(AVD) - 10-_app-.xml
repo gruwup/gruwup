@@ -1,0 +1,10 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<testsuite name="com.cpen321.gruwup.RequestTest" tests="2" failures="0" errors="0" skipped="0" time="22.309" timestamp="2022-08-06T17:51:42" hostname="localhost">
+  <properties>
+    <property name="device" value="CPEN321Tutorials(AVD) - 10" />
+    <property name="flavor" value="" />
+    <property name="project" value=":app" />
+  </properties>
+  <testcase name="requestFromSearch" classname="com.cpen321.gruwup.RequestTest" time="11.754" />
+  <testcase name="requestFromDiscover" classname="com.cpen321.gruwup.RequestTest" time="9.695" />
+</testsuite>

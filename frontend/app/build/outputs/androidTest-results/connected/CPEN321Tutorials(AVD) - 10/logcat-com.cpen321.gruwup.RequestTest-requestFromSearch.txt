@@ -1,0 +1,626 @@
+08-06 10:51:19.063  9581  9615 I TestRunner: started: requestFromSearch(com.cpen321.gruwup.RequestTest)
+08-06 10:51:19.075  9581  9615 W Settings: Setting always_finish_activities has moved from android.provider.Settings.System to android.provider.Settings.Global, returning read-only value.
+08-06 10:51:19.093  2080  2104 E system_server: Invalid ID 0x00000000.
+08-06 10:51:19.095  2080  2400 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:19.096  2080  2400 I chatty  : uid=1000(system) Binder:2080_6 identical 8 lines
+08-06 10:51:19.096  2080  2400 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:19.113  1774  1774 D Zygote  : Forked child process 9617
+08-06 10:51:19.114  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:19.118  9617  9617 I 321.gruwup.tes: Late-enabling -Xcheck:jni
+08-06 10:51:19.143  9617  9617 E 321.gruwup.tes: Unknown bits set in runtime_flags: 0x8000
+08-06 10:51:19.144  9617  9617 W 321.gruwup.tes: Unexpected CPU variant for X86 using defaults: x86_64
+08-06 10:51:19.202  2080  2308 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:19.211  2080  2308 I chatty  : uid=1000(system) Binder:2080_4 identical 28 lines
+08-06 10:51:19.211  2080  2308 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:19.215  2080  2104 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:19.215  2080  2104 I chatty  : uid=1000(system) android.anim identical 8 lines
+08-06 10:51:19.215  2080  2104 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:19.235  2493  2991 D EGL_emulation: eglMakeCurrent: 0x7f797d648de0: ver 2 0 (tinfo 0x7f79c77a5840)
+08-06 10:51:19.238  2224  2561 D EGL_emulation: eglMakeCurrent: 0x7f79c944a400: ver 2 0 (tinfo 0x7f79c94f4120)
+08-06 10:51:19.241  3094  3982 D EGL_emulation: eglMakeCurrent: 0x7f79c9449a00: ver 2 0 (tinfo 0x7f79c9402fe0)
+08-06 10:51:19.255  9617  9617 I 321.gruwup.tes: The ClassLoaderContext is a special shared library.
+08-06 10:51:19.257  9617  9617 I 321.gruwup.tes: The ClassLoaderContext is a special shared library.
+08-06 10:51:19.386  1823  2452 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+08-06 10:51:19.387  1823  2452 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+08-06 10:51:19.390  9617  9650 D libEGL  : Emulator has host GPU support, qemu.gles is set to 1.
+08-06 10:51:19.390  9617  9650 W libc    : Unable to set property "qemu.gles" to "1": connection failed; errno=13 (Permission denied)
+08-06 10:51:19.395  9617  9650 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+08-06 10:51:19.396  9617  9650 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+08-06 10:51:19.397  9617  9650 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+08-06 10:51:19.377  9617  9617 W RenderThread: type=1400 audit(0.0:151): avc: denied { write } for name="property_service" dev="tmpfs" ino=6136 scontext=u:r:untrusted_app:s0:c144,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
+08-06 10:51:19.421  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:19.421  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:19.443  2080  2462 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:19.445  2080  2462 I chatty  : uid=1000(system) Binder:2080_8 identical 38 lines
+08-06 10:51:19.445  2080  2462 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:19.446  9581  9581 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@8df0f01
+08-06 10:51:19.446  2080  2462 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:19.450  2080  2462 I chatty  : uid=1000(system) Binder:2080_8 identical 18 lines
+08-06 10:51:19.450  2080  2462 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:19.455  1823  1914 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+08-06 10:51:19.457  1823  2120 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+08-06 10:51:19.459  3094  7374 I PBSessionCacheImpl: (REDACTED) Deleted sessionId[%d] from persistence.
+08-06 10:51:19.472  3094  3462 W SearchServiceCore: Abort, client detached.
+08-06 10:51:19.484  9581  9654 D libEGL  : Emulator has host GPU support, qemu.gles is set to 1.
+08-06 10:51:19.484  9581  9654 W libc    : Unable to set property "qemu.gles" to "1": connection failed; errno=13 (Permission denied)
+08-06 10:51:19.477  9581  9581 W RenderThread: type=1400 audit(0.0:152): avc: denied { write } for name="property_service" dev="tmpfs" ino=6136 scontext=u:r:untrusted_app:s0:c153,c256,c512,c768 tcontext=u:object_r:property_socket:s0 tclass=sock_file permissive=0
+08-06 10:51:19.516  9581  9654 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+08-06 10:51:19.518  9581  9654 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+08-06 10:51:19.521  9581  9654 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+08-06 10:51:19.564  9581  9581 D LifecycleMonitor: Lifecycle status change: com.cpen321.gruwup.LogInActivity@1aa7232 in: PRE_ON_CREATE
+08-06 10:51:19.565  9581  9581 V ActivityScenario: Activity lifecycle changed event received but ignored because the reported transition was not ON_CREATE while the last known transition was PRE_ON_CREATE
+08-06 10:51:19.647  9581  9581 W .cpen321.gruwu: Accessing hidden method Landroid/view/View;->computeFitSystemWindows(Landroid/graphics/Rect;Landroid/graphics/Rect;)Z (greylist, reflection, allowed)
+08-06 10:51:19.647  9581  9581 W .cpen321.gruwu: Accessing hidden method Landroid/view/ViewGroup;->makeOptionalFitsSystemWindows()V (greylist, reflection, allowed)
+08-06 10:51:19.719  9581  9581 I .cpen321.gruwu: The ClassLoaderContext is a special shared library.
+08-06 10:51:19.721  9581  9581 I .cpen321.gruwu: The ClassLoaderContext is a special shared library.
+08-06 10:51:19.744  9581  9581 I DynamiteModule: Considering local module com.google.android.gms.signinbutton_dynamite:0 and remote module com.google.android.gms.signinbutton_dynamite:2
+08-06 10:51:19.744  9581  9581 I DynamiteModule: Selected remote version of com.google.android.gms.signinbutton_dynamite, version >= 2
+08-06 10:51:19.863  9581  9581 D LifecycleMonitor: Lifecycle status change: com.cpen321.gruwup.LogInActivity@1aa7232 in: CREATED
+08-06 10:51:19.863  9581  9581 V ActivityScenario: Update currentActivityStage to CREATED, currentActivity=com.cpen321.gruwup.LogInActivity@1aa7232
+08-06 10:51:19.881  9581  9581 D LogInActivity: Display Name: Jerry Shao
+08-06 10:51:19.882  9581  9581 D LogInActivity: Email: jerryshaoca@gmail.com
+08-06 10:51:19.882  9581  9581 D LogInActivity: Given Name: Jerry
+08-06 10:51:19.882  9581  9581 D LogInActivity: Family Name: Shao
+08-06 10:51:19.882  9581  9581 D LogInActivity: Photo URL: https://lh3.googleusercontent.com/a-/AFdZucpnjtoc8HDFz-4R4D7wifCvplzNrIXj8xW1aT0LpQ=s96-c
+08-06 10:51:19.882  9581  9581 D LogInActivity: Token: eyJhbGciOiJSUzI1NiIsImtpZCI6IjE1NDllMGFlZjU3NGQxYzdiZGQxMzZjMjAyYjhkMjkwNTgwYjE2NWMiLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL2FjY291bnRzLmdvb2dsZS5jb20iLCJhenAiOiI0OTYzOTUyNzY2Ny1iZXNnZXNqOGMybHAwbXByNXRjbG41YXJoYTU2bHNnOS5hcHBzLmdvb2dsZXVzZXJjb250ZW50LmNvbSIsImF1ZCI6IjQ5NjM5NTI3NjY3LWtlZHRzZWFjZjA0azN2ZmszNGpyajBqNm9vaGc5bWN2LmFwcHMuZ29vZ2xldXNlcmNvbnRlbnQuY29tIiwic3ViIjoiMTE0NzUxODU1MjYwMzI0ODcxOTc0IiwiZW1haWwiOiJqZXJyeXNoYW9jYUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6dHJ1ZSwibmFtZSI6IkplcnJ5IFNoYW8iLCJwaWN0dXJlIjoiaHR0cHM6Ly9saDMuZ29vZ2xldXNlcmNvbnRlbnQuY29tL2EtL0FGZFp1Y3BuanRvYzhIREZ6LTRSNEQ3d2lmQ3ZwbHpOcklYajh4VzFhVDBMcFE9czk2LWMiLCJnaXZlbl9uYW1lIjoiSmVycnkiLCJmYW1pbHlfbmFtZSI6IlNoYW8iLCJsb2NhbGUiOiJlbiIsImlhdCI6MTY1OTgwODExNCwiZXhwIjoxNjU5ODExNzE0fQ.l06lAr5URv2UxSa0mQrdn-19I_58IXQJzd6HEEoHS6F-8nOxluNJKe8YeC1l5GCeKu5gvPOZE6nb54dKRnLSmnQsvhhiiw-VoEStc8pqrKg-c8_H9bfActYBO7NB5z0yZvaGaHGomIAYwtphc-UC1Yj5nUth6yhXERDkcdMJNSrD8Q6yrn1JHnxfR06Zml19HphNtFAfmHb5wnDtDBhEJk4jyx4wazBR6MJEm0Cptzc3VlL90zA2O7BdUDpOKJbEnd_G_id0xiby4DphXPvZ-rGrdArjI_vHOK0yigMDyEQHW7CEZeDtLO5lk7Bv54qVMyu9tbi4A1axvS2RchZbHQ
+08-06 10:51:19.888  2999  2999 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.auth.api.signin.service.START pkg=com.google.android.gms }
+08-06 10:51:19.888  2999  2999 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.auth.api.signin.service.START pkg=com.google.android.gms }
+08-06 10:51:20.057  9581  9581 D NetworkSecurityConfig: No Network Security Config specified, using platform default
+08-06 10:51:20.085  9581  9581 D LifecycleMonitor: Lifecycle status change: com.cpen321.gruwup.LogInActivity@1aa7232 in: STARTED
+08-06 10:51:20.085  9581  9581 V ActivityScenario: Update currentActivityStage to STARTED, currentActivity=com.cpen321.gruwup.LogInActivity@1aa7232
+08-06 10:51:20.087  9581  9581 D LifecycleMonitor: Lifecycle status change: com.cpen321.gruwup.LogInActivity@1aa7232 in: RESUMED
+08-06 10:51:20.087  9581  9581 V ActivityScenario: Update currentActivityStage to RESUMED, currentActivity=com.cpen321.gruwup.LogInActivity@1aa7232
+08-06 10:51:20.114  9581  9615 W FileTestStorage: Output properties is not supported.
+08-06 10:51:20.114  9581  9615 I Tracing : Tracer added: class androidx.test.platform.tracing.AndroidXTracer
+08-06 10:51:20.131  9581  9615 D EventInjectionStrategy: Creating injection strategy with input manager.
+08-06 10:51:20.131  9581  9615 W .cpen321.gruwu: Accessing hidden method Landroid/hardware/input/InputManager;->getInstance()Landroid/hardware/input/InputManager; (greylist, reflection, allowed)
+08-06 10:51:20.131  9581  9615 W .cpen321.gruwu: Accessing hidden method Landroid/hardware/input/InputManager;->injectInputEvent(Landroid/view/InputEvent;I)Z (greylist, reflection, allowed)
+08-06 10:51:20.131  9581  9615 W .cpen321.gruwu: Accessing hidden field Landroid/hardware/input/InputManager;->INJECT_INPUT_EVENT_MODE_WAIT_FOR_FINISH:I (greylist, reflection, allowed)
+08-06 10:51:20.148  9581  9651 D HostConnection: HostConnection::get() New Host Connection established 0x7f797d8f3220, tid 9651
+08-06 10:51:20.149  9581  9651 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV420_888_to_NV21 ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_2
+08-06 10:51:20.153  9581  9651 W OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+08-06 10:51:20.170  9581  9651 D eglCodecCommon: setVertexArrayObject: set vao to 0 (0) 0 0
+08-06 10:51:20.170  9581  9651 D EGL_emulation: eglCreateContext: 0x7f797d8f3400: maj 2 min 0 rcv 2
+08-06 10:51:20.252  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:20.257  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:20.259  1678  1678 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@3.0::IMapper/default in either framework or device manifest.
+08-06 10:51:20.259  9581  9651 W Gralloc3: mapper 3.x is not supported
+08-06 10:51:20.261  9581  9651 D HostConnection: createUnique: call
+08-06 10:51:20.261  9581  9651 D HostConnection: HostConnection::get() New Host Connection established 0x7f79c78ff540, tid 9651
+08-06 10:51:20.261  9581  9651 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV420_888_to_NV21 ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_2
+08-06 10:51:20.261  9581  9651 D eglCodecCommon: allocate: Ask for block of size 0x1000
+08-06 10:51:20.262  9581  9651 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ff708000 size 0x2000
+08-06 10:51:20.263  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:20.264  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:20.269  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:20.272  9581  9651 D eglCodecCommon: setVertexArrayObject: set vao to 0 (0) 1 0
+08-06 10:51:20.298  2080  2108 I ActivityTaskManager: Displayed com.cpen321.gruwup/.LogInActivity: +1s213ms
+08-06 10:51:20.355  9581  9615 W FileTestStorage: Test input args is not supported.
+08-06 10:51:20.362  9581  9581 W .cpen321.gruwu: Accessing hidden method Landroid/os/MessageQueue;->next()Landroid/os/Message; (greylist, reflection, allowed)
+08-06 10:51:20.362  9581  9581 W .cpen321.gruwu: Accessing hidden field Landroid/os/MessageQueue;->mMessages:Landroid/os/Message; (greylist, reflection, allowed)
+08-06 10:51:20.362  9581  9581 W .cpen321.gruwu: Accessing hidden method Landroid/os/Message;->recycleUnchecked()V (greylist, reflection, allowed)
+08-06 10:51:20.364  9581  9615 W .cpen321.gruwu: Accessing hidden method Lsun/misc/Unsafe;->getUnsafe()Lsun/misc/Unsafe; (greylist,core-platform-api, linking, allowed)
+08-06 10:51:20.365  9581  9615 W .cpen321.gruwu: Accessing hidden method Lsun/misc/Unsafe;->objectFieldOffset(Ljava/lang/reflect/Field;)J (greylist,core-platform-api, linking, allowed)
+08-06 10:51:20.365  9581  9615 W .cpen321.gruwu: Accessing hidden method Lsun/misc/Unsafe;->putObject(Ljava/lang/Object;JLjava/lang/Object;)V (greylist, linking, allowed)
+08-06 10:51:20.367  9581  9661 W .cpen321.gruwu: Accessing hidden method Lsun/misc/Unsafe;->getObject(Ljava/lang/Object;J)Ljava/lang/Object; (greylist, linking, allowed)
+08-06 10:51:20.367  9581  9661 W .cpen321.gruwu: Accessing hidden method Lsun/misc/Unsafe;->compareAndSwapObject(Ljava/lang/Object;JLjava/lang/Object;Ljava/lang/Object;)Z (greylist, linking, allowed)
+08-06 10:51:20.367  9581  9581 W .cpen321.gruwu: Accessing hidden method Landroid/view/WindowManagerGlobal;->getInstance()Landroid/view/WindowManagerGlobal; (greylist, reflection, allowed)
+08-06 10:51:20.368  9581  9581 W .cpen321.gruwu: Accessing hidden field Landroid/view/WindowManagerGlobal;->mViews:Ljava/util/ArrayList; (greylist, reflection, allowed)
+08-06 10:51:20.368  9581  9581 W .cpen321.gruwu: Accessing hidden field Landroid/view/WindowManagerGlobal;->mParams:Ljava/util/ArrayList; (greylist, reflection, allowed)
+08-06 10:51:20.378  9581  9581 I ViewInteraction: Performing 'check for existence' action on view (an instance of android.widget.TextView and view.getText() with or without transformation to match: is "Sign in" and Child at position 0 in parent (view.getId() is <2131362316/com.cpen321.gruwup:id/sign_in_button> and Child at position 0 in parent view.getClass().getName() matches: is "androidx.constraintlayout.widget.ConstraintLayout") and (view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() to return non-empty rectangle))
+08-06 10:51:20.386  9581  9615 W .cpen321.gruwu: Accessing hidden method Landroid/view/ViewConfiguration;->getDoubleTapMinTime()I (greylist, reflection, allowed)
+08-06 10:51:20.389  9581  9615 W .cpen321.gruwu: Accessing hidden method Lsun/misc/Unsafe;->compareAndSwapObject(Ljava/lang/Object;JLjava/lang/Object;Ljava/lang/Object;)Z (greylist, linking, allowed)
+08-06 10:51:20.392  9581  9581 I ViewInteraction: Performing 'single click' action on view (an instance of android.widget.TextView and view.getText() with or without transformation to match: is "Sign in" and Child at position 0 in parent (view.getId() is <2131362316/com.cpen321.gruwup:id/sign_in_button> and Child at position 0 in parent view.getClass().getName() matches: is "androidx.constraintlayout.widget.ConstraintLayout") and (view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() to return non-empty rectangle))
+08-06 10:51:20.422  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:20.422  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:20.447  1781  5610 W audio_hw_generic: Not supplying enough data to HAL, expected position 16589798 , only wrote 16589778
+08-06 10:51:20.460  9581  9581 D LifecycleMonitor: Lifecycle status change: com.cpen321.gruwup.LogInActivity@1aa7232 in: PAUSED
+08-06 10:51:20.461  9581  9581 V ActivityScenario: Update currentActivityStage to PAUSED, currentActivity=com.cpen321.gruwup.LogInActivity@1aa7232
+08-06 10:51:20.463  2080  2462 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.468  2080  2462 I chatty  : uid=1000(system) Binder:2080_8 identical 38 lines
+08-06 10:51:20.468  2080  2462 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.474  9581  9581 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@8fd0114
+08-06 10:51:20.478  9581  9581 D LifecycleMonitor: Lifecycle status change: com.google.android.gms.auth.api.signin.internal.SignInHubActivity@4c2f4fe in: PRE_ON_CREATE
+08-06 10:51:20.478  9581  9581 V ActivityScenario: Activity lifecycle changed event received but ignored because the intent does not match. startActivityIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cpen321.gruwup/.LogInActivity }, activity.getIntent()=Intent { act=com.google.android.gms.auth.GOOGLE_SIGN_IN flg=0x800000 pkg=com.cpen321.gruwup cmp=com.cpen321.gruwup/com.google.android.gms.auth.api.signin.internal.SignInHubActivity (has extras) }, activity=com.google.android.gms.auth.api.signin.internal.SignInHubActivity@4c2f4fe
+08-06 10:51:20.491  9581  9581 D LifecycleMonitor: Lifecycle status change: com.google.android.gms.auth.api.signin.internal.SignInHubActivity@4c2f4fe in: CREATED
+08-06 10:51:20.492  9581  9581 V ActivityScenario: Activity lifecycle changed event received but ignored because the intent does not match. startActivityIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cpen321.gruwup/.LogInActivity }, activity.getIntent()=Intent { act=com.google.android.gms.auth.GOOGLE_SIGN_IN flg=0x800000 pkg=com.cpen321.gruwup cmp=com.cpen321.gruwup/com.google.android.gms.auth.api.signin.internal.SignInHubActivity (has extras) }, activity=com.google.android.gms.auth.api.signin.internal.SignInHubActivity@4c2f4fe
+08-06 10:51:20.496  9581  9581 D LifecycleMonitor: Lifecycle status change: com.google.android.gms.auth.api.signin.internal.SignInHubActivity@4c2f4fe in: STARTED
+08-06 10:51:20.496  9581  9581 V ActivityScenario: Activity lifecycle changed event received but ignored because the intent does not match. startActivityIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cpen321.gruwup/.LogInActivity }, activity.getIntent()=Intent { act=com.google.android.gms.auth.GOOGLE_SIGN_IN flg=0x800000 pkg=com.cpen321.gruwup cmp=com.cpen321.gruwup/com.google.android.gms.auth.api.signin.internal.SignInHubActivity (has extras) }, activity=com.google.android.gms.auth.api.signin.internal.SignInHubActivity@4c2f4fe
+08-06 10:51:20.496  9581  9581 D LifecycleMonitor: Lifecycle status change: com.google.android.gms.auth.api.signin.internal.SignInHubActivity@4c2f4fe in: RESUMED
+08-06 10:51:20.496  9581  9581 V ActivityScenario: Activity lifecycle changed event received but ignored because the intent does not match. startActivityIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cpen321.gruwup/.LogInActivity }, activity.getIntent()=Intent { act=com.google.android.gms.auth.GOOGLE_SIGN_IN flg=0x800000 pkg=com.cpen321.gruwup cmp=com.cpen321.gruwup/com.google.android.gms.auth.api.signin.internal.SignInHubActivity (has extras) }, activity=com.google.android.gms.auth.api.signin.internal.SignInHubActivity@4c2f4fe
+08-06 10:51:20.512  9581  9581 D LifecycleMonitor: Lifecycle status change: com.google.android.gms.auth.api.signin.internal.SignInHubActivity@4c2f4fe in: PAUSED
+08-06 10:51:20.512  9581  9581 V ActivityScenario: Activity lifecycle changed event received but ignored because the intent does not match. startActivityIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cpen321.gruwup/.LogInActivity }, activity.getIntent()=Intent { act=com.google.android.gms.auth.GOOGLE_SIGN_IN flg=0x800000 pkg=com.cpen321.gruwup cmp=com.cpen321.gruwup/com.google.android.gms.auth.api.signin.internal.SignInHubActivity (has extras) }, activity=com.google.android.gms.auth.api.signin.internal.SignInHubActivity@4c2f4fe
+08-06 10:51:20.513  2080  2400 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.514  2080  2400 I chatty  : uid=1000(system) Binder:2080_6 identical 19 lines
+08-06 10:51:20.514  2080  2400 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.514  8215  8215 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@f4e4c98
+08-06 10:51:20.514  2080  2400 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.517  2080  2400 I chatty  : uid=1000(system) Binder:2080_6 identical 17 lines
+08-06 10:51:20.517  2080  2400 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.539  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:20.551  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:20.561  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:20.562  2999  2999 D BoundBrokerSvc: onBind: Intent { act=com.google.android.gms.signin.service.START dat=chimera-action:com.google.android.gms.signin.service.START cmp=com.google.android.gms/.chimera.GmsApiService }
+08-06 10:51:20.562  2999  2999 D BoundBrokerSvc: Loading bound service for intent: Intent { act=com.google.android.gms.signin.service.START dat=chimera-action:com.google.android.gms.signin.service.START cmp=com.google.android.gms/.chimera.GmsApiService }
+08-06 10:51:20.566  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:20.574  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:20.620  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 4096
+08-06 10:51:20.640  2638  3422 I FontLog : Received query Noto Color Emoji Compat, URI content://com.google.android.gms.fonts [CONTEXT service_id=132 ]
+08-06 10:51:20.641  2638  3422 I FontLog : Query [emojicompat-emoji-font] resolved to {Noto Color Emoji Compat, wdth 100.0, wght 400, ital 0.0, bestEffort false} [CONTEXT service_id=132 ]
+08-06 10:51:20.641  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 4096
+08-06 10:51:20.643  2080  2104 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.643  2080  2104 I chatty  : uid=1000(system) android.anim identical 8 lines
+08-06 10:51:20.643  2080  2104 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.645  2638  3422 I FontLog : Fetch {Noto Color Emoji Compat, wdth 100.0, wght 400, ital 0.0, bestEffort false} end status Status{statusCode=SUCCESS, resolution=null} [CONTEXT service_id=132 ]
+08-06 10:51:20.645  2080  2104 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.645  2080  2104 I chatty  : uid=1000(system) android.anim identical 8 lines
+08-06 10:51:20.645  2080  2104 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.650  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 4096
+08-06 10:51:20.660  9581  9658 D RESPONSE_TIME : SIGN IN: 773 millis
+08-06 10:51:20.661  9581  9658 D LogInActivity: login successful
+08-06 10:51:20.662  9581  9658 D LogInActivity: response body is {"userId":"114751855260324871974","userExists":true}
+08-06 10:51:20.662  9581  9658 D LogInActivity: cookie is gruwup-session=a822f53c6058ed295d47a1712b93e5ecf48f5cb85e7e141345708226fdbc9bb8; Path=/
+08-06 10:51:20.663  2080  2108 I ActivityTaskManager: Displayed com.google.android.gms/.auth.api.signin.ui.SignInActivity: +100ms
+08-06 10:51:20.662  9581  9658 D LogInActivity: json Obj {"userId":"114751855260324871974","userExists":true}
+08-06 10:51:20.665  9581  9658 D LogInActivity: User exits: true
+08-06 10:51:20.665  9581  9658 D LogInActivity: User id114751855260324871974
+08-06 10:51:20.682  2638  3422 I FontLog : Pulling font file for id = 53, cache size = 6 [CONTEXT service_id=132 ]
+08-06 10:51:20.688  2638  3422 I FontLog : Pulling font file for id = 53, cache size = 6 [CONTEXT service_id=132 ]
+08-06 10:51:20.705  2080  2400 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.710  2080  2400 I chatty  : uid=1000(system) Binder:2080_6 identical 58 lines
+08-06 10:51:20.710  2080  2400 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.711  9581  9581 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@ffdd8e0
+08-06 10:51:20.712  2080  2400 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.712  2080  2400 I chatty  : uid=1000(system) Binder:2080_6 identical 8 lines
+08-06 10:51:20.712  2080  2400 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:20.739  9581  9581 D LifecycleMonitor: Lifecycle status change: com.cpen321.gruwup.MainActivity@53b2e6a in: PRE_ON_CREATE
+08-06 10:51:20.740  9581  9581 V ActivityScenario: Activity lifecycle changed event received but ignored because the intent does not match. startActivityIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cpen321.gruwup/.LogInActivity }, activity.getIntent()=Intent { cmp=com.cpen321.gruwup/.MainActivity (has extras) }, activity=com.cpen321.gruwup.MainActivity@53b2e6a
+08-06 10:51:21.036  9581  9581 D LifecycleMonitor: Lifecycle status change: com.cpen321.gruwup.MainActivity@53b2e6a in: CREATED
+08-06 10:51:21.037  9581  9581 V ActivityScenario: Activity lifecycle changed event received but ignored because the intent does not match. startActivityIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cpen321.gruwup/.LogInActivity }, activity.getIntent()=Intent { cmp=com.cpen321.gruwup/.MainActivity (has extras) }, activity=com.cpen321.gruwup.MainActivity@53b2e6a
+08-06 10:51:21.106  9581  9581 D SupportRequests: Get request from http://20.227.142.169:8081/user/adventure/114751855260324871974/discover
+08-06 10:51:21.137  9581  9581 D LifecycleMonitor: Lifecycle status change: com.cpen321.gruwup.MainActivity@53b2e6a in: STARTED
+08-06 10:51:21.137  9581  9581 V ActivityScenario: Activity lifecycle changed event received but ignored because the intent does not match. startActivityIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cpen321.gruwup/.LogInActivity }, activity.getIntent()=Intent { cmp=com.cpen321.gruwup/.MainActivity (has extras) }, activity=com.cpen321.gruwup.MainActivity@53b2e6a
+08-06 10:51:21.139  9581  9581 D LifecycleMonitor: Lifecycle status change: com.cpen321.gruwup.MainActivity@53b2e6a in: RESUMED
+08-06 10:51:21.139  9581  9581 V ActivityScenario: Activity lifecycle changed event received but ignored because the intent does not match. startActivityIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cpen321.gruwup/.LogInActivity }, activity.getIntent()=Intent { cmp=com.cpen321.gruwup/.MainActivity (has extras) }, activity=com.cpen321.gruwup.MainActivity@53b2e6a
+08-06 10:51:21.156  9581  9581 I System.out: Service!!!
+08-06 10:51:21.221  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:21.224  1793 19155 I chatty  : uid=1000(system) HwBinder:1793_3 identical 1 line
+08-06 10:51:21.225  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:21.236  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:21.257  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:21.263  2080  2104 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:21.268  2080  2104 I chatty  : uid=1000(system) android.anim identical 38 lines
+08-06 10:51:21.268  2080  2104 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:21.294  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:21.413  9581  9581 D LifecycleMonitor: Lifecycle status change: com.cpen321.gruwup.LogInActivity@1aa7232 in: STOPPED
+08-06 10:51:21.414  9581  9581 V ActivityScenario: Update currentActivityStage to STOPPED, currentActivity=com.cpen321.gruwup.LogInActivity@1aa7232
+08-06 10:51:21.423  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:21.423  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:21.432  9581  9581 D LifecycleMonitor: Lifecycle status change: com.google.android.gms.auth.api.signin.internal.SignInHubActivity@4c2f4fe in: STOPPED
+08-06 10:51:21.433  9581  9581 V ActivityScenario: Activity lifecycle changed event received but ignored because the intent does not match. startActivityIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cpen321.gruwup/.LogInActivity }, activity.getIntent()=Intent { act=com.google.android.gms.auth.GOOGLE_SIGN_IN flg=0x800000 pkg=com.cpen321.gruwup cmp=com.cpen321.gruwup/com.google.android.gms.auth.api.signin.internal.SignInHubActivity (has extras) }, activity=com.google.android.gms.auth.api.signin.internal.SignInHubActivity@4c2f4fe
+08-06 10:51:21.489  9581  9581 I ViewInteraction: Checking 'MatchesViewAssertion{viewMatcher=(view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() to return non-empty rectangle)}' assertion on view an instance of android.widget.TextView and view.getText() with or without transformation to match: is "Choose and Create Adventures!"
+08-06 10:51:21.505  9581  9581 I ViewInteraction: Checking 'MatchesViewAssertion{viewMatcher=(view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() to return non-empty rectangle)}' assertion on view view.getId() is <2131362178/com.cpen321.gruwup:id/nav_search>
+08-06 10:51:21.518  9581  9581 I ViewInteraction: Performing 'single click' action on view view.getId() is <2131362178/com.cpen321.gruwup:id/nav_search>
+08-06 10:51:21.637  1817  1989 D AF::Track: interceptBuffer: took 637us to intercept 0 tracks
+08-06 10:51:21.662  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:21.662  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:21.671  2224  2561 D EGL_emulation: eglMakeCurrent: 0x7f79c944a400: ver 2 0 (tinfo 0x7f79c94f4120)
+08-06 10:51:21.678  9581  9581 I System.out: city Vancouver
+08-06 10:51:21.766  9581  9581 D SupportRequests: Get request from http://20.227.142.169:8081/user/adventure/nearby?city=Vancouver
+08-06 10:51:21.866  9581  9581 E RecyclerView: No adapter attached; skipping layout
+08-06 10:51:22.145  9581  9581 I ViewInteraction: Checking 'MatchesViewAssertion{viewMatcher=(view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() to return non-empty rectangle)}' assertion on view an instance of android.widget.TextView and view.getText() with or without transformation to match: is "Search Results"
+08-06 10:51:22.265  9581  9694 D SocketService: true
+08-06 10:51:22.265  9581  9694 D SocketService: ===>connected to socket
+08-06 10:51:22.422  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:22.422  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:22.469  2493  2510 I s.nexuslaunche: WaitForGcToComplete blocked HeapTrim on None for 10.721ms
+08-06 10:51:22.521  9581  9594 I .cpen321.gruwu: Background concurrent copying GC freed 40161(3101KB) AllocSpace objects, 4(144KB) LOS objects, 36% free, 10MB/16MB, paused 361us total 119.928ms
+08-06 10:51:22.532  9581  9685 I System.out: !map response data[{"_id":"62ca5abeb6d18f3fa88a4508","owner":"112857330293409918914","title":"League of Legends Tournament","description":"Join us for a league tournament in Rogers arena","category":"FOOD","peopleGoing":["112857330293409918914","102725629585468063742","114751855260324871974","116853060753534924974"],"dateTime":1890842400,"location":"800 Griffiths Way, Vancouver, BC V6B 6G1, Canada","status":"OPEN","image":"/9j/4AAQSkZJRgABAQAAAQABAAD/4gIoSUNDX1BST0ZJTEUAAQEAAAIYAAAAAAIQAABtbnRyUkdC\nIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAA\nAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlk\nZXNjAAAA8AAAAHRyWFlaAAABZAAAABRnWFlaAAABeAAAABRiWFlaAAABjAAAABRyVFJDAAABoAAA\nAChnVFJDAAABoAAAAChiVFJDAAABoAAAACh3dHB0AAAByAAAABRjcHJ0AAAB3AAAADxtbHVjAAAA\nAAAAAAEAAAAMZW5VUwAAAFgAAAAcAHMAUgBHAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA\nAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhZWiAA\nAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z3Bh\ncmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABYWVogAAAAAAAA9tYAAQAAAADT\nLW1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAw\nADEANv/bAEMA////////////////////////////////////////////////////////////////\n///////////////////////bAEMB////////////////////////////////////////////////\n///////////////////////////////////////AABEIA38GRwMBIgACEQEDEQH/xAAXAAEBAQEA\nAAAAAAAAAAAAAAAAAQID/8QAKRABAQEAAQUBAQEBAAEEAwEAAAERMQISIUFRYXGBkaEiMrHBQoLx\n8P/EABYBAQEBAAAAAAAAAAAAAAAAAAABAv/EABgRAQEBAQEAAAAAAAAAAAAAAAABESEx/9oADAMB\nAAIRAxEAPwDKoqoAmgVFRFAAFQBcCNciIigCsrlBUPIqAKBIUt+IKAAAAKNSAsNEBRFE1KioAiiq\ngACooiC4gqCgIKAigAACr7SNJQBAAAAAPapAFRUBeWV4OQSNMqAm4tYBvkZ6a0CE8qnsDGK6M4Ky\nAAu1AGpgyuiKGgAACKAgqAAAAAAAAAgoCKgAKgCoAAAAAKAoAAAAAAAAAAAACggoAAIAAqoACoCA\nAAAAAIAAAAiigAgAAAAAAAAAAACACiiAqAAAAAgAAAAAAAAAKAAAAAAAgCoKCKigIqAAIAAAAAAK\nIAAAAAAAAoCxFEXlM9KtEST60zv1e5VKhyaIJQFwAAAAABWowoNAgiiAACgACCoKKAjTNq8oinpG\nvSAgCgAAoANMxpARUAFQACgRWVvoChQBP4sQDdVM1qAzaw3fKQDpaZz54aBFiKBagAZ4ZxswHMax\nMFQVAVWVlwFD+AgAAAAAAAAigIAAAAigIKAgoKi8pixFNDNXJ/VZRGr5ycJgof4LgIAIAAAAACgo\nAAAKAGCgmCpoAAggAIqAAAAAAAIoAAAACKAAAAAAAKigIAAigqCgIAAAAAgAgKi6AAAAAAKAAAAC\nKAioAogAKgACAAAAAAAAAAAAAAAAAACqiiKrK6qAKAwtvwFgCAAoAAAACoqjSLERABQBAUVEABRU\nUQSFUopOEWAIAoAAAqIKQFAEABQEtkO4GVTTQaE00wU8J4AaE2fUtAIRQBQRAAEUABRULFEVhHRm\nqMDTILGqw1L94AFBEFFEFQAVAAAAAAAQUBlRAUX0AixF3wipqxDRDfJUXmAizwkVFa//ANGU1pRB\nQRBQEUUVFAAABFQDVQAQAAAAAAAAABARQAAAFAEFAAAEVAAAAAAAAUEAARQVAAAAAAAEEUAAAAFA\nBAAgACgACCoAAAKAgCAAAAAAAAAAAuIoCKTkEHRMEYGsqYB4oYAKmmgabaigsCCiAoIKAAAAAKiq\nNekX0IiAKAIDXpFiIAiqACAqKKkD2UAQUUAAABplUFQBBLfS3wkgqYuABkMADEawNGRrDwaMC1FG\nlYXfxBsZ039BpGf9JfkBoTz7oCr6ZXQIICtJU00ESrqUEABZfX/FZnMbolQFBAAAABAAABUAVKAC\nFQF0QFa1EAaQECB7AEXlAG2caAEFRRAFEAURRVEABAFQAAAAAAAAAAAABAAAAFEUAAAABAAAAAAB\nQAAQAAABFBUBQQAAAABBFAAABFAQUAAUAAQBABQEVAAAAAAAAAAAAAVWVEEUANoAbWufLJwoocqD\nOLi4cAnb8SLqggIIoAoIoAAAACooNRWdNBUaQRBUBYUigwq2MqqgqIixFgqUq1PQCKigqAKIoAAK\ngIJz5UFAAAQBoZVEWJ1VWeRUkaBRMMUAwwVBFQBQABABFAQwRFVABCqgDbDc4UBUEEVAQVAAAAAA\nAF1AA8f0wBkVBVQEGg30AZ5OaLx4FT2Z4ODfoAXkVAAQAAAAAFAAAAAAAAAAAAAAAAABAAAAAAAA\nARQAAAAAAFRQAAQVAAAAAQAVFAAAAAAAAAAAAAAABFAQBAAAAAAAAAAAAAABe2pWvH1KqIAityJi\nS2G0RcXIz5alUZ4FsRANoAu1OQBYpBUABUxFARQEBVDWRQUAAABZWmGoBUKCLFABLFBWQBAi6aC1\nmNMCqAogAAAKAAAAAAioAAAqCC2iAKIoAAAAAAAAAACcqsgGMtsIqBUBpmtJQRqMgNgKgioAAAAC\nCgIoAAAAgJRQVkUiCL5ioKaVAFBfQgAqAAAAAAAoKgoCCoAAAAAAAAAAAACKAAAAAAKIgoCYogKI\nAAgKICqICNCAKgAAAAAIqCgAAAAAACAABpogKAAAoAIIAAAAAAAAAAAAAAAC4YqVURQiA1iAKBio\nrF5bAYFsxBRYNYJaAAIqKCKIqCoDSEqaJi0RRYAAAANemVgBCkEaAAABmi1AQUnILC4Fgp4MTF/g\nIhtWfoILchgIAooAAAAACKgACAAAqAKIoAAAAAAAACooKzTURUqLUBorMq0EBAbisRoABUAAAAAA\nAAAAEUATDAVEURUXUAFABpFADARAFQAAFABAFAAAAAFEVAAAAAAAAAAAAAABAABRAEVBVEAVAAAA\nRUQUQUUAFEUAAAAEFQAAABAAAAAABAAURQEAFRUAAAAAAAAAAAAAABpKpVRFRUEUVRdEBFABL5Se\nGkAigqKgIqCiiAAcIrPCKqs6INDKqKIoAAAIDXMT2RaCgCKIAogKCoIKJRSkZ0luoLen3EytW4nk\nDPHlJcXWfqjWxfDCg14GFl8A1iYaWgBsP4AAoIoCCogAAoigAAAgKIAogCqKKiFLwgzWWqyAAAAA\n3OGG5wAAqAoAAAAAAAAAis6CoIii6gKAAKgCrGQH
+08-06 10:51:23.256  2999  2999 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.feedback.internal.IFeedbackService dat=chimera-action:com.google.android.gms.feedback.internal.IFeedbackService cmp=com.google.android.gms/.chimera.GmsBoundBrokerService }
+08-06 10:51:23.422  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:23.422  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:24.423  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:24.423  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:24.653  9581  9581 I ViewInteraction: Performing 'single click' action on view (view.getId() is <2131361875/com.cpen321.gruwup:id/adventure_card> and Child at position 0 in parent Child at position 0 in parent view.getId() is <2131362290/com.cpen321.gruwup:id/searchedAdventures> and (view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() to return non-empty rectangle))
+08-06 10:51:24.696  9581  9581 D DiscAdvViewAdapter: Clicked Adventure Card
+08-06 10:51:24.753  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 10035200
+08-06 10:51:24.762  1793 19155 I chatty  : uid=1000(system) HwBinder:1793_3 identical 1 line
+08-06 10:51:24.763  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 10035200
+08-06 10:51:24.769  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:24.816  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:25.047  9581  9581 I ViewInteraction: Checking 'MatchesViewAssertion{viewMatcher=(view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() to return non-empty rectangle)}' assertion on view view.getId() is <2131362250/com.cpen321.gruwup:id/request_join_adventure>
+08-06 10:51:25.053  9581  9581 I ViewInteraction: Performing 'single click' action on view view.getId() is <2131362250/com.cpen321.gruwup:id/request_join_adventure>
+08-06 10:51:25.068  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:25.102  9581  9651 I chatty  : uid=10153(com.cpen321.gruwup) RenderThread identical 1 line
+08-06 10:51:25.119  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:25.121  2080  5549 E InputDispatcher: Window handle Window{37ad0fe u0 com.cpen321.gruwup/com.cpen321.gruwup.MainActivity} has no registered input channel
+08-06 10:51:25.382  9581  9581 I ViewInteraction: Checking 'MatchesViewAssertion{viewMatcher=(view has effective visibility <VISIBLE> and view.getGlobalVisibleRect() to return non-empty rectangle)}' assertion on view view.getId() is <2131362250/com.cpen321.gruwup:id/request_join_adventure>
+08-06 10:51:25.402  3094  3294 I A       : NGA disabled since it's running Panthera and at least one a11y feature is on.
+08-06 10:51:25.403  3094  3294 I A       : (REDACTED) Nga state changed to %s
+08-06 10:51:25.404  2798 17916 I A       : (REDACTED) APA or Classic session decision: %s.
+08-06 10:51:25.404  2798 17916 I A       : (REDACTED) [Memory] eligibility: %s
+08-06 10:51:25.404  2798  3320 I A       : Unsubscribed to apa or classic variant change.
+08-06 10:51:25.405  3094  8203 I Search.LoginHelperImpl: (REDACTED) Successfully received auth token for scope: %s in time %d ms
+08-06 10:51:25.405  3094  3487 E Tracer  : Missing trace
+08-06 10:51:25.405  3094  3487 E Tracer  : java.lang.IllegalStateException: Was supposed to have a trace - did you forget to propagate or create one? See this exception's cause for the last place a trace was missing. See http://go/tiktok-tracing for more details.
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.fp.r(PG:6)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.aj.a(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.storage.protostore.eg.d(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.account.data.manager.ag.f(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.account.data.a.f.c(PG:4)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.search.a.c.e.a(PG:2)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.search.core.google.gaia.c.a.b.apply(Unknown Source:4)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.es.apply(PG:2)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.h.e(PG:2)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.j.run(PG:9)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.i.af.run(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.i.an.run(PG:23)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.i.l.run(PG:2)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.i.q.run(PG:4)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at java.lang.Thread.run(Thread.java:919)
+08-06 10:51:25.405  3094  3487 E Tracer  : Caused by: com.google.apps.tiktok.tracing.x
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.an.<init>(PG:3)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.fp.f(PG:2)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.ev.f(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.contrib.b.f.i(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.search.core.google.gaia.c.a.c.b(PG:3)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.location.a.k.a(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.staticplugins.nga.a.a.br.run(PG:7)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.gsa.k.a.h.run(PG:2)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.shared.util.c.a.ce.b(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.shared.util.c.a.ch.run(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.dq.run(PG:4)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	... 5 more
+08-06 10:51:25.405  3094  3487 E Tracer  : Missing trace
+08-06 10:51:25.405  3094  3487 E Tracer  : java.lang.IllegalStateException: Was supposed to have a trace - did you forget to propagate or create one? See this exception's cause for the last place a trace was missing. See http://go/tiktok-tracing for more details.
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.fp.r(PG:6)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.aj.a(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.storage.protostore.eg.d(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.account.data.manager.ag.d(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.account.data.g.g(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.account.data.az.g(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.search.a.c.d.apply(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.es.apply(PG:2)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.h.e(PG:2)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.j.run(PG:9)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.i.af.run(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.i.an.run(PG:23)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.i.l.run(PG:2)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.i.q.run(PG:4)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at java.lang.Thread.run(Thread.java:919)
+08-06 10:51:25.405  3094  3487 E Tracer  : Caused by: com.google.apps.tiktok.tracing.x
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.an.<init>(PG:3)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.fp.f(PG:2)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.ev.f(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.contrib.b.f.i(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.search.core.google.gaia.c.a.c.b(PG:3)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.location.a.k.a(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.staticplugins.nga.a.a.br.run(PG:7)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.libraries.gsa.k.a.h.run(PG:2)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.shared.util.c.a.ce.b(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.shared.util.c.a.ch.run(PG:1)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.dq.run(PG:4)
+08-06 10:51:25.405  3094  3487 E Tracer  : 	... 5 more
+08-06 10:51:25.406  3094  3487 E Tracer  : Missing trace
+08-06 10:51:25.406  3094  3487 E Tracer  : java.lang.IllegalStateException: Was supposed to have a trace - did you forget to propagate or create one? See this exception's cause for the last place a trace was missing. See http://go/tiktok-tracing for more details.
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.fp.r(PG:6)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.aj.a(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.storage.protostore.eg.d(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.search.location.a.a.i.a(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.search.location.a.bp.b(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.search.location.a.ag.q(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.search.location.a.ag.d(PG:7)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.search.location.ag.a(PG:3)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.location.a.f.apply(PG:3)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.es.apply(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.h.e(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.j.run(PG:9)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.bg.execute(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.d.i(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.d.l(PG:12)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.d.n(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.i.f(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.j.run(PG:13)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.i.af.run(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.i.an.run(PG:23)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.i.l.run(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.i.q.run(PG:4)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at java.lang.Thread.run(Thread.java:919)
+08-06 10:51:25.406  3094  3487 E Tracer  : Caused by: com.google.apps.tiktok.tracing.x
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.an.<init>(PG:3)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.fp.f(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.ev.f(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.contrib.b.f.i(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.location.a.k.a(PG:3)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.staticplugins.nga.a.a.br.run(PG:7)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.gsa.k.a.h.run(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.shared.util.c.a.ce.b(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.shared.util.c.a.ch.run(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.dq.run(PG:4)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	... 5 more
+08-06 10:51:25.406  3094  3487 E Tracer  : Missing trace
+08-06 10:51:25.406  3094  3487 E Tracer  : java.lang.IllegalStateException: Was supposed to have a trace - did you forget to propagate or create one? See this exception's cause for the last place a trace was missing. See http://go/tiktok-tracing for more details.
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.fp.r(PG:6)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.aj.a(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.storage.protostore.eg.d(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.search.location.a.ak.a(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.search.location.a.bp.b(PG:3)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.search.location.a.ag.q(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.search.location.a.ag.d(PG:7)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.search.location.ag.a(PG:3)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.location.a.f.apply(PG:3)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.es.apply(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.h.e(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.j.run(PG:9)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.bg.execute(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.d.i(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.d.l(PG:12)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.d.n(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.i.f(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.j.run(PG:13)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.i.af.run(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.i.an.run(PG:23)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.i.l.run(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.i.q.run(PG:4)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at java.lang.Thread.run(Thread.java:919)
+08-06 10:51:25.406  3094  3487 E Tracer  : Caused by: com.google.apps.tiktok.tracing.x
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.an.<init>(PG:3)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.fp.f(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.ev.f(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.apps.tiktok.tracing.contrib.b.f.i(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.location.a.k.a(PG:3)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.staticplugins.nga.a.a.br.run(PG:7)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.libraries.gsa.k.a.h.run(PG:2)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.shared.util.c.a.ce.b(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.android.apps.gsa.shared.util.c.a.ch.run(PG:1)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	at com.google.common.util.concurrent.dq.run(PG:4)
+08-06 10:51:25.406  3094  3487 E Tracer  : 	... 5 more
+08-06 10:51:25.414  9581  9581 D takeScreenshot: Found 3 global views to redraw
+08-06 10:51:25.422  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:25.422  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:25.476  9581  9697 D RESPONSE_TIME : SEND REQUEST: 378 millis
+08-06 10:51:25.511  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 638976
+08-06 10:51:25.520  1793 19155 I chatty  : uid=1000(system) HwBinder:1793_3 identical 1 line
+08-06 10:51:25.521  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 638976
+08-06 10:51:25.522  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:25.947  3094  3094 E Tracer  : Missing trace
+08-06 10:51:25.947  3094  3094 E Tracer  : java.lang.IllegalStateException: Was supposed to have a trace - did you forget to propagate or create one? See http://go/tiktok-tracing for more details.
+08-06 10:51:25.947  3094  3094 E Tracer  : 	at com.google.apps.tiktok.tracing.fp.r(PG:3)
+08-06 10:51:25.947  3094  3094 E Tracer  : 	at com.google.apps.tiktok.tracing.fp.u(PG:2)
+08-06 10:51:25.947  3094  3094 E Tracer  : 	at com.google.apps.tiktok.tracing.fp.a(PG:2)
+08-06 10:51:25.947  3094  3094 E Tracer  : 	at com.google.android.libraries.logging.ve.b.b.i.a(PG:2)
+08-06 10:51:25.947  3094  3094 E Tracer  : 	at com.google.android.libraries.logging.ve.b.b.f.run(PG:1)
+08-06 10:51:25.947  3094  3094 E Tracer  : 	at android.os.Handler.handleCallback(Handler.java:883)
+08-06 10:51:25.947  3094  3094 E Tracer  : 	at android.os.Handler.dispatchMessage(Handler.java:100)
+08-06 10:51:25.947  3094  3094 E Tracer  : 	at android.os.Looper.loop(Looper.java:214)
+08-06 10:51:25.947  3094  3094 E Tracer  : 	at android.app.ActivityThread.main(ActivityThread.java:7356)
+08-06 10:51:25.947  3094  3094 E Tracer  : 	at java.lang.reflect.Method.invoke(Native Method)
+08-06 10:51:25.947  3094  3094 E Tracer  : 	at com.android.internal.os.RuntimeInit$MethodAndArgsCaller.run(RuntimeInit.java:492)
+08-06 10:51:25.947  3094  3094 E Tracer  : 	at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:930)
+08-06 10:51:26.423  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:26.423  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:26.427  2999  2999 D BoundBrokerSvc: onUnbind: Intent { act=com.google.android.gms.signin.service.START dat=chimera-action:com.google.android.gms.signin.service.START cmp=com.google.android.gms/.chimera.GmsApiService }
+08-06 10:51:27.426  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:27.426  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:27.486  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:28.242  1781  1911 W audio_hw_generic: Not supplying enough data to HAL, expected position 17275747 , only wrote 16933498
+08-06 10:51:28.425  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:28.425  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:29.426  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:29.426  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:29.474  3094  3462 I WorkerManager: dispose()
+08-06 10:51:29.474  3094  3462 W A       : (REDACTED) Queue length for executor %s is now %d. Perhaps some tasks are too long, or the pool is too small.
+08-06 10:51:30.419  9581  9615 W takeScreenshot: force redraw failed. Proceeding with screenshot
+08-06 10:51:30.419  9581  9615 W takeScreenshot: java.util.concurrent.TimeoutException: Waited 5 seconds (plus 1590900 nanoseconds delay) for androidx.concurrent.futures.ResolvableFuture@63f5437[status=PENDING, info=[setFuture=[androidx.test.core.app.ListFuture@e29cda4]]]
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at androidx.concurrent.futures.AbstractResolvableFuture.get(AbstractResolvableFuture.java:456)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at androidx.test.core.app.DeviceCapture.takeScreenshotNoSync(DeviceCapture.kt:106)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at androidx.test.espresso.base.DefaultFailureHandler.takeScreenshot(DefaultFailureHandler.java:3)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:3)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:8)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at androidx.test.espresso.ViewInteraction.check(ViewInteraction.java:12)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at com.cpen321.gruwup.RequestTest.requestFromSearch(RequestTest.java:152)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at java.lang.reflect.Method.invoke(Native Method)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:54)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at androidx.test.ext.junit.runners.AndroidJUnit4.run(AndroidJUnit4.java:162)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.Suite.runChild(Suite.java:128)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.Suite.runChild(Suite.java:27)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:67)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:58)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:438)
+08-06 10:51:30.419  9581  9615 W takeScreenshot: 	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2189)
+08-06 10:51:30.425  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: a: input svInfo.flags is 8
+08-06 10:51:30.425  1792  2361 E GnssHAL_GnssInterface: gnssSvStatusCb: b: input svInfo.flags is 8
+08-06 10:51:30.443  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:30.449  1678  1678 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@3.0::IMapper/default in either framework or device manifest.
+08-06 10:51:30.449  9565  9577 W Gralloc3: mapper 3.x is not supported
+08-06 10:51:30.457  9565  9577 D HostConnection: createUnique: call
+08-06 10:51:30.457  9565  9577 D HostConnection: HostConnection::get() New Host Connection established 0x7e6fb4e091c0, tid 9577
+08-06 10:51:30.459  9565  9577 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV420_888_to_NV21 ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_2
+08-06 10:51:30.459  9565  9577 D eglCodecCommon: allocate: Ask for block of size 0x1000
+08-06 10:51:30.459  9565  9577 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ff704000 size 0x2000
+08-06 10:51:30.464  1823  2041 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+08-06 10:51:30.465  1823  1914 E SurfaceFlinger: ro.sf.lcd_density must be defined as a build property
+08-06 10:51:30.467  9565  9702 D libEGL  : Emulator has host GPU support, qemu.gles is set to 1.
+08-06 10:51:30.474  9565  9702 W libc    : Unable to set property "qemu.gles" to "1": error code: 0x18
+08-06 10:51:30.475  9565  9702 D libEGL  : loaded /vendor/lib64/egl/libEGL_emulation.so
+08-06 10:51:30.475  9565  9702 D libEGL  : loaded /vendor/lib64/egl/libGLESv1_CM_emulation.so
+08-06 10:51:30.476  9565  9702 D libEGL  : loaded /vendor/lib64/egl/libGLESv2_emulation.so
+08-06 10:51:30.486  9565  9702 D HostConnection: HostConnection::get() New Host Connection established 0x7e6f23681900, tid 9702
+08-06 10:51:30.488  9565  9702 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV420_888_to_NV21 ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_2
+08-06 10:51:30.491  9565  9702 W OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+08-06 10:51:30.504  9565  9702 D eglCodecCommon: setVertexArrayObject: set vao to 0 (0) 0 0
+08-06 10:51:30.504  9565  9702 D EGL_emulation: eglCreateContext: 0x7e6f23681a40: maj 2 min 0 rcv 2
+08-06 10:51:30.525  9565  9702 D EGL_emulation: eglMakeCurrent: 0x7e6f23681a40: ver 2 0 (tinfo 0x7e6f23618860)
+08-06 10:51:30.535  9565  9702 D eglCodecCommon: setVertexArrayObject: set vao to 0 (0) 1 0
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: Failed to take screenshot
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: java.io.FileNotFoundException: view-op-error-1.png: open failed: EROFS (Read-only file system)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at libcore.io.IoBridge.open(IoBridge.java:496)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at java.io.FileOutputStream.<init>(FileOutputStream.java:235)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at java.io.FileOutputStream.<init>(FileOutputStream.java:125)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at androidx.test.platform.io.FileTestStorage.openOutputFile(FileTestStorage.java:60)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at androidx.test.core.graphics.BitmapStorage.writeToTestStorage(BitmapStorageExt.kt:49)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at androidx.test.espresso.base.DefaultFailureHandler.takeScreenshot(DefaultFailureHandler.java:4)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:3)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:8)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at androidx.test.espresso.ViewInteraction.check(ViewInteraction.java:12)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at com.cpen321.gruwup.RequestTest.requestFromSearch(RequestTest.java:152)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at java.lang.reflect.Method.invoke(Native Method)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:54)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at androidx.test.ext.junit.runners.AndroidJUnit4.run(AndroidJUnit4.java:162)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.Suite.runChild(Suite.java:128)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.Suite.runChild(Suite.java:27)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:67)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:58)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:438)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2189)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: Caused by: android.system.ErrnoException: open failed: EROFS (Read-only file system)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at libcore.io.Linux.open(Native Method)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at libcore.io.ForwardingOs.open(ForwardingOs.java:167)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:252)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at libcore.io.ForwardingOs.open(ForwardingOs.java:167)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at android.app.ActivityThread$AndroidOs.open(ActivityThread.java:7255)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	at libcore.io.IoBridge.open(IoBridge.java:482)
+08-06 10:51:30.552  9581  9615 W DefaultFailureHandler: 	... 43 more
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: Failed to save the view hierarchy to file view-hierarchy-1.txt
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: java.io.FileNotFoundException: view-hierarchy-1.txt: open failed: EROFS (Read-only file system)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at libcore.io.IoBridge.open(IoBridge.java:496)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at java.io.FileOutputStream.<init>(FileOutputStream.java:235)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at java.io.FileOutputStream.<init>(FileOutputStream.java:125)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.platform.io.FileTestStorage.openOutputFile(FileTestStorage.java:60)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.espresso.base.ViewHierarchyExceptionHandler.addOutputFile(ViewHierarchyExceptionHandler.java:1)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.espresso.base.ViewHierarchyExceptionHandler.dumpFullViewHierarchyToFile(ViewHierarchyExceptionHandler.java:5)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.espresso.base.ViewHierarchyExceptionHandler.handleSafely(ViewHierarchyExceptionHandler.java:2)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.espresso.base.ViewHierarchyExceptionHandler.handleSafely(ViewHierarchyExceptionHandler.java:1)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.espresso.base.DefaultFailureHandler$TypedFailureHandler.handle(DefaultFailureHandler.java:4)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.espresso.base.DefaultFailureHandler.handle(DefaultFailureHandler.java:5)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.espresso.ViewInteraction.waitForAndHandleInteractionResults(ViewInteraction.java:8)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.espresso.ViewInteraction.check(ViewInteraction.java:12)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at com.cpen321.gruwup.RequestTest.requestFromSearch(RequestTest.java:152)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at java.lang.reflect.Method.invoke(Native Method)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.model.FrameworkMethod$1.runReflectiveCall(FrameworkMethod.java:59)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.internal.runners.model.ReflectiveCallable.run(ReflectiveCallable.java:12)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.model.FrameworkMethod.invokeExplosively(FrameworkMethod.java:56)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.internal.runners.statements.InvokeMethod.evaluate(InvokeMethod.java:17)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.rules.ExternalResource$1.evaluate(ExternalResource.java:54)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.BlockJUnit4ClassRunner$1.evaluate(BlockJUnit4ClassRunner.java:100)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner.runLeaf(ParentRunner.java:366)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:103)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.BlockJUnit4ClassRunner.runChild(BlockJUnit4ClassRunner.java:63)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.ext.junit.runners.AndroidJUnit4.run(AndroidJUnit4.java:162)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.Suite.runChild(Suite.java:128)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.Suite.runChild(Suite.java:27)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner$4.run(ParentRunner.java:331)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner$1.schedule(ParentRunner.java:79)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner.runChildren(ParentRunner.java:329)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner.access$100(ParentRunner.java:66)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner$2.evaluate(ParentRunner.java:293)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner$3.evaluate(ParentRunner.java:306)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runners.ParentRunner.run(ParentRunner.java:413)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:137)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at org.junit.runner.JUnitCore.run(JUnitCore.java:115)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:67)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.internal.runner.TestExecutor.execute(TestExecutor.java:58)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at androidx.test.runner.AndroidJUnitRunner.onStart(AndroidJUnitRunner.java:438)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at android.app.Instrumentation$InstrumentationThread.run(Instrumentation.java:2189)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: Caused by: android.system.ErrnoException: open failed: EROFS (Read-only file system)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at libcore.io.Linux.open(Native Method)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at libcore.io.ForwardingOs.open(ForwardingOs.java:167)
+08-06 10:51:30.598  9581  9615 W ViewHierarchyExceptionHandler: 	at libcore.io.BlockGuardOs.open(BlockGuardOs.java:252)
+08-06 10:51:30.599  9581  9615 W ViewHierarchyExceptionHandler: 	at libcore.io.ForwardingOs.open(ForwardingOs.java:167)
+08-06 10:51:30.599  9581  9615 W ViewHierarchyExceptionHandler: 	at android.app.ActivityThread$AndroidOs.open(ActivityThread.java:7255)
+08-06 10:51:30.599  9581  9615 W ViewHierarchyExceptionHandler: 	at libcore.io.IoBridge.open(IoBridge.java:482)
+08-06 10:51:30.599  9581  9615 W ViewHierarchyExceptionHandler: 	... 46 more
+08-06 10:51:30.599  9581  9615 W FileTestStorage: Test input args is not supported.
+08-06 10:51:30.645  9581  9581 D LifecycleMonitor: Lifecycle status change: com.cpen321.gruwup.MainActivity@53b2e6a in: PAUSED
+08-06 10:51:30.645  9581  9581 V ActivityScenario: Activity lifecycle changed event received but ignored because the intent does not match. startActivityIntent=Intent { act=android.intent.action.MAIN cat=[android.intent.category.LAUNCHER] cmp=com.cpen321.gruwup/.LogInActivity }, activity.getIntent()=Intent { cmp=com.cpen321.gruwup/.MainActivity (has extras) }, activity=com.cpen321.gruwup.MainActivity@53b2e6a
+08-06 10:51:30.646  2080  5038 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:30.649  2080  5038 I chatty  : uid=1000(system) Binder:2080_18 identical 48 lines
+08-06 10:51:30.649  2080  5038 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:30.650  9617  9617 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@264f2ff
+08-06 10:51:30.652  2080  2108 E memtrack: Couldn't load memtrack module
+08-06 10:51:30.652  2080  2108 W android.os.Debug: failed to get memory consumption info: -1
+08-06 10:51:30.670  9581  9651 D EGL_emulation: eglMakeCurrent: 0x7f797d8f3400: ver 2 0 (tinfo 0x7f7a58dc9f40)
+08-06 10:51:30.678  9581  9581 D LifecycleMonitor: Lifecycle status change: com.cpen321.gruwup.LogInActivity@1aa7232 in: DESTROYED
+08-06 10:51:30.678  9581  9581 V ActivityScenario: Update currentActivityStage to DESTROYED, currentActivity=null
+08-06 10:51:30.683  9581  9594 I .cpen321.gruwu: NativeAlloc concurrent copying GC freed 43403(3576KB) AllocSpace objects, 81(6440KB) LOS objects, 46% free, 7006KB/12MB, paused 818us total 132.208ms
+08-06 10:51:30.702  9617  9648 D HostConnection: HostConnection::get() New Host Connection established 0x7f79c7900c60, tid 9648
+08-06 10:51:30.704  9617  9648 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV420_888_to_NV21 ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_2
+08-06 10:51:30.708  9617  9648 W OpenGLRenderer: Failed to choose config with EGL_SWAP_BEHAVIOR_PRESERVED, retrying without...
+08-06 10:51:30.721  9617  9648 D eglCodecCommon: setVertexArrayObject: set vao to 0 (0) 0 0
+08-06 10:51:30.721  9617  9648 D EGL_emulation: eglCreateContext: 0x7f79c7900e40: maj 2 min 0 rcv 2
+08-06 10:51:30.747  9617  9648 D EGL_emulation: eglMakeCurrent: 0x7f79c7900e40: ver 2 0 (tinfo 0x7f79c77d9700)
+08-06 10:51:30.754  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:30.757  1678  1678 I hwservicemanager: getTransport: Cannot find entry android.hardware.graphics.mapper@3.0::IMapper/default in either framework or device manifest.
+08-06 10:51:30.757  9617  9648 W Gralloc3: mapper 3.x is not supported
+08-06 10:51:30.759  9617  9648 D HostConnection: createUnique: call
+08-06 10:51:30.760  9617  9648 D HostConnection: HostConnection::get() New Host Connection established 0x7f79c7900f80, tid 9648
+08-06 10:51:30.763  9617  9648 D HostConnection: HostComposition ext ANDROID_EMU_CHECKSUM_HELPER_v1 ANDROID_EMU_dma_v1 ANDROID_EMU_direct_mem ANDROID_EMU_host_composition_v1 ANDROID_EMU_host_composition_v2 ANDROID_EMU_vulkan ANDROID_EMU_deferred_vulkan_commands ANDROID_EMU_vulkan_null_optional_strings ANDROID_EMU_vulkan_create_resources_with_requirements ANDROID_EMU_YUV420_888_to_NV21 ANDROID_EMU_YUV_Cache ANDROID_EMU_vulkan_free_memory_sync ANDROID_EMU_vulkan_shader_float16_int8 ANDROID_EMU_vulkan_async_queue_submit ANDROID_EMU_sync_buffer_data GL_OES_vertex_array_object GL_KHR_texture_compression_astc_ldr ANDROID_EMU_host_side_tracing ANDROID_EMU_gles_max_version_2
+08-06 10:51:30.764  9617  9648 D eglCodecCommon: allocate: Ask for block of size 0x1000
+08-06 10:51:30.764  9617  9648 D eglCodecCommon: allocate: ioctl allocate returned offset 0x3ff702000 size 0x2000
+08-06 10:51:30.766  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:30.768  1793 19155 D gralloc_ranchu: gralloc_alloc: Creating ashmem region of size 9334784
+08-06 10:51:30.770  9617  9648 D EGL_emulation: eglMakeCurrent: 0x7f79c7900e40: ver 2 0 (tinfo 0x7f79c77d9700)
+08-06 10:51:30.771  9617  9648 D eglCodecCommon: setVertexArrayObject: set vao to 0 (0) 1 0
+08-06 10:51:30.832  2080  2462 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:30.836  2080  2462 I chatty  : uid=1000(system) Binder:2080_8 identical 48 lines
+08-06 10:51:30.836  2080  2462 W InputReader: Device has associated, but no associated display id.
+08-06 10:51:30.843  9617  9617 W ActivityThread: handleWindowVisibility: no activity for token android.os.BinderProxy@7b08cfc
+08-06 10:51:30.865  9581  9615 I TestRunner: finished: requestFromSearch(com.cpen321.gruwup.RequestTest)

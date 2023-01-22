@@ -90,7 +90,7 @@ public class MapViewFragment extends Fragment implements GoogleMap.OnMarkerClick
                     }
                 }
                 else {
-                    System.out.println("normal mode");
+                    System.out.println("normal mode, single adventure");
                     LatLng eventLocation = getLocationFromAddress(getActivity(), address);
                     googleMap.addMarker(new MarkerOptions().position(eventLocation).title("Event title"));
                     CameraUpdate cameraUpdate = CameraUpdateFactory.newLatLngZoom(eventLocation, 12);

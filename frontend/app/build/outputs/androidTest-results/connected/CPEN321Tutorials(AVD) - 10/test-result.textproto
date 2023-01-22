@@ -1,0 +1,120 @@
+# 2022-08-06T17:51:42.133Z:
+test_suite_meta_data {
+  scheduled_test_case_count: 2
+}
+test_status: PASSED
+test_result {
+  test_case {
+    test_class: "RequestTest"
+    test_package: "com.cpen321.gruwup"
+    test_method: "requestFromSearch"
+    start_time {
+      seconds: 1659808279
+      nanos: 722000000
+    }
+    end_time {
+      seconds: 1659808291
+      nanos: 513000000
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\shaoj\\Documents\\UBC assignments\\CPEN 321\\gruwup2\\frontend\\app\\build\\outputs\\androidTest-results\\connected\\CPEN321Tutorials(AVD) - 10\\logcat-com.cpen321.gruwup.RequestTest-requestFromSearch.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\shaoj\\Documents\\UBC assignments\\CPEN 321\\gruwup2\\frontend\\app\\build\\outputs\\androidTest-results\\connected\\CPEN321Tutorials(AVD) - 10\\device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\shaoj\\Documents\\UBC assignments\\CPEN 321\\gruwup2\\frontend\\app\\build\\outputs\\androidTest-results\\connected\\CPEN321Tutorials(AVD) - 10\\meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\shaoj\\Documents\\UBC assignments\\CPEN 321\\gruwup2\\frontend\\app\\build\\outputs\\androidTest-results\\connected\\CPEN321Tutorials(AVD) - 10\\cpuinfo"
+    }
+  }
+}
+test_result {
+  test_case {
+    test_class: "RequestTest"
+    test_package: "com.cpen321.gruwup"
+    test_method: "requestFromDiscover"
+    start_time {
+      seconds: 1659808291
+      nanos: 636000000
+    }
+    end_time {
+      seconds: 1659808301
+      nanos: 337000000
+    }
+  }
+  test_status: PASSED
+  output_artifact {
+    label {
+      label: "logcat"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\shaoj\\Documents\\UBC assignments\\CPEN 321\\gruwup2\\frontend\\app\\build\\outputs\\androidTest-results\\connected\\CPEN321Tutorials(AVD) - 10\\logcat-com.cpen321.gruwup.RequestTest-requestFromDiscover.txt"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\shaoj\\Documents\\UBC assignments\\CPEN 321\\gruwup2\\frontend\\app\\build\\outputs\\androidTest-results\\connected\\CPEN321Tutorials(AVD) - 10\\device-info.pb"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.meminfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\shaoj\\Documents\\UBC assignments\\CPEN 321\\gruwup2\\frontend\\app\\build\\outputs\\androidTest-results\\connected\\CPEN321Tutorials(AVD) - 10\\meminfo"
+    }
+  }
+  output_artifact {
+    label {
+      label: "device-info.cpuinfo"
+      namespace: "android"
+    }
+    source_path {
+      path: "C:\\Users\\shaoj\\Documents\\UBC assignments\\CPEN 321\\gruwup2\\frontend\\app\\build\\outputs\\androidTest-results\\connected\\CPEN321Tutorials(AVD) - 10\\cpuinfo"
+    }
+  }
+}
+output_artifact {
+  label {
+    label: "test-results.log"
+    namespace: "com.google.testing.platform.runtime.android.driver.AndroidInstrumentationDriver"
+  }
+  source_path {
+    path: "C:\\Users\\shaoj\\Documents\\UBC assignments\\CPEN 321\\gruwup2\\frontend\\app\\build\\outputs\\androidTest-results\\connected\\CPEN321Tutorials(AVD) - 10\\testlog\\test-results.log"
+  }
+  type: TEST_DATA
+  mime_type: "text/plain"
+}

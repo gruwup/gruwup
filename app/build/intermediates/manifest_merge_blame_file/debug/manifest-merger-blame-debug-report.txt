@@ -1,0 +1,245 @@
+1<?xml version="1.0" encoding="utf-8"?>
+2<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+3    package="com.cpen321.gruwup"
+4    android:versionCode="1"
+5    android:versionName="1.0" >
+6
+7    <uses-sdk
+8        android:minSdkVersion="16"
+8-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml
+9        android:targetSdkVersion="32" />
+9-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml
+10
+11    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
+11-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:6:5-81
+11-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:6:22-78
+12    <uses-permission android:name="android.permission.INTERNET" />
+12-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:7:5-67
+12-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:7:22-64
+13    <uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />
+13-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:8:5-78
+13-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:8:22-75
+14    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+14-->[com.google.android.libraries.places:places:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\f84ac88c21498ff1ef130ec395b3b59c\transformed\jetified-places-2.4.0\AndroidManifest.xml:9:5-79
+14-->[com.google.android.libraries.places:places:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\f84ac88c21498ff1ef130ec395b3b59c\transformed\jetified-places-2.4.0\AndroidManifest.xml:9:22-76
+15    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" /> <!-- Include required permissions for Google Maps API to run. -->
+15-->[com.google.android.libraries.places:places:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\f84ac88c21498ff1ef130ec395b3b59c\transformed\jetified-places-2.4.0\AndroidManifest.xml:10:5-76
+15-->[com.google.android.libraries.places:places:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\f84ac88c21498ff1ef130ec395b3b59c\transformed\jetified-places-2.4.0\AndroidManifest.xml:10:22-73
+16    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+16-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\251ed9933c980bc47287e9493d5385aa\transformed\jetified-play-services-maps-17.0.0\AndroidManifest.xml:23:5-79
+16-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\251ed9933c980bc47287e9493d5385aa\transformed\jetified-play-services-maps-17.0.0\AndroidManifest.xml:23:22-76
+17
+18    <uses-feature
+18-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\251ed9933c980bc47287e9493d5385aa\transformed\jetified-play-services-maps-17.0.0\AndroidManifest.xml:26:5-28:35
+19        android:glEsVersion="0x00020000"
+19-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\251ed9933c980bc47287e9493d5385aa\transformed\jetified-play-services-maps-17.0.0\AndroidManifest.xml:27:9-41
+20        android:required="true" />
+20-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\251ed9933c980bc47287e9493d5385aa\transformed\jetified-play-services-maps-17.0.0\AndroidManifest.xml:28:9-32
+21
+22    <application
+22-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:10:5-51:19
+23        android:allowBackup="true"
+23-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:11:9-35
+24        android:appComponentFactory="androidx.core.app.CoreComponentFactory"
+24-->[androidx.core:core:1.7.0] C:\Users\shaoj\.gradle\caches\transforms-3\d8338c189490aee58604e111af57865f\transformed\core-1.7.0\AndroidManifest.xml:24:18-86
+25        android:dataExtractionRules="@xml/data_extraction_rules"
+25-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:12:9-65
+26        android:debuggable="true"
+27        android:fullBackupContent="@xml/backup_rules"
+27-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:13:9-54
+28        android:icon="@mipmap/ic_launcher"
+28-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:14:9-43
+29        android:label="@string/app_name"
+29-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:15:9-41
+30        android:roundIcon="@mipmap/ic_launcher_round"
+30-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:16:9-54
+31        android:supportsRtl="true"
+31-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:17:9-35
+32        android:testOnly="true"
+33        android:theme="@style/Theme.Gruwup"
+33-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:18:9-44
+34        android:usesCleartextTraffic="true" >
+34-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:19:9-44
+35        <meta-data
+35-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:21:9-23:70
+36            android:name="com.google.android.geo.API_KEY"
+36-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:22:13-58
+37            android:value="AIzaSyBTzzjkUX-5Snzfhc8JrGn1wA07jgKbluk" />
+37-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:23:13-68
+38
+39        <activity
+39-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:24:9-26:40
+40            android:name="com.cpen321.gruwup.SignUpActivity"
+40-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:25:13-43
+41            android:exported="false" />
+41-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:26:13-37
+42        <activity
+42-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:27:9-29:40
+43            android:name="com.cpen321.gruwup.ChatActivity"
+43-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:28:13-41
+44            android:exported="false" />
+44-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:29:13-37
+45        <activity
+45-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:30:9-37:20
+46            android:name="com.cpen321.gruwup.LogInActivity"
+46-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:31:13-42
+47            android:exported="true" >
+47-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:32:13-36
+48            <intent-filter>
+48-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:33:13-36:29
+49                <action android:name="android.intent.action.MAIN" />
+49-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:34:17-69
+49-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:34:25-66
+50
+51                <category android:name="android.intent.category.LAUNCHER" />
+51-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:35:17-77
+51-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:35:27-74
+52            </intent-filter>
+53        </activity>
+54        <activity
+54-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:38:9-45:20
+55            android:name="com.cpen321.gruwup.MainActivity"
+55-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:39:13-41
+56            android:exported="true" >
+56-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:40:13-36
+57
+58            <!-- <intent-filter> -->
+59            <!-- <action android:name="android.intent.action.MAIN" /> -->
+60            <!-- <category android:name="android.intent.category.LAUNCHER" /> -->
+61            <!-- </intent-filter> -->
+62        </activity>
+63
+64        <service android:name="com.cpen321.gruwup.SocketService" />
+64-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:46:9-58
+64-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:46:18-47
+65
+66        <meta-data
+66-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:48:9-50:57
+67            android:name="preloaded_fonts"
+67-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:49:13-43
+68            android:resource="@array/preloaded_fonts" />
+68-->C:\Users\shaoj\Documents\UBC assignments\CPEN 321\gruwup2\app\src\main\AndroidManifest.xml:50:13-54
+69
+70        <activity
+70-->[com.google.android.libraries.places:places:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\f84ac88c21498ff1ef130ec395b3b59c\transformed\jetified-places-2.4.0\AndroidManifest.xml:14:9-20:20
+71            android:name="com.google.android.libraries.places.widget.AutocompleteActivity"
+71-->[com.google.android.libraries.places:places:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\f84ac88c21498ff1ef130ec395b3b59c\transformed\jetified-places-2.4.0\AndroidManifest.xml:15:13-91
+72            android:exported="false"
+72-->[com.google.android.libraries.places:places:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\f84ac88c21498ff1ef130ec395b3b59c\transformed\jetified-places-2.4.0\AndroidManifest.xml:16:13-37
+73            android:label="@string/places_autocomplete_label"
+73-->[com.google.android.libraries.places:places:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\f84ac88c21498ff1ef130ec395b3b59c\transformed\jetified-places-2.4.0\AndroidManifest.xml:17:13-62
+74            android:theme="@style/PlacesAutocompleteOverlay"
+74-->[com.google.android.libraries.places:places:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\f84ac88c21498ff1ef130ec395b3b59c\transformed\jetified-places-2.4.0\AndroidManifest.xml:18:13-61
+75            android:windowSoftInputMode="adjustResize" >
+75-->[com.google.android.libraries.places:places:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\f84ac88c21498ff1ef130ec395b3b59c\transformed\jetified-places-2.4.0\AndroidManifest.xml:19:13-55
+76        </activity>
+77        <activity
+77-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c2045bd863f0412431aa49b4265da9f\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:23:9-27:75
+78            android:name="com.google.android.gms.auth.api.signin.internal.SignInHubActivity"
+78-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c2045bd863f0412431aa49b4265da9f\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:24:13-93
+79            android:excludeFromRecents="true"
+79-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c2045bd863f0412431aa49b4265da9f\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:25:13-46
+80            android:exported="false"
+80-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c2045bd863f0412431aa49b4265da9f\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:26:13-37
+81            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+81-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c2045bd863f0412431aa49b4265da9f\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:27:13-72
+82        <!--
+83            Service handling Google Sign-In user revocation. For apps that do not integrate with
+84            Google Sign-In, this service will never be started.
+85        -->
+86        <service
+86-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c2045bd863f0412431aa49b4265da9f\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:33:9-37:51
+87            android:name="com.google.android.gms.auth.api.signin.RevocationBoundService"
+87-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c2045bd863f0412431aa49b4265da9f\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:34:13-89
+88            android:exported="true"
+88-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c2045bd863f0412431aa49b4265da9f\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:35:13-36
+89            android:permission="com.google.android.gms.auth.api.signin.permission.REVOCATION_NOTIFICATION"
+89-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c2045bd863f0412431aa49b4265da9f\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:36:13-107
+90            android:visibleToInstantApps="true" />
+90-->[com.google.android.gms:play-services-auth:20.2.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c2045bd863f0412431aa49b4265da9f\transformed\jetified-play-services-auth-20.2.0\AndroidManifest.xml:37:13-48
+91
+92        <provider
+92-->[com.squareup.picasso:picasso:2.71828] C:\Users\shaoj\.gradle\caches\transforms-3\ea2e7efc9c5a7f6f66986495dd3ae50d\transformed\jetified-picasso-2.71828\AndroidManifest.xml:8:9-11:40
+93            android:name="com.squareup.picasso.PicassoProvider"
+93-->[com.squareup.picasso:picasso:2.71828] C:\Users\shaoj\.gradle\caches\transforms-3\ea2e7efc9c5a7f6f66986495dd3ae50d\transformed\jetified-picasso-2.71828\AndroidManifest.xml:9:13-64
+94            android:authorities="com.cpen321.gruwup.com.squareup.picasso"
+94-->[com.squareup.picasso:picasso:2.71828] C:\Users\shaoj\.gradle\caches\transforms-3\ea2e7efc9c5a7f6f66986495dd3ae50d\transformed\jetified-picasso-2.71828\AndroidManifest.xml:10:13-72
+95            android:exported="false" /> <!-- Needs to be explicitly declared on P+ -->
+95-->[com.squareup.picasso:picasso:2.71828] C:\Users\shaoj\.gradle\caches\transforms-3\ea2e7efc9c5a7f6f66986495dd3ae50d\transformed\jetified-picasso-2.71828\AndroidManifest.xml:11:13-37
+96        <uses-library
+96-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\251ed9933c980bc47287e9493d5385aa\transformed\jetified-play-services-maps-17.0.0\AndroidManifest.xml:33:9-35:40
+97            android:name="org.apache.http.legacy"
+97-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\251ed9933c980bc47287e9493d5385aa\transformed\jetified-play-services-maps-17.0.0\AndroidManifest.xml:34:13-50
+98            android:required="false" />
+98-->[com.google.android.gms:play-services-maps:17.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\251ed9933c980bc47287e9493d5385aa\transformed\jetified-play-services-maps-17.0.0\AndroidManifest.xml:35:13-37
+99
+100        <activity
+100-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\shaoj\.gradle\caches\transforms-3\83a3f1d22377343828f93e04efac90b1\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:9-22:45
+101            android:name="com.google.android.gms.common.api.GoogleApiActivity"
+101-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\shaoj\.gradle\caches\transforms-3\83a3f1d22377343828f93e04efac90b1\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:20:19-85
+102            android:exported="false"
+102-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\shaoj\.gradle\caches\transforms-3\83a3f1d22377343828f93e04efac90b1\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:22:19-43
+103            android:theme="@android:style/Theme.Translucent.NoTitleBar" />
+103-->[com.google.android.gms:play-services-base:18.0.1] C:\Users\shaoj\.gradle\caches\transforms-3\83a3f1d22377343828f93e04efac90b1\transformed\jetified-play-services-base-18.0.1\AndroidManifest.xml:21:19-78
+104
+105        <meta-data
+105-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c9211a8f4a5cdf4e2e140581bc1db8e\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:21:9-23:69
+106            android:name="com.google.android.gms.version"
+106-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c9211a8f4a5cdf4e2e140581bc1db8e\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:22:13-58
+107            android:value="@integer/google_play_services_version" />
+107-->[com.google.android.gms:play-services-basement:18.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\7c9211a8f4a5cdf4e2e140581bc1db8e\transformed\jetified-play-services-basement-18.0.0\AndroidManifest.xml:23:13-66
+108
+109        <provider
+109-->[androidx.emoji2:emoji2:1.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\dafda43020c998140bb590dd363804eb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:26:9-34:20
+110            android:name="androidx.startup.InitializationProvider"
+110-->[androidx.emoji2:emoji2:1.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\dafda43020c998140bb590dd363804eb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:27:13-67
+111            android:authorities="com.cpen321.gruwup.androidx-startup"
+111-->[androidx.emoji2:emoji2:1.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\dafda43020c998140bb590dd363804eb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:28:13-68
+112            android:exported="false" >
+112-->[androidx.emoji2:emoji2:1.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\dafda43020c998140bb590dd363804eb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:29:13-37
+113            <meta-data
+113-->[androidx.emoji2:emoji2:1.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\dafda43020c998140bb590dd363804eb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:31:13-33:52
+114                android:name="androidx.emoji2.text.EmojiCompatInitializer"
+114-->[androidx.emoji2:emoji2:1.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\dafda43020c998140bb590dd363804eb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:32:17-75
+115                android:value="androidx.startup" />
+115-->[androidx.emoji2:emoji2:1.0.0] C:\Users\shaoj\.gradle\caches\transforms-3\dafda43020c998140bb590dd363804eb\transformed\jetified-emoji2-1.0.0\AndroidManifest.xml:33:17-49
+116            <meta-data
+116-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\fb7578b74fadc6b60a379e8d199d207c\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:31:13-33:52
+117                android:name="androidx.lifecycle.ProcessLifecycleInitializer"
+117-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\fb7578b74fadc6b60a379e8d199d207c\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:32:17-78
+118                android:value="androidx.startup" />
+118-->[androidx.lifecycle:lifecycle-process:2.4.0] C:\Users\shaoj\.gradle\caches\transforms-3\fb7578b74fadc6b60a379e8d199d207c\transformed\jetified-lifecycle-process-2.4.0\AndroidManifest.xml:33:17-49
+119        </provider>
+120
+121        <service
+121-->[com.google.android.datatransport:transport-backend-cct:2.3.0] C:\Users\shaoj\.gradle\caches\transforms-3\339f0dce143f1adda7495883d282075c\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:29:9-35:19
+122            android:name="com.google.android.datatransport.runtime.backends.TransportBackendDiscovery"
+122-->[com.google.android.datatransport:transport-backend-cct:2.3.0] C:\Users\shaoj\.gradle\caches\transforms-3\339f0dce143f1adda7495883d282075c\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:30:13-103
+123            android:exported="false" >
+123-->[com.google.android.datatransport:transport-backend-cct:2.3.0] C:\Users\shaoj\.gradle\caches\transforms-3\339f0dce143f1adda7495883d282075c\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:31:13-37
+124            <meta-data
+124-->[com.google.android.datatransport:transport-backend-cct:2.3.0] C:\Users\shaoj\.gradle\caches\transforms-3\339f0dce143f1adda7495883d282075c\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:32:13-34:39
+125                android:name="backend:com.google.android.datatransport.cct.CctBackendFactory"
+125-->[com.google.android.datatransport:transport-backend-cct:2.3.0] C:\Users\shaoj\.gradle\caches\transforms-3\339f0dce143f1adda7495883d282075c\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:33:17-94
+126                android:value="cct" />
+126-->[com.google.android.datatransport:transport-backend-cct:2.3.0] C:\Users\shaoj\.gradle\caches\transforms-3\339f0dce143f1adda7495883d282075c\transformed\jetified-transport-backend-cct-2.3.0\AndroidManifest.xml:34:17-36
+127        </service>
+128        <service
+128-->[com.google.android.datatransport:transport-runtime:2.2.3] C:\Users\shaoj\.gradle\caches\transforms-3\9d2dcde208d848bbd3077b279695800a\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:26:9-30:19
+129            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.JobInfoSchedulerService"
+129-->[com.google.android.datatransport:transport-runtime:2.2.3] C:\Users\shaoj\.gradle\caches\transforms-3\9d2dcde208d848bbd3077b279695800a\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:27:13-117
+130            android:exported="false"
+130-->[com.google.android.datatransport:transport-runtime:2.2.3] C:\Users\shaoj\.gradle\caches\transforms-3\9d2dcde208d848bbd3077b279695800a\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:28:13-37
+131            android:permission="android.permission.BIND_JOB_SERVICE" >
+131-->[com.google.android.datatransport:transport-runtime:2.2.3] C:\Users\shaoj\.gradle\caches\transforms-3\9d2dcde208d848bbd3077b279695800a\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:29:13-69
+132        </service>
+133
+134        <receiver
+134-->[com.google.android.datatransport:transport-runtime:2.2.3] C:\Users\shaoj\.gradle\caches\transforms-3\9d2dcde208d848bbd3077b279695800a\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:32:9-34:40
+135            android:name="com.google.android.datatransport.runtime.scheduling.jobscheduling.AlarmManagerSchedulerBroadcastReceiver"
+135-->[com.google.android.datatransport:transport-runtime:2.2.3] C:\Users\shaoj\.gradle\caches\transforms-3\9d2dcde208d848bbd3077b279695800a\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:33:13-132
+136            android:exported="false" />
+136-->[com.google.android.datatransport:transport-runtime:2.2.3] C:\Users\shaoj\.gradle\caches\transforms-3\9d2dcde208d848bbd3077b279695800a\transformed\jetified-transport-runtime-2.2.3\AndroidManifest.xml:34:13-37
+137    </application>
+138
+139</manifest>

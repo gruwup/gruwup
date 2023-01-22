@@ -83,10 +83,11 @@ public class LoginTest {
 
         emailInput.waitForExists(timeOut);
         emailInput.setText("gruwupinc@gmail.com");
-
-        UiObject mText = mUiDevice.findObject(new UiSelector().textStartsWith("Next"));
-        mText.waitForExists(timeOut);
-        mText.click();
+        // Confirm Button Click
+        UiObject next = mDevice.findObject(new UiSelector()
+                .resourceId("identifierNext"));
+        next.waitForExists(timeOut);
+        next. click();
 
         // Set Password
         UiObject passwordInput = mDevice.findObject(new UiSelector()

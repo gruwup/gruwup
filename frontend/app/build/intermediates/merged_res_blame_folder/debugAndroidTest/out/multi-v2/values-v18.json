@@ -1,0 +1,38 @@
+{
+    "logs": [
+        {
+            "outputFile": "com.cpen321.gruwup.test.app-mergeDebugAndroidTestResources-24:/values-v18/values-v18.xml",
+            "map": [
+                {
+                    "source": "C:\\Users\\shaoj\\.gradle\\caches\\transforms-3\\846bd1e6ef12a6d68419ac9e045844bf\\transformed\\appcompat-1.4.2\\res\\values-v18\\values-v18.xml",
+                    "from": {
+                        "startLines": "2",
+                        "startColumns": "4",
+                        "startOffsets": "55",
+                        "endColumns": "48",
+                        "endOffsets": "99"
+                    }
+                },
+                {
+                    "source": "C:\\Users\\shaoj\\.gradle\\caches\\transforms-3\\df6983f0b3a1d4b84b0f00e05e4628bb\\transformed\\jetified-core-1.4.1-alpha07\\res\\values-v18\\values.xml",
+                    "from": {
+                        "startLines": "4,12",
+                        "startColumns": "0,0",
+                        "startOffsets": "180,596",
+                        "endLines": "11,19",
+                        "endColumns": "8,8",
+                        "endOffsets": "595,1009"
+                    },
+                    "to": {
+                        "startLines": "3,11",
+                        "startColumns": "4,4",
+                        "startOffsets": "104,524",
+                        "endLines": "10,18",
+                        "endColumns": "8,8",
+                        "endOffsets": "519,937"
+                    }
+                }
+            ]
+        }
+    ]
+}
