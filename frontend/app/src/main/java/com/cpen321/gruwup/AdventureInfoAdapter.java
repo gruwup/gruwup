@@ -24,7 +24,7 @@ import org.json.JSONObject;
 import java.util.ArrayList;
 import java.util.Map;
 
-public class AdventureInfoAdapter extends RecyclerView.Adapter<AdventureInfoAdapter.ViewHolder> {
+    public class AdventureInfoAdapter extends RecyclerView.Adapter<AdventureInfoAdapter.ViewHolder> {
     private static final String TAG = "AdventureInfoAdapter";
 
     Dialog viewAdventureDialog;
