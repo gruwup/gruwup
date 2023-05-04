@@ -25,8 +25,11 @@ Below is Figma illustrations for the two main screens of our app.
 
 ## Demo Video
 
+The demo of running app is uploaded in the drive below
+
 https://drive.google.com/drive/folders/1C2Ap7VbVOHJYZxZ1hF5239o_adyMEDHf?usp=sharing 
 
+## Testing 
 
 Testing, things to keep in mind:
 - Please configure a google console project with this project's SHA-1, otherwise google sign in will not work for running frontend tests
